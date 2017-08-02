@@ -1,7 +1,6 @@
 package com.tongwii.ico.web;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.core.ResultGenerator;
 import com.tongwii.ico.model.OperatorHistory;
 import com.tongwii.ico.service.OperatorHistoryService;
 import com.github.pagehelper.PageHelper;
@@ -23,25 +22,25 @@ public class OperatorHistoryController {
     @PostMapping
     public Result add(@RequestBody OperatorHistory operatorHistory) {
         operatorHistoryService.save(operatorHistory);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         operatorHistoryService.deleteById(id);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody OperatorHistory operatorHistory) {
         operatorHistoryService.update(operatorHistory);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         OperatorHistory operatorHistory = operatorHistoryService.findById(id);
-        return ResultGenerator.genSuccessResult(operatorHistory);
+        return Result.successResult(operatorHistory);
     }
 
     @GetMapping
@@ -49,6 +48,6 @@ public class OperatorHistoryController {
         PageHelper.startPage(page, size);
         List<OperatorHistory> list = operatorHistoryService.findAll();
         PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+        return Result.successResult(pageInfo);
     }
 }

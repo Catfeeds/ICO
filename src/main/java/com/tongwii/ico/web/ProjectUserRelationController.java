@@ -1,7 +1,6 @@
 package com.tongwii.ico.web;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.core.ResultGenerator;
 import com.tongwii.ico.model.ProjectUserRelation;
 import com.tongwii.ico.service.ProjectUserRelationService;
 import com.github.pagehelper.PageHelper;
@@ -23,25 +22,25 @@ public class ProjectUserRelationController {
     @PostMapping
     public Result add(@RequestBody ProjectUserRelation projectUserRelation) {
         projectUserRelationService.save(projectUserRelation);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         projectUserRelationService.deleteById(id);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody ProjectUserRelation projectUserRelation) {
         projectUserRelationService.update(projectUserRelation);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         ProjectUserRelation projectUserRelation = projectUserRelationService.findById(id);
-        return ResultGenerator.genSuccessResult(projectUserRelation);
+        return Result.successResult(projectUserRelation);
     }
 
     @GetMapping
@@ -49,6 +48,6 @@ public class ProjectUserRelationController {
         PageHelper.startPage(page, size);
         List<ProjectUserRelation> list = projectUserRelationService.findAll();
         PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+        return Result.successResult(pageInfo);
     }
 }

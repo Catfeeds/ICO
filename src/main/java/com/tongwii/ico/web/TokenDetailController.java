@@ -1,7 +1,6 @@
 package com.tongwii.ico.web;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.core.ResultGenerator;
 import com.tongwii.ico.model.TokenDetail;
 import com.tongwii.ico.service.TokenDetailService;
 import com.github.pagehelper.PageHelper;
@@ -23,25 +22,25 @@ public class TokenDetailController {
     @PostMapping
     public Result add(@RequestBody TokenDetail tokenDetail) {
         tokenDetailService.save(tokenDetail);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         tokenDetailService.deleteById(id);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody TokenDetail tokenDetail) {
         tokenDetailService.update(tokenDetail);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         TokenDetail tokenDetail = tokenDetailService.findById(id);
-        return ResultGenerator.genSuccessResult(tokenDetail);
+        return Result.successResult(tokenDetail);
     }
 
     @GetMapping
@@ -49,6 +48,6 @@ public class TokenDetailController {
         PageHelper.startPage(page, size);
         List<TokenDetail> list = tokenDetailService.findAll();
         PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+        return Result.successResult(pageInfo);
     }
 }

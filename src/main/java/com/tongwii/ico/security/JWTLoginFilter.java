@@ -8,7 +8,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 /**
- * ${DESCRIPTION}
+ * JWT登陆过滤器
  *
  * @author Zeral
  * @date 2017-08-02
@@ -28,8 +27,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter  {
     }
 
     @Override
-    public Authentication attemptAuthentication(
-            HttpServletRequest req, HttpServletResponse res)
+    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException, IOException, ServletException {
         AccountCredentials creds = new ObjectMapper()
                 .readValue(req.getInputStream(), AccountCredentials.class);
@@ -40,14 +38,5 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter  {
                         Collections.emptyList()
                 )
         );
-    }
-
-    @Override
-    protected void successfulAuthentication(
-            HttpServletRequest req,
-            HttpServletResponse res, FilterChain chain,
-            Authentication auth) throws IOException, ServletException {
-        TokenAuthenticationService
-                .addAuthentication(res, auth.getName());
     }
 }
