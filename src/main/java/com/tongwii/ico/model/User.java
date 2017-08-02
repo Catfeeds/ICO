@@ -1,6 +1,5 @@
 package com.tongwii.ico.model;
 
-import java.util.Date;
 import javax.persistence.*;
 
 public class User {
@@ -8,17 +7,38 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String username;
+    @Column(name = "email_account")
+    private String emailAccount;
 
     private String password;
 
-    @Column(name = "nick_name")
-    private String nickName;
+    @Column(name = "real_name")
+    private String realName;
 
-    private Integer sex;
+    private String phone;
 
-    @Column(name = "register_date")
-    private Date registerDate;
+    @Column(name = "id_card")
+    private String idCard;
+
+    @Column(name = "is_validate_email")
+    private Boolean isValidateEmail;
+
+    @Column(name = "is_validate_phone")
+    private Boolean isValidatePhone;
+
+    @Column(name = "avator_url")
+    private String avatorUrl;
+
+    @Column(name = "idCard_front_url")
+    private String idcardFrontUrl;
+
+    @Column(name = "idCard_back_url")
+    private String idcardBackUrl;
+
+    @Column(name = "idCard_all_url")
+    private String idcardAllUrl;
+
+    private String des;
 
     /**
      * @return id
@@ -35,17 +55,17 @@ public class User {
     }
 
     /**
-     * @return username
+     * @return email_account
      */
-    public String getUsername() {
-        return username;
+    public String getEmailAccount() {
+        return emailAccount;
     }
 
     /**
-     * @param username
+     * @param emailAccount
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmailAccount(String emailAccount) {
+        this.emailAccount = emailAccount;
     }
 
     /**
@@ -63,44 +83,142 @@ public class User {
     }
 
     /**
-     * @return nick_name
+     * @return real_name
      */
-    public String getNickName() {
-        return nickName;
+    public String getRealName() {
+        return realName;
     }
 
     /**
-     * @param nickName
+     * @param realName
      */
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     /**
-     * @return sex
+     * @return phone
      */
-    public Integer getSex() {
-        return sex;
+    public String getPhone() {
+        return phone;
     }
 
     /**
-     * @param sex
+     * @param phone
      */
-    public void setSex(Integer sex) {
-        this.sex = sex;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     /**
-     * @return register_date
+     * @return id_card
      */
-    public Date getRegisterDate() {
-        return registerDate;
+    public String getIdCard() {
+        return idCard;
     }
 
     /**
-     * @param registerDate
+     * @param idCard
      */
-    public void setRegisterDate(Date registerDate) {
-        this.registerDate = registerDate;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    /**
+     * @return is_validate_email
+     */
+    public Boolean getIsValidateEmail() {
+        return isValidateEmail;
+    }
+
+    /**
+     * @param isValidateEmail
+     */
+    public void setIsValidateEmail(Boolean isValidateEmail) {
+        this.isValidateEmail = isValidateEmail;
+    }
+
+    /**
+     * @return is_validate_phone
+     */
+    public Boolean getIsValidatePhone() {
+        return isValidatePhone;
+    }
+
+    /**
+     * @param isValidatePhone
+     */
+    public void setIsValidatePhone(Boolean isValidatePhone) {
+        this.isValidatePhone = isValidatePhone;
+    }
+
+    /**
+     * @return avator_url
+     */
+    public String getAvatorUrl() {
+        return avatorUrl;
+    }
+
+    /**
+     * @param avatorUrl
+     */
+    public void setAvatorUrl(String avatorUrl) {
+        this.avatorUrl = avatorUrl;
+    }
+
+    /**
+     * @return idCard_front_url
+     */
+    public String getIdcardFrontUrl() {
+        return idcardFrontUrl;
+    }
+
+    /**
+     * @param idcardFrontUrl
+     */
+    public void setIdcardFrontUrl(String idcardFrontUrl) {
+        this.idcardFrontUrl = idcardFrontUrl;
+    }
+
+    /**
+     * @return idCard_back_url
+     */
+    public String getIdcardBackUrl() {
+        return idcardBackUrl;
+    }
+
+    /**
+     * @param idcardBackUrl
+     */
+    public void setIdcardBackUrl(String idcardBackUrl) {
+        this.idcardBackUrl = idcardBackUrl;
+    }
+
+    /**
+     * @return idCard_all_url
+     */
+    public String getIdcardAllUrl() {
+        return idcardAllUrl;
+    }
+
+    /**
+     * @param idcardAllUrl
+     */
+    public void setIdcardAllUrl(String idcardAllUrl) {
+        this.idcardAllUrl = idcardAllUrl;
+    }
+
+    /**
+     * @return des
+     */
+    public String getDes() {
+        return des;
+    }
+
+    /**
+     * @param des
+     */
+    public void setDes(String des) {
+        this.des = des;
     }
 }

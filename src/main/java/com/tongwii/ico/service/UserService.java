@@ -4,7 +4,7 @@ import com.tongwii.ico.core.Service;
 
 
 /**
- * Created by Zeral on 2017-08-01.
+ * Created by Zeral on 2017-08-02.
  */
 public interface UserService extends Service<User> {
 

@@ -13,7 +13,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.servlet.ErrorPageRegistrar;
+import org.springframework.boot.web.servlet.ErrorPageRegistry;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -37,7 +42,7 @@ import java.util.List;
  * Spring MVC 配置
  */
 @Configuration
-public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
+public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPageRegistrar {
 
     private final Logger logger = LoggerFactory.getLogger(WebMvcConfigurer.class);
     @Value("${spring.profiles.active}")
@@ -71,7 +76,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                 } else if (e instanceof ServletException) {
                     result.setCode(ResultCode.FAIL).setMessage(e.getMessage());
                 } else {
-                    result.setCode(ResultCode.INTERNAL_SERVER_ERROR).setMessage("接口 [" + request.getRequestURI() + "] 内部错误，请联系管理员");
+                    result.setCode(ResultCode.ERROR).setMessage("接口 [" + request.getRequestURI() + "] 内部错误，请联系管理员");
                     String message;
                     if (handler instanceof HandlerMethod) {
                         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -95,7 +100,21 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     //解决跨域问题
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        //registry.addMapping("/**");
+        registry.addMapping( "/**" )
+                .allowedMethods(
+                        HttpMethod.HEAD.name(),
+                        HttpMethod.GET.name(),
+                        HttpMethod.POST.name(),
+                        HttpMethod.PUT.name(),
+                        HttpMethod.DELETE.name(),
+                        HttpMethod.OPTIONS.name(),
+                        HttpMethod.PATCH.name(),
+                        HttpMethod.TRACE.name()
+                )
+                .allowCredentials( true )
+                // .allowedHeaders(  ) // Authorization
+                // 允许的域名
+                .allowedOrigins( "*" );
     }
 
     //添加拦截器
@@ -186,5 +205,12 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         }
 
         return ip;
+    }
+
+    @Override
+    public void registerErrorPages(ErrorPageRegistry registry) {
+        registry.addErrorPages( new ErrorPage( HttpStatus.NOT_FOUND, "/404.html" ) );
+        registry.addErrorPages( new ErrorPage( HttpStatus.UNAUTHORIZED, "/401.html" ) );
+        registry.addErrorPages( new ErrorPage( Throwable.class, "/500.html" ) );
     }
 }
