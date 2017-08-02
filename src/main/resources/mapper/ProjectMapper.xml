@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwii.ico.dao.ProjectMapper">
+  <resultMap id="BaseResultMap" type="com.tongwii.ico.model.Project">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_cn" jdbcType="VARCHAR" property="nameCn" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="third_endorsement" jdbcType="BIT" property="thirdEndorsement" />
+    <result column="output_token_money_detail_id" jdbcType="INTEGER" property="outputTokenMoneyDetailId" />
+    <result column="input_token_money_datail_id" jdbcType="INTEGER" property="inputTokenMoneyDatailId" />
+    <result column="part_person_number" jdbcType="INTEGER" property="partPersonNumber" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="project_wallet_id" jdbcType="INTEGER" property="projectWalletId" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="des" jdbcType="LONGVARCHAR" property="des" />
+  </resultMap>
+</mapper>

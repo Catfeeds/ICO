@@ -10,8 +10,8 @@ import com.tongwii.ico.core.ResultCode;
 import com.tongwii.ico.core.ServiceException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.servlet.ErrorPageRegistrar;
@@ -44,7 +44,8 @@ import java.util.List;
 @Configuration
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPageRegistrar {
 
-    private final Logger logger = LoggerFactory.getLogger(WebMvcConfigurer.class);
+    private final static Logger logger = LogManager.getLogger();
+
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
 
@@ -117,6 +118,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                 .allowedOrigins( "*" );
     }
 
+/*
     //添加拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -142,6 +144,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
             });
         }
     }
+*/
 
     private void responseResult(HttpServletResponse response, Result result) {
         response.setCharacterEncoding("UTF-8");

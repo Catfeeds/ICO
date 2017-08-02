@@ -2,8 +2,8 @@ package com.tongwii.ico.web;
 
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.core.ResultGenerator;
-import com.tongwii.ico.model.User;
-import com.tongwii.ico.service.UserService;
+import com.tongwii.ico.model.TokenDetail;
+import com.tongwii.ico.service.TokenDetailService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
@@ -15,41 +15,40 @@ import java.util.List;
 * Created by Zeral on 2017-08-02.
 */
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/token/detail")
+public class TokenDetailController {
     @Resource
-    private UserService userService;
+    private TokenDetailService tokenDetailService;
 
     @PostMapping
-    public Result add(@RequestBody User user) {
-        userService.save(user);
+    public Result add(@RequestBody TokenDetail tokenDetail) {
+        tokenDetailService.save(tokenDetail);
         return ResultGenerator.genSuccessResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
-        userService.deleteById(id);
+        tokenDetailService.deleteById(id);
         return ResultGenerator.genSuccessResult();
     }
 
     @PutMapping
-    public Result update(@RequestBody User user) {
-        userService.update(user);
+    public Result update(@RequestBody TokenDetail tokenDetail) {
+        tokenDetailService.update(tokenDetail);
         return ResultGenerator.genSuccessResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
-        User user = userService.findById(id);
-        return ResultGenerator.genSuccessResult(user);
+        TokenDetail tokenDetail = tokenDetailService.findById(id);
+        return ResultGenerator.genSuccessResult(tokenDetail);
     }
 
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
-        List<User> list = userService.findAll();
+        List<TokenDetail> list = tokenDetailService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
-
 }

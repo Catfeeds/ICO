@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwii.ico.dao.UserWalletMapper">
+  <resultMap id="BaseResultMap" type="com.tongwii.ico.model.UserWallet">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="token_money_id" jdbcType="INTEGER" property="tokenMoneyId" />
+    <result column="token_money_url" jdbcType="VARCHAR" property="tokenMoneyUrl" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="des" jdbcType="LONGVARCHAR" property="des" />
+  </resultMap>
+</mapper>
