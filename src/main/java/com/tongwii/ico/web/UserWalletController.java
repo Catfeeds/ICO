@@ -1,7 +1,6 @@
 package com.tongwii.ico.web;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.core.ResultGenerator;
 import com.tongwii.ico.model.UserWallet;
 import com.tongwii.ico.service.UserWalletService;
 import com.github.pagehelper.PageHelper;
@@ -23,25 +22,25 @@ public class UserWalletController {
     @PostMapping
     public Result add(@RequestBody UserWallet userWallet) {
         userWalletService.save(userWallet);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         userWalletService.deleteById(id);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody UserWallet userWallet) {
         userWalletService.update(userWallet);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         UserWallet userWallet = userWalletService.findById(id);
-        return ResultGenerator.genSuccessResult(userWallet);
+        return Result.successResult(userWallet);
     }
 
     @GetMapping
@@ -49,6 +48,6 @@ public class UserWalletController {
         PageHelper.startPage(page, size);
         List<UserWallet> list = userWalletService.findAll();
         PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+        return Result.successResult(pageInfo);
     }
 }

@@ -1,7 +1,6 @@
 package com.tongwii.ico.web;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.core.ResultGenerator;
 import com.tongwii.ico.model.Project;
 import com.tongwii.ico.service.ProjectService;
 import com.github.pagehelper.PageHelper;
@@ -23,25 +22,25 @@ public class ProjectController {
     @PostMapping
     public Result add(@RequestBody Project project) {
         projectService.save(project);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         projectService.deleteById(id);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody Project project) {
         projectService.update(project);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         Project project = projectService.findById(id);
-        return ResultGenerator.genSuccessResult(project);
+        return Result.successResult(project);
     }
 
     @GetMapping
@@ -49,6 +48,6 @@ public class ProjectController {
         PageHelper.startPage(page, size);
         List<Project> list = projectService.findAll();
         PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+        return Result.successResult(pageInfo);
     }
 }

@@ -7,8 +7,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "email_account")
-    private String emailAccount;
+    private String username;
 
     private String password;
 
@@ -55,17 +54,17 @@ public class User {
     }
 
     /**
-     * @return email_account
+     * @return username
      */
-    public String getEmailAccount() {
-        return emailAccount;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * @param emailAccount
+     * @param username
      */
-    public void setEmailAccount(String emailAccount) {
-        this.emailAccount = emailAccount;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**

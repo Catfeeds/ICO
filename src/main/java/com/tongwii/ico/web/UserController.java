@@ -1,7 +1,6 @@
 package com.tongwii.ico.web;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.core.ResultGenerator;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -23,25 +22,25 @@ public class UserController {
     @PostMapping
     public Result add(@RequestBody User user) {
         userService.save(user);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         userService.deleteById(id);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody User user) {
         userService.update(user);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         User user = userService.findById(id);
-        return ResultGenerator.genSuccessResult(user);
+        return Result.successResult(user);
     }
 
     @GetMapping
@@ -49,7 +48,6 @@ public class UserController {
         PageHelper.startPage(page, size);
         List<User> list = userService.findAll();
         PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+        return Result.successResult(pageInfo);
     }
-
 }

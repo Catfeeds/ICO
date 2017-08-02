@@ -1,7 +1,6 @@
 package com.tongwii.ico.web;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.core.ResultGenerator;
 import com.tongwii.ico.model.ProjectUserWalletRelation;
 import com.tongwii.ico.service.ProjectUserWalletRelationService;
 import com.github.pagehelper.PageHelper;
@@ -23,25 +22,25 @@ public class ProjectUserWalletRelationController {
     @PostMapping
     public Result add(@RequestBody ProjectUserWalletRelation projectUserWalletRelation) {
         projectUserWalletRelationService.save(projectUserWalletRelation);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         projectUserWalletRelationService.deleteById(id);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody ProjectUserWalletRelation projectUserWalletRelation) {
         projectUserWalletRelationService.update(projectUserWalletRelation);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         ProjectUserWalletRelation projectUserWalletRelation = projectUserWalletRelationService.findById(id);
-        return ResultGenerator.genSuccessResult(projectUserWalletRelation);
+        return Result.successResult(projectUserWalletRelation);
     }
 
     @GetMapping
@@ -49,6 +48,6 @@ public class ProjectUserWalletRelationController {
         PageHelper.startPage(page, size);
         List<ProjectUserWalletRelation> list = projectUserWalletRelationService.findAll();
         PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+        return Result.successResult(pageInfo);
     }
 }

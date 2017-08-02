@@ -1,7 +1,6 @@
 package com.tongwii.ico.web;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.core.ResultGenerator;
 import com.tongwii.ico.model.TokenMoney;
 import com.tongwii.ico.service.TokenMoneyService;
 import com.github.pagehelper.PageHelper;
@@ -23,25 +22,25 @@ public class TokenMoneyController {
     @PostMapping
     public Result add(@RequestBody TokenMoney tokenMoney) {
         tokenMoneyService.save(tokenMoney);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         tokenMoneyService.deleteById(id);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody TokenMoney tokenMoney) {
         tokenMoneyService.update(tokenMoney);
-        return ResultGenerator.genSuccessResult();
+        return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         TokenMoney tokenMoney = tokenMoneyService.findById(id);
-        return ResultGenerator.genSuccessResult(tokenMoney);
+        return Result.successResult(tokenMoney);
     }
 
     @GetMapping
@@ -49,6 +48,6 @@ public class TokenMoneyController {
         PageHelper.startPage(page, size);
         List<TokenMoney> list = tokenMoneyService.findAll();
         PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+        return Result.successResult(pageInfo);
     }
 }
