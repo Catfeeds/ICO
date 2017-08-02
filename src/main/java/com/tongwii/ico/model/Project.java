@@ -37,6 +37,8 @@ public class Project {
     @Column(name = "project_wallet_id")
     private Integer projectWalletId;
 
+    private Byte state;
+
     private String des;
 
     /**
@@ -191,6 +193,20 @@ public class Project {
      */
     public void setProjectWalletId(Integer projectWalletId) {
         this.projectWalletId = projectWalletId;
+    }
+
+    /**
+     * @return state
+     */
+    public Byte getState() {
+        return state;
+    }
+
+    /**
+     * @param state
+     */
+    public void setState(Byte state) {
+        this.state = state;
     }
 
     /**

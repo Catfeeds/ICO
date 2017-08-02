@@ -74,6 +74,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // Create a default account
         auth.inMemoryAuthentication()
                 .withUser("admin")
-                .password("password");
+                .password("password")
+                .roles("ADMIN");
     }
 }
