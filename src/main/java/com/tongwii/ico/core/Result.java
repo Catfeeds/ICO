@@ -12,7 +12,16 @@ public class Result {
 
     public Result setCode(ResultCode resultCode) {
         this.code = resultCode.code;
+        this.message = resultCode.getStatusMessage();
         return this;
+    }
+
+    public Result() {
+    }
+
+    public Result(int code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
     public int getCode() {

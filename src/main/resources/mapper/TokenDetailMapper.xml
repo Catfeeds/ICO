@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwii.ico.dao.TokenDetailMapper">
+  <resultMap id="BaseResultMap" type="com.tongwii.ico.model.TokenDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="token_money_id" jdbcType="INTEGER" property="tokenMoneyId" />
+    <result column="current_number" jdbcType="INTEGER" property="currentNumber" />
+    <result column="ico_number" jdbcType="INTEGER" property="icoNumber" />
+    <result column="min_target_number" jdbcType="INTEGER" property="minTargetNumber" />
+    <result column="target_number" jdbcType="INTEGER" property="targetNumber" />
+    <result column="token_money_whitePaper_cn_url" jdbcType="VARCHAR" property="tokenMoneyWhitepaperCnUrl" />
+    <result column="token_money_whitePaper_en_url" jdbcType="VARCHAR" property="tokenMoneyWhitepaperEnUrl" />
+  </resultMap>
+</mapper>
