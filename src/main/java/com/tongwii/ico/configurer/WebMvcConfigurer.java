@@ -27,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.ServletException;
+import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -69,6 +70,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                 if (e instanceof ServiceException) {//业务失败的异常，如“账号或密码错误”
                     result = Result.failResult(e.getMessage());
                     logger.info(e.getMessage());
+                } else if(e instanceof NoHandlerFoundException) {
+                    result = Result.unavailable("接口 [" + request.getRequestURI() + "] 不存在");
                 } else if (e instanceof ServletException) {
                     result = Result.failResult(e.getMessage());
                 } else {

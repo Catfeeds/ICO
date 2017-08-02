@@ -7,9 +7,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String username;
+    @Column(name = "email_account")
+    private String emailAccount;
 
     private String password;
+
+    @Column(name = "nick_name")
+    private String nickName;
 
     @Column(name = "real_name")
     private String realName;
@@ -21,6 +25,9 @@ public class User {
 
     @Column(name = "is_validate_email")
     private Boolean isValidateEmail;
+
+    @Column(name = "is_enabled")
+    private Boolean isEnabled;
 
     @Column(name = "is_validate_phone")
     private Boolean isValidatePhone;
@@ -54,17 +61,17 @@ public class User {
     }
 
     /**
-     * @return username
+     * @return email_account
      */
-    public String getUsername() {
-        return username;
+    public String getEmailAccount() {
+        return emailAccount;
     }
 
     /**
-     * @param username
+     * @param emailAccount
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmailAccount(String emailAccount) {
+        this.emailAccount = emailAccount;
     }
 
     /**
@@ -79,6 +86,20 @@ public class User {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return nick_name
+     */
+    public String getNickName() {
+        return nickName;
+    }
+
+    /**
+     * @param nickName
+     */
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     /**
@@ -135,6 +156,20 @@ public class User {
      */
     public void setIsValidateEmail(Boolean isValidateEmail) {
         this.isValidateEmail = isValidateEmail;
+    }
+
+    /**
+     * @return is_enabled
+     */
+    public Boolean getEnabled() {
+        return isEnabled;
+    }
+
+    /**
+     * @param isEnabled
+     */
+    public void setEnabled(Boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 
     /**

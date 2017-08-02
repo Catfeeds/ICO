@@ -31,7 +31,7 @@ sys:user.home
         -->
         <Console name="Console" target="SYSTEM_OUT" follow="true" >
             <!-- 输出日志的格式 -->
-            <PatternLayout pattern="[%highlight{%-5level}] %d{yyyy-MM-dd HH:mm:ss SSS} [%t] %c.%M(%L) | %m%n"/>
+            <PatternLayout pattern="[%highlight{%-5level}] [%X{userId}] [%X{userName}] %d{yyyy-MM-dd HH:mm:ss SSS} [%t] %c.%M(%L) | %m%n"/>
         </Console>
 
         <!--

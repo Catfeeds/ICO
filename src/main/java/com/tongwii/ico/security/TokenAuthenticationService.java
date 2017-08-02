@@ -1,6 +1,5 @@
 package com.tongwii.ico.security;
 
-import com.alibaba.fastjson.JSON;
 import com.tongwii.ico.core.Result;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

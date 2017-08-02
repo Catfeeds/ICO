@@ -31,10 +31,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private UserDetailsService          userDetailsService;
+
+    @Autowired
+    public void configureAuthentication ( AuthenticationManagerBuilder authenticationManagerBuilder ) throws Exception {
+        authenticationManagerBuilder
+                .userDetailsService( this.userDetailsService )
+                .passwordEncoder( passwordEncoder() );
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder () {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JWTAuthenticationFilter authenticationTokenFilterBean () throws Exception {
+        return new JWTAuthenticationFilter();
     }
 
     @Override
@@ -54,22 +68,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         HttpMethod.GET,
                         "/",
                         "/*.html",
-                        "/assets/**",
                         "/favicon.ico",
+                        "/assets/**",
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated()
-                .and()
-                // We filter the api/login requests
-                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
-                        UsernamePasswordAuthenticationFilter.class)
-                // And filter other requests to check the presence of JWT in header
-                .addFilterBefore(new JWTAuthenticationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);
+                .anyRequest().authenticated();
+        // 基于定制JWT安全过滤器
+        httpSecurity.addFilterBefore( authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class );
         // 禁用页面缓存
         httpSecurity.headers().cacheControl();
     }
