@@ -6,10 +6,17 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="email_account" jdbcType="VARCHAR" property="emailAccount" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
-    <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="is_validate_email" jdbcType="BIT" property="isValidateEmail" />
+    <result column="is_validate_phone" jdbcType="BIT" property="isValidatePhone" />
+    <result column="avator_url" jdbcType="VARCHAR" property="avatorUrl" />
+    <result column="idCard_front_url" jdbcType="VARCHAR" property="idcardFrontUrl" />
+    <result column="idCard_back_url" jdbcType="VARCHAR" property="idcardBackUrl" />
+    <result column="idCard_all_url" jdbcType="VARCHAR" property="idcardAllUrl" />
+    <result column="des" jdbcType="LONGVARCHAR" property="des" />
   </resultMap>
 </mapper>
