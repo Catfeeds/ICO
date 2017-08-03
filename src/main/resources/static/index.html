@@ -30,8 +30,6 @@
 </head>
 <body>
 <div class="wrapper">
-
-
     <!-- Header -->
     <header id="main-header">
         <div class="container">
@@ -127,7 +125,7 @@
                                 <div class="spreator5"></div>
 								<span>来自全球最佳创新<br>
 								让每一个人从最初就能参与伟大的项目开始</span>
-                                <a href="#" class="explore-btn cs-bgcolor"> 搜索项目</a>
+                                <!--<a href="#" class="explore-btn cs-bgcolor"> 搜索项目</a>-->
                             </div>
                         </figcaption>
                     </figure>
@@ -193,19 +191,16 @@
                                         <div class="row mt-xlg">
                                             <div class="col-md-12">
                                                 <div class="heading heading-border heading-middle-border heading-middle-border-center center">
-
                                                     <h2>正在 ICO <span class="inverted inverted-quaternary"
                                                                      style="font-family:Arial;"> </span></h2>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="container">
                                         <div class="row">
-                                            <ul class="team-list sort-destination" data-sort-id="team">
-
-                                                <li class="col-md-3 col-sm-6 col-xs-12 isotope-item leadership">
+                                            <ul class="team-list sort-destination" data-sort-id="team" id="ICOList">
+                                               <!-- <li class="col-md-3 col-sm-6 col-xs-12 isotope-item leadership">
                                                     <div class="directory-section">
 														<span class="thumb-info thumb-info-hide-wrapper-bg mb-xlg">
 														<span class="thumb-info-wrapper">
@@ -213,8 +208,8 @@
 																<img src="assets/extra-images//listing-grid-2.jpg"
                                                                      class="img-responsive" alt="">
 																<span class="thumb-info-title">
-																	<span class="thumb-info-inner">TOM</span>
-																	<span class="thumb-info-type">2017/7/26 21:00:00 - 2018/6/2 6:59:0</span>
+																	<span class="thumb-info-inner" id="projectName">TOM</span>
+																	<span class="thumb-info-type" id="time">2017/7/26 21:00:00 - 2018/6/2 6:59:0</span>
 																</span>
 															</a>
 														</span>
@@ -226,13 +221,13 @@
 														<div class="content_info">
 															<div class="title">
 																<span class="thumb-info-caption-text"
-                                                                      style="min-height:100px;">Delphy是一个基于以太坊的、去中心化的、社交性的、全开源的、预测市场的移动平台。通过将大众的知识和经验转化为智慧，帮助人们更好地预见.</span>
+                                                                      style="min-height:100px;" id="descript">Delphy是一个基于以太坊的、去中心化的、社交性的、全开源的、预测市场的移动平台。通过将大众的知识和经验转化为智慧，帮助人们更好地预见.</span>
 																<br>
 															</div>
 															<div class="dr_info">
 																<ul>
 																	<li> <i class="cscolor icon-target5"></i> <p
-                                                                            style="margin-left:30px;">目标金额 21000</p> </li>
+                                                                            style="margin-left:30px;" id="needMoney">目标金额 21000</p> </li>
 																	<li> <i class="cscolor icon-clock7"></i> <p
                                                                             style="margin-left:38px;">剩余天数 25</p></li>
 																</ul>
@@ -244,8 +239,8 @@
 														</div>
 														</span>
                                                     </div>
-                                                </li>
-                                                <li class="col-md-3 col-sm-6 col-xs-12 isotope-item leadership">
+                                                </li>-->
+                                                <!--<li class="col-md-3 col-sm-6 col-xs-12 isotope-item leadership">
                                                     <div class="directory-section">
 														<span class="thumb-info thumb-info-hide-wrapper-bg mb-xlg">
 														<span class="thumb-info-wrapper">
@@ -284,7 +279,7 @@
 														</div>
 														</span>
                                                     </div>
-                                                </li>
+                                                </li>-->
                                             </ul>
                                         </div>
                                     </div>
@@ -1200,6 +1195,7 @@
 </div>
 
 <!-- jQuery (necessary JavaScript) -->
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 <script src="assets/scripts/jquery.js"></script>
 <script src="assets/scripts/bootstrap.min.js"></script>
 <script src="assets/scripts/modernizr.js"></script>
@@ -1215,6 +1211,54 @@
             nextText: "<em class='icon-arrow-right10'></em>",
             start: function (slider) {
                 jQuery('body').removeClass('loading');
+            }
+        });
+
+        var ICOList = null;
+        $.ajax({url:"http://192.168.0.42:8080/project/findProjectsAndSort",
+            type: 'GET',
+            timeout:10000,//超时时间设置为10秒；
+            success:function(result){
+                ICOList = result.data.ICO;
+                $.each(ICOList, function(i, item) {
+                    $("#ICOList").append(
+                            "<li class="+"\"col-md-3 col-sm-6 col-xs-12 isotope-item leadership\">"
+                                +"<div class="+"\"directory-section\">"
+                                    +"<span class="+"\"thumb-info thumb-info-hide-wrapper-bg mb-xlg\">"
+                                        +"<span class="+"\"thumb-info-wrapper\">"
+                                            +"<a href="+"\"https://www.icoage.com/?p=D&amp;id=155\">"
+                                                +"<img src="+"\"assets/extra-images//listing-grid-2.jpg\""
+                                                     +"class="+"\"img-responsive\" alt=\"\">"
+                                                    +"<span class="+"\"thumb-info-title\">"
+                                                        +"<span class="+"\"thumb-info-inner\">"+item.name+"</span>"
+                                                        +"<span class="+"\"thumb-info-type\" id=\"time\">"+item.startTime+" - "+item.endTime+"</span>"
+                                                    +"</span></a></span>"
+                                        +"<span class="+"\"thumb-info-action\">"
+                                            +"<span class="+"\"thumb-info-action-icon\">"
+                                                +"<img src="+"\"assets/images/open_cn.png\" style=\"width:60%;\">"
+                                            +"</span></span></span>"
+                                        +"<div class="+"\"content_info\">"
+                                            +"<div class="+"\"title\">"
+                                                +"<span class="+"\"thumb-info-caption-text\""
+                                                      +"style=\"min-height:100px;\" id=\"descript\">"+item.des+"</span>"
+                                                +"<br></div>"
+                                            +"<div class="+"\"dr_info\">"
+                                                +"<ul>"
+                                                   +"<li> <i class="+"\"cscolor icon-target5\"></i> <p"
+                                                            +"style="+"\"margin-left:30px;\" id=\"needMoney\">目标金额 "+item.outputTokenMoneyDetailId+"</p> </li>"
+                                                    +"<li> <i class="+"\"cscolor icon-clock7\"></i> <p"
+                                                            +"style="+"\"margin-left:38px;\">剩余天数 25</p></li></ul>"
+                                                +"<span class="+"\"bar\"><span"
+                                                        +"style="+"\"width:12%;\"></span></span>"
+                                                +"<div class="+"\"detail\"> <span class=\"fund\">12%</span> <a"
+                                                        +"href="+"\"#\" class=\"star icon-star\"></a> </div>"
+                                            +"</div></div></div></li>");
+                });
+                console.log(ICOList);
+//                alert(ICOList);
+            },
+            error: function(xhr, type, errerThrown) {
+                alert('网络异常,请稍候再试');
             }
         });
     });

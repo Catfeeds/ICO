@@ -1,5 +1,8 @@
 package com.tongwii.ico.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tongwii.ico.util.CustomDateSerializer;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -13,9 +16,11 @@ public class Project {
     @Column(name = "name_cn")
     private String nameCn;
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     @Column(name = "start_time")
     private Date startTime;
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     @Column(name = "end_time")
     private Date endTime;
 
