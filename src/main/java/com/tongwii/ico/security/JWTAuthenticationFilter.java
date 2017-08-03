@@ -34,6 +34,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private static final String USER_ID   = "userId";
     /** 用户姓名 */
     private static final String USER_NAME = "userName";
+    /** 用户ip */
+    public static final String USER_IP = "userIP";
+
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -69,6 +72,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 );
 
                 ThreadContext.put( USER_ID, String.valueOf( ( (JwtUser) userDetails ).getId() ) );
+                ThreadContext.put( USER_IP, getIpAddress(request));
                 ThreadContext.put( USER_NAME, username );
 
                 authentication.setDetails( new WebAuthenticationDetailsSource().buildDetails( request ) );
@@ -77,12 +81,38 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     logger.debug( "authToken : {},username : {}", authToken, username );
                 }
                 if ( logger.isDebugEnabled() ) {
-                    logger.debug( "该 " + username + "用户已认证, 设置安全上下文" );
+                    logger.debug( "该{}用户已认证, 设置安全上下文, 登陆ip:{}", username, getIpAddress(request) );
                 }
                 SecurityContextHolder.getContext().setAuthentication( authentication );
             }
         }
         chain.doFilter( request, response );
         return;
+    }
+
+
+    private String getIpAddress(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        // 如果是多级代理，那么取第一个ip为客户端ip
+        if (ip != null && ip.indexOf(",") != -1) {
+            ip = ip.substring(0, ip.indexOf(",")).trim();
+        }
+
+        return ip;
     }
 }

@@ -53,9 +53,11 @@ public class ProjectController {
         return Result.successResult(pageInfo);
     }
 
-    /*
-    * 返回给首页的数据
-    */
+    /**
+     * 返回给首页的数据
+     *
+     * @return the result
+     */
     @GetMapping("/findProjectsAndSort")
     public Result findProjectsAndSort(){
         List<Project> projectList = projectService.findAll();
