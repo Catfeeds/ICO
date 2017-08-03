@@ -85,20 +85,6 @@ public class JwtTokenUtil implements Serializable {
         return expiration;
     }
 
-    /**
-     * @param token
-     * @return
-     */
-    public String getAudienceFromToken ( String token ) {
-        String audience;
-        try {
-            final Claims claims = getClaimsFromToken( token );
-            audience = ( String ) claims.get( CLAIM_KEY_AUDIENCE );
-        } catch ( Exception e ) {
-            audience = null;
-        }
-        return audience;
-    }
 
     /**
      * @param token
@@ -161,10 +147,9 @@ public class JwtTokenUtil implements Serializable {
      * token是否可以刷新
      *
      * @param token
-     * @param lastPasswordReset : 密码重置日期
      * @return
      */
-    public Boolean canTokenBeRefreshed ( String token, Date lastPasswordReset ) {
+    public Boolean canTokenBeRefreshed ( String token) {
         final Date created = getCreatedDateFromToken( token );
         return !isTokenExpired( token );
     }
@@ -195,7 +180,7 @@ public class JwtTokenUtil implements Serializable {
      * @return
      */
     public Boolean validateToken ( String token, UserDetails userDetails ) {
-        AccountCredentials user = ( AccountCredentials ) userDetails;
+        JwtUser user = (JwtUser) userDetails;
         final String username = this.getUsernameFromToken( token );
         final Date   created  = this.getCreatedDateFromToken( token );
         return ( username.equals( user.getUsername() ) // 用户名校验 

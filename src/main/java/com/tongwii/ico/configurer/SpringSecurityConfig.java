@@ -1,7 +1,6 @@
 package com.tongwii.ico.configurer;
 
 import com.tongwii.ico.security.JWTAuthenticationFilter;
-import com.tongwii.ico.security.JWTLoginFilter;
 import com.tongwii.ico.security.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,6 +61,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
                 // 异常处理
                 .exceptionHandling().authenticationEntryPoint( authenticationEntryPoint ).and()
+                // 允许授权请求
                 .authorizeRequests()
                 // 允许匿名资源请求
                 .antMatchers(
@@ -74,6 +74,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
+                .antMatchers(HttpMethod.POST, "/user/login").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
         // 基于定制JWT安全过滤器

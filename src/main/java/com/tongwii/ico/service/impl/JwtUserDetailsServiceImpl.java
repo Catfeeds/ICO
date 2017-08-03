@@ -1,8 +1,9 @@
 package com.tongwii.ico.service.impl;
 
 import com.tongwii.ico.model.User;
-import com.tongwii.ico.security.AccountCredentials;
+import com.tongwii.ico.security.JwtUser;
 import com.tongwii.ico.service.RoleService;
+import com.tongwii.ico.service.UserRoleRelationService;
 import com.tongwii.ico.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +18,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
     @Autowired
-    private RoleService roleService;
+    private UserRoleRelationService userRoleRelationService;
 
     @Override
     public UserDetails loadUserByUsername ( String username ) throws UsernameNotFoundException {
@@ -25,7 +26,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
         if ( user == null ) {
             throw new UsernameNotFoundException( String.format( "该'%s'用户名不存在.", username ) );
         }
-        return new AccountCredentials(
+        return new JwtUser(
                 user.getId(),
                 user.getEmailAccount(),
                 user.getPassword(),
@@ -34,7 +35,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
                 user.getPhone(),
                 user.getIdCard(),
                 user.getEnabled(),
-                roleService.getByUserId( user.getId() )
+                userRoleRelationService.getByUserId( user.getId() )
         );
     }
 

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @author Zeral
  * @date 2017-08-02
  */
-public class AccountCredentials implements UserDetails {
+public class JwtUser implements UserDetails {
     private Integer id;
     private String username;
     private String password;
@@ -49,27 +49,31 @@ public class AccountCredentials implements UserDetails {
                 .collect( Collectors.toList() );
     }
 
+    @JsonIgnore
     @Override
     public String getPassword () {
         return this.password;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired () {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked () {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired () {
         return true;
     }
 
-    public AccountCredentials(Integer id, String username, String password, String nickName, String realName, String phone, String idCard, boolean enabled, List<Role> roles) {
+    public JwtUser(Integer id, String username, String password, String nickName, String realName, String phone, String idCard, boolean enabled, List<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -85,59 +89,24 @@ public class AccountCredentials implements UserDetails {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getNickName() {
         return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 
     public String getRealName() {
         return realName;
     }
 
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
     public String getPhone() {
         return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getIdCard() {
         return idCard;
     }
 
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 }
