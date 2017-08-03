@@ -142,6 +142,16 @@ public final class Result {
         return new Result(ResultCode.UNAUTHORIZED.getCode(), message);
     }
 
+    /**
+     * Unavailable result.
+     *
+     * @param message the message
+     * @return the result
+     */
+    public static Result unavailable (final String message ) {
+        return new Result(ResultCode.NOT_FOUND.getCode(), message);
+    }
+
 
 
     /**

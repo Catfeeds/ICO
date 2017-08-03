@@ -1,7 +1,6 @@
 package com.tongwii.ico.configurer;
 
 import com.tongwii.ico.security.JWTAuthenticationFilter;
-import com.tongwii.ico.security.JWTLoginFilter;
 import com.tongwii.ico.security.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,8 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * @author : 披荆斩棘
- * @date : 2017/6/8
+ * @author : Zeral
+ * @date : 2017/8/3
  */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity( prePostEnabled = true )
@@ -31,45 +30,70 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    public void configureAuthentication ( AuthenticationManagerBuilder authenticationManagerBuilder ) throws Exception {
+        authenticationManagerBuilder
+                .userDetailsService( this.userDetailsService )
+                .passwordEncoder( passwordEncoder() );
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder () {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public JWTAuthenticationFilter authenticationTokenFilterBean () throws Exception {
+        return new JWTAuthenticationFilter();
+    }
+
     @Override
     protected void configure ( HttpSecurity httpSecurity ) throws Exception {
-        httpSecurity
-                // jwt不需要csrf
-                .csrf().disable()
-                // cors 支持
-                .cors().and()
-                // jwt不需要session , 所以不创建会话
-                .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
-                // 异常处理
-                .exceptionHandling().authenticationEntryPoint( authenticationEntryPoint ).and()
-                .authorizeRequests()
-                // 允许匿名资源请求
-                .antMatchers(
-                        HttpMethod.GET,
-                        "/",
-                        "/*.html",
-                        "/assets/**",
-                        "/favicon.ico",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js"
-                ).permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated()
-                .and()
-                // We filter the api/login requests
-                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
-                        UsernamePasswordAuthenticationFilter.class)
-                // And filter other requests to check the presence of JWT in header
-                .addFilterBefore(new JWTAuthenticationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);
+        // 开发者模式，放行所有
+        if (env.equals("dev")) {
+            httpSecurity
+                    // jwt不需要csrf
+                    .csrf().disable()
+                    // cors 支持
+                    .cors().and()
+                    // jwt不需要session , 所以不创建会话
+                    .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
+                    // 允许授权请求
+                    .authorizeRequests()
+                    // 允许匿名资源请求
+                    .anyRequest().permitAll();
+        } else {
+            httpSecurity
+                    // jwt不需要csrf
+                    .csrf().disable()
+                    // cors 支持
+                    .cors().and()
+                    // jwt不需要session , 所以不创建会话
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                    // 异常处理
+                    .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
+                    // 允许授权请求
+                    .authorizeRequests()
+                    // 允许匿名资源请求
+                    .antMatchers(
+                            HttpMethod.GET,
+                            "/",
+                            "/*.html",
+                            "/favicon.ico",
+                            "/assets/**",
+                            "/**/*.html",
+                            "/**/*.css",
+                            "/**/*.js"
+                    ).permitAll()
+                    .antMatchers(HttpMethod.POST, "/user/login").permitAll()
+                    // 除上面外的所有请求全部需要鉴权认证
+                    .anyRequest().authenticated();
+            // 基于定制JWT安全过滤器
+            httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        }
         // 禁用页面缓存
         httpSecurity.headers().cacheControl();
     }
