@@ -30,8 +30,6 @@
 </head>
 <body>
 <div class="wrapper">
-
-
     <!-- Header -->
     <header id="main-header">
         <div class="container">
@@ -44,22 +42,20 @@
                             <li><a href="listing-grid.html">ICO中</a></li>
                             <li><a href="under.html">即将ICO</a></li>
                             <li><a href="listing.html">已结束ICO</a></li>
-                            <li><a href="blogmedium.html">新闻媒体</a></li>
+                            <li>
+                                <a href="#">新闻</a>
+                                <ul class="sub-dropdown">
+                                    <li><a href="bloglrag.html">新闻列表</a></li>
+                                    <li><a href="blogmedium.html">新闻媒体</a></li>
+                                    <li><a href="blogdetail.html">新闻详情</a></li>
+                                </ul>
+                            </li>
                             <li><a href="#">关于</a>
                                 <ul class="sub-dropdown">
                                     <li><a href="about.html">关于我们</a></li>
-                                    <!-- <li><a href="faq.html">FAQ’s</a></li>
-                                     <li><a href="contect.html">Contect</a></li>-->
                                     <li><a href="sign.html">登录/注册</a></li>
-                                    <!--<li><a href="404.html">404 Page</a></li>-->
-                                    <!--<li><a href="under.html">under-construction</a></li>-->
-                                    <!--<li><a href="terms.html">Terms &amp; Conditions</a></li>-->
-                                    <!--<li><a href="pricing.html">Price &amp; Packges</a></li>-->
                                     <li><a href="services.html">服务与帮助</a></li>
-                                    <!--<li><a href="site-map.html">Site Map</a></li>-->
-                                    <!--<li><a href="result.html">Result</a></li>-->
-                                    <!--<li><a href="donate.html">Donate</a></li>-->
-                                    <li><a href="contect.html">我的信息</a></li>
+                                    <li><a href="user-detail2.html">用户信息</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -113,9 +109,9 @@
                             <div class="text">
                                 <h2>全新融资方式</h2>
                                 <div class="spreator5"></div>
-                                <span>你的优秀创意<br>
+								<span>你的优秀创意<br>
                                    让ICO.TT帮助你实现</span>
-                                <a href="#" class="explore-btn cs-bgcolor">搜索项目</a>
+                                <!--<a href="#" class="explore-btn cs-bgcolor">搜索项目</a>-->
                             </div>
                         </figcaption>
                     </figure>
@@ -127,9 +123,9 @@
                             <div class="text">
                                 <h2>随时随地，探索项目！</h2>
                                 <div class="spreator5"></div>
-                                <span>来自全球最佳创新<br>
+								<span>来自全球最佳创新<br>
 								让每一个人从最初就能参与伟大的项目开始</span>
-                                <a href="#" class="explore-btn cs-bgcolor"> 搜索项目</a>
+                                <!--<a href="#" class="explore-btn cs-bgcolor"> 搜索项目</a>-->
                             </div>
                         </figcaption>
                     </figure>
@@ -191,27 +187,20 @@
                         <div class="section-fullwidth col-lg-12">
                             <div class="cs-content-holder">
                                 <div class="row">
-
-
                                     <div class="container" id="progress">
                                         <div class="row mt-xlg">
                                             <div class="col-md-12">
                                                 <div class="heading heading-border heading-middle-border heading-middle-border-center center">
-
                                                     <h2>正在 ICO <span class="inverted inverted-quaternary"
                                                                      style="font-family:Arial;"> </span></h2>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <div class="container">
                                         <div class="row">
-                                            <ul class="team-list sort-destination" data-sort-id="team">
-
-                                                <li class="col-md-3 col-sm-6 col-xs-12 isotope-item leadership">
+                                            <ul class="team-list sort-destination" data-sort-id="team" id="ICOList">
+                                               <!-- <li class="col-md-3 col-sm-6 col-xs-12 isotope-item leadership">
                                                     <div class="directory-section">
 														<span class="thumb-info thumb-info-hide-wrapper-bg mb-xlg">
 														<span class="thumb-info-wrapper">
@@ -219,8 +208,8 @@
 																<img src="assets/extra-images//listing-grid-2.jpg"
                                                                      class="img-responsive" alt="">
 																<span class="thumb-info-title">
-																	<span class="thumb-info-inner">TOM</span>
-																	<span class="thumb-info-type">2017/7/26 21:00:00 - 2018/6/2 6:59:0</span>
+																	<span class="thumb-info-inner" id="projectName">TOM</span>
+																	<span class="thumb-info-type" id="time">2017/7/26 21:00:00 - 2018/6/2 6:59:0</span>
 																</span>
 															</a>
 														</span>
@@ -232,13 +221,13 @@
 														<div class="content_info">
 															<div class="title">
 																<span class="thumb-info-caption-text"
-                                                                      style="min-height:100px;">Delphy是一个基于以太坊的、去中心化的、社交性的、全开源的、预测市场的移动平台。通过将大众的知识和经验转化为智慧，帮助人们更好地预见.</span>
+                                                                      style="min-height:100px;" id="descript">Delphy是一个基于以太坊的、去中心化的、社交性的、全开源的、预测市场的移动平台。通过将大众的知识和经验转化为智慧，帮助人们更好地预见.</span>
 																<br>
 															</div>
 															<div class="dr_info">
 																<ul>
 																	<li> <i class="cscolor icon-target5"></i> <p
-                                                                            style="margin-left:30px;">目标金额 21000</p> </li>
+                                                                            style="margin-left:30px;" id="needMoney">目标金额 21000</p> </li>
 																	<li> <i class="cscolor icon-clock7"></i> <p
                                                                             style="margin-left:38px;">剩余天数 25</p></li>
 																</ul>
@@ -250,10 +239,8 @@
 														</div>
 														</span>
                                                     </div>
-                                                </li>
-
-
-                                                <li class="col-md-3 col-sm-6 col-xs-12 isotope-item leadership">
+                                                </li>-->
+                                                <!--<li class="col-md-3 col-sm-6 col-xs-12 isotope-item leadership">
                                                     <div class="directory-section">
 														<span class="thumb-info thumb-info-hide-wrapper-bg mb-xlg">
 														<span class="thumb-info-wrapper">
@@ -292,11 +279,10 @@
 														</div>
 														</span>
                                                     </div>
-                                                </li>
+                                                </li>-->
                                             </ul>
                                         </div>
                                     </div>
-
 
                                     <div class="container" id="preparation">
                                         <div class="row mt-xlg">
@@ -310,7 +296,6 @@
                                             </div>
                                         </div>
                                     </div>
-
 
                                     <div class="page-content ">
                                         <div class="listing_grid">
@@ -331,9 +316,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000+
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/8/7
+                                                                        &nbsp;&nbsp;20:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:12%;"></span></span>
@@ -360,9 +345,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000+
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/3/2
+                                                                        &nbsp;&nbsp;21:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:84%;"></span></span>
@@ -389,9 +374,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000+
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/10/2
+                                                                        &nbsp;&nbsp;23:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:12%;"></span></span>
@@ -418,9 +403,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000+
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/10/10
+                                                                        &nbsp;&nbsp;15:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:12%;"></span></span>
@@ -447,9 +432,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i><label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/10/2
+                                                                        &nbsp;&nbsp;23:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:84%;"></span></span>
@@ -476,9 +461,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/10/2
+                                                                        &nbsp;&nbsp;23:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:12%;"></span></span>
@@ -505,9 +490,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i><label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i>2017/10/2
+                                                                        &nbsp;&nbsp;23:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:84%;"></span></span>
@@ -534,9 +519,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/10/2
+                                                                        &nbsp;&nbsp;12:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:12%;"></span></span>
@@ -591,9 +576,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000+
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/8/7
+                                                                        &nbsp;&nbsp;20:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:12%;"></span></span>
@@ -620,9 +605,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000+
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/3/2
+                                                                        &nbsp;&nbsp;21:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:84%;"></span></span>
@@ -649,9 +634,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000+
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/10/2
+                                                                        &nbsp;&nbsp;23:00:00<
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:12%;"></span></span>
@@ -678,9 +663,9 @@
                                                                 <ul>
                                                                     <li><i class="cscolor icon-target5"></i> RMB 84,000+
                                                                     </li>
-                                                                    <li><i class="cscolor icon-clock7"></i> <label
-                                                                            style="margin-left:30px;">2017/3/2
-                                                                        21:00:00</label></li>
+                                                                    <li><i class="cscolor icon-clock7"></i> 2017/10/10
+                                                                        &nbsp;&nbsp;15:00:00
+                                                                    </li>
                                                                 </ul>
                                                                 <span class="bar"><span
                                                                         style="width:12%;"></span></span>
@@ -700,6 +685,31 @@
                                     </div>
                                     <br>
                                     <br>
+                                    <!--<aside class="page-sidebar col-lg-3">-->
+                                    <!--<div class="widget cs_directory_categories">-->
+                                    <!--<div class="widget-section-title">-->
+                                    <!--<h4><i class="icon-globe4"></i>15 Diverse Categories</h4>-->
+                                    <!--</div>-->
+                                    <!--<ul class="menu">-->
+                                    <!--<li><a href="#"><i class="icon-user9 cscolor"></i>Art</a> <span>233</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-heart11 cscolor"></i>Comics</a> <span>258</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-brush2 cscolor"></i>Craft</a> <span>89</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-circle-thin cscolor"></i>Dance</a> <span>1879</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-key7 cscolor"></i>Design</a> <span>55</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-sun4 cscolor"></i>Fashion</a> <span>12</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-light-bulb cscolor"></i>Film &amp; Video</a><span>8</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-clipboard6 cscolor"></i>Food</a> <span>10</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-archive2 cscolor"></i>Games</a> <span>56</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-pie2 cscolor"></i>Journalism</a> <span>233</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-lock6 cscolor"></i>Music</a> <span>258</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-upload10 cscolor"></i>Photography</a> <span>1879</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-archive3 cscolor"></i>Publishing</a> <span>55</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-sound4 cscolor"></i>Technology</a> <span>89</span></li>-->
+                                    <!--<li><a href="#"><i class="icon-evernote cscolor"></i>Theatre</a> <span>13</span></li>-->
+                                    <!--</ul>-->
+                                    <!--</div>-->
+                                    <!--<div class="widget widget_advertisment"> <img src="assets/extra-images/adv2.jpg" alt=""> </div>-->
+                                    <!--</aside>-->
 
 
                                 </div>
@@ -838,148 +848,198 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div class="page-section">-->
-                                <!--<div class="container">-->
-                                <!--<div class="row">-->
-                                <!--<div class="section-fullwidth col-md-12">-->
-                                <!--<div class="cs-content-holder">-->
-                                <!--<div class="row">-->
-                                <!--<div class="main-heading col-md-12 left top-center">-->
-                                <!--<a href="#" class="cs-btn">View Blogs</a>-->
-                                <!--<h1>Reviews, Press &amp; Media</h1>-->
-                                <!--<strong class="title">224 countries &amp; territories. 5 currencies. 4 languages. We'll get your crowdfunding campaign in front of millions of eyes.</strong>-->
-                                <!--</div>-->
-                                <!--<div class="masonary-sec">-->
-                                <!---->
-                                <!--<div class="col-lg-3 col-md-3 col-sm-6 post-854"> -->
-                                <!--<div class="cs-blog blog-masnery">-->
-                                <!--<div class="main-thumb">-->
-                                <!--<figure>-->
-                                <!--<a href="#"><img src="assets/extra-images/mas1.jpg" alt="thumbnail"></a>-->
-                                <!--<figcaption>-->
-                                <!--<a href="#">-->
-                                <!--<i class="icon-uniEAB5"></i>-->
-                                <!--</a>-->
-                                <!--</figcaption>-->
-                                <!--</figure>-->
-                                <!--</div>-->
-                                <!--<div class="bloginfo-sec">-->
-                                <!--<h2><a href="#">Six Steps Your Nonprofit Must Take Before Launching a Senior Hire</a></h2>-->
-                                <!--<ul class="post-options">-->
-                                <!--<li><time datetime="2014-12-03"><i class="icon-clock7 cscolor"></i>December 3, 2014</time></li>  -->
-                                <!--</ul>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="col-lg-3 col-md-3 col-sm-6 post-854"> -->
-                                <!--<div class="cs-blog blog-masnery">-->
-                                <!--<div class="main-thumb">-->
-                                <!--<figure>-->
-                                <!--<a href="#"><img src="assets/extra-images/mas2.jpg" alt="thumbnail"></a>-->
-                                <!--<figcaption>-->
-                                <!--<a href="#">-->
-                                <!--<i class="icon-uniEAB5"></i>-->
-                                <!--</a>-->
-                                <!--</figcaption>-->
-                                <!--</figure>-->
-                                <!--</div>-->
-                                <!--<div class="bloginfo-sec">-->
-                                <!--<h2><a href="#">Six Steps Your Nonprofit Must Take Before Launching a Senior Hire</a></h2>-->
-                                <!--<ul class="post-options">-->
-                                <!--<li><time datetime="2014-12-03"><i class="icon-clock7 cscolor"></i>December 3, 2014</time></li>  -->
-                                <!--</ul>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>  -->
-                                <!--<div class="col-lg-6 col-md-6 col-sm-6 post-854"> -->
-                                <!--<div class="cs-blog blog-masnery">-->
-                                <!--<div class="main-thumb">-->
-                                <!--<figure>-->
-                                <!--<a href="#"><img src="assets/extra-images/mas8.jpg" alt="thumbnail"></a>-->
-                                <!--<figcaption>-->
-                                <!--<a href="#">-->
-                                <!--<i class="icon-uniEAB5"></i>-->
-                                <!--</a>-->
-                                <!--</figcaption>-->
-                                <!--</figure>-->
-                                <!--</div>-->
-                                <!--<div class="bloginfo-sec">-->
-                                <!--<h2><a href="#">Six Steps Your Nonprofit Must Take Before Launching a Senior Hire</a></h2>-->
-                                <!--<ul class="post-options">-->
-                                <!--<li><time datetime="2014-12-03"><i class="icon-clock7 cscolor"></i>December 3, 2014</time></li>  -->
-                                <!--</ul>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!---->
-                                <!---->
-                                <!--<div class="col-lg-3 col-md-3 col-sm-6 post-854"> -->
-                                <!--<div class="cs-blog blog-masnery">-->
-                                <!--<div class="main-thumb">-->
-                                <!--<figure>-->
-                                <!--<a href="#"><img src="assets/extra-images/mas6.jpg" alt="thumbnail"></a>-->
-                                <!--<figcaption>-->
-                                <!--<a href="#">-->
-                                <!--<i class="icon-uniEAB5"></i>-->
-                                <!--</a>-->
-                                <!--</figcaption>-->
-                                <!--</figure>-->
-                                <!--</div>-->
-                                <!--<div class="bloginfo-sec">-->
-                                <!--<h2><a href="#">Six Steps Your Nonprofit Must Take Before Launching a Senior Hire</a></h2>-->
-                                <!--<ul class="post-options">-->
-                                <!--<li><time datetime="2014-12-03"><i class="icon-clock7 cscolor"></i>December 3, 2014</time></li>  -->
-                                <!--</ul>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="col-lg-3 col-md-3 col-sm-6 post-854"> -->
-                                <!--<div class="cs-blog blog-masnery">-->
-                                <!--<div class="main-thumb">-->
-                                <!--<figure>-->
-                                <!--<a href="#"><img src="assets/extra-images/mas7.jpg" alt="thumbnail"></a>-->
-                                <!--<figcaption>-->
-                                <!--<a href="#">-->
-                                <!--<i class="icon-uniEAB5"></i>-->
-                                <!--</a>-->
-                                <!--</figcaption>-->
-                                <!--</figure>-->
-                                <!--</div>-->
-                                <!--<div class="bloginfo-sec">-->
-                                <!--<h2><a href="#">Six Steps Your Nonprofit Must Take Before Launching a Senior Hire</a></h2>-->
-                                <!--<ul class="post-options">-->
-                                <!--<li><time datetime="2014-12-03"><i class="icon-clock7 cscolor"></i>December 3, 2014</time></li>  -->
-                                <!--</ul>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="col-lg-3 col-md-3 col-sm-6 post-854"> -->
-                                <!--<div class="cs-blog blog-masnery">-->
-                                <!--<div class="main-thumb">-->
-                                <!--<figure>-->
-                                <!--<a href="#"><img src="assets/extra-images/mas4.jpg" alt="thumbnail"></a>-->
-                                <!--<figcaption>-->
-                                <!--<a href="#">-->
-                                <!--<i class="icon-uniEAB5"></i>-->
-                                <!--</a>-->
-                                <!--</figcaption>-->
-                                <!--</figure>-->
-                                <!--</div>-->
-                                <!--<div class="bloginfo-sec">-->
-                                <!--<h2><a href="#">Six Steps Your Nonprofit Must Take Before Launching a Senior Hire</a></h2>-->
-                                <!--<ul class="post-options">-->
-                                <!--<li><time datetime="2014-12-03"><i class="icon-clock7 cscolor"></i>December 3, 2014</time></li>  -->
-                                <!--</ul>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
+                                <div class="page-section">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="section-fullwidth col-md-12">
+                                                <div class="cs-content-holder">
+                                                    <div class="row">
+                                                        <div class="main-heading col-md-12 left top-center">
+                                                            <a href="#" class="cs-btn">View Blogs</a>
+                                                            <h1>Reviews, Press &amp; Media</h1>
+                                                            <strong class="title">224 countries &amp; territories. 5
+                                                                currencies. 4 languages. We'll get your crowdfunding
+                                                                campaign in front of millions of eyes.</strong>
+                                                        </div>
+                                                        <div class="masonary-sec">
+
+                                                            <div class="col-lg-3 col-md-3 col-sm-6 post-854">
+                                                                <div class="cs-blog blog-masnery">
+                                                                    <div class="main-thumb">
+                                                                        <figure>
+                                                                            <a href="#"><img
+                                                                                    src="assets/extra-images/mas1.jpg"
+                                                                                    alt="thumbnail"></a>
+                                                                            <figcaption>
+                                                                                <a href="#">
+                                                                                    <i class="icon-uniEAB5"></i>
+                                                                                </a>
+                                                                            </figcaption>
+                                                                        </figure>
+                                                                    </div>
+                                                                    <div class="bloginfo-sec">
+                                                                        <h2><a href="#">Six Steps Your Nonprofit Must
+                                                                            Take Before Launching a Senior Hire</a></h2>
+                                                                        <ul class="post-options">
+                                                                            <li>
+                                                                                <time datetime="2014-12-03"><i
+                                                                                        class="icon-clock7 cscolor"></i>December
+                                                                                    3, 2014
+                                                                                </time>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-6 post-854">
+                                                                <div class="cs-blog blog-masnery">
+                                                                    <div class="main-thumb">
+                                                                        <figure>
+                                                                            <a href="#"><img
+                                                                                    src="assets/extra-images/mas2.jpg"
+                                                                                    alt="thumbnail"></a>
+                                                                            <figcaption>
+                                                                                <a href="#">
+                                                                                    <i class="icon-uniEAB5"></i>
+                                                                                </a>
+                                                                            </figcaption>
+                                                                        </figure>
+                                                                    </div>
+                                                                    <div class="bloginfo-sec">
+                                                                        <h2><a href="#">Six Steps Your Nonprofit Must
+                                                                            Take Before Launching a Senior Hire</a></h2>
+                                                                        <ul class="post-options">
+                                                                            <li>
+                                                                                <time datetime="2014-12-03"><i
+                                                                                        class="icon-clock7 cscolor"></i>December
+                                                                                    3, 2014
+                                                                                </time>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 post-854">
+                                                                <div class="cs-blog blog-masnery">
+                                                                    <div class="main-thumb">
+                                                                        <figure>
+                                                                            <a href="#"><img
+                                                                                    src="assets/extra-images/mas8.jpg"
+                                                                                    alt="thumbnail"></a>
+                                                                            <figcaption>
+                                                                                <a href="#">
+                                                                                    <i class="icon-uniEAB5"></i>
+                                                                                </a>
+                                                                            </figcaption>
+                                                                        </figure>
+                                                                    </div>
+                                                                    <div class="bloginfo-sec">
+                                                                        <h2><a href="#">Six Steps Your Nonprofit Must
+                                                                            Take Before Launching a Senior Hire</a></h2>
+                                                                        <ul class="post-options">
+                                                                            <li>
+                                                                                <time datetime="2014-12-03"><i
+                                                                                        class="icon-clock7 cscolor"></i>December
+                                                                                    3, 2014
+                                                                                </time>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-lg-3 col-md-3 col-sm-6 post-854">
+                                                                <div class="cs-blog blog-masnery">
+                                                                    <div class="main-thumb">
+                                                                        <figure>
+                                                                            <a href="#"><img
+                                                                                    src="assets/extra-images/mas6.jpg"
+                                                                                    alt="thumbnail"></a>
+                                                                            <figcaption>
+                                                                                <a href="#">
+                                                                                    <i class="icon-uniEAB5"></i>
+                                                                                </a>
+                                                                            </figcaption>
+                                                                        </figure>
+                                                                    </div>
+                                                                    <div class="bloginfo-sec">
+                                                                        <h2><a href="#">Six Steps Your Nonprofit Must
+                                                                            Take Before Launching a Senior Hire</a></h2>
+                                                                        <ul class="post-options">
+                                                                            <li>
+                                                                                <time datetime="2014-12-03"><i
+                                                                                        class="icon-clock7 cscolor"></i>December
+                                                                                    3, 2014
+                                                                                </time>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-6 post-854">
+                                                                <div class="cs-blog blog-masnery">
+                                                                    <div class="main-thumb">
+                                                                        <figure>
+                                                                            <a href="#"><img
+                                                                                    src="assets/extra-images/mas7.jpg"
+                                                                                    alt="thumbnail"></a>
+                                                                            <figcaption>
+                                                                                <a href="#">
+                                                                                    <i class="icon-uniEAB5"></i>
+                                                                                </a>
+                                                                            </figcaption>
+                                                                        </figure>
+                                                                    </div>
+                                                                    <div class="bloginfo-sec">
+                                                                        <h2><a href="#">Six Steps Your Nonprofit Must
+                                                                            Take Before Launching a Senior Hire</a></h2>
+                                                                        <ul class="post-options">
+                                                                            <li>
+                                                                                <time datetime="2014-12-03"><i
+                                                                                        class="icon-clock7 cscolor"></i>December
+                                                                                    3, 2014
+                                                                                </time>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-6 post-854">
+                                                                <div class="cs-blog blog-masnery">
+                                                                    <div class="main-thumb">
+                                                                        <figure>
+                                                                            <a href="#"><img
+                                                                                    src="assets/extra-images/mas4.jpg"
+                                                                                    alt="thumbnail"></a>
+                                                                            <figcaption>
+                                                                                <a href="#">
+                                                                                    <i class="icon-uniEAB5"></i>
+                                                                                </a>
+                                                                            </figcaption>
+                                                                        </figure>
+                                                                    </div>
+                                                                    <div class="bloginfo-sec">
+                                                                        <h2><a href="#">Six Steps Your Nonprofit Must
+                                                                            Take Before Launching a Senior Hire</a></h2>
+                                                                        <ul class="post-options">
+                                                                            <li>
+                                                                                <time datetime="2014-12-03"><i
+                                                                                        class="icon-clock7 cscolor"></i>December
+                                                                                    3, 2014
+                                                                                </time>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="page-section">
                                     <div class="container">
                                         <div class="row">
@@ -987,35 +1047,44 @@
                                                 <div class="cs-content-holder">
                                                     <div class="row">
                                                         <div class="main-heading top-center col-lg-12">
-                                                            <h1>成千上万个成功故事</h1>
-                                                            <strong class="title">我们每周向世界各地的运动者分发数百万元，不管你是筹集500元还是500欧元。</strong>
+                                                            <h1>Thousands Success Stories</h1>
+                                                            <strong class="title">We're distributing millions of dollars
+                                                                every week to campaigners around the world. Whether
+                                                                you're raising 500 dollars or 5 million euros.</strong>
                                                         </div>
                                                         <div id="cs-testimonial-595"
                                                              class="testimonial left italic-style">
                                                             <ul class="slides">
                                                                 <li class="col-lg-6 col-md-6 col-sm-6">
                                                                     <div class="question-mark">
-                                                                        <p>
-                                                                            在过去的四年里，在我们为世界各地的孩子们带来改变生活的教育的时候，这个优雅的平台已经成为了一支充满希望的铅笔。</p>
+                                                                        <p>Over the past four years, the Classy platform
+                                                                            has become absolutely essential to Pencils
+                                                                            of Promise as we bring life-changing
+                                                                            education to children around the world.</p>
                                                                         <div class="ts-author">
                                                                             <figure><img alt=""
                                                                                          src="assets/extra-images/img-testi.png"
                                                                                          draggable="false"></figure>
-                                                                            <span class="cs-author">吉米沃森<br>
-															<span>首席执行官、创始人许诺的铅笔</span>
+														<span class="cs-author">Jimmi Warson<br>
+															<span>CEO &amp; Founder Pencils of Promise</span>
 														</span>
                                                                         </div>
                                                                     </div>
                                                                 </li>
                                                                 <li class="col-lg-6 col-md-6 col-sm-6">
                                                                     <div class="question-mark">
-                                                                        <p>没有rally.org，就没有我的未来。</p>
+                                                                        <p>Thanks to Rally.org I'm doing my internship
+                                                                            at the United Nations headquarters in NYC!
+                                                                            NGOs and the public sector understand the
+                                                                            power of RALLY and are starting to campaign
+                                                                            online. Without Rally.org, this wouldn't be
+                                                                            possible.</p>
                                                                         <div class="ts-author">
                                                                             <figure><img alt=""
                                                                                          src="assets/extra-images/img-testi-1.png"
                                                                                          draggable="false"></figure>
-                                                                            <span class="cs-author">王老五<br>
-															<span>首席执行官和创始人</span>
+														<span class="cs-author">Mike Delnes<br>
+															<span>CEO &amp; Founder</span>
 														</span>
                                                                         </div>
                                                                     </div>
@@ -1036,10 +1105,11 @@
                                                 <div class="cs-content-holder">
                                                     <div class="row">
                                                         <div class="signup-area col-lg-12">
-                                                            <a href="#" class="cs-btn">开始你的旅程</a>
+                                                            <a href="#" class="cs-btn">Start your Cause</a>
                                                             <div class="main-heading">
-                                                                <h1>注册就有惊喜等着你！</h1>
-                                                                <strong class="title">“我们有能力再次改变世界。”-托马斯·潘恩。 </strong>
+                                                                <h1>Sign up today to rally for what matters. </h1>
+                                                                <strong class="title">"We have it in our power to begin
+                                                                    the world over again." - Thomas Paine.</strong>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1049,11 +1119,11 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </main>
     <!--// Main Content //-->
 
@@ -1125,6 +1195,7 @@
 </div>
 
 <!-- jQuery (necessary JavaScript) -->
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 <script src="assets/scripts/jquery.js"></script>
 <script src="assets/scripts/bootstrap.min.js"></script>
 <script src="assets/scripts/modernizr.js"></script>
@@ -1140,6 +1211,54 @@
             nextText: "<em class='icon-arrow-right10'></em>",
             start: function (slider) {
                 jQuery('body').removeClass('loading');
+            }
+        });
+
+        var ICOList = null;
+        $.ajax({url:"http://192.168.0.42:8080/project/findProjectsAndSort",
+            type: 'GET',
+            timeout:10000,//超时时间设置为10秒；
+            success:function(result){
+                ICOList = result.data.ICO;
+                $.each(ICOList, function(i, item) {
+                    $("#ICOList").append(
+                            "<li class="+"\"col-md-3 col-sm-6 col-xs-12 isotope-item leadership\">"
+                                +"<div class="+"\"directory-section\">"
+                                    +"<span class="+"\"thumb-info thumb-info-hide-wrapper-bg mb-xlg\">"
+                                        +"<span class="+"\"thumb-info-wrapper\">"
+                                            +"<a href="+"\"https://www.icoage.com/?p=D&amp;id=155\">"
+                                                +"<img src="+"\"assets/extra-images//listing-grid-2.jpg\""
+                                                     +"class="+"\"img-responsive\" alt=\"\">"
+                                                    +"<span class="+"\"thumb-info-title\">"
+                                                        +"<span class="+"\"thumb-info-inner\">"+item.name+"</span>"
+                                                        +"<span class="+"\"thumb-info-type\" id=\"time\">"+item.startTime+" - "+item.endTime+"</span>"
+                                                    +"</span></a></span>"
+                                        +"<span class="+"\"thumb-info-action\">"
+                                            +"<span class="+"\"thumb-info-action-icon\">"
+                                                +"<img src="+"\"assets/images/open_cn.png\" style=\"width:60%;\">"
+                                            +"</span></span></span>"
+                                        +"<div class="+"\"content_info\">"
+                                            +"<div class="+"\"title\">"
+                                                +"<span class="+"\"thumb-info-caption-text\""
+                                                      +"style=\"min-height:100px;\" id=\"descript\">"+item.des+"</span>"
+                                                +"<br></div>"
+                                            +"<div class="+"\"dr_info\">"
+                                                +"<ul>"
+                                                   +"<li> <i class="+"\"cscolor icon-target5\"></i> <p"
+                                                            +"style="+"\"margin-left:30px;\" id=\"needMoney\">目标金额 "+item.outputTokenMoneyDetailId+"</p> </li>"
+                                                    +"<li> <i class="+"\"cscolor icon-clock7\"></i> <p"
+                                                            +"style="+"\"margin-left:38px;\">剩余天数 25</p></li></ul>"
+                                                +"<span class="+"\"bar\"><span"
+                                                        +"style="+"\"width:12%;\"></span></span>"
+                                                +"<div class="+"\"detail\"> <span class=\"fund\">12%</span> <a"
+                                                        +"href="+"\"#\" class=\"star icon-star\"></a> </div>"
+                                            +"</div></div></div></li>");
+                });
+                console.log(ICOList);
+//                alert(ICOList);
+            },
+            error: function(xhr, type, errerThrown) {
+                alert('网络异常,请稍候再试');
             }
         });
     });
