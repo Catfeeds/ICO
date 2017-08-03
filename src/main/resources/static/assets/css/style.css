@@ -22,7 +22,7 @@ Tags: black, brown, orange, tan, white, yellow, light, one-column, two-columns, 
 
 Text Domain: pc
 
----------------------------------------------------------------*/
+ellipsis
 
 /* Header Style */
 
@@ -3926,4 +3926,51 @@ blockquote:before {
 }
 .slicknav_menu {
     display: none;
+}
+
+/*-------------------------- custom default -------------------------------------*/
+.ico-ellipsis
+{
+	overflow: hidden;
+
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.ico-ellipsis-2
+ {
+	 display: -webkit-box;
+	 overflow: hidden;
+
+	 white-space: normal !important;
+	 text-overflow: ellipsis;
+	 word-wrap: break-word;
+
+	 -webkit-line-clamp: 2;
+	 -webkit-box-orient: vertical;
+ }
+
+.ico-ellipsis-4
+{
+	display: -webkit-box;
+	overflow: hidden;
+
+	white-space: normal !important;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+}
+.ico-ellipsis-6
+{
+	display: -webkit-box;
+	overflow: hidden;
+
+	white-space: normal !important;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
 }
