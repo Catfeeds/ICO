@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwii.ico.dao.UserRoleRelationMapper">
+  <resultMap id="BaseResultMap" type="com.tongwii.ico.model.UserRoleRelation">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+  </resultMap>
+
+  <select id="getByUserId" parameterType="java.lang.Integer" resultType="com.tongwii.ico.model.Role">
+    select role.* from user_role_relation u_r, role where u_r.role_id = role.id AND u_r.user_id = #{id}
+  </select>
+</mapper>
