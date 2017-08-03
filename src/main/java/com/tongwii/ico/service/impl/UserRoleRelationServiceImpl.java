@@ -22,7 +22,8 @@ public class UserRoleRelationServiceImpl extends AbstractService<UserRoleRelatio
     private UserRoleRelationMapper userRoleRelationMapper;
 
     @Override
-    public List<Role> getByUserId(Integer id) {
-        return userRoleRelationMapper.getByUserId(id);
+    public List<Role> getByUserId ( Integer userId ) {
+       List<Role> roles = userRoleRelationMapper.selectByUserId(userId);
+       return roles;
     }
 }

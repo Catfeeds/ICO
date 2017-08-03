@@ -7,5 +7,5 @@ import com.tongwii.ico.model.UserRoleRelation;
 import java.util.List;
 
 public interface UserRoleRelationMapper extends Mapper<UserRoleRelation> {
-    List<Role> getByUserId(Integer id);
+    List<Role> selectByUserId(Integer id);
 }

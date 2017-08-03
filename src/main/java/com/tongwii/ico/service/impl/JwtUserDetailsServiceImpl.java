@@ -2,7 +2,6 @@ package com.tongwii.ico.service.impl;
 
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtUser;
-import com.tongwii.ico.service.RoleService;
 import com.tongwii.ico.service.UserRoleRelationService;
 import com.tongwii.ico.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

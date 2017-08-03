@@ -10,7 +10,15 @@
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
 
-  <select id="getByUserId" parameterType="java.lang.Integer" resultType="com.tongwii.ico.model.Role">
-    select role.* from user_role_relation u_r, role where u_r.role_id = role.id AND u_r.user_id = #{id}
+    <resultMap id="RoleMap" type="com.tongwii.ico.model.Role">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="role_name_code" jdbcType="VARCHAR" property="roleNameCode" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+    </resultMap>
+
+  <select id="selectByUserId" resultMap="RoleMap" parameterType="java.lang.Integer" >
+    select role.* from user_role_relation urr, role where role.id = urr.role_id AND user_id = #{id,jdbcType=INTEGER}
   </select>
+
 </mapper>
