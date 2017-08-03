@@ -1,8 +1,8 @@
-package com.tongwii.ico.web;
+package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.model.TokenMoney;
-import com.tongwii.ico.service.TokenMoneyService;
+import com.tongwii.ico.model.ProjectWallet;
+import com.tongwii.ico.service.ProjectWalletService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
@@ -14,39 +14,39 @@ import java.util.List;
 * Created by Zeral on 2017-08-02.
 */
 @RestController
-@RequestMapping("/token/money")
-public class TokenMoneyController {
+@RequestMapping("/project/wallet")
+public class ProjectWalletController {
     @Resource
-    private TokenMoneyService tokenMoneyService;
+    private ProjectWalletService projectWalletService;
 
     @PostMapping
-    public Result add(@RequestBody TokenMoney tokenMoney) {
-        tokenMoneyService.save(tokenMoney);
+    public Result add(@RequestBody ProjectWallet projectWallet) {
+        projectWalletService.save(projectWallet);
         return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
-        tokenMoneyService.deleteById(id);
+        projectWalletService.deleteById(id);
         return Result.successResult();
     }
 
     @PutMapping
-    public Result update(@RequestBody TokenMoney tokenMoney) {
-        tokenMoneyService.update(tokenMoney);
+    public Result update(@RequestBody ProjectWallet projectWallet) {
+        projectWalletService.update(projectWallet);
         return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
-        TokenMoney tokenMoney = tokenMoneyService.findById(id);
-        return Result.successResult(tokenMoney);
+        ProjectWallet projectWallet = projectWalletService.findById(id);
+        return Result.successResult(projectWallet);
     }
 
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
-        List<TokenMoney> list = tokenMoneyService.findAll();
+        List<ProjectWallet> list = projectWalletService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult(pageInfo);
     }

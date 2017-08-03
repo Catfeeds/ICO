@@ -1,8 +1,8 @@
-package com.tongwii.ico.web;
+package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.model.UserRoleRelation;
-import com.tongwii.ico.service.UserRoleRelationService;
+import com.tongwii.ico.model.UserWallet;
+import com.tongwii.ico.service.UserWalletService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
@@ -14,39 +14,39 @@ import java.util.List;
 * Created by Zeral on 2017-08-02.
 */
 @RestController
-@RequestMapping("/user/role/relation")
-public class UserRoleRelationController {
+@RequestMapping("/user/wallet")
+public class UserWalletController {
     @Resource
-    private UserRoleRelationService userRoleRelationService;
+    private UserWalletService userWalletService;
 
     @PostMapping
-    public Result add(@RequestBody UserRoleRelation userRoleRelation) {
-        userRoleRelationService.save(userRoleRelation);
+    public Result add(@RequestBody UserWallet userWallet) {
+        userWalletService.save(userWallet);
         return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
-        userRoleRelationService.deleteById(id);
+        userWalletService.deleteById(id);
         return Result.successResult();
     }
 
     @PutMapping
-    public Result update(@RequestBody UserRoleRelation userRoleRelation) {
-        userRoleRelationService.update(userRoleRelation);
+    public Result update(@RequestBody UserWallet userWallet) {
+        userWalletService.update(userWallet);
         return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
-        UserRoleRelation userRoleRelation = userRoleRelationService.findById(id);
-        return Result.successResult(userRoleRelation);
+        UserWallet userWallet = userWalletService.findById(id);
+        return Result.successResult(userWallet);
     }
 
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
-        List<UserRoleRelation> list = userRoleRelationService.findAll();
+        List<UserWallet> list = userWalletService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult(pageInfo);
     }

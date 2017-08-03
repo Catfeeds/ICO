@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +47,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JWTAuthenticationFilter authenticationTokenFilterBean () throws Exception {
+    public JWTAuthenticationFilter authenticationTokenFilterBean () throws AuthenticationException {
         return new JWTAuthenticationFilter();
     }
 
@@ -88,7 +89,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/**/*.css",
                             "/**/*.js"
                     ).permitAll()
-                    .antMatchers(HttpMethod.POST, "/user/login").permitAll()
+                    // 认证放行
+                    .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                    .antMatchers(HttpMethod.PUT, "/auth/**").permitAll()
                     // 除上面外的所有请求全部需要鉴权认证
                     .anyRequest().authenticated();
             // 基于定制JWT安全过滤器
@@ -96,14 +99,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         }
         // 禁用页面缓存
         httpSecurity.headers().cacheControl();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Create a default account
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("password")
-                .roles("ADMIN");
     }
 }
