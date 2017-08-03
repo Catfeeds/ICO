@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -138,9 +139,22 @@ public class JwtTokenUtil implements Serializable {
     String generateToken ( Map< String, Object > claims ) {
         return Jwts.builder()
                    .setClaims( claims )
-                   .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                   .setExpiration(generateExpirationDate(new Date(), expiration))
                    .signWith( SignatureAlgorithm.HS512, secret )
                    .compact();
+    }
+
+    /**
+     * 生成过期时间，在当前时间基础上+秒
+     * @param date 基于时间
+     * @param number 单位：秒
+     * @return
+     */
+    private Date generateExpirationDate(Date date, int number) {
+        Calendar instance = Calendar.getInstance();
+        instance.setTime( date );
+        instance.add( Calendar.SECOND, number );
+        return instance.getTime();
     }
 
     /**
@@ -150,7 +164,6 @@ public class JwtTokenUtil implements Serializable {
      * @return
      */
     public Boolean canTokenBeRefreshed ( String token) {
-        final Date created = getCreatedDateFromToken( token );
         return !isTokenExpired( token );
     }
 

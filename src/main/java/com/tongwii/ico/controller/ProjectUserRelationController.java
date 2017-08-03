@@ -1,8 +1,8 @@
-package com.tongwii.ico.web;
+package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.model.TokenDetail;
-import com.tongwii.ico.service.TokenDetailService;
+import com.tongwii.ico.model.ProjectUserRelation;
+import com.tongwii.ico.service.ProjectUserRelationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
@@ -14,39 +14,39 @@ import java.util.List;
 * Created by Zeral on 2017-08-02.
 */
 @RestController
-@RequestMapping("/token/detail")
-public class TokenDetailController {
+@RequestMapping("/project/user/relation")
+public class ProjectUserRelationController {
     @Resource
-    private TokenDetailService tokenDetailService;
+    private ProjectUserRelationService projectUserRelationService;
 
     @PostMapping
-    public Result add(@RequestBody TokenDetail tokenDetail) {
-        tokenDetailService.save(tokenDetail);
+    public Result add(@RequestBody ProjectUserRelation projectUserRelation) {
+        projectUserRelationService.save(projectUserRelation);
         return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
-        tokenDetailService.deleteById(id);
+        projectUserRelationService.deleteById(id);
         return Result.successResult();
     }
 
     @PutMapping
-    public Result update(@RequestBody TokenDetail tokenDetail) {
-        tokenDetailService.update(tokenDetail);
+    public Result update(@RequestBody ProjectUserRelation projectUserRelation) {
+        projectUserRelationService.update(projectUserRelation);
         return Result.successResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
-        TokenDetail tokenDetail = tokenDetailService.findById(id);
-        return Result.successResult(tokenDetail);
+        ProjectUserRelation projectUserRelation = projectUserRelationService.findById(id);
+        return Result.successResult(projectUserRelation);
     }
 
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
-        List<TokenDetail> list = tokenDetailService.findAll();
+        List<ProjectUserRelation> list = projectUserRelationService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult(pageInfo);
     }

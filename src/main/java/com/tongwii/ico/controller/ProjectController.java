@@ -1,4 +1,4 @@
-package com.tongwii.ico.web;
+package com.tongwii.ico.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.core.Result;

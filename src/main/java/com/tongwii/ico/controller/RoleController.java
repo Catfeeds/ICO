@@ -1,4 +1,4 @@
-package com.tongwii.ico.web;
+package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.Role;

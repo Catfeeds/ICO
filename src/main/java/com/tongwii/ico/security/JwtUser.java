@@ -109,4 +109,37 @@ public class JwtUser implements UserDetails {
         return roles;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        JwtUser jwtUser = (JwtUser) o;
+
+        if (isEnabled() != jwtUser.isEnabled()) return false;
+        if (!getId().equals(jwtUser.getId())) return false;
+        if (!getUsername().equals(jwtUser.getUsername())) return false;
+        if (!getPassword().equals(jwtUser.getPassword())) return false;
+        if (getNickName() != null ? !getNickName().equals(jwtUser.getNickName()) : jwtUser.getNickName() != null)
+            return false;
+        if (getRealName() != null ? !getRealName().equals(jwtUser.getRealName()) : jwtUser.getRealName() != null)
+            return false;
+        if (getPhone() != null ? !getPhone().equals(jwtUser.getPhone()) : jwtUser.getPhone() != null) return false;
+        if (getIdCard() != null ? !getIdCard().equals(jwtUser.getIdCard()) : jwtUser.getIdCard() != null) return false;
+        return getRoles() != null ? getRoles().equals(jwtUser.getRoles()) : jwtUser.getRoles() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getUsername().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + (getNickName() != null ? getNickName().hashCode() : 0);
+        result = 31 * result + (getRealName() != null ? getRealName().hashCode() : 0);
+        result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);
+        result = 31 * result + (getIdCard() != null ? getIdCard().hashCode() : 0);
+        result = 31 * result + (isEnabled() ? 1 : 0);
+        result = 31 * result + (getRoles() != null ? getRoles().hashCode() : 0);
+        return result;
+    }
 }
