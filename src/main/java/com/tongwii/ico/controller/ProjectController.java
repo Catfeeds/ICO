@@ -86,7 +86,7 @@ public class ProjectController {
     /*
     * 根据项目状态查询项目信息
     */
-    @RequestMapping("/findProjectByState")
+ /*   @RequestMapping("/findProjectByState")
     public Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
                                       @RequestParam(required = true,defaultValue = "0") Integer page,
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
@@ -106,5 +106,5 @@ public class ProjectController {
             PageInfo pageInfo = new PageInfo(projectList);
             return Result.successResult(pageInfo);
         }
-    }
+    }*/
 }
