@@ -230,6 +230,12 @@
             success: function (result) {
                 var willICOList = result.data.willICO;
                 $.each(willICOList, function (i, item) {
+                    var date = null;
+                    if(item.startTime == null || item.endTime == null){
+                        date = "尚未明确";
+                    }else{
+                        date = item.startTime + " —— " + item.endTime;
+                    }
                     $("#willICOList").append(
                             "<article class="+"\"col-md-3 col-sm-6 col-xs-12 isotope-item leadership\">"
                             +"<div class="+"\"directory-section\">"
@@ -242,9 +248,7 @@
                             +"<br></div>"
                             +"<div class="+"\"dr_info\">"
                             +"<ul><li><i class="+"\"cscolor icon-target5\"></i>RMB"+item.outputTokenMoneyDetailId+"</li>"
-                            +"<li><i class=" + "\"cscolor icon-clock7\"></i>" + item.startTime + " - " + item.endTime + "</li>"
-                            +"<div class="+"\"detail\"><span class=\"fund\">12%</span>"
-                            +"<a class="+"\"star icon-star\"></a>"
+                            +"<li><i class=" + "\"cscolor icon-clock7\"></i>" +date+ "</li>"
                             +"</div></div></div></div></article>");
                 });
 
