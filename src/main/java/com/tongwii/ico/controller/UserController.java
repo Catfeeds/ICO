@@ -1,13 +1,24 @@
 package com.tongwii.ico.controller;
 
-import com.tongwii.ico.core.Result;
-import com.tongwii.ico.model.User;
-import com.tongwii.ico.service.UserService;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tongwii.ico.core.Result;
+import com.tongwii.ico.exception.EmailExistException;
+import com.tongwii.ico.exception.StorageFileNotFoundException;
+import com.tongwii.ico.model.User;
+import com.tongwii.ico.service.FileService;
+import com.tongwii.ico.service.UserService;
+import com.tongwii.ico.util.ContextUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import javax.annotation.Resource;
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -16,8 +27,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Resource
+    @Autowired
     private UserService userService;
+    @Autowired
+    private FileService fileService;
 
     @PostMapping
     public Result add(@RequestBody User user) {
@@ -54,6 +67,38 @@ public class UserController {
     @PostMapping("register")
     public Result register(@RequestBody User user) {
         userService.register(user);
-        return Result.successResult();
+        return Result.successResult("注册成功");
+    }
+
+    @ExceptionHandler(EmailExistException.class)
+    public Result handleStorageFileNotFound(EmailExistException e) {
+        return Result.failResult(e.getMessage());
+    }
+
+    @PostMapping("/avator")
+    public Result handleFileUpload(@RequestParam("file") MultipartFile file) {
+        fileService.store(file);
+        Path path = fileService.load(file.getOriginalFilename());
+        JSONObject object = new JSONObject();
+        String url = MvcUriComponentsBuilder.fromMethodName(UserController.class,
+                "avatorFile", path.getFileName().toString()).build().toString();
+        object.put("path", url);
+
+        Integer userId = ContextUtils.getUserId();
+        userService.userUploadAvator(userId, url);
+        return Result.successResult(object);
+    }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/avator/{filename:.+}")
+    public ResponseEntity<Resource> avatorFile(@PathVariable String filename) {
+
+        Resource file = fileService.loadAsResource(filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 }

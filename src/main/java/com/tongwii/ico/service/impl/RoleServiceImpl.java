@@ -19,4 +19,11 @@ import java.util.List;
 public class RoleServiceImpl extends AbstractService<Role> implements RoleService {
     @Resource
     private RoleMapper roleMapper;
+
+    @Override
+    public Role findByRoleCode(String roleCode) {
+        Role role = new Role();
+        role.setRoleNameCode(roleCode);
+        return roleMapper.selectOne(role);
+    }
 }
