@@ -48,7 +48,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                 SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
                 SerializerFeature.WriteNullNumberAsZero, //Number null -> 0
                 SerializerFeature.WriteNullListAsEmpty,  //将Collection类型字段的字段空值输出为[]
-                SerializerFeature.WriteNullBooleanAsFalse   //将Boolean类型字段的空值输出为false
+                SerializerFeature.WriteNullBooleanAsFalse,   //将Boolean类型字段的空值输出为false
+                SerializerFeature.WriteDateUseDateFormat    // 使用自定义格式化日期
         );
         converter.setFastJsonConfig(config);
         converter.setDefaultCharset(Charset.forName("UTF-8"));
@@ -59,8 +60,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
     //统一异常处理
     @Override
     public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-        exceptionResolvers.add(new HandlerExceptionResolver() {
-            public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
+        exceptionResolvers.add((HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) -> {
                 Result result;
                 if (e instanceof ServiceException) {//业务失败的异常，如“账号或密码错误”
                     result = Result.failResult(e.getMessage());
@@ -88,9 +88,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                 }
                 responseResult(response, result);
                 return new ModelAndView();
-            }
-
-        });
+            });
     }
 
     //解决跨域问题

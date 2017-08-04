@@ -9,4 +9,6 @@ import com.tongwii.ico.core.Service;
 public interface UserService extends Service<User> {
 
     User findByUsername(String username);
+
+    void register(User user);
 }
