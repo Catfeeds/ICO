@@ -50,4 +50,10 @@ public class UserController {
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult(pageInfo);
     }
+
+    @PostMapping("register")
+    public Result register(@RequestBody User user) {
+        userService.register(user);
+        return Result.successResult();
+    }
 }

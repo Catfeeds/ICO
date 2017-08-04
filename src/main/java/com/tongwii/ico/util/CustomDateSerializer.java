@@ -18,10 +18,6 @@ public class CustomDateSerializer extends StdSerializer<Date> {
 
     private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public CustomDateSerializer() {
-        this(null);
-    }
-
     public CustomDateSerializer(Class<Date> t) {
         super(t);
     }

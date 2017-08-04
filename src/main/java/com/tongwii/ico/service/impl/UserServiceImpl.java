@@ -25,4 +25,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         user.setEmailAccount(username);
         return userMapper.selectOne(user);
     }
+
+    @Override
+    public void register(User user) {
+
+    }
 }

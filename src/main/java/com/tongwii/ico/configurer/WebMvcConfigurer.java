@@ -7,12 +7,14 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.core.ServiceException;
+import netscape.security.ForbiddenTargetException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.servlet.ErrorPageRegistrar;
 import org.springframework.boot.web.servlet.ErrorPageRegistry;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -48,7 +51,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                 SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
                 SerializerFeature.WriteNullNumberAsZero, //Number null -> 0
                 SerializerFeature.WriteNullListAsEmpty,  //将Collection类型字段的字段空值输出为[]
-                SerializerFeature.WriteNullBooleanAsFalse   //将Boolean类型字段的空值输出为false
+                SerializerFeature.WriteNullBooleanAsFalse,   //将Boolean类型字段的空值输出为false
+                SerializerFeature.WriteDateUseDateFormat    // 使用自定义格式化日期
         );
         converter.setFastJsonConfig(config);
         converter.setDefaultCharset(Charset.forName("UTF-8"));
@@ -59,8 +63,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
     //统一异常处理
     @Override
     public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-        exceptionResolvers.add(new HandlerExceptionResolver() {
-            public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
+        exceptionResolvers.add((HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) -> {
                 Result result;
                 if (e instanceof ServiceException) {//业务失败的异常，如“账号或密码错误”
                     result = Result.failResult(e.getMessage());
@@ -69,8 +72,10 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                     result = Result.unavailable("接口 [" + request.getRequestURI() + "] 不存在");
                 } else if (e instanceof ServletException) {
                     result = Result.failResult(e.getMessage());
-                } else if (e instanceof AuthenticationException) {
+                } else if (e instanceof AuthenticationException || e instanceof ForbiddenTargetException) {
                     result = Result.unauthorized("未经授权:身份验证令牌丢失或无效。");
+                } else if (e instanceof SQLException || e instanceof DataAccessException) {
+                    result = Result.errorResult( "服务器内部错误");
                 } else  {
                     result = Result.errorResult("接口 [" + request.getRequestURI() + "] 内部错误，请联系管理员");
                     String message;
@@ -88,9 +93,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                 }
                 responseResult(response, result);
                 return new ModelAndView();
-            }
-
-        });
+            });
     }
 
     //解决跨域问题
