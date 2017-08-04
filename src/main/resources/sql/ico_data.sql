@@ -15,3 +15,18 @@ INSERT INTO `project` VALUES ('6', 'OmiseGo', 'OmiseGo代币', '2017-08-03 16:04
 
 INSERT INTO `user` VALUES (1, 'user', '$2a$10$WIUYeUw1.TcoKiIxUAf.7Ot5QN3CZNlP0.nts5USRBsvu5F7D02.2', 'user', '用户', '18829012080', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (2, 'admin', '$2a$10$i689y0x9zhtnFtmGmkOPRuLChsxsdBbHLN2/bpMicev/VPcdZAnrC', 'admin', '管理员', '18829012090', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Records of user_role_relation
+-- ----------------------------
+
+INSERT INTO `user_role_relation` VALUES (1, 1, 1);
+INSERT INTO `user_role_relation` VALUES (2, 2, 2);
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+
+INSERT INTO `role` VALUES (1, 'ROLE_USER', 'ROLE_USER', NULL);
+INSERT INTO `role` VALUES (2, 'ROLE_ADMIN', 'ROLE_ADMIN', NULL);
+
