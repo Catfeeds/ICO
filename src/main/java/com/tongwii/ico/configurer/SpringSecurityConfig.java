@@ -95,6 +95,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     // 认证放行
                     .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
                     .antMatchers(HttpMethod.PUT, "/auth/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/user/register").permitAll()
                     // 除上面外的所有请求全部需要鉴权认证
                     .anyRequest().authenticated();
             // 基于定制JWT安全过滤器

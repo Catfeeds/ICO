@@ -3030,7 +3030,7 @@ blockquote:before {
 	list-style: none;
 	margin-bottom: 18px;
 }
-.user-signup .signup-form ul li input[type="submit"]{
+.user-signup .signup-form ul li input[type="button"]{
 	border: medium none;
     border-radius: 5px;
     color: #ffffff;

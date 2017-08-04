@@ -67,7 +67,7 @@ public class UserController {
         return Result.successResult(pageInfo);
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public Result register(@RequestBody User user) {
         userService.register(user);
         return Result.successResult("注册成功");
