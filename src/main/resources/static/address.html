@@ -202,7 +202,7 @@
                                             <a href="revise.html"> 修改登录密码</a>
                                         </li>
                                         <li>
-                                            < a href="#"> 修改交易密码 </a>
+                                            <a href="index.html"> 修改交易密码 </a>
                                         </li>
                                         <li>
                                             <a href="google.html"> 设置谷歌两步验证</a>
@@ -227,90 +227,35 @@
                                 <BR>ICO.TT是一个专业为ICO项目提供完整服务解决方案的平台，能够帮助投资者更好的了解进行ICO的区块链项目，并且帮助投资者更好的管理自己的投资资金和投资项目。</p>
                         </aside>
                     </div>
-
-                    <div class="col-md-9">
-                        <h2><strong>提现地址管理</strong></h2>
-
-
-                        <div class="row">
-                            <header class="panel-heading">
-                                <h2 class="panel-title">数字代币提现地址列表</h2>
-                            </header>
-                            <div class="panel-body">
+                            <div class="col-md-9">
+                                <h2><strong>设置谷歌两步验证</strong></h2>
 
                                 <div class="form-group">
-                                    <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
-                                    <div class="col-md-6 col-xs-11">没有数字代币提现地址</div>
-                                </div>
-
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
-                                    <div class="col-md-6 col-xs-11"><span id="downlist" name="downlist"></span><input type="button" class="btn btn-default" onclick="javascript: " data-toggle="modal" data-target="#formModal" value="新建提现地址" /></div>
-                                </div>
-                                <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                <h4 class="modal-title" id="formModalLabel">新增数字代币提现地址</h4>
-                                            </div>
-                                            <form id="demo-form" action="?p=withdrawaddr&do=addaddress" class="form-horizontal mb-lg" method="post">
-                                                <div class="modal-body">
-                                                    <div class="form-group mt-lg">
-                                                        <label class="col-sm-2 control-label">地址说明</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" name="a_name" value="" class="form-control" placeholder="请输入对该地址的简称" required />
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">地址类型</label>
-                                                        <div class="col-sm-10">
-                                                            <select class="form-control" name="a_coin" required><option value='iou'>Tokex(直通充值)</option><option value='btc'>Bitcoin(btc)</option><option value='eth'>Ethereum(eth)</option><option value='qtum'>Qtum(qtum)</option><option value='trst'>WeTrust(trst)</option><option value='rlc'>RLC(rlc)</option><option value='gno'>Gnosis(gno)</option><option value='ins'>inChain(ins)</option><option value='ant'>Aragon(ant)</option><option value='crea'>Creativechain(crea)</option><option value='fid'>Bitfid(fid)</option><option value='mgo'>MobileGo(mgo)</option><option value='snt'>Status(snt)</option><option value='pay'>Tenx(pay)</option><option value='omg'>OmiseGo(omg)</option><option value='eos'>EOS(eos)</option><option value='storj'>Storj(storj)</option><option value='taas'>Taas(taas)</option></select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">地址</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" name="a_address" value="" class="form-control" placeholder="请输入数字代币的地址"  required/>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">验证码</label>
-                                                        <div class="col-sm-3">
-                                                            <input type="text" name="verifycode" value="" class="form-control" style="width:140px;"  required/>
-                                                        </div>
-                                                        <div class="col-sm-7">
-                                                            <input type="button" id="sendsms" name="sendsms" class="btn btn-primary" onclick="javascript:sendSMS('18409272347');myrefresh();" value="发送手机验证码" />
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                    <input type="submit" class="btn btn-primary" value="递交信息" />
-                                                </div>
-                                            </form>
-                                        </div>
+                                    <div class="col-md-6 col-xs-11">
+                                        <form action="?p=2fp&do=submit" method="post">
+                                            请先用手机的谷歌验证APP扫描二维码<BR>
+                                            将手机上生成的动态验证码填写到输入框<BR>
+                                            请在安全的地方妥善保管您的密钥<BR>
+                                            <BR>
+                                            <input class="form-control" placeholder="" name="googlev" id="googlev" type="text">
+                                            <hr>
+                                            <input type="submit" value="递交" class="btn btn-primary mb-xl">
+                                        </form>
                                     </div>
+                                    <div class="col-md-4 col-xs-9" style="margin-left: 100px;"><img src='assets/images/2.png'><BR>34034N325XMWFP6VPOWTM</div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
 
-
-
-
+                    </div>
 
                     <hr>
                 </div>
-            </div>
-        </div>
-        </div>
     </main>
 </div>
+
+
 
 
 <!--// Main Content //-->
