@@ -87,7 +87,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/assets/**",
                             "/**/*.html",
                             "/**/*.css",
-                            "/**/*.js"
+                            "/**/*.js",
+                            "/**/*.jpg",
+                            "/**/*.jpeg",
+                            "/**/*.png"
                     ).permitAll()
                     // 认证放行
                     .antMatchers(HttpMethod.POST, "/auth/**").permitAll()

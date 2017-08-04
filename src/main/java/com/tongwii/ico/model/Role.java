@@ -70,4 +70,25 @@ public class Role {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public enum RoleCode {
+        ADMIN("ROLE_ADMIN", "管理员"),
+        USER("ROLE_USER", "用户");
+
+        public String code;
+        private String roleName;
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getRoleName() {
+            return roleName;
+        }
+
+        RoleCode(String code, String roleName) {
+            this.code = code;
+            this.roleName = roleName;
+        }
+    }
 }

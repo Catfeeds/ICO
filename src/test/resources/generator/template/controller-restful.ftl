@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("${baseRequestMapping}")
 public class ${modelNameUpperCamel}Controller {
-    @Resource
+    @Autowired
     private ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
 
     @PostMapping
