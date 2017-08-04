@@ -12,12 +12,15 @@ import com.tongwii.ico.service.UserService;
 import com.tongwii.ico.util.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLConnection;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -95,10 +98,17 @@ public class UserController {
     }
 
     @GetMapping("/avator/{filename:.+}")
-    public ResponseEntity<Resource> avatorFile(@PathVariable String filename) {
+    public void avatorFile(@PathVariable String filename, HttpServletResponse response) throws IOException {
 
         Resource file = fileService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+
+        File files = file.getFile();
+        String mimeType= URLConnection.guessContentTypeFromName(files.getName());
+        response.setContentType(mimeType);
+        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + files.getName() +"\""));
+        response.setContentLength((int)files.length());
+        InputStream inputStream = new BufferedInputStream(new FileInputStream(files));
+
+        FileCopyUtils.copy(inputStream, response.getOutputStream());
     }
 }
