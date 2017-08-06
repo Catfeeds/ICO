@@ -17,10 +17,8 @@
     <link href="assets/css/color.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
     <link href="assets/css/responsive.css" rel="stylesheet">
-    <!-- <link href="assets/css/rtl.css" rel="stylesheet">  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <!-- <link href="assets/css/rtl.css" rel="stylesheet"> Uncomment it if needed! -->
-
+    <link href="assets/css/sweet-alert.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -122,11 +120,9 @@
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs" role="tablist">
                                             <li role="presentation" class="active"><a href="#home" aria-controls="home"
-                                                                       role="tab" data-toggle="tab"
-                                                                       id="a_login">登录</a></li>
+                                                                       role="tab" data-toggle="tab">登录</a></li>
                                             <li role="presentation"><a href="#profile" aria-controls="profile"
-                                                                       role="tab" data-toggle="tab"
-                                                                       id="a_regist">注册</a></li>
+                                                                       role="tab" data-toggle="tab">注册</a></li>
                                         </ul>
 
                                         <!-- Tab panes -->
@@ -324,14 +320,20 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/jquery.js"></script>
 <script src="assets/scripts/app.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script>
-    $(document).ready(function () {
+    jQuery(window).load(function(){
+//    $(document).ready(function () {
         $("#login").click(function () {
             var signName = $("#sign_name").val();
             var signPassword = $("#sign_password").val();
             if (signName.length <= 0) {
-                layer.msg('用户名为空!');
+                sweetAlert("登录名不能为空!");
+                return;
+            }
+            if (signPassword.length <= 0) {
+                sweetAlert("密码不能为空!");
                 return;
             }
             var json = {emailAccount:signName, password: signPassword};
@@ -360,25 +362,26 @@
                 var registPassword = $("#regist_password").val().toString();
                 var againPassword = $("#again_password").val().toString();
                 if(email.length <= 0){
-                    layer.msg('用户名为空!');
+                    sweetAlert("用户名不能为空!");
                     return;
                 }
                 if(registPassword.length <= 0 || againPassword.length <= 0){
-                    layer.msg('密码为空!');
+                    sweetAlert("密码不能为空!");
                     return;
                 }
                 if(registPassword != againPassword){
-                    layer.msg('两次输入的密码不一致!');
+                    sweetAlert("两次输入的密码不一致!");
                     return;
                 }
+                var registJson = {emailAccount:email, password:registPassword};
                 $.ajax({
                     url: app.getServerUrl()+"/user/register",
-                    type:'POST',
-                    timeout:10000,//超时时间设置为10秒；
-                    data:{emailAccount:email, password:registPassword},
-                    dataType:'JSON',//服务器返回json格式数据
+                    type: 'POST',
+                    timeout: 10000,//超时时间设置为10秒；
+                    data: JSON.stringify(registJson),
+                    dataType:'json',//服务器返回json格式数据
                     contentType: "application/json; charset=utf-8",
-                    success:function (result) {
+                    success: function (result) {
                         if(result.code == 200){
                             location.href = "index.html";
                         }
