@@ -68,7 +68,7 @@
                                     <li><a href="about.html">关于我们</a></li>
                                     <li><a href="sign.html">登录/注册</a></li>
                                     <li><a href="services.html">服务与帮助</a></li>
-                                    <li><a href="contect.html">我的信息</a></li>
+                                    <li><a href="contect.html" id="contect">我的信息</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -78,20 +78,21 @@
                 <div class="right-side">
                     <div class="cs-search-block">
                         <form>
-                            <input type="text" id="s" name="s" value="搜索项目" onfocus="if(this.value =='搜索项目') { this.value = ''; }" onblur="if(this.value == '') { this.value ='搜索项目'; }" class="form-control">
+                            <input type="text" id="s" name="s" value="搜索项目"
+                                   onfocus="if(this.value =='搜索项目') { this.value = ''; }"
+                                   onblur="if(this.value == '') { this.value ='搜索项目'; }" class="form-control">
                             <label>
                                 <input type="submit" value="Search">
                             </label>
                         </form>
                     </div>
                     <div class="profile-view">
-                        <ul>
+                        <ul id="personInfo" style="display:none">
                             <li>
                                 <img alt="#" src="assets/extra-images/user-img.jpg">
                                 <i class="icon-arrow-down8"></i>
                                 <div class="dropdown-area">
-                                    <h5>Yamo</h5>
-                                    <span>会员自2014年5月20日起</span>
+                                    <h5 id="userName"></h5>
                                     <ul class="dropdown">
                                         <li><a href="causes.html"><i class="icon-flag5"></i>我的目标</a></li>
                                         <li><a href="saved.html"><i class="icon-file-text-o"></i>保存目标</a></li>
@@ -100,18 +101,19 @@
                                         <li><a href="profilesetting.html"><i class="icon-pie2"></i>个人档案</a></li>
                                         <li><a href="create-new-cause.html"><i class="icon-plus6"></i>创建新项目</a></li>
                                     </ul>
-                                    <a class="sign-btn" href="#"><i class="icon-logout"></i>退出登录</a>
+                                    <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <a href="sign.html" class="free-btn">免费开启</a> </div>
+                </div>
+                <div class="mob-nav"></div>
             </div>
-            <div class="mob-nav"></div>
         </div>
     </header>
     <!-- Header -->
-    <div class="breadcrumb-sec" style="background:url(assets/extra-images/banner.jpg) no-repeat; background-size:100% auto; min-height:157px!important;">
+    <div class="breadcrumb-sec"
+         style="background:url(assets/extra-images/banner.jpg) no-repeat; background-size:100% auto; min-height:157px!important;">
         <div class="absolute-sec">
             <div class="container">
                 <div class="cs-table">
@@ -133,17 +135,12 @@
                         <div class="section-fullwidth col-lg-12">
                             <div class="cs-content-holder">
                                 <div class="row">
-                                    <!--<div class="col-lg-12">-->
-                                    <!--<div class="simple-heading">-->
-                                    <!--<h2>1000s Causes, 100000s Donors</h2>-->
-                                    <!--<p>Voluptate velit esse cillum dolore eu fugiat nulla pariatur: Duis aute irure dolor in reprehenderit in voluptate.</p>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
                                     <div class="col-lg-4 col-md-4 col-sm-6">
                                         <div class="cs-services list">
                                             <figure><img alt="" src="assets/extra-images/ico-services1.png"></figure>
                                             <div class="text">
-                                                <p>关于Primas（原本）项目锁定通知：ICO.TT将于7月31日（周一）20:00正式开放原本锁定通道，该项目只接受ETH，锁定期间兑换比例均为首日比例，即1ETH=1350PST，更多关于项目的信息请参考：Primas.io</p>
+                                                <p>
+                                                    关于Primas（原本）项目锁定通知：ICO.TT将于7月31日（周一）20:00正式开放原本锁定通道，该项目只接受ETH，锁定期间兑换比例均为首日比例，即1ETH=1350PST，更多关于项目的信息请参考：Primas.io</p>
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +148,8 @@
                                         <div class="cs-services list">
                                             <figure><img alt="" src="assets/extra-images/ico-services2.png"></figure>
                                             <div class="text">
-                                                <p>通知：ICO.TT不再接受人民币充值，本网站也不再提供人民币代购数字货币服务来参与任何ICO项目，请勿再充值人民币到ICOAGE账户，在ICOAGE账户还存有人民币的用户请在本月内尽快申请提现。</p>
+                                                <p>
+                                                    通知：ICO.TT不再接受人民币充值，本网站也不再提供人民币代购数字货币服务来参与任何ICO项目，请勿再充值人民币到ICOAGE账户，在ICOAGE账户还存有人民币的用户请在本月内尽快申请提现。</p>
                                             </div>
                                         </div>
                                     </div>
@@ -159,7 +157,8 @@
                                         <div class="cs-services list">
                                             <figure><img alt="" src="assets/extra-images/ico-services3.png"></figure>
                                             <div class="text">
-                                                <p>目前WeTrust(TRST)、iEx.ec(RLC)、Gnosis(GNO)、Aragon(ANT)、Mobilego(MGO)、印链(INS)、Omisego(OMG)、Storj、QTUM、币飞（FID）等代币均可提现，提现时间一般为1-3个工作日，请耐心等待。</p>
+                                                <p>
+                                                    目前WeTrust(TRST)、iEx.ec(RLC)、Gnosis(GNO)、Aragon(ANT)、Mobilego(MGO)、印链(INS)、Omisego(OMG)、Storj、QTUM、币飞（FID）等代币均可提现，提现时间一般为1-3个工作日，请耐心等待。</p>
                                             </div>
                                         </div>
                                     </div>
@@ -222,7 +221,7 @@
                                     <a href="helpmessage.html"> 帮助留言</a>
                                 </li>
                                 <li>
-                                    <a href="#"> 退出登录</a>
+                                    <a id="signOut"> 退出登录</a>
                                 </li>
                             </ul>
                             <hr>
@@ -236,12 +235,8 @@
                     <div class="col-md-9">
                         <h2><strong>充值记录</strong></h2>
                         <div class="row">
-
-
-                            <!--<div class="col-md-9"  id="putmoney">-->
-                                <!--<h2><strong>充值记录</strong></h2>-->
-                            <!--</div>-->
-                            <div class="col-md-16">
+                            <div class="col-md-6 col-xs-11" id="noIcotext" style="display: none">请您先登录!</div>
+                            <div class="col-md-16" id="warning">
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
@@ -250,10 +245,6 @@
                                         <th>状态</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-
-
-                                    </tbody>
                                 </table>
                                 <div class="alert alert-info fade in nomargin">
                                     <h4>充值请注意：</h4>
@@ -263,38 +254,15 @@
                                     <p>如果出现“信息不符”状态，说明您汇款的姓名、金额或者识别码和您所填写的信息不一致，您可以重新填写充值信息，也可以和客服人员联系。</p>
                                     <p>如果您有任何疑问，请联系微信客服（微信号：bzgqw2）</p>
                                 </div>
-                            <!--</div>-->
-                            <!--<hr class="tall">-->
-                        <!--</div>-->
-
-
+                            </div>
+                            <hr class="tall">
                         </div>
-                        <hr class="tall">
                     </div>
-
-
                 </div>
             </div>
         </div>
-        </div>
     </main>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </main>
@@ -304,32 +272,28 @@
 <footer id="footer-sec">
     <div class="container">
         <div class="row">
-            <div class="ads-sec col-lg-12"> <img src="assets/images/ads.jpg" alt="" > </div>
-            <!--<div class="col-lg-12">-->
-            <!--<div class="tweet-sec">-->
-            <!--<p><i class="twitter-icon icon-twitter2"></i> Thing anyone did today was get ready for #Scandal <a href="#">http://t.co/UfiNiBLWlZ http://t.co/Fvggnf320f</a> <span class="by">Boxtheme</span> <span class="time">10 hours ago</span></p>-->
-            <!--</div>-->
-            <!--</div>-->
             <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
-                <div class="widget-section-title"> <strong class="title">关于我们</strong> </div>
+                <div class="widget-section-title"><strong class="title">关于我们</strong></div>
                 <ul>
-                    <li><a>ICO.TT所提供的各项服务的所有权和运营权均归ICOAGE网站所有（网站中简称为“ICO.TT”）。ICOAGE用户通过访问或使用本网站，即表示接受并同意网站协议的所有条件和条款。</a></li>
+                    <li>
+                        <a>ICO.TT所提供的各项服务的所有权和运营权均归ICOAGE网站所有（网站中简称为“ICO.TT”）。ICOAGE用户通过访问或使用本网站，即表示接受并同意网站协议的所有条件和条款。</a>
+                    </li>
                 </ul>
             </aside>
             <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
-                <div class="widget-section-title"> <strong class="title">法律说明</strong> </div>
+                <div class="widget-section-title"><strong class="title">法律说明</strong></div>
                 <ul>
                     <li><a>ICO.TT的所有运营行为将会尊重客户所在地相关法律和法规，本网站法律声明未涉及的问题参见当地国家有关法律法规，当本声明与当地国家法律法规冲突时，以当地国家法律法规为准。
                         因用户使用本网站而引起或与之相关的一切争议、权利主张或其它事项，均受当地法律法规区域的管辖。</a></li>
                 </ul>
             </aside>
             <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
-                <div class="widget-section-title"> <strong class="title">联系我们</strong> </div>
+                <div class="widget-section-title"><strong class="title">联系我们</strong></div>
                 <ul>
-                    <li><a>客服微信号: ICO.TT
-                        客服QQ: 2318798407
-                        官方QQ群: 389428765
-                        Email: 2318798407@qq.com</a></li>
+                    <li><a>客服微信号: ICO.TT</a>
+                        <a>客服QQ: 2318798407</a>
+                        <a>官方QQ群: 389428765</a>
+                        <a>Email:2318798407@qq.com</a></li>
                 </ul>
             </aside>
         </div>
@@ -369,17 +333,34 @@
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
+<script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
-    jQuery(window).load(function(){
+    jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            $("#personInfo").css('display','none');
+        } else {
+            $("#personInfo").css('display','block');
+            $("#userName").text(app.getUserInfo().nickName);
+        }
         jQuery('.flexslider').flexslider({
             animation: "slide",
-            prevText:"<em class='icon-arrow-left9'></em>",
-            nextText:"<em class='icon-arrow-right9'></em>",
-            start: function(slider){
+            prevText: "<em class='icon-arrow-left9'></em>",
+            nextText: "<em class='icon-arrow-right9'></em>",
+            start: function (slider) {
                 jQuery('body').removeClass('loading');
             }
+        });
+        $("#sign_out").click(function () {
+            $("#personInfo").css('display','none');
+            localtion.href = "index.hrml";
+            app.setUserInfo({});
+        });
+        $("#signOut").click(function () {
+            $("#personInfo").css('display','none');
+            localtion.href = "index.hrml";
+            app.setUserInfo({});
         });
     });
 </script>

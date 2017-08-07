@@ -221,7 +221,7 @@
                                     <a href="helpmessage.html"> 帮助留言</a>
                                 </li>
                                 <li>
-                                    <a href="#"> 退出登录</a>
+                                    <a id="signOut"> 退出登录</a>
                                 </li>
                             </ul>
                             <hr>
@@ -250,9 +250,8 @@
                             <header class="panel-heading">
                                 <h2 class="panel-title">填写数字代币ICO信息</h2>
                             </header>
-
-                            <div class="panel-body">
-
+                            <div class="col-md-6 col-xs-11" id="noIcotext" style="display: none">请您先登录!</div>
+                            <div class="panel-body" id="IcoProject">
                                 <div class="form-group">
                                     <div class='col-md-12' style="padding-top:40px;padding-bottom:20px;font-size:16px;">
                                         请选择锁定即将开始项目
@@ -297,8 +296,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="alert alert-info fade in nomargin"></div>
-                        <div class="col-md-12">
+                        <div class="alert alert-info fade in nomargin" id="bar"></div>
+                        <div class="col-md-12" id="form">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -411,6 +410,12 @@
         });
         $("#sign_out").click(function () {
             $("#personInfo").css('display','none');
+            localtion.href = "index.hrml";
+            app.setUserInfo({});
+        });
+        $("#signOut").click(function () {
+            $("#personInfo").css('display','none');
+            localtion.href = "index.hrml";
             app.setUserInfo({});
         });
     });

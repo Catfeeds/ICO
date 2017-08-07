@@ -67,7 +67,7 @@
                                     <li><a href="about.html">关于我们</a></li>
                                     <li><a href="sign.html">登录/注册</a></li>
                                     <li><a href="services.html">服务与帮助</a></li>
-                                    <li><a href="contect.html">我的信息</a></li>
+                                    <li><a href="contect.html" id="contect">我的信息</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -220,7 +220,7 @@
                                     <a href="helpmessage.html"> 帮助留言</a>
                                 </li>
                                 <li>
-                                    <a href="#"> 退出登录</a>
+                                    <a id="signOut"> 退出登录</a>
                                 </li>
                             </ul>
                             <hr>
@@ -241,19 +241,16 @@
                                 <h2 class="panel-title">数字代币提现地址列表</h2>
                             </header>
                             <div class="panel-body">
-
                                 <div class="form-group">
                                     <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
                                     <div class="col-md-6 col-xs-11">没有数字代币提现地址</div>
                                 </div>
-
                             </div>
                             <div class="panel-body">
                                 <div class="form-group">
                                     <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
-                                    <div class="col-md-6 col-xs-11"><span id="downlist" name="downlist"></span><input
-                                            type="button" class="btn btn-default"
-                                            onclick="javascript:sendSMS('18409272347');" data-toggle="modal"
+                                    <div class="col-md-6 col-xs-11"><span id="downlist" name="downlist"></span>
+                                        <input type="button" class="btn btn-default" id="btn" data-toggle="modal"
                                             data-target="#formModal" value="新建提现地址"/></div>
                                 </div>
                                 <div class="modal fade" id="formModal" tabindex="-1" role="dialog"
@@ -434,8 +431,14 @@
         });
         $("#sign_out").click(function () {
             $("#personInfo").css('display','none');
+            localtion.href = "index.hrml";
+            app.setUserInfo({});
+        });$("#signOut").click(function () {
+            $("#personInfo").css('display','none');
+            localtion.href = "index.hrml";
             app.setUserInfo({});
         });
+
     });
 </script>
 </body>
