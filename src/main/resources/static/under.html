@@ -58,20 +58,21 @@
                 <div class="right-side">
                     <div class="cs-search-block">
                         <form>
-                            <input type="text" id="s" name="s" value="搜索项目" onfocus="if(this.value =='搜索项目') { this.value = ''; }" onblur="if(this.value == '') { this.value ='搜索项目'; }" class="form-control">
+                            <input type="text" id="s" name="s" value="搜索项目"
+                                   onfocus="if(this.value =='搜索项目') { this.value = ''; }"
+                                   onblur="if(this.value == '') { this.value ='搜索项目'; }" class="form-control">
                             <label>
                                 <input type="submit" value="Search">
                             </label>
                         </form>
                     </div>
                     <div class="profile-view">
-                        <ul>
+                        <ul id="personInfo" style="display:none">
                             <li>
                                 <img alt="#" src="assets/extra-images/user-img.jpg">
                                 <i class="icon-arrow-down8"></i>
                                 <div class="dropdown-area">
-                                    <h5>Yamo</h5>
-                                    <span>会员自2014年5月20日起</span>
+                                    <h5 id="userName"></h5>
                                     <ul class="dropdown">
                                         <li><a href="causes.html"><i class="icon-flag5"></i>我的目标</a></li>
                                         <li><a href="saved.html"><i class="icon-file-text-o"></i>保存目标</a></li>
@@ -80,25 +81,27 @@
                                         <li><a href="profilesetting.html"><i class="icon-pie2"></i>个人档案</a></li>
                                         <li><a href="create-new-cause.html"><i class="icon-plus6"></i>创建新项目</a></li>
                                     </ul>
-                                    <a class="sign-btn" href="#"><i class="icon-logout"></i>退出登录</a>
+                                    <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <a href="sign.html" class="free-btn">免费开启</a> </div>
+                </div>
+                <div class="mob-nav"></div>
             </div>
-            <div class="mob-nav"></div>
         </div>
     </header>
     <!-- Header -->
-    <div class="breadcrumb-sec" style="background:url(assets/extra-images/banner.jpg) no-repeat; background-size:100% auto; min-height:157px!important;">
+    <div class="breadcrumb-sec"
+         style="background:url(assets/extra-images/banner.jpg) no-repeat; background-size:100% auto; min-height:157px!important;">
         <div class="absolute-sec">
             <div class="container">
                 <div class="cs-table">
                     <div class="cs-tablerow">
                         <div class="pageinfo page-title-align-left">
                             <h1 style="color:#fff !important; text-transform:none;">即将ICO</h1>
-                            <strong style="text-align:center; display:block; color:#fff; font-weight:normal;" class="title">快来加入众筹集，随心所欲赚大钱！</strong>
+                            <strong style="text-align:center; display:block; color:#fff; font-weight:normal;"
+                                    class="title">快来加入众筹集，随心所欲赚大钱！</strong>
                         </div>
                     </div>
                 </div>
@@ -131,7 +134,8 @@
             <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
                 <div class="widget-section-title"><strong class="title">关于我们</strong></div>
                 <ul>
-                    <li><a>ICO.TT所提供的各项服务的所有权和运营权均归ICOAGE网站所有（网站中简称为“ICO.TT”）。ICOAGE用户通过访问或使用本网站，即表示接受并同意网站协议的所有条件和条款。</a>
+                    <li>
+                        <a>ICO.TT所提供的各项服务的所有权和运营权均归ICOAGE网站所有（网站中简称为“ICO.TT”）。ICOAGE用户通过访问或使用本网站，即表示接受并同意网站协议的所有条件和条款。</a>
                     </li>
                 </ul>
             </aside>
@@ -188,20 +192,27 @@
 <script src="assets/scripts/bootstrap.min.js"></script>
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
-
+<script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script src="assets/scripts/masonary.js"></script>
 <script src="assets/scripts/jquery.sumoselect.min.js"></script>
 
-<script >
-    jQuery(window).load(function(){
+<script>
+    jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            $("#personInfo").css('display','none');
+        } else {
+            $("#personInfo").css('display','block');
+            $("#userName").text(app.getUserInfo().nickName);
+        }
+
         jQuery('.flexslider').flexslider({
             animation: "slide",
             controlNav: false,
-            prevText:"<em class='icon-arrow-left10'></em>",
-            nextText:"<em class='icon-arrow-right10'></em>",
-            start: function(slider){
+            prevText: "<em class='icon-arrow-left10'></em>",
+            nextText: "<em class='icon-arrow-right10'></em>",
+            start: function (slider) {
                 jQuery('body').removeClass('loading');
             }
         });
@@ -213,31 +224,35 @@
                 var willICOList = result.data.willICO;
                 $.each(willICOList, function (i, item) {
                     var date = null;
-                    if(item.startTime == null || item.endTime == null){
+                    if (item.startTime == null || item.endTime == null) {
                         date = "尚未明确";
-                    }else{
+                    } else {
                         date = item.startTime + " —— " + item.endTime;
                     }
                     $("#willICOList").append(
-                            "<article class="+"\"col-md-3 col-sm-6 col-xs-12 isotope-item leadership\">"
-                            +"<div class="+"\"directory-section\">"
-                            +"<div class="+"\"cs_thumbsection\">"
-                            +"<figure><a><img src="+"\"assets/extra-images/img.jpg\" alt=\"\"></a>"
-                            +"</figure></div>"
-                            +"<div class="+"\"content_info\">"
-                            +"<div class="+"\"title\">"
-                            +"<span class="+"\"ico-ellipsis-6\">"+item.des+"</span>"
-                            +"<br></div>"
-                            +"<div class="+"\"dr_info\">"
-                            +"<ul><li><i class="+"\"cscolor icon-target5\"></i>RMB"+item.outputTokenMoneyDetailId+"</li>"
-                            +"<li><i class=" + "\"cscolor icon-clock7\"></i>" +date+ "</li>"
-                            +"</div></div></div></div></article>");
+                            "<article class=" + "\"col-md-3 col-sm-6 col-xs-12 isotope-item leadership\">"
+                            + "<div class=" + "\"directory-section\">"
+                            + "<div class=" + "\"cs_thumbsection\">"
+                            + "<figure><a><img src=" + "\"assets/extra-images/img.jpg\" alt=\"\"></a>"
+                            + "</figure></div>"
+                            + "<div class=" + "\"content_info\">"
+                            + "<div class=" + "\"title\">"
+                            + "<span class=" + "\"ico-ellipsis-6\">" + item.des + "</span>"
+                            + "<br></div>"
+                            + "<div class=" + "\"dr_info\">"
+                            + "<ul><li><i class=" + "\"cscolor icon-target5\"></i>RMB" + item.outputTokenMoneyDetailId + "</li>"
+                            + "<li><i class=" + "\"cscolor icon-clock7\"></i>" + date + "</li>"
+                            + "</div></div></div></div></article>");
                 });
 
             },
             error: function (xhr, type, errerThrown) {
                 alert('网络异常,请稍候再试');
             }
+        });
+        $("#sign_out").click(function () {
+            $("#personInfo").css('display','none');
+            app.setUserInfo({});
         });
     });
 

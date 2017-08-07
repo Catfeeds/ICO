@@ -66,13 +66,12 @@
                         </form>
                     </div>
                     <div class="profile-view">
-                        <ul>
+                        <ul id="personInfo" style="display:none">
                             <li>
                                 <img alt="#" src="assets/extra-images/user-img.jpg">
                                 <i class="icon-arrow-down8"></i>
                                 <div class="dropdown-area">
-                                    <h5>Yamo</h5>
-                                    <span>会员自2014年5月20日起</span>
+                                    <h5 id="userName"></h5>
                                     <ul class="dropdown">
                                         <li><a href="causes.html"><i class="icon-flag5"></i>我的目标</a></li>
                                         <li><a href="saved.html"><i class="icon-file-text-o"></i>保存目标</a></li>
@@ -81,12 +80,11 @@
                                         <li><a href="profilesetting.html"><i class="icon-pie2"></i>个人档案</a></li>
                                         <li><a href="create-new-cause.html"><i class="icon-plus6"></i>创建新项目</a></li>
                                     </ul>
-                                    <a class="sign-btn" href="#"><i class="icon-logout"></i>退出登录</a>
+                                    <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <a href="sign.html" class="free-btn">免费开启</a></div>
             </div>
             <div class="mob-nav"></div>
         </div>
@@ -104,7 +102,6 @@
                                 <div class="spreator5"></div>
 								<span>你的优秀创意<br>
                                    让ICO.TT帮助你实现</span>
-                                <!--<a href="#" class="explore-btn cs-bgcolor">搜索项目</a>-->
                             </div>
                         </figcaption>
                     </figure>
@@ -118,7 +115,6 @@
                                 <div class="spreator5"></div>
 								<span>来自全球最佳创新<br>
 								让每一个人从最初就能参与伟大的项目开始</span>
-                                <!--<a href="#" class="explore-btn cs-bgcolor"> 搜索项目</a>-->
                             </div>
                         </figcaption>
                     </figure>
@@ -164,7 +160,6 @@
                                             <div class="text">
                                                 <h2>迈向新时代</h2>
                                                 <p>众筹平台的发展，使得未来的众筹不会有产品之分，只是场景之分。一切都是以生活更美好为出发点，追求美好是众筹的出发点，也是落脚点。</p>
-                                                <!--<a href="#" class="read-more">Read More</a>-->
                                             </div>
                                         </article>
                                     </div>
@@ -225,8 +220,6 @@
                                     </div>
                                     <br>
                                     <br>
-
-
                                     <div class="container" id="stop">
                                         <div class="row mt-xlg">
                                             <div class="col-md-12">
@@ -494,7 +487,7 @@
                         <li><a>客服微信号: ICO.TT</a>
                             <a>客服QQ: 2318798407</a>
                             <a>官方QQ群: 389428765</a>
-                            <a> Email:2318798407@qq.com</a></li>
+                            <a>Email:2318798407@qq.com</a></li>
                     </ul>
                 </aside>
             </div>
@@ -539,8 +532,16 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
+<script src="assets/scripts/app.js"></script>
 <script>
     jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            $("#personInfo").css('display','none');
+        } else {
+            $("#personInfo").css('display','block');
+            $("#userName").text(app.getUserInfo().nickName);
+        }
+
         jQuery('.flexslider').flexslider({
             animation: "slide",
             controlNav: false,
@@ -574,7 +575,7 @@
                             + "<div class=" + "\"directory-section\">"
                             + "<span class=" + "\"thumb-info thumb-info-hide-wrapper-bg mb-xlg\">"
                             + "<span class=" + "\"thumb-info-wrapper\">"
-                            + "<a href=" + "\"https://www.icoage.com/?p=D&amp;id=155\">"
+                            + "<a>"
                             + "<img src=" + "\"assets/extra-images//listing-grid-2.jpg\""
                             + "class=" + "\"img-responsive\" alt=\"\">"
                             + "<span class=" + "\"thumb-info-title\">"
@@ -645,6 +646,15 @@
             error: function (xhr, type, errerThrown) {
                 alert('网络异常,请稍候再试');
             }
+        });
+
+        $('li.isotope-item').click(function () {
+            location.href = "icodetail.html";
+        });
+
+        $("#sign_out").click(function () {
+            $("#personInfo").css('display','none');
+            app.setUserInfo({});
         });
     });
 </script>

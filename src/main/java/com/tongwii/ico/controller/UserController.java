@@ -70,7 +70,8 @@ public class UserController {
     @PostMapping("/register")
     public Result register(@RequestBody User user) {
         userService.register(user);
-        return Result.successResult("注册成功");
+        User userInfo = userService.findByUsername(user.getEmailAccount());
+        return Result.successResult("注册成功").add("userInfo", userInfo);
     }
 
     @ExceptionHandler(EmailExistException.class)
