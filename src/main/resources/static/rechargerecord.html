@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
     <link rel="stylesheet" href="assets/css/default.css">
-    <!--<script src="master/style-switcher/style.switcher.localstorage.js"></script>-->
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -192,7 +191,7 @@
                                     <a href="tokenwithdrawal.html"> 数字代币提现</a>
                                 </li>
                                 <li>
-                                    <a href="tokenwithdrawal.html"> 提现地址管理</a>
+                                    <a href="addressmanage.html"> 提现地址管理</a>
                                 </li>
                                 <li>
                                     <a href="rmbpush.html"> 人民币提现</a>
@@ -353,14 +352,15 @@
             }
         });
         $("#sign_out").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
+//        列表中退出登录的触发事件
         $("#signOut").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
     });
 </script>
