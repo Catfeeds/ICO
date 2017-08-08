@@ -78,26 +78,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                     // 允许授权请求
                     .authorizeRequests()
-                    // 允许匿名资源请求
-                    .antMatchers(
-                            HttpMethod.GET,
-                            "/",
-                            "/*.html",
-                            "/favicon.ico",
-                            "/assets/**",
-                            "/**/*.html",
-                            "/**/*.css",
-                            "/**/*.js",
-                            "/**/*.jpg",
-                            "/**/*.jpeg",
-                            "/**/*.png"
-                    ).permitAll()
-                    // 认证放行
-                    .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                    .antMatchers(HttpMethod.PUT, "/auth/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/user/register").permitAll()
-                    // 除上面外的所有请求全部需要鉴权认证
-                    .anyRequest().authenticated();
+                    .antMatchers("/user/**").hasAnyRole("USER", "ADMIN");
             // 基于定制JWT安全过滤器
             httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         }

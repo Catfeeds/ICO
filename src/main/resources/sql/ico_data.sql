@@ -3,8 +3,8 @@
 -- Records of user
 -- ----------------------------
 
-INSERT INTO `user` VALUES (1, 'user', '$2a$10$WIUYeUw1.TcoKiIxUAf.7Ot5QN3CZNlP0.nts5USRBsvu5F7D02.2', 'user', '用户', '18829012080', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `user` VALUES (2, 'admin', '$2a$10$i689y0x9zhtnFtmGmkOPRuLChsxsdBbHLN2/bpMicev/VPcdZAnrC', 'admin', '管理员', '18829012090', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user` VALUES (1, 'user', '$2a$10$WIUYeUw1.TcoKiIxUAf.7Ot5QN3CZNlP0.nts5USRBsvu5F7D02.2', 'user', '用户', '18829012080', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL);
+INSERT INTO `user` VALUES (2, 'admin', '$2a$10$i689y0x9zhtnFtmGmkOPRuLChsxsdBbHLN2/bpMicev/VPcdZAnrC', 'admin', '管理员', '18829012090', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Records of role
@@ -30,4 +30,23 @@ INSERT INTO `project` VALUES ('4', 'Postbase', '基础发行币', '2017-08-03 16
 INSERT INTO `project` VALUES ('5', 'EOS', '观测星币', '2017-08-03 16:00:44', '2017-08-31 13:37:42', '0', '1', null, null, '10000', '为商用分布式应用设计的一款区块链操作系统，在分布式应用程序开发过程中，如果能有一个底层区块链操作系统就能大大降低开发难度，让开发者专注于更重要的事情－业务逻辑的探索。', '1', null, null);
 INSERT INTO `project` VALUES ('6', 'OmiseGo', 'OmiseGo代币', '2017-08-03 16:04:38', '2017-08-02 13:41:51', '2', '1', null, null, '500', 'OmiseGO是一个基于以太坊公共金融技术的主流数字钱包，可以跨管辖区域和组织单点，同时可以使用法币和去中心化货币，提供实时点对点的价值交换和支付服务，旨在实现金融包容性并颠覆现有机构，从2017年第四季度开始，每个人都可以使用OmiseGo网络和数字钱包框架。', '1', null, null);
 
+-- ----------------------------
+-- Records of token_money
+-- ----------------------------
 
+INSERT INTO `token_money` VALUES (1, '云币', 'ETC', NULL, NULL, NULL, NULL);
+INSERT INTO `token_money` VALUES (2, '比特币', 'BTC', NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Records of token_detail
+-- ----------------------------
+
+INSERT INTO `token_detail` VALUES (1, 1, NULL, 1000, 6000, 10000, NULL, NULL);
+INSERT INTO `token_detail` VALUES (2, 2, NULL, 20, 50, 20, NULL, NULL);
+
+-- ----------------------------
+-- Records of user_wallet
+-- ----------------------------
+
+INSERT INTO `user_wallet` VALUES (3, 1, NULL, 2, '比特币钱包', 1, NULL);
+INSERT INTO `user_wallet` VALUES (4, 2, NULL, 2, '云币钱包', 1, NULL);

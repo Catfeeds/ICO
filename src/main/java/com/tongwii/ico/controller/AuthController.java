@@ -4,6 +4,7 @@ import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.security.JwtUser;
+import com.tongwii.ico.service.UserService;
 import com.tongwii.ico.util.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,13 +36,11 @@ public class AuthController {
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 创建身份验证token
-     *
-     * @param user
-     * @return
-     * @throws AuthenticationException
      */
     @PostMapping("/login")
     public Result createAuthenticationToken (@RequestBody User user) throws AuthenticationException {
@@ -55,15 +54,14 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication( authentication );
         final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
         final String token = jwtTokenUtil.generateToken( userDetails);
+        // 通过email查询数据库中的唯一记录
+        User userInfo = userService.findByUsername(user.getEmailAccount());
         // 返回
-        return Result.successResult().add( "token", token );
+        return Result.successResult().add( "token", token ).add("userInfo", userInfo);
     }
 
     /**
      * 刷新并认证token
-     *
-     * @param request
-     * @return
      */
     @PutMapping("/refresh")
     public Result refreshAndGetAuthenticationToken ( HttpServletRequest request ) {

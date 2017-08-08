@@ -5,12 +5,12 @@ import org.springframework.security.authentication.encoding.PlaintextPasswordEnc
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * The type Encoder test.
+ * The type DesEncoder test.
  *
  * @author Zeral
  * @date 2017-08-03
  */
-public class EncoderTest {
+public class EncoderTest extends Tester {
 
     @Test
     public void encoder() {

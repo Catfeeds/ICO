@@ -48,10 +48,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public void register(User user) {
-        if(emailAccountExist(user.getEmailAccount())) {
-            throw new EmailExistException(
-                    "该账号已存在:" + user.getEmailAccount());
-        }
         // 加密密码
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         // 设置用户昵称

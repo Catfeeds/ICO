@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
     <link rel="stylesheet" href="assets/css/default.css">
-    <!--<script src="master/style-switcher/style.switcher.localstorage.js"></script>-->
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -87,13 +86,12 @@
                         </form>
                     </div>
                     <div class="profile-view">
-                        <ul>
+                        <ul id="personInfo" style="display:none">
                             <li>
                                 <img alt="#" src="assets/extra-images/user-img.jpg">
                                 <i class="icon-arrow-down8"></i>
                                 <div class="dropdown-area">
-                                    <h5>Yamo</h5>
-                                    <span>会员自2014年5月20日起</span>
+                                    <h5 id="userName"></h5>
                                     <ul class="dropdown">
                                         <li><a href="causes.html"><i class="icon-flag5"></i>我的目标</a></li>
                                         <li><a href="saved.html"><i class="icon-file-text-o"></i>保存目标</a></li>
@@ -102,14 +100,14 @@
                                         <li><a href="profilesetting.html"><i class="icon-pie2"></i>个人档案</a></li>
                                         <li><a href="create-new-cause.html"><i class="icon-plus6"></i>创建新项目</a></li>
                                     </ul>
-                                    <a class="sign-btn" href="#"><i class="icon-logout"></i>退出登录</a>
+                                    <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <a href="sign.html" class="free-btn">免费开启</a></div>
+                </div>
+                <div class="mob-nav"></div>
             </div>
-            <div class="mob-nav"></div>
         </div>
     </header>
     <!-- Header -->
@@ -193,7 +191,7 @@
                                     <a href="tokenwithdrawal.html"> 数字代币提现</a>
                                 </li>
                                 <li>
-                                    <a href="tokenwithdrawal.html"> 提现地址管理</a>
+                                    <a href="addressmanage.html"> 提现地址管理</a>
                                 </li>
                                 <li>
                                     <a href="rmbpush.html"> 人民币提现</a>
@@ -222,7 +220,7 @@
                                     <a href="helpmessage.html"> 帮助留言</a>
                                 </li>
                                 <li>
-                                    <a href="#"> 退出登录</a>
+                                    <a id="signOut"> 退出登录</a>
                                 </li>
                             </ul>
                             <hr>
@@ -236,7 +234,6 @@
 
                     <div class="col-md-9">
                         <h2><strong>数字代币ICO</strong></h2>
-
                         <div class="row">
                             <div class="form-group">
                                 <label class="col-md-12 control-label" style="text-align: center;">目前持有数字代币
@@ -246,14 +243,11 @@
                                 </label>
                             </div>
                         </div>
-
                         <div class="row">
                             <header class="panel-heading">
                                 <h2 class="panel-title">填写数字代币ICO信息</h2>
                             </header>
-
-                            <div class="panel-body">
-
+                            <div class="panel-body" id="IcoProject">
                                 <div class="form-group">
                                     <div class='col-md-12' style="padding-top:40px;padding-bottom:20px;font-size:16px;">
                                         请选择锁定即将开始项目
@@ -298,8 +292,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="alert alert-info fade in nomargin"></div>
-                        <div class="col-md-12">
+                        <div class="alert alert-info fade in nomargin" id="bar"></div>
+                        <div class="col-md-12" id="form">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -313,7 +307,6 @@
                                 <tbody>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                     <hr>
@@ -391,10 +384,17 @@
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
+<script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            $("#personInfo").css('display', 'none');
+        } else {
+            $("#personInfo").css('display', 'block');
+            $("#userName").text(app.getUserInfo().nickName);
+        }
         jQuery('.flexslider').flexslider({
             animation: "slide",
             prevText: "<em class='icon-arrow-left9'></em>",
@@ -402,6 +402,16 @@
             start: function (slider) {
                 jQuery('body').removeClass('loading');
             }
+        });
+        $("#sign_out").click(function () {
+            $("#personInfo").css('display', 'none');
+            app.setUserInfo({});
+            location.href = "index.html";
+        });
+        $("#signOut").click(function () {
+            $("#personInfo").css('display', 'none');
+            app.setUserInfo({});
+            location.href = "index.html";
         });
     });
 </script>

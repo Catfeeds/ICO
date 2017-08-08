@@ -29,6 +29,9 @@ public class TokenDetail {
     @Column(name = "token_money_whitePaper_en_url")
     private String tokenMoneyWhitepaperEnUrl;
 
+    @Transient
+    private TokenMoney tokenMoney;
+
     /**
      * @return id
      */
@@ -139,5 +142,13 @@ public class TokenDetail {
      */
     public void setTokenMoneyWhitepaperEnUrl(String tokenMoneyWhitepaperEnUrl) {
         this.tokenMoneyWhitepaperEnUrl = tokenMoneyWhitepaperEnUrl;
+    }
+
+    public TokenMoney getTokenMoney() {
+        return tokenMoney;
+    }
+
+    public void setTokenMoney(TokenMoney tokenMoney) {
+        this.tokenMoney = tokenMoney;
     }
 }

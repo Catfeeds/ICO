@@ -1,6 +1,6 @@
 package com.tongwii.ico.security;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.tongwii.ico.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,12 +20,14 @@ import java.util.stream.Collectors;
 public class JwtUser implements UserDetails {
     private Integer id;
     private String username;
+    @JSONField(serialize = false)
     private String password;
     private String nickName;
     private String realName;
     private String phone;
     private String idCard;
     private boolean enabled;
+    @JSONField(serialize = false)
     private List<Role> roles;
 
     @Override
@@ -38,7 +40,6 @@ public class JwtUser implements UserDetails {
         return this.enabled;
     }
 
-    @JsonIgnore
     @Override
     public Collection< ? extends GrantedAuthority > getAuthorities () {
         if ( CollectionUtils.isEmpty( this.getRoles() ) ) {
@@ -49,25 +50,25 @@ public class JwtUser implements UserDetails {
                 .collect( Collectors.toList() );
     }
 
-    @JsonIgnore
+    @JSONField(serialize=false)
     @Override
     public String getPassword () {
         return this.password;
     }
 
-    @JsonIgnore
+    @JSONField(serialize=false)
     @Override
     public boolean isAccountNonExpired () {
         return true;
     }
 
-    @JsonIgnore
+    @JSONField(serialize=false)
     @Override
     public boolean isAccountNonLocked () {
         return true;
     }
 
-    @JsonIgnore
+    @JSONField(serialize=false)
     @Override
     public boolean isCredentialsNonExpired () {
         return true;
