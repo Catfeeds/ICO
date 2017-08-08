@@ -1,6 +1,5 @@
 package com.tongwii.ico.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
@@ -42,10 +41,6 @@ public class AuthController {
 
     /**
      * 创建身份验证token
-     *
-     * @param user
-     * @return
-     * @throws AuthenticationException
      */
     @PostMapping("/login")
     public Result createAuthenticationToken (@RequestBody User user) throws AuthenticationException {
@@ -67,9 +62,6 @@ public class AuthController {
 
     /**
      * 刷新并认证token
-     *
-     * @param request
-     * @return
      */
     @PutMapping("/refresh")
     public Result refreshAndGetAuthenticationToken ( HttpServletRequest request ) {

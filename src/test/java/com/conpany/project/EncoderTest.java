@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * @author Zeral
  * @date 2017-08-03
  */
-public class EncoderTest {
+public class EncoderTest extends Tester {
 
     @Test
     public void encoder() {

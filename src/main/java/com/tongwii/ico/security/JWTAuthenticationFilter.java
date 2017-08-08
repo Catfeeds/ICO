@@ -1,5 +1,6 @@
 package com.tongwii.ico.security;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
@@ -49,8 +50,11 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal ( HttpServletRequest request,
                                       HttpServletResponse response,
                                       FilterChain chain ) throws ServletException, IOException {
-
-        final String authToken = request.getHeader( this.tokenHeader );
+        String token = request.getHeader( this.tokenHeader );
+        if(StringUtils.isBlank(token)) {
+            token = request.getParameter(this.tokenHeader);
+        }
+        final String authToken = token;
         final String username  = jwtTokenUtil.getUsernameFromToken( authToken );
 
         if ( logger.isDebugEnabled() ) {

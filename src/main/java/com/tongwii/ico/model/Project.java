@@ -1,10 +1,11 @@
 package com.tongwii.ico.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.tongwii.ico.util.CustomDateSerializer;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 public class Project {
     @Id
@@ -27,24 +28,39 @@ public class Project {
     @Column(name = "third_endorsement")
     private Boolean thirdEndorsement;
 
+    @JSONField(serialize = false)
     @Column(name = "output_token_money_detail_id")
     private Integer outputTokenMoneyDetailId;
 
+    @JSONField(serialize = false)
     @Column(name = "input_token_money_datail_id")
     private Integer inputTokenMoneyDatailId;
 
     @Column(name = "part_person_number")
     private Integer partPersonNumber;
 
+    @JSONField(serialize = false)
     @Column(name = "create_user_id")
     private Integer createUserId;
 
     @Column(name = "project_wallet_id")
     private Integer projectWalletId;
 
+    @Column(name = "content")
+    private String content;
+
     private Byte state;
 
     private String des;
+
+    @Transient
+    private TokenDetail inputTokenDetail;
+
+    @Transient
+    private TokenDetail outPutTokenDetail;
+
+    @Transient
+    private User createUser;
 
     /**
      * @return id
@@ -226,5 +242,37 @@ public class Project {
      */
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public TokenDetail getInputTokenDetail() {
+        return inputTokenDetail;
+    }
+
+    public void setInputTokenDetail(TokenDetail inputTokenDetail) {
+        this.inputTokenDetail = inputTokenDetail;
+    }
+
+    public TokenDetail getOutPutTokenDetail() {
+        return outPutTokenDetail;
+    }
+
+    public void setOutPutTokenDetail(TokenDetail outPutTokenDetail) {
+        this.outPutTokenDetail = outPutTokenDetail;
+    }
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
     }
 }

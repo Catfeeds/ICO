@@ -13,12 +13,15 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="id_card" jdbcType="VARCHAR" property="idCard" />
     <result column="is_validate_email" jdbcType="BIT" property="isValidateEmail" />
+    <result column="is_validate_user" jdbcType="BIT" property="isValidateUser" />
     <result column="is_enabled" jdbcType="BIT" property="isEnabled" />
     <result column="is_validate_phone" jdbcType="BIT" property="isValidatePhone" />
     <result column="avator_url" jdbcType="VARCHAR" property="avatorUrl" />
     <result column="idCard_front_url" jdbcType="VARCHAR" property="idcardFrontUrl" />
     <result column="idCard_back_url" jdbcType="VARCHAR" property="idcardBackUrl" />
     <result column="idCard_all_url" jdbcType="VARCHAR" property="idcardAllUrl" />
+    <result column="verify_code" jdbcType="INTEGER" property="verifyCode" />
+    <result column="expire_date" jdbcType="TIMESTAMP" property="expireDate" />
     <result column="des" jdbcType="LONGVARCHAR" property="des" />
   </resultMap>
 </mapper>

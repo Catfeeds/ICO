@@ -3,8 +3,8 @@
 -- Records of user
 -- ----------------------------
 
-INSERT INTO `user` VALUES (1, 'user', '$2a$10$WIUYeUw1.TcoKiIxUAf.7Ot5QN3CZNlP0.nts5USRBsvu5F7D02.2', 'user', '用户', '18829012080', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `user` VALUES (2, 'admin', '$2a$10$i689y0x9zhtnFtmGmkOPRuLChsxsdBbHLN2/bpMicev/VPcdZAnrC', 'admin', '管理员', '18829012090', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user` VALUES (1, 'user', '$2a$10$WIUYeUw1.TcoKiIxUAf.7Ot5QN3CZNlP0.nts5USRBsvu5F7D02.2', 'user', '用户', '18829012080', NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user` VALUES (2, 'admin', '$2a$10$i689y0x9zhtnFtmGmkOPRuLChsxsdBbHLN2/bpMicev/VPcdZAnrC', 'admin', '管理员', '18829012090', NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Records of role

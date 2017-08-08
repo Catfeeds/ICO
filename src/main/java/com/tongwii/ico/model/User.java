@@ -1,6 +1,12 @@
 package com.tongwii.ico.model;
 
-import javax.persistence.*;
+import com.alibaba.fastjson.annotation.JSONField;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.Date;
 
 public class User {
     @Id
@@ -10,6 +16,7 @@ public class User {
     @Column(name = "email_account")
     private String emailAccount;
 
+    @JSONField(serialize = false)
     private String password;
 
     @Column(name = "nick_name")
@@ -32,6 +39,9 @@ public class User {
     @Column(name = "is_validate_phone")
     private Boolean isValidatePhone;
 
+    @Column(name = "is_validate_user")
+    private Boolean isValidateUser;
+
     @Column(name = "avator_url")
     private String avatorUrl;
 
@@ -45,6 +55,14 @@ public class User {
     private String idcardAllUrl;
 
     private String des;
+
+    @JSONField(serialize = false)
+    @Column(name = "veriry_code")
+    private Integer veriryCode;
+
+    @JSONField(serialize = false)
+    @Column(name = "expire_date")
+    private Date expireDate;
 
     /**
      * @return id
@@ -158,6 +176,30 @@ public class User {
         this.isValidateEmail = isValidateEmail;
     }
 
+    public Boolean getValidateEmail() {
+        return isValidateEmail;
+    }
+
+    public void setValidateEmail(Boolean validateEmail) {
+        isValidateEmail = validateEmail;
+    }
+
+    public Boolean getValidatePhone() {
+        return isValidatePhone;
+    }
+
+    public void setValidatePhone(Boolean validatePhone) {
+        isValidatePhone = validatePhone;
+    }
+
+    public Boolean getValidateUser() {
+        return isValidateUser;
+    }
+
+    public void setValidateUser(Boolean validateUser) {
+        isValidateUser = validateUser;
+    }
+
     /**
      * @return is_enabled
      */
@@ -170,20 +212,6 @@ public class User {
      */
     public void setEnabled(Boolean isEnabled) {
         this.isEnabled = isEnabled;
-    }
-
-    /**
-     * @return is_validate_phone
-     */
-    public Boolean getIsValidatePhone() {
-        return isValidatePhone;
-    }
-
-    /**
-     * @param isValidatePhone
-     */
-    public void setIsValidatePhone(Boolean isValidatePhone) {
-        this.isValidatePhone = isValidatePhone;
     }
 
     /**
@@ -254,5 +282,21 @@ public class User {
      */
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public Integer getVeriryCode() {
+        return veriryCode;
+    }
+
+    public void setVeriryCode(Integer veriryCode) {
+        this.veriryCode = veriryCode;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
     }
 }

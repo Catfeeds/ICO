@@ -1,5 +1,6 @@
 package com.tongwii.ico.security;
 
+import com.tongwii.ico.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -133,6 +134,19 @@ public class JwtTokenUtil implements Serializable {
     /**
      * 构建token
      *
+     * @param user the user
+     * @return string
+     */
+    public String generateToken ( User user ) {
+        Map< String, Object > claims = new HashMap<>();
+        claims.put( CLAIM_KEY_USERNAME, user.getEmailAccount() );
+        claims.put( CLAIM_KEY_CREATED, new Date() );
+        return generateToken( claims );
+    }
+
+    /**
+     * 构建token
+     *
      * @param claims
      * @return
      */
@@ -150,7 +164,7 @@ public class JwtTokenUtil implements Serializable {
      * @param number 单位：秒
      * @return
      */
-    private Date generateExpirationDate(Date date, int number) {
+    public Date generateExpirationDate(Date date, int number) {
         Calendar instance = Calendar.getInstance();
         instance.setTime( date );
         instance.add( Calendar.SECOND, number );

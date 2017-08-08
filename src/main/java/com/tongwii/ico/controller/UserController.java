@@ -4,15 +4,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.exception.EmailExistException;
 import com.tongwii.ico.exception.StorageFileNotFoundException;
 import com.tongwii.ico.model.User;
+import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.service.FileService;
 import com.tongwii.ico.service.UserService;
 import com.tongwii.ico.util.ContextUtils;
+import com.tongwii.ico.util.MessageUtil;
+import com.tongwii.ico.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,12 +25,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLConnection;
 import java.nio.file.Path;
+import java.util.Date;
 import java.util.List;
 
 /**
 * Created by Zeral on 2017-08-02.
 */
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
     @Autowired
@@ -35,31 +39,41 @@ public class UserController {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private MessageUtil messageUtil;
+
     @PostMapping
+    @ResponseBody
     public Result add(@RequestBody User user) {
         userService.save(user);
         return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
+    @ResponseBody
     public Result delete(@PathVariable Integer id) {
         userService.deleteById(id);
         return Result.successResult();
     }
 
     @PutMapping
+    @ResponseBody
     public Result update(@RequestBody User user) {
         userService.update(user);
         return Result.successResult();
     }
 
     @GetMapping("/{id}")
+    @ResponseBody
     public Result detail(@PathVariable Integer id) {
         User user = userService.findById(id);
         return Result.successResult(user);
     }
 
     @GetMapping
+    @ResponseBody
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
         List<User> list = userService.findAll();
@@ -67,19 +81,76 @@ public class UserController {
         return Result.successResult(pageInfo);
     }
 
+    /**
+     * 注册
+     */
     @PostMapping("/register")
+    @ResponseBody
     public Result register(@RequestBody User user) {
+        if(!ValidateUtil.validateEmail(user.getEmailAccount())) {
+            return Result.failResult("邮箱格式不正确");
+        }
+        if(userService.emailAccountExist(user.getEmailAccount())) {
+            return Result.failResult("该账号已存在:" + user.getEmailAccount());
+        }
+
+        //生成token
+        String token = jwtTokenUtil.generateToken(user);
+        messageUtil.sendRegisterMail(user.getEmailAccount(), token);
         userService.register(user);
-        User userInfo = userService.findByUsername(user.getEmailAccount());
-        return Result.successResult("注册成功").add("userInfo", userInfo);
+        return Result.successResult("注册成功");
     }
 
-    @ExceptionHandler(EmailExistException.class)
-    public Result handleStorageFileNotFound(EmailExistException e) {
-        return Result.failResult(e.getMessage());
+    /**
+     * 验证手机号
+     */
+    @PostMapping("/validatePhone")
+    @ResponseBody
+    public Result validatePhone(@RequestParam("phone") String phone) {
+        if(!ValidateUtil.validateEmail(phone)) {
+            return Result.failResult("手机号码格式不正确");
+        }
+        try {
+            User user = userService.findById(ContextUtils.getUserId());
+            user.setPhone(phone);
+            Integer code = messageUtil.getSixRandNum();
+            user.setVeriryCode(code);
+            user.setExpireDate(jwtTokenUtil.generateExpirationDate(new Date(), 1800));
+            messageUtil.sendRegisterSMS(user.getPhone(), code);
+            userService.update(user);
+        } catch (Exception e) {
+            return Result.errorResult("发送验证码失败");
+        }
+        return Result.successResult("注册成功");
     }
 
+    /**
+     * 验证邮箱
+     */
+    @GetMapping("/validateEmail")
+    public String validateEmail() {
+        Integer userId = ContextUtils.getUserId();
+        User user = userService.findById(userId);
+        user.setIsValidateEmail(true);
+        userService.update(user);
+        return "/sign";
+    }
+
+    /**
+     * 获取用户数据
+     */
+    @GetMapping("/userInfo")
+    @ResponseBody
+    public Result userInfo() {
+        User user = userService.findById(ContextUtils.getUserId());
+        return Result.successResult(user);
+    }
+
+    /**
+     * 上传头像
+     */
     @PostMapping("/avator")
+    @ResponseBody
     public Result handleFileUpload(@RequestParam("file") MultipartFile file) {
         fileService.store(file);
         Path path = fileService.load(file.getOriginalFilename());
@@ -98,7 +169,11 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * 获取头像文件
+     */
     @GetMapping("/avator/{filename:.+}")
+    @ResponseBody
     public void avatorFile(@PathVariable String filename, HttpServletResponse response) throws IOException {
 
         Resource file = fileService.loadAsResource(filename);
@@ -112,4 +187,5 @@ public class UserController {
 
         FileCopyUtils.copy(inputStream, response.getOutputStream());
     }
+
 }
