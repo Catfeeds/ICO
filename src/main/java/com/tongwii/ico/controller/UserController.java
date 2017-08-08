@@ -114,7 +114,7 @@ public class UserController {
             User user = userService.findById(ContextUtils.getUserId());
             user.setPhone(phone);
             Integer code = messageUtil.getSixRandNum();
-            user.setVeriryCode(code);
+            user.setVerifyCode(code);
             user.setExpireDate(jwtTokenUtil.generateExpirationDate(new Date(), 1800));
             messageUtil.sendRegisterSMS(user.getPhone(), code);
             userService.update(user);

@@ -57,8 +57,8 @@ public class User {
     private String des;
 
     @JSONField(serialize = false)
-    @Column(name = "veriry_code")
-    private Integer veriryCode;
+    @Column(name = "verify_code")
+    private Integer verifyCode;
 
     @JSONField(serialize = false)
     @Column(name = "expire_date")
@@ -284,12 +284,12 @@ public class User {
         this.des = des;
     }
 
-    public Integer getVeriryCode() {
-        return veriryCode;
+    public Integer getVerifyCode() {
+        return verifyCode;
     }
 
-    public void setVeriryCode(Integer veriryCode) {
-        this.veriryCode = veriryCode;
+    public void setVerifyCode(Integer verifyCode) {
+        this.verifyCode = verifyCode;
     }
 
     public Date getExpireDate() {
