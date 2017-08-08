@@ -233,136 +233,168 @@
                     </div>
 
                     <div class="col-md-9">
-                        <h2><strong>人民币提现</strong></h2>
+                        <div class="col-md-12" id="warningInfo" style="display: block">
+                            <div class="featured-box featured-box-primary featured-box-text-left">
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h2>提示信息 </h2>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>
+                                                    <strong>为了保障您的权益，请先填写您的真实姓名和身份证信息，为了确保您最终可以获得您的投资收益，请务必填写真实信息</strong>
+                                                </p>
 
-                        <div class="row">
-                            <header class="panel-heading">
-                                <h2 class="panel-title">人民币提现申请</h2>
-                            </header>
-                            <form class="form-horizontal form-bordered" action="?p=withdrawCNY&do=withdrawCNY"
-                                  method="post">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">目前持有资金</label>
-                                        <label class="col-md-3 control-label"
-                                               style="text-align:left;">0.00元（人民币）</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">提现者姓名</label>
-                                        <div class="col-md-8">
-                                            <div class="input-group">
-                                                王雅默
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">提现金额（元）</label>
-                                        <div class="col-md-8">
-                                            <div class="input-group">
-                                                <input type="text" name="number" class="form-control" value=""
-                                                       placeholder=""><BR>
-                                                <input type="hidden" name="truename" value="王雅默">
+                                            <div class="col-md-12 row">
+                                                <input class="cs-bgcolor m-xs m-lg btn btn-lg" type="button" value="返回"
+                                                       style="color: #ffffff; font-weight: bold;"
+                                                       onclick="javascript:window.location.href='contect.html';"/>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">提现银行</label>
-                                        <div class="col-md-8">
-                                            <div class="input-group">
-                                                <select class="form-control" name="flagcode" required>
-                                                    <option value='cmb'>招商银行</option>
-                                                    <option value='icbc'>工商银行</option>
-                                                    <option value='cbc'>建设银行</option>
-                                                    <option value='bc'>中国银行</option>
-                                                    <option value='bcm'>交通银行</option>
-                                                    <option value='abc'>农业银行</option>
-                                                    <option value='cmbc'>民生银行</option>
-                                                    <option value='cncb'>中信银行</option>
-                                                    <option value='hxb'>华夏银行</option>
-                                                    <option value='cib'>兴业银行</option>
-                                                    <option value='spdb'>浦东发展银行</option>
-                                                    <option value='bob'>北京银行</option>
-                                                    <option value='ceb'>光大银行</option>
-                                                    <option value='sdb'>深圳发展银行</option>
-                                                    <option value='pab'>平安银行</option>
-                                                    <option value='gdb'>广东发展银行</option>
-                                                    <option value='psbc'>中国邮政储蓄银行</option>
-                                                    <option value='bos'>上海银行</option>
-                                                </select><BR>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">银行账号</label>
-                                        <div class="col-md-8">
-                                            <div class="input-group">
-                                                <input type="text" name="memo" class="form-control" value=""
-                                                       placeholder="" required/><BR>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">开户行</label>
-                                        <div class="col-md-8">
-                                            <div class="input-group">
-                                                <input type="text" name="memo" class="form-control" value=""
-                                                       placeholder="" required/><BR>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group" style="margin-left: 20px;">
-                                        <label class="col-sm-2 control-label">验证码</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" name="verifycode" value="" class="form-control"
-                                                   style="width:140px;" required/>
-                                        </div>
-                                        <div class="col-sm-7">
-                                            <input type="button" id="sendsms" name="sendsms" class="btn btn-primary"
-                                                   onclick="javascript:sendSMS('18409272347');myrefresh();"
-                                                   value="发送手机验证码"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label"></label>
-                                        <div class="col-md-6 col-xs-11">
-                                            <button id="ms_example7-toggle" class="btn btn-primary" type="submit">
-                                                递交信息
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                            <div class="alert alert-info fade in nomargin">
-                                ICO.TT自2017年6月15日起，每笔人民币提现收取千分之一手续费，每笔最低5元，最高不超过100元的手续费。
                             </div>
-                            <hr>
+                        </div>
+
+                        <div id="officalInfo" style="display: none">
+                            <h2><strong>人民币提现</strong></h2>
+
                             <div class="row">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">人民币提现申请列表</h2>
+                                    <h2 class="panel-title">人民币提现申请</h2>
                                 </header>
-                                <div class="col-md-12">
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>时间</th>
-                                            <th>提现金额</th>
-                                            <th>银行</th>
-                                            <th>状态</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
+                                <form class="form-horizontal form-bordered" action="?p=withdrawCNY&do=withdrawCNY"
+                                      method="post">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">目前持有资金</label>
+                                            <label class="col-md-3 control-label"
+                                                   style="text-align:left;">0.00元（人民币）</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">提现者姓名</label>
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    王雅默
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">提现金额（元）</label>
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <input type="text" name="number" class="form-control" value=""
+                                                           placeholder=""><BR>
+                                                    <input type="hidden" name="truename" value="王雅默">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">提现银行</label>
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <select class="form-control" name="flagcode" required>
+                                                        <option value='cmb'>招商银行</option>
+                                                        <option value='icbc'>工商银行</option>
+                                                        <option value='cbc'>建设银行</option>
+                                                        <option value='bc'>中国银行</option>
+                                                        <option value='bcm'>交通银行</option>
+                                                        <option value='abc'>农业银行</option>
+                                                        <option value='cmbc'>民生银行</option>
+                                                        <option value='cncb'>中信银行</option>
+                                                        <option value='hxb'>华夏银行</option>
+                                                        <option value='cib'>兴业银行</option>
+                                                        <option value='spdb'>浦东发展银行</option>
+                                                        <option value='bob'>北京银行</option>
+                                                        <option value='ceb'>光大银行</option>
+                                                        <option value='sdb'>深圳发展银行</option>
+                                                        <option value='pab'>平安银行</option>
+                                                        <option value='gdb'>广东发展银行</option>
+                                                        <option value='psbc'>中国邮政储蓄银行</option>
+                                                        <option value='bos'>上海银行</option>
+                                                    </select><BR>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">银行账号</label>
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <input type="text" name="memo" class="form-control" value=""
+                                                           placeholder="" required/><BR>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">开户行</label>
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <input type="text" name="memo" class="form-control" value=""
+                                                           placeholder="" required/><BR>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" style="margin-left: 20px;">
+                                            <label class="col-sm-2 control-label">验证码</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" name="verifycode" value="" class="form-control"
+                                                       style="width:140px;" required/>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <input type="button" id="sendsms" name="sendsms"
+                                                       class="cs-bgcolor btn"
+                                                       style="color: #ffffff; font-weight: bold;"
+                                                       onclick="javascript:sendSMS('18409272347');myrefresh();"
+                                                       value="发送手机验证码"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label"></label>
+                                            <div class="col-md-6 col-xs-11">
+                                                <button id="ms_example7-toggle" class="btn cs-bgcolor"
+                                                        style="color: #ffffff; font-weight: bold;"
+                                                        type="button">
+                                                    递交信息
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="alert alert-info fade in nomargin">
+                                    ICO.TT自2017年6月15日起，每笔人民币提现收取千分之一手续费，每笔最低5元，最高不超过100元的手续费。
                                 </div>
+                                <hr>
+                                <div class="row">
+                                    <header class="panel-heading">
+                                        <h2 class="panel-title">人民币提现申请列表</h2>
+                                    </header>
+                                    <div class="col-md-12">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>时间</th>
+                                                <th>提现金额</th>
+                                                <th>银行</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
                             </div>
-                            <hr>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+</div>
+</main>
 </div>
 
 
@@ -443,6 +475,11 @@
         } else {
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
+            //此处需要看看是否有身份证验证，如果验证通过就展现具体的界面，如果没有就不展现界面展现提示信息
+            if (app.getUserInfo().validateUser) {
+                $("#warningInfo").css('display', 'none');
+                $("#officalInfo").css('display', 'block');
+            }
         }
         jQuery('.flexslider').flexslider({
             animation: "slide",
@@ -453,15 +490,16 @@
             }
         });
         $("#sign_out").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
         $("#signOut").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
+
     });
 </script>
 </body>

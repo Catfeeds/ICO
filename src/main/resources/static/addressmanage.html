@@ -67,7 +67,7 @@
                                     <li><a href="about.html">关于我们</a></li>
                                     <li><a href="sign.html">登录/注册</a></li>
                                     <li><a href="services.html">服务与帮助</a></li>
-                                    <li><a href="contect.html">我的信息</a></li>
+                                    <li><a href="contect.html" id="contect">我的信息</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -86,13 +86,12 @@
                         </form>
                     </div>
                     <div class="profile-view">
-                        <ul>
+                        <ul id="personInfo" style="display:none">
                             <li>
                                 <img alt="#" src="assets/extra-images/user-img.jpg">
                                 <i class="icon-arrow-down8"></i>
                                 <div class="dropdown-area">
-                                    <h5>Yamo</h5>
-                                    <span>会员自2014年5月20日起</span>
+                                    <h5 id="userName"></h5>
                                     <ul class="dropdown">
                                         <li><a href="causes.html"><i class="icon-flag5"></i>我的目标</a></li>
                                         <li><a href="saved.html"><i class="icon-file-text-o"></i>保存目标</a></li>
@@ -101,14 +100,14 @@
                                         <li><a href="profilesetting.html"><i class="icon-pie2"></i>个人档案</a></li>
                                         <li><a href="create-new-cause.html"><i class="icon-plus6"></i>创建新项目</a></li>
                                     </ul>
-                                    <a class="sign-btn" href="#"><i class="icon-logout"></i>退出登录</a>
+                                    <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <a href="sign.html" class="free-btn">免费开启</a></div>
+                </div>
+                <div class="mob-nav"></div>
             </div>
-            <div class="mob-nav"></div>
         </div>
     </header>
     <!-- Header -->
@@ -192,7 +191,7 @@
                                     <a href="tokenwithdrawal.html"> 数字代币提现</a>
                                 </li>
                                 <li>
-                                    <a href="tokenwithdrawal.html"> 提现地址管理</a>
+                                    <a href="addressmanage.html"> 提现地址管理</a>
                                 </li>
                                 <li>
                                     <a href="rmbpush.html"> 人民币提现</a>
@@ -207,7 +206,7 @@
                                             <a href="revise.html"> 修改登录密码</a>
                                         </li>
                                         <li>
-                                            <a href="index.html"> 修改交易密码 </a>
+                                            <a href="index.html"> 修改交易密码</a>
                                         </li>
                                         <li>
                                             <a href="google.html"> 设置谷歌两步验证</a>
@@ -221,7 +220,7 @@
                                     <a href="helpmessage.html"> 帮助留言</a>
                                 </li>
                                 <li>
-                                    <a href="#"> 退出登录</a>
+                                    <a id="signOut"> 退出登录</a>
                                 </li>
                             </ul>
                             <hr>
@@ -232,30 +231,142 @@
                                 <BR>ICO.TT是一个专业为ICO项目提供完整服务解决方案的平台，能够帮助投资者更好的了解进行ICO的区块链项目，并且帮助投资者更好的管理自己的投资资金和投资项目。</p>
                         </aside>
                     </div>
-                    <div class="col-md-9">
-                        <h2><strong>设置谷歌两步验证</strong></h2>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-xs-11">
-                                <form action="?p=2fp&do=submit" method="post">
-                                    请先用手机的谷歌验证APP扫描二维码<BR>
-                                    将手机上生成的动态验证码填写到输入框<BR>
-                                    请在安全的地方妥善保管您的密钥<BR>
-                                    <BR>
-                                    <input class="form-control" placeholder="" name="googlev" id="googlev" type="text">
-                                    <hr>
-                                    <input type="submit" value="递交" class="btn btn-primary mb-xl">
-                                </form>
-                            </div>
-                            <div class="col-md-4 col-xs-9" style="margin-left: 100px;"><img
-                                    src='assets/images/2.png'><BR>34034N325XMWFP6VPOWTM
+                    <div class="col-md-9">
+                        <div class="col-md-12" id="warningInfo" style="display: block">
+                            <div class="featured-box featured-box-primary featured-box-text-left">
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h2>提示信息 </h2>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>
+                                                    <strong>为了保障您的权益，请先填写您的真实姓名和身份证信息，为了确保您最终可以获得您的投资收益，请务必填写真实信息</strong>
+                                                </p>
+
+                                            </div>
+                                            <div class="col-md-12 row">
+                                                <input class="cs-bgcolor m-xs m-lg btn btn-lg" type="button" value="返回"
+                                                       style="color: #ffffff; font-weight: bold;"
+                                                       onclick="javascript:window.location.href='contect.html';"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div id="officalInfo" style="display: none">
+                            <h2><strong>提现地址管理</strong></h2>
+                            <div class="row">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">数字代币提现地址列表</h2>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
+                                        <div class="col-md-6 col-xs-11">没有数字代币提现地址</div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
+                                        <div class="col-md-6 col-xs-11"><span id="downlist" name="downlist"></span>
+                                            <input type="button" class="btn btn-default" id="btn"
+                                                   data-toggle="modal"
+                                                   data-target="#formModal" value="新建提现地址"/></div>
+                                    </div>
+                                    <div class="modal fade" id="formModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="formModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true"></button>
+                                                    <h4 class="modal-title" id="formModalLabel">新增数字代币提现地址</h4>
+                                                </div>
+                                                <form id="demo-form" action="?p=withdrawaddr&do=addaddress"
+                                                      class="form-horizontal mb-lg" method="post">
+                                                    <div class="modal-body">
+                                                        <div class="form-group mt-lg">
+                                                            <label class="col-sm-2 control-label">地址说明</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="a_name" value=""
+                                                                       class="form-control" placeholder="请输入对该地址的简称"
+                                                                       required/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">地址类型</label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-control" name="a_coin" required>
+                                                                    <option value='iou'>Tokex(直通充值)</option>
+                                                                    <option value='btc'>Bitcoin(btc)</option>
+                                                                    <option value='eth'>Ethereum(eth)</option>
+                                                                    <option value='qtum'>Qtum(qtum)</option>
+                                                                    <option value='trst'>WeTrust(trst)</option>
+                                                                    <option value='rlc'>RLC(rlc)</option>
+                                                                    <option value='gno'>Gnosis(gno)</option>
+                                                                    <option value='ins'>inChain(ins)</option>
+                                                                    <option value='ant'>Aragon(ant)</option>
+                                                                    <option value='crea'>Creativechain(crea)
+                                                                    </option>
+                                                                    <option value='fid'>Bitfid(fid)</option>
+                                                                    <option value='mgo'>MobileGo(mgo)</option>
+                                                                    <option value='snt'>Status(snt)</option>
+                                                                    <option value='pay'>Tenx(pay)</option>
+                                                                    <option value='omg'>OmiseGo(omg)</option>
+                                                                    <option value='eos'>EOS(eos)</option>
+                                                                    <option value='storj'>Storj(storj)</option>
+                                                                    <option value='taas'>Taas(taas)</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">地址</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="a_address" value=""
+                                                                       class="form-control" placeholder="请输入数字代币的地址"
+                                                                       required/>
+                                                            </div>
+                                                        </div>
 
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">验证码</label>
+                                                            <div class="col-sm-3">
+                                                                <input type="text" name="verifycode" value=""
+                                                                       class="form-control" style="width:140px;"
+                                                                       required/>
+                                                            </div>
+                                                            <div class="col-sm-7">
+                                                                <input type="button" id="sendsms" name="sendsms"
+                                                                       class="cs-bgcolor btn"
+                                                                       style="color: #ffffff; font-weight: bold;"
+                                                                       onclick="javascript:sendSMS();myrefresh();"
+                                                                       value="发送手机验证码"/>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">
+                                                            取消
+                                                        </button>
+                                                        <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="递交信息"/>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
             </div>
-            <hr>
         </div>
     </main>
 </div>
@@ -328,10 +439,22 @@
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
+<script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            $("#personInfo").css('display', 'none');
+        } else {
+            $("#personInfo").css('display', 'block');
+            $("#userName").text(app.getUserInfo().nickName);
+            //此处需要看看是否有身份证验证，如果验证通过就展现具体的界面，如果没有就不展现界面展现提示信息
+            if (app.getUserInfo().validateUser) {
+                $("#warningInfo").css('display', 'none');
+                $("#officalInfo").css('display', 'block');
+            }
+        }
         jQuery('.flexslider').flexslider({
             animation: "slide",
             prevText: "<em class='icon-arrow-left9'></em>",
@@ -340,6 +463,17 @@
                 jQuery('body').removeClass('loading');
             }
         });
+        $("#sign_out").click(function () {
+            $("#personInfo").css('display', 'none');
+            app.setUserInfo({});
+            location.href = "index.html";
+        });
+        $("#signOut").click(function () {
+            $("#personInfo").css('display', 'none');
+            app.setUserInfo({});
+            location.href = "index.html";
+        });
+
     });
 </script>
 </body>

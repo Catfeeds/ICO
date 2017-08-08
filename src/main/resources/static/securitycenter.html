@@ -278,8 +278,10 @@
 
                                         <div class="form-group">
                                             <label class="col-md-3 control-label"></label>
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#formModal"
-                                                    type="submit">递交
+                                            <button data-toggle="modal" data-target="#formModal"
+                                                    class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;"
+                                                    type="button"
+                                            >递交
                                             </button>
                                         </div>
                                     </form>
@@ -377,9 +379,9 @@
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display','none');
+            $("#personInfo").css('display', 'none');
         } else {
-            $("#personInfo").css('display','block');
+            $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
         }
         jQuery('.flexslider').flexslider({
@@ -391,14 +393,14 @@
             }
         });
         $("#sign_out").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
         $("#signOut").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
     });
 </script>

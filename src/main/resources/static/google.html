@@ -240,7 +240,7 @@
                             <div class="panel-body">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" style="text-align:right;">是否要开启两步验证？</label>
-                                    <div class="col-md-6 col-xs-11"><input type="button" value="是"
+                                    <div class="col-md-6 col-xs-11"><input value="是" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" type="button"
                                                                            onclick="window.location.href='address.html';">
                                     </div>
                                 </div>
@@ -341,14 +341,14 @@
             }
         });
         $("#sign_out").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
         $("#signOut").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
     });
 </script>

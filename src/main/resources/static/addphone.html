@@ -252,8 +252,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label"></label>
-                                        <button class="btn btn-primary" data-toggle="modal" data-target="#formModal"
-                                                type="submit">提交
+                                        <button class="cs-bgcolor m-xs m-lg btn btn-lg" data-toggle="modal" data-target="#formModal"
+                                                type="submit" style="color: #ffffff; font-weight: bold;">提交
                                         </button>
                                     </div>
                                 </form>
@@ -354,14 +354,14 @@
             }
         });
         $("#sign_out").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
         $("#signOut").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
     });
 </script>

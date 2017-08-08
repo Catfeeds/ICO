@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
     <link rel="stylesheet" href="assets/css/theme_cn.css">
+    <link href="assets/css/sweet-alert.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/theme-elements_0529.css">
     <link rel="stylesheet" href="assets/css/theme-blog.css">
     <link rel="stylesheet" href="assets/css/theme-shop.css">
@@ -188,7 +189,7 @@
                                     <a href="tokenwithdrawal.html"> 数字代币提现</a>
                                 </li>
                                 <li>
-                                    <a href="tokenwithdrawal.html"> 提现地址管理</a>
+                                    <a href="addressmanage.html"> 提现地址管理</a>
                                 </li>
                                 <li>
                                     <a href="rmbpush.html"> 人民币提现</a>
@@ -217,7 +218,7 @@
                                     <a href="helpmessage.html"> 帮助留言</a>
                                 </li>
                                 <li>
-                                    <a id="singOut"> 退出登录</a>
+                                    <a id="signOut"> 退出登录</a>
                                 </li>
                             </ul>
                             <hr>
@@ -241,7 +242,8 @@
                                         <label class="col-md-3 control-label"> 真实姓名</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input type="text" name="truename" class="form-control" value=""
+                                                <label class="control-label" id="trueNamelable" style="display: none"></label>
+                                                <input type="text" id="truename" class="form-control"
                                                        placeholder="" required>
                                             </div>
                                         </div>
@@ -250,7 +252,8 @@
                                         <label class="col-md-3 control-label"> 身份证号码/护照号码</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input type="text" name="identitycard" class="form-control" value=""
+                                                <label class="control-label" id="identityCardlable" style="display: none"></label>
+                                                <input type="text" id="identitycard" class="form-control"
                                                        placeholder="" required>
                                             </div>
                                         </div>
@@ -309,7 +312,8 @@
                                     <label class="col-md-3 control-label"> 手机 </label>
                                     <div class="col-md-6">
                                         <div class="input-group">
-                                            <label class="col-md-12 control-label"><a href='?p=editmobile'>添加手机号</a>
+                                            <label class="control-label"><a href='addphone.html'
+                                                                            style="color:#fe6500; font-weight: bold">添加手机号</a>
                                             </label>
                                         </div>
                                     </div>
@@ -405,15 +409,23 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
 <script src="assets/scripts/app.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display','none');
+            $("#personInfo").css('display', 'none');
         } else {
-            $("#personInfo").css('display','block');
+            $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
+            if(app.getUserInfo().validateUser){
+                $("#trueNamelable").text(app.getUserInfo().realName).css('display', 'block');
+                $("#identityCardlable").text(app.getUserInfo().idCard).css('display','block');
+                $("#truename").css('display', 'none');
+                $("#identitycard").css('display', 'none');
+                $("#submitRealInfo").css('display', 'none');
+            }
         }
         jQuery('.flexslider').flexslider({
             animation: "slide",
@@ -423,17 +435,79 @@
                 jQuery('body').removeClass('loading');
             }
         });
-        $('#submitRealInfo').click({});
+        $('#submitRealInfo').click(function () {
+            var cardNO = $('#identitycard').val();
+            var realName = $("#truename").val();
+            var isValidate = null;
+            if(cardNO.length <= 0){
+                sweetAlert("身份证信息不可为空!");
+                return;
+            }
+            if(realName.length <= 0){
+                sweetAlert("姓名信息不可为空!");
+                return;
+            }
+            var json = {cardno:cardNO,name:realName};
+            $.ajax({
+                url: "http://idcard.market.alicloudapi.com/lianzhuo/idcard",
+                type: 'GET',
+                timeout: 10000,//超时时间设置为10秒；
+                data: JSON.stringify(json),
+                dataType: 'json',//服务器返回json格式数据
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.code == 200) {
+                        isValidate = true;
+                        sweetAlert("身份证验证成功!");
+                    }
+                    else {
+                        sweetAlert("身份证验证失败!");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("网络异常,请稍候再试!");
+                }
+            });
+            if(isValidate == null){
+                var json = {idCard:cardNO,realName:realName,id:app.getUserInfo().id,isValidateUser:true};
+                $.ajax({
+                    url: app.getServerUrl() + "/user",
+                    type: 'PUT',
+                    timeout: 10000,//超时时间设置为10秒；
+                    data: JSON.stringify(json),
+                    dataType: 'json',//服务器返回json格式数据
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        if (result.code == 200) {
+                            app.setUserInfo(result.data.userInfo);
+//                            app.getUserInfo().
+                            location.href = "contect.html";
+                            $("#truename").css('display', 'none');
+                            $("#identitycard").css('display', 'none');
+                            $("#submitRealInfo").css('display', 'none');
+                            $("#trueNamelable").css('display', 'block');
+                            $("#identityCardlable").css('display', 'block');
+                        }
+                        else {
+                            console.log("信息修改失败!");
+                        }
+                    },
+                    error: function (xhr, type, errerThrown) {
+                        sweetAlert("网络异常,请重新验证!");
+                    }
+                });
+            }
+        });
         $("#sign_out").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
 //        列表中退出登录的触发事件
         $("#signOut").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
 
     });

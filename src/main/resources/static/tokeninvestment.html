@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
     <link rel="stylesheet" href="assets/css/default.css">
-    <!--<script src="master/style-switcher/style.switcher.localstorage.js"></script>-->
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -235,7 +234,6 @@
 
                     <div class="col-md-9">
                         <h2><strong>数字代币ICO</strong></h2>
-
                         <div class="row">
                             <div class="form-group">
                                 <label class="col-md-12 control-label" style="text-align: center;">目前持有数字代币
@@ -245,12 +243,10 @@
                                 </label>
                             </div>
                         </div>
-
                         <div class="row">
                             <header class="panel-heading">
                                 <h2 class="panel-title">填写数字代币ICO信息</h2>
                             </header>
-                            <div class="col-md-6 col-xs-11" id="noIcotext" style="display: none">请您先登录!</div>
                             <div class="panel-body" id="IcoProject">
                                 <div class="form-group">
                                     <div class='col-md-12' style="padding-top:40px;padding-bottom:20px;font-size:16px;">
@@ -311,7 +307,6 @@
                                 <tbody>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                     <hr>
@@ -395,9 +390,9 @@
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display','none');
+            $("#personInfo").css('display', 'none');
         } else {
-            $("#personInfo").css('display','block');
+            $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
         }
         jQuery('.flexslider').flexslider({
@@ -409,14 +404,14 @@
             }
         });
         $("#sign_out").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
         $("#signOut").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
     });
 </script>

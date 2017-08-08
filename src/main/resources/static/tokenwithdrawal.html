@@ -108,7 +108,7 @@
                 </div>
                 <div class="mob-nav"></div>
             </div>
-            </div>
+        </div>
     </header>
     <!-- Header -->
     <div class="breadcrumb-sec"
@@ -233,109 +233,138 @@
                     </div>
 
                     <div class="col-md-9">
-                        <h2><strong>提现地址管理</strong></h2>
+                        <div class="col-md-12" id="warningInfo" style="display: block">
+                            <div class="featured-box featured-box-primary featured-box-text-left">
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h2>提示信息 </h2>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>
+                                                    <strong>为了保障您的权益，请先填写您的真实姓名和身份证信息，为了确保您最终可以获得您的投资收益，请务必填写真实信息</strong>
+                                                </p>
 
-
-                        <div class="row">
-                            <header class="panel-heading">
-                                <h2 class="panel-title">数字代币提现地址列表</h2>
-                            </header>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
-                                    <div class="col-md-6 col-xs-11">没有数字代币提现地址</div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
-                                    <div class="col-md-6 col-xs-11"><span id="downlist" name="downlist"></span>
-                                        <input type="button" class="btn btn-default" id="btn" data-toggle="modal"
-                                            data-target="#formModal" value="新建提现地址"/></div>
-                                </div>
-                                <div class="modal fade" id="formModal" tabindex="-1" role="dialog"
-                                     aria-labelledby="formModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-hidden="true"></button>
-                                                <h4 class="modal-title" id="formModalLabel">新增数字代币提现地址</h4>
                                             </div>
-                                            <form id="demo-form" action="?p=withdrawaddr&do=addaddress"
-                                                  class="form-horizontal mb-lg" method="post">
-                                                <div class="modal-body">
-                                                    <div class="form-group mt-lg">
-                                                        <label class="col-sm-2 control-label">地址说明</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" name="a_name" value=""
-                                                                   class="form-control" placeholder="请输入对该地址的简称"
-                                                                   required/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">地址类型</label>
-                                                        <div class="col-sm-10">
-                                                            <select class="form-control" name="a_coin" required>
-                                                                <option value='iou'>Tokex(直通充值)</option>
-                                                                <option value='btc'>Bitcoin(btc)</option>
-                                                                <option value='eth'>Ethereum(eth)</option>
-                                                                <option value='qtum'>Qtum(qtum)</option>
-                                                                <option value='trst'>WeTrust(trst)</option>
-                                                                <option value='rlc'>RLC(rlc)</option>
-                                                                <option value='gno'>Gnosis(gno)</option>
-                                                                <option value='ins'>inChain(ins)</option>
-                                                                <option value='ant'>Aragon(ant)</option>
-                                                                <option value='crea'>Creativechain(crea)</option>
-                                                                <option value='fid'>Bitfid(fid)</option>
-                                                                <option value='mgo'>MobileGo(mgo)</option>
-                                                                <option value='snt'>Status(snt)</option>
-                                                                <option value='pay'>Tenx(pay)</option>
-                                                                <option value='omg'>OmiseGo(omg)</option>
-                                                                <option value='eos'>EOS(eos)</option>
-                                                                <option value='storj'>Storj(storj)</option>
-                                                                <option value='taas'>Taas(taas)</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">地址</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" name="a_address" value=""
-                                                                   class="form-control" placeholder="请输入数字代币的地址"
-                                                                   required/>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">验证码</label>
-                                                        <div class="col-sm-3">
-                                                            <input type="text" name="verifycode" value=""
-                                                                   class="form-control" style="width:140px;" required/>
-                                                        </div>
-                                                        <div class="col-sm-7">
-                                                            <input type="button" id="sendsms" name="sendsms"
-                                                                   class="btn btn-primary"
-                                                                   onclick="javascript:sendSMS('18409272347');myrefresh();"
-                                                                   value="发送手机验证码"/>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                        取消
-                                                    </button>
-                                                    <input type="submit" class="btn btn-primary" value="递交信息"/>
-                                                </div>
-                                            </form>
+                                            <div class="col-md-12 row">
+                                                <input class="cs-bgcolor m-xs m-lg btn btn-lg" type="button" value="返回"
+                                                       style="color: #ffffff; font-weight: bold;"
+                                                       onclick="javascript:window.location.href='contect.html';"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div id="officalInfo" style="display: none">
+                            <h2><strong>提现地址管理</strong></h2>
+                            <div class="row">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">数字代币提现地址列表</h2>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
+                                        <div class="col-md-6 col-xs-11">没有数字代币提现地址</div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
+                                        <div class="col-md-6 col-xs-11"><span id="downlist" name="downlist"></span>
+                                            <input type="button" class="btn btn-default" id="btn"
+                                                   data-toggle="modal"
+                                                   data-target="#formModal" value="新建提现地址"/></div>
+                                    </div>
+                                    <div class="modal fade" id="formModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="formModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true"></button>
+                                                    <h4 class="modal-title" id="formModalLabel">新增数字代币提现地址</h4>
+                                                </div>
+                                                <form id="demo-form" action="?p=withdrawaddr&do=addaddress"
+                                                      class="form-horizontal mb-lg" method="post">
+                                                    <div class="modal-body">
+                                                        <div class="form-group mt-lg">
+                                                            <label class="col-sm-2 control-label">地址说明</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="a_name" value=""
+                                                                       class="form-control" placeholder="请输入对该地址的简称"
+                                                                       required/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">地址类型</label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-control" name="a_coin" required>
+                                                                    <option value='iou'>Tokex(直通充值)</option>
+                                                                    <option value='btc'>Bitcoin(btc)</option>
+                                                                    <option value='eth'>Ethereum(eth)</option>
+                                                                    <option value='qtum'>Qtum(qtum)</option>
+                                                                    <option value='trst'>WeTrust(trst)</option>
+                                                                    <option value='rlc'>RLC(rlc)</option>
+                                                                    <option value='gno'>Gnosis(gno)</option>
+                                                                    <option value='ins'>inChain(ins)</option>
+                                                                    <option value='ant'>Aragon(ant)</option>
+                                                                    <option value='crea'>Creativechain(crea)
+                                                                    </option>
+                                                                    <option value='fid'>Bitfid(fid)</option>
+                                                                    <option value='mgo'>MobileGo(mgo)</option>
+                                                                    <option value='snt'>Status(snt)</option>
+                                                                    <option value='pay'>Tenx(pay)</option>
+                                                                    <option value='omg'>OmiseGo(omg)</option>
+                                                                    <option value='eos'>EOS(eos)</option>
+                                                                    <option value='storj'>Storj(storj)</option>
+                                                                    <option value='taas'>Taas(taas)</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">地址</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="a_address" value=""
+                                                                       class="form-control" placeholder="请输入数字代币的地址"
+                                                                       required/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">验证码</label>
+                                                            <div class="col-sm-3">
+                                                                <input type="text" name="verifycode" value=""
+                                                                       class="form-control" style="width:140px;"
+                                                                       required/>
+                                                            </div>
+                                                            <div class="col-sm-7">
+                                                                <input type="button" id="sendsms" name="sendsms"
+                                                                       class="cs-bgcolor btn"
+                                                                       style="color: #ffffff; font-weight: bold;"
+                                                                       onclick="javascript:sendSMS('18409272347');myrefresh();"
+                                                                       value="发送手机验证码"/>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">
+                                                            取消
+                                                        </button>
+                                                        <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="递交信息"/>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
-                    <hr>
                 </div>
             </div>
         </div>
@@ -416,10 +445,15 @@
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display','none');
+            $("#personInfo").css('display', 'none');
         } else {
-            $("#personInfo").css('display','block');
+            $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
+            //此处需要看看是否有身份证验证，如果验证通过就展现具体的界面，如果没有就不展现界面展现提示信息
+            if (app.getUserInfo().validateUser) {
+                $("#warningInfo").css('display', 'none');
+                $("#officalInfo").css('display', 'block');
+            }
         }
         jQuery('.flexslider').flexslider({
             animation: "slide",
@@ -430,13 +464,14 @@
             }
         });
         $("#sign_out").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
-        });$("#signOut").click(function () {
-            $("#personInfo").css('display','none');
-            localtion.href = "index.hrml";
+            location.href = "index.html";
+        });
+        $("#signOut").click(function () {
+            $("#personInfo").css('display', 'none');
             app.setUserInfo({});
+            location.href = "index.html";
         });
 
     });

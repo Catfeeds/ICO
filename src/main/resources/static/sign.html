@@ -365,9 +365,10 @@
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    alert('网络异常,请稍候再试');
+                    sweetAlert("网络异常,请稍候再试!");
                 }
             });
+
         });
         $("#regist").click(function () {
             var email = $("#email").val().toString();
@@ -381,8 +382,8 @@
                 sweetAlert("密码不能为空!");
                 return;
             }
-            if (registPassword.length <= 6) {
-                sweetAlert("密码需为6位以上!");
+            if (registPassword.length <8 || registPassword.length >30) {
+                sweetAlert("密码需为8位以上,30位以下!");
                 return;
             }
             if (registPassword != againPassword) {
@@ -408,7 +409,7 @@
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    alert('网络异常,请稍候再试');
+                    sweetAlert("网络异常,请稍候再试!");
                 }
             });
         });

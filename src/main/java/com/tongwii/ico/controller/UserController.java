@@ -66,7 +66,8 @@ public class UserController {
     @ResponseBody
     public Result update(@RequestBody User user) {
         userService.update(user);
-        return Result.successResult();
+        User u = userService.findById(user.getId());
+        return Result.successResult().add("userInfo",u);
     }
 
     @GetMapping("/{id}")
