@@ -477,6 +477,7 @@
                     data: JSON.stringify(json),
                     dataType: 'json',//服务器返回json格式数据
                     contentType: "application/json; charset=utf-8",
+                    headers: app.createAuthorizationTokenHeader(),
                     success: function (result) {
                         if (result.code == 200) {
                             app.setUserInfo(result.data.userInfo);
