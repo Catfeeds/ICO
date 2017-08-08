@@ -30,6 +30,9 @@ public class UserWallet {
 
     private String des;
 
+    @Transient
+    private TokenMoney tokenMoney;
+
     /**
      * @return id
      */
@@ -138,5 +141,13 @@ public class UserWallet {
      */
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public TokenMoney getTokenMoney() {
+        return tokenMoney;
+    }
+
+    public void setTokenMoney(TokenMoney tokenMoney) {
+        this.tokenMoney = tokenMoney;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -19,4 +20,10 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
     @Resource
     private UserWalletMapper userWalletMapper;
 
+    @Override
+    public List<UserWallet> findByUserId(Integer userId) {
+        UserWallet userWallet = new UserWallet();
+        userWallet.setUserId(userId);
+        return userWalletMapper.select(userWallet);
+    }
 }

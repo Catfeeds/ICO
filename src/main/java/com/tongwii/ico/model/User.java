@@ -45,17 +45,6 @@ public class User {
     @Column(name = "avator_url")
     private String avatorUrl;
 
-    @Column(name = "idCard_front_url")
-    private String idcardFrontUrl;
-
-    @Column(name = "idCard_back_url")
-    private String idcardBackUrl;
-
-    @Column(name = "idCard_all_url")
-    private String idcardAllUrl;
-
-    private String des;
-
     @JSONField(serialize = false)
     @Column(name = "verify_code")
     private Integer verifyCode;
@@ -63,6 +52,8 @@ public class User {
     @JSONField(serialize = false)
     @Column(name = "expire_date")
     private Date expireDate;
+
+    private String des;
 
     /**
      * @return id
@@ -226,48 +217,6 @@ public class User {
      */
     public void setAvatorUrl(String avatorUrl) {
         this.avatorUrl = avatorUrl;
-    }
-
-    /**
-     * @return idCard_front_url
-     */
-    public String getIdcardFrontUrl() {
-        return idcardFrontUrl;
-    }
-
-    /**
-     * @param idcardFrontUrl
-     */
-    public void setIdcardFrontUrl(String idcardFrontUrl) {
-        this.idcardFrontUrl = idcardFrontUrl;
-    }
-
-    /**
-     * @return idCard_back_url
-     */
-    public String getIdcardBackUrl() {
-        return idcardBackUrl;
-    }
-
-    /**
-     * @param idcardBackUrl
-     */
-    public void setIdcardBackUrl(String idcardBackUrl) {
-        this.idcardBackUrl = idcardBackUrl;
-    }
-
-    /**
-     * @return idCard_all_url
-     */
-    public String getIdcardAllUrl() {
-        return idcardAllUrl;
-    }
-
-    /**
-     * @param idcardAllUrl
-     */
-    public void setIdcardAllUrl(String idcardAllUrl) {
-        this.idcardAllUrl = idcardAllUrl;
     }
 
     /**

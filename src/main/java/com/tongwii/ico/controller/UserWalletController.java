@@ -1,14 +1,17 @@
 package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
+import com.tongwii.ico.model.TokenMoney;
 import com.tongwii.ico.model.UserWallet;
+import com.tongwii.ico.service.TokenMoneyService;
 import com.tongwii.ico.service.UserWalletService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.tongwii.ico.util.ContextUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 /**
 * Created by Zeral on 2017-08-02.
@@ -18,6 +21,10 @@ import java.util.List;
 public class UserWalletController {
     @Resource
     private UserWalletService userWalletService;
+
+    @Autowired
+    private TokenMoneyService tokenMoneyService;
+
 
     @PostMapping
     public Result add(@RequestBody UserWallet userWallet) {
@@ -43,11 +50,16 @@ public class UserWalletController {
         return Result.successResult(userWallet);
     }
 
+    /** 查询用户所有钱包接口 **/
     @GetMapping
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
-        List<UserWallet> list = userWalletService.findAll();
-        PageInfo pageInfo = new PageInfo(list);
-        return Result.successResult(pageInfo);
+    public Result list() {
+        List<UserWallet> userWallets = userWalletService.findByUserId(ContextUtils.getUserId());
+        for (UserWallet userWallet : userWallets) {
+            if(Objects.nonNull(userWallet.getTokenMoneyId())) {
+                TokenMoney tokenMoney = tokenMoneyService.findById(userWallet.getTokenMoneyId());
+                userWallet.setTokenMoney(tokenMoney);
+            }
+        }
+        return Result.successResult("获取用户钱包成功").add("userWallets", userWallets);
     }
 }

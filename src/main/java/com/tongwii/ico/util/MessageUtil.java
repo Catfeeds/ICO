@@ -1,10 +1,14 @@
 package com.tongwii.ico.util;
 
+import com.tongwii.ico.interceptor.LoggingRequestInterceptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -15,7 +19,10 @@ import org.thymeleaf.context.Context;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -95,12 +102,17 @@ public class MessageUtil {
         Map<String, String> hashMap = new LinkedHashMap<>();
         hashMap.put("ParamString", "{'node':'"+ code +"'}");
         hashMap.put("RecNum", phone);
-        hashMap.put("SignName", signName);
+        hashMap.put("SignName", URLEncoder.encode(signName, "UTF-8"));
         hashMap.put("TemplateCode", templateCode);
         HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(hashMap, httpHeaders);
 
         //执行请求
         RestTemplate restTemplate = new RestTemplate();
+        ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();
+        List<ClientHttpRequestInterceptor> ris = new ArrayList<>();
+        ris.add(ri);
+        restTemplate.setInterceptors(ris);
+        restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
         ResponseEntity<String> resp = restTemplate.exchange(host+path, HttpMethod.GET, requestEntity, String.class);
 
         //获得返回值
