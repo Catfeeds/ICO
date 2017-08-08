@@ -13,6 +13,7 @@ import com.tongwii.ico.util.ContextUtils;
 import com.tongwii.ico.util.MessageUtil;
 import com.tongwii.ico.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLConnection;
@@ -43,6 +45,8 @@ public class UserController {
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private MessageUtil messageUtil;
+    @Value( "${jwt.header}" )
+    private String tokenHeader;
 
     @PostMapping
     @ResponseBody
@@ -94,10 +98,23 @@ public class UserController {
             return Result.failResult("该账号已存在:" + user.getEmailAccount());
         }
 
-        //生成token
-        String token = jwtTokenUtil.generateToken(user);
+        try {
+            userService.register(user);
+        } catch (Exception e) {
+            return Result.errorResult("注册失败");
+        }
+        return Result.successResult("注册成功");
+    }
+
+    /**
+     * 发送认证邮箱
+     */
+    @GetMapping("/sendVerifyEmail")
+    @ResponseBody
+    public Result register(HttpServletRequest request) {
+        User user = ContextUtils.getUser();
+        String token = request.getHeader(tokenHeader);
         messageUtil.sendRegisterMail(user.getEmailAccount(), token);
-        userService.register(user);
         return Result.successResult("注册成功");
     }
 

@@ -188,7 +188,7 @@ alter table user comment '用户信息';
 /*==============================================================*/
 create table user_role_relation
 (
-   id                   int(11) unsigned not null,
+   id                   int(11) unsigned not null AUTO_INCREMENT,
    user_id              int(11) unsigned,
    role_id              int(11) unsigned,
    primary key (id)
