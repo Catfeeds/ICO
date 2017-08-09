@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/9 10:26:12                            */
+/* Created on:     2017/8/9 10:35:53                            */
 /*==============================================================*/
 
 
@@ -66,7 +66,7 @@ create table project
    name                 varchar(200) not null,
    name_cn              varchar(100),
    start_time           timestamp not null default CURRENT_TIMESTAMP,
-   end_time             timestamp,
+   end_time             timestamp default CURRENT_TIMESTAMP,
    state                tinyint,
    third_endorsement    bool,
    output_token_money_detail_id int(11) unsigned,
@@ -173,9 +173,6 @@ create table user
    is_enabled           bool default 1,
    des                  text,
    avator_url           varchar(255),
-   idCard_front_url     varchar(255),
-   idCard_back_url      varchar(255),
-   idCard_all_url       varchar(255),
    verify_code          int(7),
    expire_date          timestamp,
    primary key (id)
