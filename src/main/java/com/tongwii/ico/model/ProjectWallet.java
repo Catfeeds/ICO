@@ -11,8 +11,13 @@ public class ProjectWallet {
     @Column(name = "wallet_address")
     private String walletAddress;
 
-    @Column(name = "token_money_detail_id")
-    private Integer tokenMoneyDetailId;
+    @Column(name = "project_id")
+    private Integer projectId;
+
+    @Column(name = "token_money_detail")
+    private Integer tokenMoneyDetail;
+
+    private String des;
 
     /**
      * @return id
@@ -42,17 +47,27 @@ public class ProjectWallet {
         this.walletAddress = walletAddress;
     }
 
-    /**
-     * @return token_money_detail_id
-     */
-    public Integer getTokenMoneyDetailId() {
-        return tokenMoneyDetailId;
+    public Integer getProjectId() {
+        return projectId;
     }
 
-    /**
-     * @param tokenMoneyDetailId
-     */
-    public void setTokenMoneyDetailId(Integer tokenMoneyDetailId) {
-        this.tokenMoneyDetailId = tokenMoneyDetailId;
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+
+    public Integer getTokenMoneyDetail() {
+        return tokenMoneyDetail;
+    }
+
+    public void setTokenMoneyDetail(Integer tokenMoneyDetail) {
+        this.tokenMoneyDetail = tokenMoneyDetail;
+    }
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
     }
 }

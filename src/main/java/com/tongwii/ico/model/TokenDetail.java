@@ -29,6 +29,9 @@ public class TokenDetail {
     @Column(name = "token_money_whitePaper_en_url")
     private String tokenMoneyWhitepaperEnUrl;
 
+    @Column(name = "input_token_money_project_id")
+    private Integer inputTokenMoneyProjectId;
+
     @Transient
     private TokenMoney tokenMoney;
 
@@ -150,5 +153,13 @@ public class TokenDetail {
 
     public void setTokenMoney(TokenMoney tokenMoney) {
         this.tokenMoney = tokenMoney;
+    }
+
+    public Integer getInputTokenMoneyProjectId() {
+        return inputTokenMoneyProjectId;
+    }
+
+    public void setInputTokenMoneyProjectId(Integer inputTokenMoneyProjectId) {
+        this.inputTokenMoneyProjectId = inputTokenMoneyProjectId;
     }
 }

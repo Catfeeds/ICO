@@ -53,7 +53,8 @@ public class ProjectController {
     @PutMapping("/{id}/inputTokenMoney")
     public Result updateInputTokenMoney(@PathVariable Integer id, @RequestParam("tokenDetail") TokenDetail tokenDetail) {
         try {
-            projectService.updateInputTokenMoney(id, tokenDetail);
+            // TODO 需要重写，目标代币为多个
+//            projectService.updateInputTokenMoney(id, tokenDetail);
         } catch (Exception e) {
             return Result.errorResult("更新目标代币信息失败");
         }
@@ -119,13 +120,14 @@ public class ProjectController {
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         Project project = projectService.findById(id);
-        if(Objects.nonNull(project.getInputTokenMoneyDatailId())) {
+        // TODO 需要重写，目标代币为多个
+       /* if(Objects.nonNull(project.getInputTokenMoneyDatailId())) {
             // 目标代币
             TokenDetail inputTokenDetail = tokenDetailService.findById(project.getInputTokenMoneyDatailId());
             TokenMoney tokenMoney = tokenMoneyService.findById(inputTokenDetail.getTokenMoneyId());
             inputTokenDetail.setTokenMoney(tokenMoney);
             project.setInputTokenDetail(inputTokenDetail);
-        }
+        }*/
         if(Objects.nonNull(project.getOutputTokenMoneyDetailId())) {
             // 发行代币
             TokenDetail outPutTokenDetail = tokenDetailService.findById(project.getOutputTokenMoneyDetailId());
