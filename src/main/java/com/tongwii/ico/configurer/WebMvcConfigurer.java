@@ -24,6 +24,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.ServletException;
@@ -132,5 +133,11 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
         registry.addErrorPages( new ErrorPage( HttpStatus.NOT_FOUND, "/404.html" ) );
         registry.addErrorPages( new ErrorPage( HttpStatus.UNAUTHORIZED, "/401.html" ) );
         registry.addErrorPages( new ErrorPage( Throwable.class, "/500.html" ) );
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/manager/**")
+                .addResourceLocations("classpath:/manager/");
     }
 }
