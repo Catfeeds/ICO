@@ -49,7 +49,7 @@ public class Project {
     @Column(name = "content")
     private String content;
 
-    private Byte state;
+    private Integer state;
 
     private String des;
 
@@ -219,14 +219,14 @@ public class Project {
     /**
      * @return state
      */
-    public Byte getState() {
+    public Integer getState() {
         return state;
     }
 
     /**
      * @param state
      */
-    public void setState(Byte state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
@@ -274,5 +274,21 @@ public class Project {
 
     public void setCreateUser(User createUser) {
         this.createUser = createUser;
+    }
+
+    public enum State {
+        NOW(0),        //当前众筹
+        UN_COMING(1),   //未开始
+        END(2);        //已结束
+
+        private Integer state;
+
+        public Integer getState() {
+            return state;
+        }
+
+        State(Integer state) {
+            this.state = state;
+        }
     }
 }

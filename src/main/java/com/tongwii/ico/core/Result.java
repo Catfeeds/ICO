@@ -199,7 +199,7 @@ public final class Result {
         TOO_MANY_REQUESTS("429", "太多的请求" ),
         TRADE_REPETITION("460", "重复交易" );
 
-        public String code;
+        private String code;
         private String statusMessage;
 
         public String getStatusMessage () {

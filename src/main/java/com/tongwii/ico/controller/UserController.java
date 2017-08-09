@@ -29,6 +29,7 @@ import java.net.URLConnection;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
 * Created by Zeral on 2017-08-02.
@@ -204,6 +205,13 @@ public class UserController {
         InputStream inputStream = new BufferedInputStream(new FileInputStream(files));
 
         FileCopyUtils.copy(inputStream, response.getOutputStream());
+    }
+
+    @GetMapping("/")
+    public String welcome(Map<String, Object> model) {
+        model.put("time", new Date());
+        model.put("message", "test");
+        return "welcome";
     }
 
 }

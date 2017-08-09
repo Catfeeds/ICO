@@ -13,6 +13,7 @@ import com.tongwii.ico.service.TokenDetailService;
 import com.tongwii.ico.service.TokenMoneyService;
 import com.tongwii.ico.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -48,6 +49,7 @@ public class ProjectController {
      * @param tokenDetail the token detail
      * @return the result
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}/inputTokenMoney")
     public Result updateInputTokenMoney(@PathVariable Integer id, @RequestParam("tokenDetail") TokenDetail tokenDetail) {
         try {
@@ -65,6 +67,7 @@ public class ProjectController {
      * @param tokenDetail the token detail
      * @return the result
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}/outputTokenMoney")
     public Result updateOutPutTokenMoney(@PathVariable Integer id, @RequestParam("tokenDetail") TokenDetail tokenDetail) {
         try {
@@ -82,6 +85,7 @@ public class ProjectController {
      * @param user the user
      * @return the result
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}/createUser")
     public Result updateCreateUser(@PathVariable Integer id, @RequestParam("user") User user) {
         try {
@@ -92,12 +96,14 @@ public class ProjectController {
         return Result.successResult("更新用户信息成功");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         projectService.deleteById(id);
         return Result.successResult();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping
     public Result update(@RequestBody Project project) {
         projectService.update(project);
@@ -155,13 +161,13 @@ public class ProjectController {
         List<Project> willICOList = new ArrayList<>(); // 即将进行ICO中的数据列表
         List<Project> finishICOList = new ArrayList<>(); // 结束ICO的数据列表
         for (int i =0; i<projectList.size();i++){
-            if(projectList.get(i).getState()==0){
+            if(projectList.get(i).getState()==Project.State.NOW.getState()){
                 ICOList.add(projectList.get(i));
             }
-            if(projectList.get(i).getState()==1){
+            if(projectList.get(i).getState()==Project.State.UN_COMING.getState()){
                 willICOList.add(projectList.get(i));
             }
-            if(projectList.get(i).getState()==2){
+            if(projectList.get(i).getState()==Project.State.END.getState()){
                 finishICOList.add(projectList.get(i));
             }
         }

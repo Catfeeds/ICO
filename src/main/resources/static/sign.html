@@ -348,7 +348,7 @@
             }
             var json = {emailAccount: signName, password: signPassword};
             $.ajax({
-                url: app.getServerUrl() + "/auth/login",
+                url: "/auth/login",
                 type: 'POST',
                 timeout: 10000,//超时时间设置为10秒；
                 data: JSON.stringify(json),
@@ -392,7 +392,7 @@
             }
             var registJson = {emailAccount: email, password: registPassword};
             $.ajax({
-                url: app.getServerUrl() + "/user/register",
+                url: "/user/register",
                 type: 'POST',
                 timeout: 10000,//超时时间设置为10秒；
                 data: JSON.stringify(registJson),

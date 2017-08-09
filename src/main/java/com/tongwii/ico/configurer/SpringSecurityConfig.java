@@ -79,7 +79,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     // 允许授权请求
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/user/register").permitAll()
-                    .antMatchers("/user/**").hasAnyRole("USER", "ADMIN");
+                    .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                    .antMatchers("/admin/**").hasAnyRole("ADMIN");
             // 基于定制JWT安全过滤器
             httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         }
