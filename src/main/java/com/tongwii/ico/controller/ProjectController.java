@@ -36,7 +36,7 @@ public class ProjectController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/add")
     public Result add(@RequestBody Project project) {
         projectService.save(project);
         return Result.successResult();
@@ -163,6 +163,14 @@ public class ProjectController {
         List<Project> willICOList = new ArrayList<>(); // 即将进行ICO中的数据列表
         List<Project> finishICOList = new ArrayList<>(); // 结束ICO的数据列表
         for (int i =0; i<projectList.size();i++){
+            Project p = projectList.get(i);
+            if(p.getThirdEndorsement() != null && p.getInputTokenDetails()!=null && p.getOutPutTokenDetail()!=null){
+                // 判断时间，设定state的值
+                //获取
+            }else{
+                //删除项目
+            }
+
             if(projectList.get(i).getState()==Project.State.NOW.getState()){
                 ICOList.add(projectList.get(i));
             }
@@ -184,7 +192,7 @@ public class ProjectController {
     * 根据项目状态查询项目信息
     */
  /*   @RequestMapping("/findProjectByState")
-    public Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
+    admin Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
                                       @RequestParam(required = true,defaultValue = "0") Integer page,
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);
