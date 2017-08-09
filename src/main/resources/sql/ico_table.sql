@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/8 14:09:39                            */
+/* Created on:     2017/8/9 10:26:12                            */
 /*==============================================================*/
 
 
@@ -32,8 +32,8 @@ drop table if exists user_wallet;
 create table Role
 (
    id                   int(11) unsigned not null auto_increment,
-   role_name            varchar(32) not null,
-   role_name_code       varchar(32) not null,
+   role_name            varchar(32),
+   role_name_code       varchar(32),
    description          varchar(32),
    primary key (id)
 );
@@ -100,8 +100,8 @@ alter table project_user_relation comment '用户项目关系';
 create table project_user_wallet_relation
 (
    id                   int(11) unsigned not null auto_increment,
-   user_wallet          int(11) unsigned not null,
-   project_wallet       int(11) unsigned not null,
+   user_wallet          int(11) unsigned,
+   project_wallet       int(11) unsigned,
    primary key (id)
 );
 
@@ -126,7 +126,7 @@ alter table project_wallet comment '项目钱包';
 create table token_detail
 (
    id                   int(11) unsigned not null auto_increment,
-   token_money_id       int(11) unsigned not null,
+   token_money_id       int(11) unsigned,
    current_number       int,
    ico_number           int,
    min_target_number    int,
@@ -160,22 +160,25 @@ alter table token_money comment '代币信息';
 /*==============================================================*/
 create table user
 (
-  id                   int(11) unsigned not null auto_increment,
-  email_account        varchar(32) not null,
-  password             varchar(255) not null,
-  nick_name            varchar(32),
-  real_name            varchar(32),
-  phone                varchar(32),
-  id_card              varchar(32),
-  is_validate_email    bool,
-  is_validate_phone    bool,
-  is_validate_user     bool,
-  is_enabled           bool default 1,
-  avator_url           varchar(255),
-  verify_code          int(7),
-  expire_date          timestamp,
-  des                  text,
-  primary key (id)
+   id                   int(11) unsigned not null auto_increment,
+   email_account        varchar(32) not null,
+   password             varchar(255) not null,
+   nick_name            varchar(32),
+   real_name            varchar(32),
+   phone                varchar(32),
+   id_card              varchar(32),
+   is_validate_email    bool,
+   is_validate_phone    bool,
+   is_validate_user     bool,
+   is_enabled           bool default 1,
+   des                  text,
+   avator_url           varchar(255),
+   idCard_front_url     varchar(255),
+   idCard_back_url      varchar(255),
+   idCard_all_url       varchar(255),
+   verify_code          int(7),
+   expire_date          timestamp,
+   primary key (id)
 );
 
 alter table user comment '用户信息';
@@ -186,8 +189,8 @@ alter table user comment '用户信息';
 create table user_role_relation
 (
    id                   int(11) unsigned not null auto_increment,
-   user_id              int(11) unsigned not null,
-   role_id              int(11) unsigned not null,
+   user_id              int(11) unsigned,
+   role_id              int(11) unsigned,
    primary key (id)
 );
 
