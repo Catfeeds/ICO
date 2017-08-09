@@ -36,10 +36,15 @@ public class ProjectController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/add")
+    @PostMapping
     public Result add(@RequestBody Project project) {
-        projectService.save(project);
-        return Result.successResult();
+        try {
+            projectService.save(project);
+            return Result.successResult(project);
+        } catch (Exception e) {
+            return Result.errorResult("项目添加失败！");
+        }
+
     }
 
     /**
@@ -192,7 +197,7 @@ public class ProjectController {
     * 根据项目状态查询项目信息
     */
  /*   @RequestMapping("/findProjectByState")
-    admin Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
+    manager Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
                                       @RequestParam(required = true,defaultValue = "0") Integer page,
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="../../bootstrap/css/layui.css">
     <link rel="stylesheet" href="../../bootstrap/css/laydate.css">
     <link rel="stylesheet" href="../../bootstrap/css/layer.css">
+    <link href="../../../assets/css/sweet-alert.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -477,11 +478,11 @@
                         </ul>
                         <div class="tab-content">
                             <div class="active tab-pane" >
-                                <form class="form-horizontal">
+                                <form class="form-horizontal" id="addprjs">
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">项目名称</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="input" placeholder="项目名称请务必包含产品的关键词（项目名称不超过25个字）">
+                                            <input type="text" class="form-control" id="prjname" placeholder="项目名称请务必包含产品的关键词（项目名称不超过25个字）">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -491,7 +492,7 @@
                                             <div class="layui-inline">
                                                 <!--<label class="layui-form-label">验证日期</label>-->
                                                 <div class="layui-input-inline">
-                                                    <input name="date" id="date1"   autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})" type="date">
+                                                    <input name="date" id="prjopentime"   autocomplete="off" class="layui-input" type="date">
                                                 </div>
                                             </div>
                                         </div>
@@ -501,7 +502,7 @@
                                             <div class="layui-inline">
                                                 <!--<label class="layui-form-label">验证日期</label>-->
                                                 <div class="layui-input-inline">
-                                                    <input name="date" id="date"  autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})" type="date">
+                                                    <input name="date" id="prjclosetime"  autocomplete="off" class="layui-input"  type="date">
                                                 </div>
                                             </div>
                                         </div>
@@ -509,27 +510,27 @@
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">项目简介</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputs" placeholder="请您对该项目做一个简单的介绍....">
+                                            <input type="text" class="form-control" id="prjproduce" placeholder="请您对该项目做一个简单的介绍....">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputExperience" class="col-sm-2 control-label">项目详情</label>
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" id="inputExperience" placeholder=""></textarea>
+                                            <textarea class="form-control" id="prjcontent" placeholder=""></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox"> 我同意 <a href="#"></a>
+                                                    <input type="checkbox" id="prjagree"> 我同意 <a href="#"></a>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">保存</button>
+                                            <button type="button" id="prjadd" class="btn btn-danger">保存</button>
                                         </div>
                                     </div>
                                 </form>
@@ -975,6 +976,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <script src="../../bootstrap/js/layui.js" charset="utf-8"></script>
+<script src="../../../assets/scripts/sweet-alert.js"></script>
+<script src="../../../assets/scripts/app.js"></script>
 <script>
     layui.use('laydate', function(){
         var laydate = layui.laydate;
@@ -1007,7 +1010,61 @@
             laydate(end);
         }
     });
-
+    jQuery(window).load(function () {
+        $("#prjadd").click(function () {
+            var prjname = $("#prjname").val();
+            var prjopentime = $("#prjopentime").val();
+            var prjclosetime = $("#prjclosetime").val();
+            var prjproduce = $("#prjproduce").val();
+            var prjcontent = $("#prjcontent").val();
+            if (prjname.length <= 0) {
+                sweetAlert("项目名称不能为空！");
+                return;
+            }
+            if(prjopentime.length <= 0) {
+                sweetAlert("开始时间不能为空！");
+                return;
+            }
+            if(prjclosetime.length <= 0) {
+                sweetAlert("终止时间不能为空！");
+                return;
+            }
+            var flag = $("#prjagree").is(':checked');
+            if(flag == false) {
+                sweetAlert("请详细阅读协议并接受！");
+                return;
+            }
+            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent};
+            $.ajax({
+                url: "/project",
+                type: 'POST',
+                timeout: 10000,//超时时间设置为10秒；
+                data: JSON.stringify(prjjson),
+                dataType: 'json',//服务器返回json格式数据
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.code == 200) {
+                        sweetAlert("项目添加成功！")
+                        location.href = "profiles.html";
+                        $("#prjname").text(result.data.project.name);
+                        $("#prjopentime").text(result.data.project.startTime);
+                        $("#prjclosetime").text(result.data.project.endTime);
+                        $("#prjproduce").text(result.data.project.des);
+                        $("#prjname").text(result.data.project.content);
+                        $("#prjagree").checked = true;
+                        $("input:not(:empty)").attr("disabled",true);
+                        $("prjadd").attr("display",true);
+                    }
+                    else {
+                        sweetAlert("项目添加失败!");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("网络异常,请稍候再试!");
+                }
+            });
+        });
+    });
 
 
 </script>
