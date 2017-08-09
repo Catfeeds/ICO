@@ -563,20 +563,21 @@
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
-                var ICOList = result.data.ICO;
-                var willICOList = result.data.willICO;
-                var finishICOList = result.data.finishICO;
-                $.each(ICOList, function (i, item) {
-                    var date = new Date();
-                    var y = date.getFullYear();
-                    var m = date.getMonth();
-                    var d = date.getDate();
-                    var endDate = item.endTime;
-                    var array = endDate.split("-");
-                    var endTime = new Date(parseInt(array[0]), parseInt(array[1]) - 1, parseInt(array[2]));
-                    var nowTime = new Date(parseInt(y), parseInt(m), parseInt(d));
-                    var day = (Number(endTime) - Number(nowTime)) / (1000 * 60 * 60 * 24);
-                    $("#ICOList").append(
+                if(result.code == 200){
+                    var ICOList = result.data.ICO;
+                    var willICOList = result.data.willICO;
+                    var finishICOList = result.data.finishICO;
+                    $.each(ICOList, function (i, item) {
+                        var date = new Date();
+                        var y = date.getFullYear();
+                        var m = date.getMonth();
+                        var d = date.getDate();
+                        var endDate = item.endTime;
+                        var array = endDate.split("-");
+                        var endTime = new Date(parseInt(array[0]), parseInt(array[1]) - 1, parseInt(array[2]));
+                        var nowTime = new Date(parseInt(y), parseInt(m), parseInt(d));
+                        var day = (Number(endTime) - Number(nowTime)) / (1000 * 60 * 60 * 24);
+                        $("#ICOList").append(
                             "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership'>"
                             + "<div class='directory-section'>"
                             + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
@@ -603,9 +604,9 @@
                             + "<div class='detail'> <span class='''fund=>12%</span>"
                             + "<a href='#' class='star icon-star'></a></div>"
                             + "</div></div></div></li>");
-                });
-                $.each(willICOList, function (i, item) {
-                    $("#willICOList").append(
+                    });
+                    $.each(willICOList, function (i, item) {
+                        $("#willICOList").append(
                             "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership'>"
                             + "<div class='directory-section'>"
                             + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
@@ -629,9 +630,9 @@
                             + "<span class='bar'><span style='width:12%;'></span></span>"
                             + "</div></div></div></li>");
 
-                });
-                $.each(finishICOList, function (i, item) {
-                    $("#finishICOList").append(
+                    });
+                    $.each(finishICOList, function (i, item) {
+                        $("#finishICOList").append(
                             "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership'>"
                             + "<div class='directory-section'>"
                             + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
@@ -654,12 +655,24 @@
                             + "<p style='margin-left:20px;'>剩余天数 0" + "</p></li></ul>"
                             + "<span class='bar'><span style='width:12%;'></span></span>"
                             + "</div></div></div></li>");
-                });
-                // 设计每个li标签的点击事件
-                $('#finishICOList').children("li").click(function () {
-                    var id = $(this).attr("id");
-                    location.href = "finishICO.html?id=" + id;
-                });
+                    });
+                    // 设计每个li标签的点击事件
+                    $('#ICOList').children("li").click(function () {
+                        var id = $(this).attr("id");
+                        location.href = "startICO.html?id=" + id;
+                    });
+                    $('#willICOList').children("li").click(function () {
+                        var id = $(this).attr("id");
+                        location.href = "willICO.html?id=" + id;
+                    });
+                    $('#finishICOList').children("li").click(function () {
+                        var id = $(this).attr("id");
+                        location.href = "finishICO.html?id=" + id;
+                    });
+                }else{
+                    location.href = "404.html";
+                }
+
             },
             error: function (xhr, type, errerThrown) {
                 sweetAlert("网络异常,请稍候再试");

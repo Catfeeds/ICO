@@ -6,6 +6,7 @@ import com.tongwii.ico.util.CustomDateSerializer;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 public class Project {
     @Id
@@ -32,19 +33,12 @@ public class Project {
     @Column(name = "output_token_money_detail_id")
     private Integer outputTokenMoneyDetailId;
 
-    @JSONField(serialize = false)
-    @Column(name = "input_token_money_datail_id")
-    private Integer inputTokenMoneyDatailId;
-
     @Column(name = "part_person_number")
     private Integer partPersonNumber;
 
     @JSONField(serialize = false)
     @Column(name = "create_user_id")
     private Integer createUserId;
-
-    @Column(name = "project_wallet_id")
-    private Integer projectWalletId;
 
     @Column(name = "content")
     private String content;
@@ -54,13 +48,22 @@ public class Project {
     private String des;
 
     @Transient
-    private TokenDetail inputTokenDetail;
-
-    @Transient
     private TokenDetail outPutTokenDetail;
 
     @Transient
     private User createUser;
+
+    /**
+     * 接受代币
+     */
+    @Transient
+    private List<TokenDetail> inputTokenDetails;
+
+    /**
+     * 项目对应钱包集合
+     */
+    @Transient
+    private List<ProjectWallet> projectWallets;
 
     /**
      * @return id
@@ -161,20 +164,6 @@ public class Project {
     }
 
     /**
-     * @return input_token_money_datail_id
-     */
-    public Integer getInputTokenMoneyDatailId() {
-        return inputTokenMoneyDatailId;
-    }
-
-    /**
-     * @param inputTokenMoneyDatailId
-     */
-    public void setInputTokenMoneyDatailId(Integer inputTokenMoneyDatailId) {
-        this.inputTokenMoneyDatailId = inputTokenMoneyDatailId;
-    }
-
-    /**
      * @return part_person_number
      */
     public Integer getPartPersonNumber() {
@@ -203,20 +192,6 @@ public class Project {
     }
 
     /**
-     * @return project_wallet_id
-     */
-    public Integer getProjectWalletId() {
-        return projectWalletId;
-    }
-
-    /**
-     * @param projectWalletId
-     */
-    public void setProjectWalletId(Integer projectWalletId) {
-        this.projectWalletId = projectWalletId;
-    }
-
-    /**
      * @return state
      */
     public Integer getState() {
@@ -237,6 +212,22 @@ public class Project {
         return des;
     }
 
+    public List<TokenDetail> getInputTokenDetails() {
+        return inputTokenDetails;
+    }
+
+    public void setInputTokenDetails(List<TokenDetail> inputTokenDetails) {
+        this.inputTokenDetails = inputTokenDetails;
+    }
+
+    public List<ProjectWallet> getProjectWallets() {
+        return projectWallets;
+    }
+
+    public void setProjectWallets(List<ProjectWallet> projectWallets) {
+        this.projectWallets = projectWallets;
+    }
+
     /**
      * @param des
      */
@@ -252,13 +243,6 @@ public class Project {
         this.content = content;
     }
 
-    public TokenDetail getInputTokenDetail() {
-        return inputTokenDetail;
-    }
-
-    public void setInputTokenDetail(TokenDetail inputTokenDetail) {
-        this.inputTokenDetail = inputTokenDetail;
-    }
 
     public TokenDetail getOutPutTokenDetail() {
         return outPutTokenDetail;

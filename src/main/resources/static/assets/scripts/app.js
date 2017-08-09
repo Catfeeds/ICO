@@ -4,6 +4,11 @@
  *
  **/
 (function(owner) {
+    /**
+     * 默认配置信息
+     */
+    var serverUrl = 'http://192.168.0.42:8080'
+
 
     // VARIABLES =============================================================
     var TOKEN_KEY = "$token";
@@ -65,4 +70,12 @@
     owner.getServerUrl = function() {
         return serverUrl;
     };
+
+    owner.getQueryString =  function(name) {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)
+            return  unescape(r[2]); 
+        return null;
+    }
 }(window.app = {}));

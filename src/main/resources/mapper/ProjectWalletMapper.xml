@@ -7,6 +7,8 @@
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="wallet_address" jdbcType="VARCHAR" property="walletAddress" />
-    <result column="token_money_detail_id" jdbcType="INTEGER" property="tokenMoneyDetailId" />
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="token_money_detail" jdbcType="INTEGER" property="tokenMoneyDetail" />
+    <result column="des" jdbcType="LONGVARCHAR" property="des" />
   </resultMap>
 </mapper>

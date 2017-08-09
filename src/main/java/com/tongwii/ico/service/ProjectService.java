@@ -9,13 +9,6 @@ import com.tongwii.ico.model.User;
  * Created by Zeral on 2017-08-02.
  */
 public interface ProjectService extends Service<Project> {
-    /**
-     * Update input token money.
-     *
-     * @param id          the id
-     * @param tokenDetail the token detail
-     */
-    void updateInputTokenMoney(Integer id, TokenDetail tokenDetail);
 
     /**
      * Update output token money.

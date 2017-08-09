@@ -195,16 +195,16 @@
                                     }
                                 </style>
 
-                                <h2><a href="#" id="enName"></a></h2>
+                                <h2><a href="#" id="enName">项目英文名</a></h2>
                                 <p></p>
                                 <h1 style="text-align:center;" align="center">
-                                    <span><span><span id="cnName"></span></span></span>
+                                    <span><span><span id="cnName">项目中文名</span></span></span>
                                 </h1>
                                 <p>
                                     <span><br></span>
                                 </p>
                                 <p class="MsoNormal">
-                                    <span><span id="projectDes"></span></span>
+                                    <span><span id="projectDes">项目简介</span></span>
                                 </p>
                                 <p class="MsoNormal">
                                     &nbsp;
@@ -454,28 +454,7 @@
                     var content = result.data.content;
                     var enName = result.data.name;
                     var cnName = result.data.nameCn;
-                    var projectDes = result.data.des;
-                    if(enName.length<=0){
-                        $("#enName").hide();
-                    }else{
-                        $("#enName").text(enName);
-                    }
-                    if(cnName.length<=0){
-                        $("#cnName").hide();
-                    }else{
-                        $("#cnName").text(cnName);
-                    }
-                    if(projectDes.length<=0){
-                        $("#projectDes").hide();
-                    }else{
-                        $("#projectDes").text(projectDes);
-                    }
-                    if(content.length<=0){
-                        $("#projectContent").hide();
-                    }else{
-                        $("#projectContent").text(content);
-                    }
-
+//                    var
                 }else{
                     location.href = "404.html";
                 }
