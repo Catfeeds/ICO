@@ -19,6 +19,7 @@
     <link href="assets/css/jplayer.blue.monday.min.css" rel="stylesheet">
     <link href="assets/css/themetypo.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
+    <link href="assets/css/sweet-alert.css" rel="stylesheet">
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -428,17 +429,40 @@
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/app.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
+<script src="assets/scripts/sweet-alert.min.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/jquery.jplayer.min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
+        var id = app.getQueryString("id");
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
         }
+        $.ajax({
+            url: "/project/"+id,
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    var content = result.data.content;
+                    var enName = result.data.name;
+                    var cnName = result.data.nameCn;
+//                    var
+                }else{
+                    location.href = "404.html";
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试");
+            }
+        });
         jQuery('.flexslider').flexslider({
             animation: "slide",
             prevText: "<em class='icon-arrow-left9'></em>",
