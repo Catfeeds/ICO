@@ -656,6 +656,14 @@
                             + "</div></div></div></li>");
                 });
                 // 设计每个li标签的点击事件
+                $('#ICOList').children("li").click(function () {
+                    var id = $(this).attr("id");
+                    location.href = "startICO.html?id=" + id;
+                });
+                $('#willICOList').children("li").click(function () {
+                    var id = $(this).attr("id");
+                    location.href = "willICO.html?id=" + id;
+                });
                 $('#finishICOList').children("li").click(function () {
                     var id = $(this).attr("id");
                     location.href = "finishICO.html?id=" + id;
