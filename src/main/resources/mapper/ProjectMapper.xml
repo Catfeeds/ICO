@@ -10,11 +10,12 @@
     <result column="name_cn" jdbcType="VARCHAR" property="nameCn" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="state" jdbcType="TINYINT" property="state" />
     <result column="third_endorsement" jdbcType="BIT" property="thirdEndorsement" />
     <result column="output_token_money_detail_id" jdbcType="INTEGER" property="outputTokenMoneyDetailId" />
     <result column="part_person_number" jdbcType="INTEGER" property="partPersonNumber" />
     <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
-    <result column="state" jdbcType="TINYINT" property="state" />
     <result column="des" jdbcType="LONGVARCHAR" property="des" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
 </mapper>

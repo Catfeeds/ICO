@@ -69,7 +69,7 @@ create table project
   end_time             timestamp default CURRENT_TIMESTAMP,
   state                tinyint,
   third_endorsement    bool,
-  input_token_money_datail_id int(11) unsigned,
+  output_token_money_datail_id int(11) unsigned,
   part_person_number   int,
   des                  text,
   create_user_id       int(11) unsigned,
