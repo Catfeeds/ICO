@@ -247,51 +247,9 @@
                             <header class="panel-heading">
                                 <h2 class="panel-title">填写数字代币ICO信息</h2>
                             </header>
-                            <div class="panel-body" id="IcoProject">
-                                <div class="form-group">
-                                    <div class='col-md-12' style="padding-top:40px;padding-bottom:20px;font-size:16px;">
-                                        请选择锁定即将开始项目
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-3 "
-                                         style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a
-                                            href='?p=invest&id=38'><span class='thumb-info thumb-info-hide-wrapper-bg'
-                                                                         style='width:200px;'><span
-                                            class='thumb-info-wrapper'><img src='assets/extra-images/img-partner1.jpg'
-                                                                            class='img-responsive'></span></span></a><span
-                                            style='font-size:20px;color:#FF8000;font-weight:bold;'>IPFS</span><BR>2017/8/8
-                                        3:00:00 - 2017/9/4 3:00:00
-                                    </div>
-                                    <div class="col-md-3 "
-                                         style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a
-                                            href='?p=invest&id=159'><span class='thumb-info thumb-info-hide-wrapper-bg'
-                                                                          style='width:200px;'><span
-                                            class='thumb-info-wrapper'><img src='assets/extra-images/img-partner3.jpg'
-                                                                            class='img-responsive'></span></span></a><span
-                                            style='font-size:20px;color:#FF8000;font-weight:bold;'>Primas</span><BR>2017/8/7
-                                        20:00:00 - 2017/8/26 20:00:00
-                                    </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class='col-md-12' style="padding-top:40px;padding-bottom:20px;font-size:16px;">
-                                        请选择投资已经开始项目
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-3 "
-                                         style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a
-                                            href='?p=invest&id=158'><span class='thumb-info thumb-info-hide-wrapper-bg'
-                                                                          style='width:200px;'><span
-                                            class='thumb-info-wrapper'><img src='assets/extra-images/img-partner2.jpg'
-                                                                            class='img-responsive'></span></span></a><span
-                                            style='font-size:20px;color:#FF8000;font-weight:bold;'>Delphy</span><BR>2017/7/31
-                                        20:00:00 - 2017/8/13 19:59:00
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <div class="panel-body" id="IcoProject"></div>
+
                         <div class="alert alert-info fade in nomargin" id="bar"></div>
                         <div class="col-md-12" id="form">
                             <table class="table table-striped">
@@ -389,6 +347,10 @@
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
+        var id = app.getQueryString("id");
+        var projectName = decodeURI(app.getQueryString("projectName"));
+        var startDate = app.getQueryString("startDate");
+        var endDate = app.getQueryString("endDate");
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
         } else {
@@ -413,6 +375,19 @@
             app.setUserInfo({});
             location.href = "index.html";
         });
+        //添加锁定项目数据
+        $("#IcoProject").append(
+            "<div class='form-group'>"
+            +"                <div class='col-md-3 '"
+            +"                     style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a"
+            +"                        href='?id="+id+"'><span class='thumb-info thumb-info-hide-wrapper-bg'"
+            +"                                                     style='width:200px;'><span"
+            +"                        class='thumb-info-wrapper'><img src='assets/extra-images/img-partner1.jpg'"
+            +"                                                        class='img-responsive'></span></span></a><span"
+            +"                        style='font-size:20px;color:#FF8000;font-weight:bold;'>"+projectName+"</span><BR>"+startDate+"——"+endDate
+            +"                </div>"
+            +"                </div>"
+        )
     });
 </script>
 </body>

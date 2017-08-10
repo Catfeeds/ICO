@@ -218,7 +218,7 @@
             }
         });
         $.ajax({
-            url: "http://192.168.0.42:8080/project/findProjectsAndSort",
+            url: "/project/findProjectsAndSort",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
@@ -254,7 +254,10 @@
                             + "<span class='bar'><span style='width:12%;'></span></span>"
                             + "</div></div></div></li>");
                 });
-
+                $('#willICOList').children("li").click(function () {
+                    var id = $(this).attr("id");
+                    location.href = "willICO.html?id=" + id;
+                });
             },
             error: function (xhr, type, errerThrown) {
                 alert('网络异常,请稍候再试');
