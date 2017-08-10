@@ -17,7 +17,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -169,21 +172,33 @@ public class ProjectController {
         List<Project> finishICOList = new ArrayList<>(); // 结束ICO的数据列表
         for (int i =0; i<projectList.size();i++){
             Project p = projectList.get(i);
-            if(p.getThirdEndorsement() != null && p.getInputTokenDetails()!=null && p.getOutPutTokenDetail()!=null){
+            if(p.getThirdEndorsement() != null && p.getOutputTokenMoneyDetailId()!=null){
                 // 判断时间，设定state的值
-                //获取
+                //获取系统当前时间，获取项目的开始时间以及结束时间
+                Date date=new Date();
+                DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String time=format.format(date);
+
+                Date startTime = p.getStartTime();
+                Date endTime = p.getEndTime();
+                //分离已结束的项目
+                if(endTime.before(date)){
+                    p.setState(2);
+                    finishICOList.add(p);
+                }
+                // 分离即将开始的项目
+                if(date.before(startTime)){
+                    p.setState(1);
+                    willICOList.add(p);
+                }
+                // 分离正在进行中的项目
+                if(startTime.before(date) && date.before(endTime)){
+                    p.setState(0);
+                    ICOList.add(p);
+                }
             }else{
                 //删除项目
-            }
-
-            if(projectList.get(i).getState()==Project.State.NOW.getState()){
-                ICOList.add(projectList.get(i));
-            }
-            if(projectList.get(i).getState()==Project.State.UN_COMING.getState()){
-                willICOList.add(projectList.get(i));
-            }
-            if(projectList.get(i).getState()==Project.State.END.getState()){
-                finishICOList.add(projectList.get(i));
+                projectService.deleteById(p.getId());
             }
         }
         JSONObject jsonObject = new JSONObject();
