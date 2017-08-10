@@ -6,8 +6,11 @@ import com.tongwii.ico.service.TokenDetailService;
 import com.tongwii.ico.core.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -19,4 +22,14 @@ public class TokenDetailServiceImpl extends AbstractService<TokenDetail> impleme
     @Resource
     private TokenDetailMapper tokenDetailMapper;
 
+    @Override
+    public List<TokenDetail> findByProjectId(Integer projectId) {
+        TokenDetail tokenDetail = new TokenDetail();
+        tokenDetail.setInputTokenMoneyProjectId(projectId);
+        List<TokenDetail> tokenDetails = tokenDetailMapper.select(tokenDetail);
+        if(CollectionUtils.isEmpty(tokenDetails)){
+            return null;
+        }
+        return tokenDetails;
+    }
 }
