@@ -9,6 +9,11 @@ import org.springframework.http.*;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.ResourceHttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -19,11 +24,9 @@ import org.thymeleaf.context.Context;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 发送验证工具集
@@ -98,13 +101,16 @@ public class MessageUtil {
         httpHeaders.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
 
+
         //设置参数
         Map<String, String> hashMap = new LinkedHashMap<>();
         hashMap.put("ParamString", "{'node':'"+ code +"'}");
         hashMap.put("RecNum", phone);
-        hashMap.put("SignName", URLEncoder.encode(signName, "UTF-8"));
+        hashMap.put("SignName", signName);
         hashMap.put("TemplateCode", templateCode);
-        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(hashMap, httpHeaders);
+        String getParams = "?" + hashMap.keySet().stream().map(k -> String.format("%s={%s}", k, k)).collect(Collectors.joining("&"));
+
+        HttpEntity<?> requestEntity = new HttpEntity<>(httpHeaders);
 
         //执行请求
         RestTemplate restTemplate = new RestTemplate();
@@ -113,7 +119,16 @@ public class MessageUtil {
         ris.add(ri);
         restTemplate.setInterceptors(ris);
         restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-        ResponseEntity<String> resp = restTemplate.exchange(host+path, HttpMethod.GET, requestEntity, String.class);
+        // 编码设置
+        FormHttpMessageConverter fc = new FormHttpMessageConverter();
+        StringHttpMessageConverter s = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+        List<HttpMessageConverter<?>> partConverters = new ArrayList<>();
+        partConverters.add(s);
+        partConverters.add(new ResourceHttpMessageConverter());
+        fc.setPartConverters(partConverters);
+        restTemplate.getMessageConverters().addAll(Arrays.asList(fc, new MappingJackson2HttpMessageConverter()));
+
+        ResponseEntity<String> resp = restTemplate.exchange(host+path+getParams, HttpMethod.GET, requestEntity, String.class, hashMap);
 
         //获得返回值
         String body = resp.getBody();

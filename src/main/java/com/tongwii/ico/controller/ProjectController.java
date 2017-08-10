@@ -17,7 +17,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,8 +41,13 @@ public class ProjectController {
 
     @PostMapping
     public Result add(@RequestBody Project project) {
-        projectService.save(project);
-        return Result.successResult();
+        try {
+            projectService.save(project);
+            return Result.successResult(project);
+        } catch (Exception e) {
+            return Result.errorResult("项目添加失败！");
+        }
+
     }
 
     /**
@@ -53,7 +61,8 @@ public class ProjectController {
     @PutMapping("/{id}/inputTokenMoney")
     public Result updateInputTokenMoney(@PathVariable Integer id, @RequestParam("tokenDetail") TokenDetail tokenDetail) {
         try {
-            projectService.updateInputTokenMoney(id, tokenDetail);
+            // TODO 需要重写，目标代币为多个
+//            projectService.updateInputTokenMoney(id, tokenDetail);
         } catch (Exception e) {
             return Result.errorResult("更新目标代币信息失败");
         }
@@ -119,13 +128,14 @@ public class ProjectController {
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         Project project = projectService.findById(id);
-        if(Objects.nonNull(project.getInputTokenMoneyDatailId())) {
+        // TODO 需要重写，目标代币为多个
+       /* if(Objects.nonNull(project.getInputTokenMoneyDatailId())) {
             // 目标代币
             TokenDetail inputTokenDetail = tokenDetailService.findById(project.getInputTokenMoneyDatailId());
             TokenMoney tokenMoney = tokenMoneyService.findById(inputTokenDetail.getTokenMoneyId());
             inputTokenDetail.setTokenMoney(tokenMoney);
             project.setInputTokenDetail(inputTokenDetail);
-        }
+        }*/
         if(Objects.nonNull(project.getOutputTokenMoneyDetailId())) {
             // 发行代币
             TokenDetail outPutTokenDetail = tokenDetailService.findById(project.getOutputTokenMoneyDetailId());
@@ -161,14 +171,34 @@ public class ProjectController {
         List<Project> willICOList = new ArrayList<>(); // 即将进行ICO中的数据列表
         List<Project> finishICOList = new ArrayList<>(); // 结束ICO的数据列表
         for (int i =0; i<projectList.size();i++){
-            if(projectList.get(i).getState()==Project.State.NOW.getState()){
-                ICOList.add(projectList.get(i));
-            }
-            if(projectList.get(i).getState()==Project.State.UN_COMING.getState()){
-                willICOList.add(projectList.get(i));
-            }
-            if(projectList.get(i).getState()==Project.State.END.getState()){
-                finishICOList.add(projectList.get(i));
+            Project p = projectList.get(i);
+            if(p.getThirdEndorsement() != null && p.getOutputTokenMoneyDetailId()!=null){
+                // 判断时间，设定state的值
+                //获取系统当前时间，获取项目的开始时间以及结束时间
+                Date date=new Date();
+                DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String time=format.format(date);
+
+                Date startTime = p.getStartTime();
+                Date endTime = p.getEndTime();
+                //分离已结束的项目
+                if(endTime.before(date)){
+                    p.setState(2);
+                    finishICOList.add(p);
+                }
+                // 分离即将开始的项目
+                if(date.before(startTime)){
+                    p.setState(1);
+                    willICOList.add(p);
+                }
+                // 分离正在进行中的项目
+                if(startTime.before(date) && date.before(endTime)){
+                    p.setState(0);
+                    ICOList.add(p);
+                }
+            }else{
+                //删除项目
+                projectService.deleteById(p.getId());
             }
         }
         JSONObject jsonObject = new JSONObject();
@@ -182,7 +212,7 @@ public class ProjectController {
     * 根据项目状态查询项目信息
     */
  /*   @RequestMapping("/findProjectByState")
-    public Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
+    manager Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
                                       @RequestParam(required = true,defaultValue = "0") Integer page,
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);

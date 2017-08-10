@@ -29,14 +29,6 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     private UserService userService;
 
     @Override
-    public void updateInputTokenMoney(Integer id, TokenDetail tokenDetail) {
-        tokenDetailService.save(tokenDetail);
-        Project project = findById(id);
-        project.setInputTokenMoneyDatailId(tokenDetail.getId());
-        update(project);
-    }
-
-    @Override
     public void updateOutputTokenMoney(Integer id, TokenDetail tokenDetail) {
         tokenDetailService.save(tokenDetail);
         Project project = findById(id);
