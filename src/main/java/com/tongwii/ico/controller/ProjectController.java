@@ -198,6 +198,7 @@ public class ProjectController {
                     p.setState(0);
                     ICOList.add(p);
                 }
+                update(p);
             }else{
                 //删除残缺项目
                 projectService.deleteById(p.getId());
