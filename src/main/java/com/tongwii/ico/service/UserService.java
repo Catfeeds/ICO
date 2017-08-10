@@ -15,4 +15,6 @@ public interface UserService extends Service<User> {
     void register(User user);
 
     void userUploadAvator(Integer userId, String url);
+
+    User findByIdCard(String idCard);
 }

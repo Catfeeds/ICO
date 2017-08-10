@@ -15,11 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.annotation.Resource;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -38,6 +40,17 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     private RoleService roleService;
     @Resource
     private UserRoleRelationService userRoleRelationService;
+
+    @Override
+    public User findByIdCard(String idCard) {
+        User user = new User();
+        user.setIdCard(idCard);
+        List<User> users = userMapper.select(user);
+        if(CollectionUtils.isEmpty(users)){
+            return null;
+        }
+        return users.get(0);
+    }
 
     @Override
     public User findByUsername(String username) {

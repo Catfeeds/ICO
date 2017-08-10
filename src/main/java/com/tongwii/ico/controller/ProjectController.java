@@ -14,6 +14,7 @@ import com.tongwii.ico.service.TokenMoneyService;
 import com.tongwii.ico.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -39,16 +40,12 @@ public class ProjectController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/add")
     public Result add(@RequestBody Project project) {
-        try {
-            projectService.save(project);
-            return Result.successResult(project);
-        } catch (Exception e) {
-            return Result.errorResult("项目添加失败！");
-        }
-
+        projectService.save(project);
+        return Result.successResult();
     }
+
 
     /**
      * Update input token money of Project.
@@ -129,13 +126,21 @@ public class ProjectController {
     public Result detail(@PathVariable Integer id) {
         Project project = projectService.findById(id);
         // TODO 需要重写，目标代币为多个
-       /* if(Objects.nonNull(project.getInputTokenMoneyDatailId())) {
-            // 目标代币
-            TokenDetail inputTokenDetail = tokenDetailService.findById(project.getInputTokenMoneyDatailId());
-            TokenMoney tokenMoney = tokenMoneyService.findById(inputTokenDetail.getTokenMoneyId());
-            inputTokenDetail.setTokenMoney(tokenMoney);
-            project.setInputTokenDetail(inputTokenDetail);
-        }*/
+        // 首先需要通过项目id查询token_details表数据
+        List<TokenDetail> tokenDetails = tokenDetailService.findByProjectId(id);
+        List<TokenDetail> inputTokenDetails = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(tokenDetails)){
+            for(int i=0; i<tokenDetails.size(); i++){
+                // 目标代币
+                if(!tokenDetails.get(i).getTokenMoneyId().equals(project.getOutputTokenMoneyDetailId())){
+                    TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(i).getTokenMoneyId());
+                    tokenDetails.get(i).setTokenMoney(inputMoney);
+                    inputTokenDetails.add(tokenDetails.get(i));
+                    project.setInputTokenDetails(inputTokenDetails);
+                }
+            }
+        }
+
         if(Objects.nonNull(project.getOutputTokenMoneyDetailId())) {
             // 发行代币
             TokenDetail outPutTokenDetail = tokenDetailService.findById(project.getOutputTokenMoneyDetailId());
@@ -176,9 +181,6 @@ public class ProjectController {
                 // 判断时间，设定state的值
                 //获取系统当前时间，获取项目的开始时间以及结束时间
                 Date date=new Date();
-                DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String time=format.format(date);
-
                 Date startTime = p.getStartTime();
                 Date endTime = p.getEndTime();
                 //分离已结束的项目
@@ -197,7 +199,7 @@ public class ProjectController {
                     ICOList.add(p);
                 }
             }else{
-                //删除项目
+                //删除残缺项目
                 projectService.deleteById(p.getId());
             }
         }
@@ -212,7 +214,7 @@ public class ProjectController {
     * 根据项目状态查询项目信息
     */
  /*   @RequestMapping("/findProjectByState")
-    manager Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
+    admin Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
                                       @RequestParam(required = true,defaultValue = "0") Integer page,
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);
