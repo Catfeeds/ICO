@@ -436,10 +436,26 @@
 
 
                     //替换相应数据
-                    $("#enName").text(enName);
-                    $("#cnName").text(cnName);
-                    $("#projectDes").text(des);
-                    $("#projectContent").html(content);
+                    if(enName.length<=0){
+                        $("#enName").hide();
+                    }else{
+                        $("#enName").text(enName);
+                    }
+                    if(cnName.length<=0){
+                        $("#cnName").hide();
+                    }else{
+                        $("#cnName").text(cnName);
+                    }
+                    if(des.length<=0){
+                        $("#projectDes").hide();
+                    }else{
+                        $("#projectDes").text(des);
+                    }
+                    if(content.length<=0){
+                        $("#projectContent").hide();
+                    }else{
+                        $("#projectContent").html(content);
+                    }
 
                     //目前进展
                     $("#startTime").text(startDate);
@@ -448,11 +464,12 @@
                     setInterval(function () {
                         var nowtime = new Date();
                         var time = endTime - nowtime;
+                        var passtime= (endTime-startTime)-(endTime - nowtime);
                         var day = parseInt(time / 1000 / 60 / 60 / 24);
                         var hour = parseInt(time / 1000 / 60 / 60 % 24);
                         var minute = parseInt(time / 1000 / 60 % 60);
                         var seconds = parseInt(time / 1000 % 60);
-                        var precent = parseInt((time/(endTime-startTime))*100);
+                        var precent = parseInt((passtime/(endTime-startTime))*100);
                         $("#clock").html(day + "天" + hour + ":" + minute + ":" + seconds);
                         $("#timeBar").width(precent+"%")
                         $("#timePTIP").text(precent+"%");
@@ -470,6 +487,7 @@
                     //发行货币
                     $("#cornName").text(outNameEnShort);
                     $("#cornCount").text(outCurrentNumber);
+                    $("#cornTotleCount").text(outTargetNumber+outNameEnShort);
                     $("#cnName1").text(outTargetNumber);
 
                     //接收货币
