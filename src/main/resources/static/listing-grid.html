@@ -222,7 +222,7 @@
         });
         // 通过ajax请求从数据库中获取数据
         $.ajax({
-            url: "http://192.168.0.42:8080/project/findProjectsAndSort",
+            url: "/project/findProjectsAndSort",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
@@ -265,6 +265,11 @@
                             + "<a href='#' class='star icon-star'></a></div>"
                             + "</div></div></div></li>");
                 });
+                $('#ICOList').children("li").click(function () {
+                    var id = $(this).attr("id");
+                    location.href = "startICO.html?id=" + id;
+                });
+
                 console.log(ICOList);
             },
             error: function (xhr, type, errerThrown) {

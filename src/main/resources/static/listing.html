@@ -247,6 +247,10 @@
                             + "<span class='bar'><span style='width:12%;'></span></span>"
                             + "</div></div></div></li>");
                 });
+                $('#finishICOList').children("li").click(function () {
+                    var id = $(this).attr("id");
+                    location.href = "finishICO.html?id=" + id;
+                });
             },
             error: function (xhr, type, errerThrown) {
                 alert('网络异常,请稍候再试');
