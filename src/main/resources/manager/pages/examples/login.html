@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="../../css/sweet-alert.css">
+  <script src="../../scripts/sweet-alert.js"></script>
+  <script src="../../scripts/app.js"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,13 +36,13 @@
   <div class="login-box-body">
     <p class="login-box-msg">登录开启您的旅程</p>
 
-    <form action="../../index2.html" method="post">
+    <form>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <input type="text" class="form-control" placeholder="userName" id="userName">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="password" id="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -52,7 +55,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+          <button type="button" class="btn btn-primary btn-block btn-flat" id="login">登录</button>
         </div>
         <!-- /.col -->
       </div>
@@ -77,6 +80,8 @@
 <script src="../../bootstrap/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="../../plugins/iCheck/icheck.min.js"></script>
+<script src="../../scripts/sweet-alert.js"></script>
+<script src="../../scripts/app.js"></script>
 <script>
   $(function () {
     $('input').iCheck({
@@ -84,6 +89,42 @@
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
+  });
+  jQuery(window).load(function () {
+      $("#login").click(function () {
+          var userName = $("#userName").val();
+          var password = $("#password").val();
+          if (userName.length <= 0) {
+              sweetAlert("登录名不能为空!");
+              return;
+          }
+          if (password.length <= 0) {
+              sweetAlert("密码不能为空!");
+              return;
+          }
+          var userjson = {emailAccount: userName, password: password};
+          $.ajax({
+              url: "/auth/login",
+              type: 'POST',
+              timeout: 10000,//超时时间设置为10秒；
+              data: JSON.stringify(userjson),
+              dataType: 'json',//服务器返回json格式数据
+              contentType: "application/json; charset=utf-8",
+              success: function (result) {
+                  if (result.code == 200) {
+                      app.setUserInfo(result.data.userInfo);
+                      app.setToken(result.data.token);
+                      location.href = "../../index.html";
+                  }
+                  else {
+                      sweetAlert("登录失败!");
+                  }
+              },
+              error: function (xhr, type, errerThrown) {
+                  sweetAlert("网络异常,请稍候再试!");
+              }
+          });
+      });
   });
 </script>
 </body>
