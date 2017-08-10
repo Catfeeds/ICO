@@ -46,6 +46,7 @@ public class ProjectController {
         return Result.successResult();
     }
 
+
     /**
      * Update input token money of Project.
      *
@@ -127,14 +128,13 @@ public class ProjectController {
         // TODO 需要重写，目标代币为多个
         // 首先需要通过项目id查询token_details表数据
         List<TokenDetail> tokenDetails = tokenDetailService.findByProjectId(id);
-//        List inputMoneyList = new ArrayList();
         List<TokenDetail> inputTokenDetails = new ArrayList<>();
         if(!CollectionUtils.isEmpty(tokenDetails)){
             for(int i=0; i<tokenDetails.size(); i++){
+                // 目标代币
                 if(!tokenDetails.get(i).getTokenMoneyId().equals(project.getOutputTokenMoneyDetailId())){
                     TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(i).getTokenMoneyId());
                     tokenDetails.get(i).setTokenMoney(inputMoney);
-//                    inputMoneyList.add(inputMoney);
                     inputTokenDetails.add(tokenDetails.get(i));
                     project.setInputTokenDetails(inputTokenDetails);
                 }
@@ -181,9 +181,6 @@ public class ProjectController {
                 // 判断时间，设定state的值
                 //获取系统当前时间，获取项目的开始时间以及结束时间
                 Date date=new Date();
-                DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String time=format.format(date);
-
                 Date startTime = p.getStartTime();
                 Date endTime = p.getEndTime();
                 //分离已结束的项目
@@ -202,7 +199,7 @@ public class ProjectController {
                     ICOList.add(p);
                 }
             }else{
-                //删除项目
+                //删除残缺项目
                 projectService.deleteById(p.getId());
             }
         }

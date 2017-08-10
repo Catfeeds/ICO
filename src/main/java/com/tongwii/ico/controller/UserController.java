@@ -78,6 +78,13 @@ public class UserController {
         return Result.successResult(user);
     }
 
+    @GetMapping("/findByIdCard/{idCard}")
+    @ResponseBody
+    public Result findUserByIdCard(@PathVariable String idCard) {
+        User user = userService.findByIdCard(idCard);
+        return Result.successResult(user);
+    }
+
     @GetMapping
     @ResponseBody
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
