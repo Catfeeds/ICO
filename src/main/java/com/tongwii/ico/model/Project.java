@@ -26,6 +26,9 @@ public class Project {
     @Column(name = "end_time")
     private Date endTime;
 
+    @Transient
+    private Double targetInvest;
+
     @Column(name = "third_endorsement")
     private Boolean thirdEndorsement;
 
@@ -105,6 +108,20 @@ public class Project {
      */
     public void setNameCn(String nameCn) {
         this.nameCn = nameCn;
+    }
+
+    /**
+     * @return targetInvest
+     */
+    public Double getTargetInvest() {
+        return targetInvest;
+    }
+
+    /**
+     * @param targetInvest
+     */
+    public void setTargetInvest(Double targetInvest) {
+        this.targetInvest = targetInvest;
     }
 
     /**

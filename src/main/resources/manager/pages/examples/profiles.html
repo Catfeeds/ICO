@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="../../bootstrap/css/layui.css">
     <link rel="stylesheet" href="../../bootstrap/css/laydate.css">
     <link rel="stylesheet" href="../../bootstrap/css/layer.css">
+    <link rel="stylesheet" href="../../css/sweet-alert.css">
+
+
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -473,207 +477,6 @@
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#set" data-toggle="tab">发起新项目</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="active tab-pane" style="height: 550px">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">项目名称</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="input" placeholder="项目名称请务必包含产品的关键词（项目名称不超过25个字）">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputEmail" class="col-sm-2 control-label">开始时间</label>
-                                        <div class="col-sm-3">
-                                            <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
-                                            <div class="layui-inline">
-                                                <!--<label class="layui-form-label">验证日期</label>-->
-                                                <div class="layui-input-inline">
-                                                    <input name="date" id="date1"   autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})" type="date">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <label for="inputEmail" class="col-sm-1 control-label">结束时间</label>
-                                        <div class="col-sm-2">
-                                            <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
-                                            <div class="layui-inline">
-                                                <!--<label class="layui-form-label">验证日期</label>-->
-                                                <div class="layui-input-inline">
-                                                    <input name="date" id="date"  autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})" type="date">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">项目简介</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputs" placeholder="请您对该项目做一个简单的介绍....">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputExperience" class="col-sm-2 control-label">项目详情</label>
-                                        <div class="col-sm-10">
-                                            <div class="box">
-                                                <div class="box-header">
-                                                    <h3 class="box-title">
-                                                        <small></small>
-                                                    </h3>
-                                                    <!-- tools box -->
-                                                    <div class="pull-right box-tools">
-                                                        <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                                            <i class="fa fa-minus"></i></button>
-                                                        <button type="button" class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
-                                                            <i class="fa fa-times"></i></button>
-                                                    </div>
-                                                    <!-- /. tools -->
-                                                </div>
-                                                <!-- /.box-header -->
-                                                <div class="box-body pad">
-                                                    <form>
-                                                        <textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> 我同意 <a href="#"></a>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">保存</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="content">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#set" data-toggle="tab">项目接收代币</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="activity">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">代币种类</label>
-                                        <div class="col-sm-2">
-                                            <select name="select" id="selected_id" style="width: 100px;" class="form-control">
-                                                <option value="1">比特币</option>
-                                                <option value="2">金币</option>
-                                                <option value="3">银币</option>
-                                                <option value="4">米特比</option>
-                                                <option value="5">艾比</option>
-                                                <option value="6">铜币</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">最低发布量</label>
-                                        <div class="col-sm-2">
-                                            <div class="mui-numbox">
-                                                <input class="mui-input-numbox" type="number"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">目标发布量</label>
-                                        <div class="col-sm-2">
-                                            <div class="mui-numbox">
-                                                <input class="mui-input-numbox" type="number"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">代币总量</label>
-                                        <div class="col-sm-2">
-                                            <div class="mui-numbox">
-                                                <input class="mui-input-numbox" type="number"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">保存</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-
-        <section class="content">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#time" data-toggle="tab">项目发行代币</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="time">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">发布类型</label>
-                                        <div class="col-sm-3">
-                                            <select name="select" id="select_id" style="width: 100px;" class="form-control">
-                                                <option value="1">比特币</option>
-                                                <option value="2">金币</option>
-                                                <option value="3">银币</option>
-                                                <option value="4">米特比</option>
-                                                <option value="5">艾比</option>
-                                                <option value="6">铜币</option>
-                                            </select>
-                                        </div>
-                                        <label for="inputName" class="col-sm-1 control-label">发布个数</label>
-                                        <div class="col-sm-5">
-                                            <div class="mui-numbox">
-                                                <input class="mui-input-numbox" type="number"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <br>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">保存</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-        <section class="content">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
                             <li class="active"><a href="#timeline" data-toggle="tab">填写发起人信息</a></li>
                         </ul>
                         <div class="tab-content">
@@ -682,25 +485,25 @@
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">姓名</label>
                                         <div class="col-sm-3">
-                                            <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                            <input type="email" class="form-control" id="inputName" placeholder="Name"  id="userName">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputEmail" class="col-sm-2 control-label">身份证号</label>
                                         <div class="col-sm-3">
-                                            <input type="email" class="form-control" id="inputEmail" placeholder="18位身份证号">
+                                            <input type="email" class="form-control" id="inputEmail" placeholder="18位身份证号"  id="userCard">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">手机号</label>
 
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="number" placeholder="请输入手机号">
+                                            <input type="text" class="form-control" id="number" placeholder="请输入手机号"  id="userPhone">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">保存</button>
+                                            <button type="button" class="btn btn-danger" id="bcUserInfo">保存</button>
                                         </div>
                                     </div>
                                 </form>
@@ -710,70 +513,253 @@
                 </div>
             </div>
         </section>
-        <section class="content">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#settings" data-toggle="tab">审核进度</a></li>
-                        </ul>
-                        <div class="tab-content" >
-                            <div class="active tab-pane" id="settings" style="margin-left: 100px">
-                                <ul class="timeline timeline-inverse" >
-                                    <li class="time-label">
+
+       <div id="ceshi">
+
+           <section class="content">
+               <div class="row">
+                   <div class="col-md-9">
+                       <div class="nav-tabs-custom">
+                           <ul class="nav nav-tabs">
+                               <li class="active"><a href="#set" data-toggle="tab">发起新项目</a></li>
+                           </ul>
+                           <div class="tab-content">
+                               <div class="active tab-pane" >
+                                   <form class="form-horizontal" id="addprjs">
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">项目名称</label>
+                                           <div class="col-sm-10">
+                                               <input type="text" class="form-control" id="prjname" placeholder="项目名称请务必包含产品的关键词（项目名称不超过25个字）">
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="inputEmail" class="col-sm-2 control-label">开始时间</label>
+                                           <div class="col-sm-3">
+                                               <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
+                                               <div class="layui-inline">
+                                                   <!--<label class="layui-form-label">验证日期</label>-->
+                                                   <div class="layui-input-inline">
+                                                       <input name="date" id="prjopentime"   autocomplete="off" class="layui-input"  type="date">
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <label for="inputEmail" class="col-sm-1 control-label">结束时间</label>
+                                           <div class="col-sm-2">
+                                               <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
+                                               <div class="layui-inline">
+                                                   <!--<label class="layui-form-label">验证日期</label>-->
+                                                   <div class="layui-input-inline">
+                                                       <input name="date" id="prjclosetime"  autocomplete="off" type="date">
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">项目简介</label>
+                                           <div class="col-sm-10">
+                                               <input type="text" class="form-control" id="prjproduce" placeholder="请您对该项目做一个简单的介绍....">
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="inputExperience" class="col-sm-2 control-label">项目详情</label>
+                                           <div class="col-sm-10">
+                                               <textarea class="form-control" id="prjcontent" placeholder=""></textarea>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <div class="col-sm-offset-2 col-sm-10">
+                                               <div class="checkbox">
+                                                   <label>
+                                                       <input type="checkbox" id="prjagree"> 我同意 <a href="#"></a>
+                                                   </label>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <div class="col-sm-offset-2 col-sm-10">
+                                               <button type="button" id="prjadd" class="btn btn-danger">保存</button>
+                                           </div>
+                                       </div>
+                                   </form>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </section>
+
+           <section class="content">
+               <div class="row">
+                   <div class="col-md-9">
+                       <div class="nav-tabs-custom">
+                           <ul class="nav nav-tabs">
+                               <li class="active"><a href="#set" data-toggle="tab">项目接收代币</a></li>
+                           </ul>
+                           <div class="tab-content">
+                               <div class="active tab-pane" id="activity">
+                                   <form class="form-horizontal">
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">代币种类</label>
+                                           <div class="col-sm-2">
+                                               <select name="select" id="selected_id" style="width: 100px;" class="form-control">
+                                                   <option value="1">比特币</option>
+                                                   <option value="2">金币</option>
+                                                   <option value="3">银币</option>
+                                                   <option value="4">米特比</option>
+                                                   <option value="5">艾比</option>
+                                                   <option value="6">铜币</option>
+                                               </select>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">最低发布量</label>
+                                           <div class="col-sm-2">
+                                               <div class="mui-numbox">
+                                                   <input class="mui-input-numbox" type="number"/>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">目标发布量</label>
+                                           <div class="col-sm-2">
+                                               <div class="mui-numbox">
+                                                   <input class="mui-input-numbox" type="number"/>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">代币总量</label>
+                                           <div class="col-sm-2">
+                                               <div class="mui-numbox">
+                                                   <input class="mui-input-numbox" type="number"/>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <div class="col-sm-offset-2 col-sm-10">
+                                               <button type="submit" class="btn btn-danger">保存</button>
+                                           </div>
+                                       </div>
+                                   </form>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </section>
+
+
+
+
+           <section class="content">
+               <div class="row">
+                   <div class="col-md-9">
+                       <div class="nav-tabs-custom">
+                           <ul class="nav nav-tabs">
+                               <li class="active"><a href="#time" data-toggle="tab">项目发行代币</a></li>
+                           </ul>
+                           <div class="tab-content">
+                               <div class="active tab-pane" id="time">
+                                   <form class="form-horizontal">
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">发布类型</label>
+                                           <div class="col-sm-3">
+                                               <select name="select" id="select_id" style="width: 100px;" class="form-control">
+                                                   <option value="1">比特币</option>
+                                                   <option value="2">金币</option>
+                                                   <option value="3">银币</option>
+                                                   <option value="4">米特比</option>
+                                                   <option value="5">艾比</option>
+                                                   <option value="6">铜币</option>
+                                               </select>
+                                           </div>
+                                           <label for="inputName" class="col-sm-1 control-label">发布个数</label>
+                                           <div class="col-sm-5">
+                                               <div class="mui-numbox">
+                                                   <input class="mui-input-numbox" type="number"/>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <br>
+                                       <br>
+                                       <div class="form-group">
+                                           <div class="col-sm-offset-2 col-sm-10">
+                                               <button type="submit" class="btn btn-danger">保存</button>
+                                           </div>
+                                       </div>
+                                   </form>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </section>
+
+           <section class="content">
+               <div class="row">
+                   <div class="col-md-9">
+                       <div class="nav-tabs-custom">
+                           <ul class="nav nav-tabs">
+                               <li class="active"><a href="#settings" data-toggle="tab">审核进度</a></li>
+                           </ul>
+                           <div class="tab-content" >
+                               <div class="active tab-pane" id="settings" style="margin-left: 100px">
+                                   <ul class="timeline timeline-inverse" >
+                                       <li class="time-label">
                                     <span class="bg-gray">
                                       审核开始
                                     </span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-envelope bg-blue"></i>
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                                            <h3 class="timeline-header"><a href="#"></a> 发起新项目</h3>
-                                        </div>
-                                    </li>
-                                    <!-- END timeline item -->
-                                    <!-- timeline item -->
-                                    <li>
-                                        <i class="fa fa-user bg-aqua"></i>
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 12:00</span>
-                                            <h3 class="timeline-header"><a href="#"></a>项目接收代币</h3>
-                                        </div>
-                                    </li>
-                                    <!-- END timeline item -->
-                                    <!-- timeline item -->
-                                    <li>
-                                        <i class="fa fa-comments bg-yellow"></i>
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 27 分钟前</span>
-                                            <h3 class="timeline-header"><a href="#"></a> 项目发行代币</h3>
-                                        </div>
-                                    </li>
+                                       </li>
+                                       <li>
+                                           <i class="fa fa-envelope bg-blue"></i>
+                                           <div class="timeline-item">
+                                               <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+                                               <h3 class="timeline-header"><a href="#"></a> 发起新项目</h3>
+                                           </div>
+                                       </li>
+                                       <!-- END timeline item -->
+                                       <!-- timeline item -->
+                                       <li>
+                                           <i class="fa fa-user bg-aqua"></i>
+                                           <div class="timeline-item">
+                                               <span class="time"><i class="fa fa-clock-o"></i> 12:00</span>
+                                               <h3 class="timeline-header"><a href="#"></a>项目接收代币</h3>
+                                           </div>
+                                       </li>
+                                       <!-- END timeline item -->
+                                       <!-- timeline item -->
+                                       <li>
+                                           <i class="fa fa-comments bg-yellow"></i>
+                                           <div class="timeline-item">
+                                               <span class="time"><i class="fa fa-clock-o"></i> 27 分钟前</span>
+                                               <h3 class="timeline-header"><a href="#"></a> 项目发行代币</h3>
+                                           </div>
+                                       </li>
 
-                                    <li>
-                                        <i class="fa fa-camera bg-purple"></i>
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 2天前</span>
-                                            <h3 class="timeline-header"><a href="#"></a>填写发起人信息 </h3>
+                                       <li>
+                                           <i class="fa fa-camera bg-purple"></i>
+                                           <div class="timeline-item">
+                                               <span class="time"><i class="fa fa-clock-o"></i> 2天前</span>
+                                               <h3 class="timeline-header"><a href="#"></a>填写发起人信息 </h3>
 
-                                        </div>
-                                    </li>
-                                    <li class="time-label">
+                                           </div>
+                                       </li>
+                                       <li class="time-label">
                                     <span class="bg-red">
                                       审核结束
                                     </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- /.tab-pane -->
-   </div>
-</div>
+                                       </li>
+                                   </ul>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </section>
+           <!-- /.tab-pane -->
+       </div>
+    </div>
+       </div>
 
     <!-- /.content-wrapper -->
     <footer class="main-footer">
@@ -982,10 +968,12 @@
 <script src="../../bootstrap/js/layui.js" charset="utf-8"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="../../scripts/sweet-alert.js"></script>
+<script src="../../scripts/app.js"></script>
+
 <script>
     layui.use('laydate', function(){
         var laydate = layui.laydate;
-
         var start = {
             min: laydate.now()
             ,max: '2099-06-16 23:59:59'
@@ -1014,10 +1002,101 @@
             laydate(end);
         }
     });
-<<<<<<< HEAD:src/main/resources/public/pages/examples/profiles.html
 
-=======
->>>>>>> origin/master:src/main/resources/manager/admin/pages/examples/profiles.html
+    jQuery(window).load(function () {
+        $("#ceshi").hide();
+        $("#bcUserInfo").click(function() {
+            var userName = $("#userName").val();
+            var userCard = $("#userCard").val();
+            var userPhone = $("#userPhone").val();
+            $.ajax({
+                url: "/project",
+                type: 'POST',
+                timeout: 10000,//超时时间设置为10秒；
+                data: JSON.stringify(prjjson),
+                dataType: 'json',//服务器返回json格式数据
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    if (result.code == 200) {
+                        sweetAlert("项目添加成功！");
+//                        location.href = "profiles.html";
+                        $("#prjname").attr("disabled",true);
+                        $("#prjopentime").attr("disabled",true);
+                        $("#prjclosetime").attr("disabled",true);
+                        $("#prjproduce").attr("disabled",true);
+                        $("#prjcontent").attr("disabled",true);
+                        $("#prjagree").checked = true;
+                        $("#prjagree").attr("disabled",true);
+                        $("#prjadd").css("display","none");
+                    }
+                    else {
+                        sweetAlert("项目添加失败!");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("网络异常,请稍候再试!");
+                }
+            });
+            $("#ceshi").show(1000);
+        });
+
+        $("#prjadd").click(function () {
+            var prjname = $("#prjname").val();
+            var prjopentime = $("#prjopentime").val();
+            var prjclosetime = $("#prjclosetime").val();
+            var prjproduce = $("#prjproduce").val();
+            var prjcontent = $("#prjcontent").val();
+            if (prjname.length <= 0) {
+                sweetAlert("项目名称不能为空！");
+                return;
+            }
+            if(prjopentime.length <= 0) {
+                sweetAlert("开始时间不能为空！");
+                return;
+            }
+            if(prjclosetime.length <= 0) {
+                sweetAlert("终止时间不能为空！");
+                return;
+            }
+            var flag = $("#prjagree").is(':checked');
+            if(flag == false) {
+                sweetAlert("请详细阅读协议并接受！");
+                return;
+            }
+
+            //需要获取用户的id，为项目创建者，暂时没有登录，所以没有
+            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce};
+            $.ajax({
+                url: "/project",
+                type: 'POST',
+                timeout: 10000,//超时时间设置为10秒；
+                data: JSON.stringify(prjjson),
+                dataType: 'json',//服务器返回json格式数据
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    if (result.code == 200) {
+                        sweetAlert("项目添加成功！");
+//                        location.href = "profiles.html";
+                        $("#prjname").attr("disabled",true);
+                        $("#prjopentime").attr("disabled",true);
+                        $("#prjclosetime").attr("disabled",true);
+                        $("#prjproduce").attr("disabled",true);
+                        $("#prjcontent").attr("disabled",true);
+                        $("#prjagree").checked = true;
+                        $("#prjagree").attr("disabled",true);
+                        $("#prjadd").css("display","none");
+                    }
+                    else {
+                        sweetAlert("项目添加失败!");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("网络异常,请稍候再试!");
+                }
+            });
+        });
+    });
+
 </script>
 
 </body>
