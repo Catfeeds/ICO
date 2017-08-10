@@ -1026,32 +1026,81 @@
     });
 
     jQuery(window).load(function () {
+
+        $("#bcUserInfo").click(function() {
+            var userName = $("#userName").val();
+            var userCard = $("#userCard").val();
+            var userPhone = $("#userPhone").val();
+//            if (userName.length <= 0) {
+//                sweetAlert("发起人姓名不能为空！");
+//                return;
+//            }
+//            if(userCard.length <= 0) {
+//                sweetAlert("发起人身份证号码不能为空！");
+//                return;
+//            }
+//            if(userPhone.length <= 0) {
+//                sweetAlert("发起人联系方式不能为空！");
+//                return;
+//            }
+            $.ajax({
+                url: "/user/findByIdCard/" + userCard,
+                type: 'GET',
+                success: function (result) {
+                    if (result.code == 200) {
+                        if(result.data == null) {
+                            sweetAlert("发起人不存在，请注册！");
+                            location.href = "register.html";
+                        } else {
+                            var userId = result.data.id;
+                            $("#ceshi").append(
+                                "<input value='" + userId + "' id='userId' type='hidden'/>"
+                            );
+                            $("#userName").attr("disabled",true);
+                            $("#userPhone").attr("disabled",true);
+                            $("#userCard").attr("disabled",true);
+                            $("#bcUserInfo").css("display","none");
+                            $("#ceshi").css("display","inline");
+                        }
+                    }
+                    else {
+                        sweetAlert("操作失败!");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("网络异常,请稍候再试!");
+                }
+            });
+        });
+
         $("#prjadd").click(function () {
             var prjname = $("#prjname").val();
             var prjopentime = $("#prjopentime").val();
             var prjclosetime = $("#prjclosetime").val();
             var prjproduce = $("#prjproduce").val();
             var prjcontent = $("#prjcontent").val();
-            if (prjname.length <= 0) {
-                sweetAlert("项目名称不能为空！");
-                return;
-            }
-            if(prjopentime.length <= 0) {
-                sweetAlert("开始时间不能为空！");
-                return;
-            }
-            if(prjclosetime.length <= 0) {
-                sweetAlert("终止时间不能为空！");
-                return;
-            }
-            var flag = $("#prjagree").is(':checked');
-            if(flag == false) {
-                sweetAlert("请详细阅读协议并接受！");
-                return;
-            }
-            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce};
+//            if (prjname.length <= 0) {
+//                sweetAlert("项目名称不能为空！");
+//                return;
+//            }
+//            if(prjopentime.length <= 0) {
+//                sweetAlert("开始时间不能为空！");
+//                return;
+//            }
+//            if(prjclosetime.length <= 0) {
+//                sweetAlert("终止时间不能为空！");
+//                return;
+//            }
+//            var flag = $("#prjagree").is(':checked');
+//            if(flag == false) {
+//                sweetAlert("请详细阅读协议并接受！");
+//                return;
+//            }
+            var id = $("#userId").val();
+            //需要获取用户的id，为项目创建者，暂时没有登录，所以没有
+            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id};
             $.ajax({
-                url: "/project",
+                url: "/project/add",
                 type: 'POST',
                 timeout: 10000,//超时时间设置为10秒；
                 data: JSON.stringify(prjjson),
@@ -1059,16 +1108,16 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
                     if (result.code == 200) {
-                        sweetAlert("项目添加成功！")
-                        location.href = "profiles.html";
-                        $("#prjname").val(result.data.project.name);
-                        $("#prjopentime").val(result.data.project.startTime);
-                        $("#prjclosetime").val(result.data.project.endTime);
-                        $("#prjproduce").val(result.data.project.des);
-                        $("#prjname").val(result.data.project.prjproduce);
-                        $("#prjproduce").val(result.data.userInfo.emailAccount);
+                        sweetAlert("项目添加成功！");
+//                        location.href = "profiles.html";
+                        $("#prjname").attr("disabled",true);
+                        $("#prjopentime").attr("disabled",true);
+                        $("#prjclosetime").attr("disabled",true);
+                        $("#prjproduce").attr("disabled",true);
+                        $("#prjcontent").attr("disabled",true);
                         $("#prjagree").checked = true;
-                        $("input:not(:empty)").attr("disabled",true);
+                        $("#prjagree").attr("disabled",true);
+                        $("#prjadd").css("display","none");
                     }
                     else {
                         sweetAlert("项目添加失败!");
