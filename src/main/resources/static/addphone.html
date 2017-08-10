@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
     <link rel="stylesheet" href="assets/css/default.css">
-    <!--<script src="master/style-switcher/style.switcher.localstorage.js"></script>-->
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -25,6 +24,7 @@
     <link rel="stylesheet" href="assets/css/component.css" media="screen">
     <link rel="stylesheet" href="assets/css/skin-corporate-hosting.css">
     <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/sweet-alert.css">
 
     <!-- Css (necessary Css) -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -245,29 +245,27 @@
                                         <label class="col-md-3 control-label">新手机号码</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input type="text" name="mobile" class="form-control" value=""
-                                                       placeholder="" required>
+                                                <input type="text" id="mobile" class="form-control">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3  control-label">验证码</label>
                                         <div class="col-md-3">
-                                            <input type="text" name="verifycode" value="" class="form-control"
-                                                   style="width:140px;" required/>
+                                            <input type="text" id="verifycode" class="form-control"
+                                                   style="width:140px;"/>
                                         </div>
                                         <div class="col-md-2">
-                                            <input type="button" id="sendsms" name="sendsms"
+                                            <input type="button" id="sendsms"
                                                    class="cs-bgcolor btn"
                                                    style="color: #ffffff; font-weight: bold;"
-                                                   onclick="javascript:sendSMS();myrefresh();"
                                                    value="发送手机验证码"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label"></label>
                                         <button class="cs-bgcolor m-xs m-lg btn btn-lg" data-toggle="modal" data-target="#formModal"
-                                                type="button" style="color: #ffffff; font-weight: bold;">提交
+                                                id="commit" style="color: #ffffff; font-weight: bold;">提交
                                         </button>
                                     </div>
                                 </form>
@@ -349,6 +347,8 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
 <script src="assets/scripts/app.js"></script>
+<script src="assets/scripts/sweet-alert.min.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
@@ -367,6 +367,16 @@
                 jQuery('body').removeClass('loading');
             }
         });
+        //给发送验证码按钮绑定监听事件
+        var phoneNum = $("#mobile").val();
+        var verifycode = $("#verifycode").val();
+        $("#sendsms").onclick(function () {
+            if(phoneNum.length != 11 ){
+                sweetAlert("请填写正确的手机号码!");
+            }
+            // 此处调用发送手机验证码的接口获取手机验证码
+        });
+
         $("#sign_out").click(function () {
             $("#personInfo").css('display', 'none');
             app.setUserInfo({});
