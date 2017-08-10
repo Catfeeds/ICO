@@ -549,7 +549,7 @@
                                                <div class="layui-inline">
                                                    <!--<label class="layui-form-label">验证日期</label>-->
                                                    <div class="layui-input-inline">
-                                                       <input name="date" id="prjclosetime"  autocomplete="off" type="date">
+                                                       <input name="date" id="prjclosetime"  autocomplete="off" class="layui-input" type="date">
                                                    </div>
                                                </div>
                                            </div>
@@ -615,7 +615,7 @@
                                            <label for="inputName" class="col-sm-2 control-label">最低发布量</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="mui-input-numbox" type="number"/>
+                                                   <input class="form-control" type="number"/>
                                                </div>
                                            </div>
                                        </div>
@@ -623,7 +623,7 @@
                                            <label for="inputName" class="col-sm-2 control-label">目标发布量</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="mui-input-numbox" type="number"/>
+                                                   <input class="form-control" type="number"/>
                                                </div>
                                            </div>
                                        </div>
@@ -631,8 +631,20 @@
                                            <label for="inputName" class="col-sm-2 control-label">代币总量</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="mui-input-numbox" type="number"/>
+                                                   <input class="form-control" type="number"/>
                                                </div>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">中文白皮书链接</label>
+                                           <div class="col-sm-2">
+                                                   <input class="mui-input-numbox" type="file"/>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">英文白皮书链接</label>
+                                           <div class="col-sm-2">
+                                               <input class="mui-input-numbox" type="file"/>
                                            </div>
                                        </div>
                                        <div class="form-group">
@@ -674,10 +686,20 @@
                                                </select>
                                            </div>
                                            <label for="inputName" class="col-sm-1 control-label">发布个数</label>
-                                           <div class="col-sm-5">
+                                           <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="mui-input-numbox" type="number"/>
+                                                   <input class="form-control" type="number"/>
                                                </div>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <label for="inputName" class="col-sm-2 control-label">中文白皮书链接</label>
+                                           <div class="col-sm-2">
+                                               <input class="mui-input-numbox" type="file"/>
+                                           </div>
+                                           <label for="inputName" class="col-sm-2 control-label">英文白皮书链接</label>
+                                           <div class="col-sm-2">
+                                               <input class="mui-input-numbox" type="file"/>
                                            </div>
                                        </div>
                                        <br>
@@ -971,133 +993,133 @@
 <script src="../../scripts/sweet-alert.js"></script>
 <script src="../../scripts/app.js"></script>
 
-<script>
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        var start = {
-            min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
-            ,istoday: false
-            ,choose: function(datas){
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-            }
-        };
+<!--<script>-->
+    <!--layui.use('laydate', function(){-->
+        <!--var laydate = layui.laydate;-->
+        <!--var start = {-->
+            <!--min: laydate.now()-->
+            <!--,max: '2099-06-16 23:59:59'-->
+            <!--,istoday: false-->
+            <!--,choose: function(datas){-->
+                <!--end.min = datas; //开始日选好后，重置结束日的最小日期-->
+                <!--end.start = datas //将结束日的初始值设定为开始日-->
+            <!--}-->
+        <!--};-->
 
-        var end = {
-            min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
-            ,istoday: false
-            ,choose: function(datas){
-                start.max = datas; //结束日选好后，重置开始日的最大日期
-            }
-        };
+        <!--var end = {-->
+            <!--min: laydate.now()-->
+            <!--,max: '2099-06-16 23:59:59'-->
+            <!--,istoday: false-->
+            <!--,choose: function(datas){-->
+                <!--start.max = datas; //结束日选好后，重置开始日的最大日期-->
+            <!--}-->
+        <!--};-->
 
-        document.getElementById('LAY_demorange_s').onclick = function(){
-            start.elem = this;
-            laydate(start);
-        }
-        document.getElementById('LAY_demorange_e').onclick = function(){
-            end.elem = this
-            laydate(end);
-        }
-    });
+        <!--document.getElementById('LAY_demorange_s').onclick = function(){-->
+            <!--start.elem = this;-->
+            <!--laydate(start);-->
+        <!--}-->
+        <!--document.getElementById('LAY_demorange_e').onclick = function(){-->
+            <!--end.elem = this-->
+            <!--laydate(end);-->
+        <!--}-->
+    <!--});-->
 
-    jQuery(window).load(function () {
-        $("#ceshi").hide();
-        $("#bcUserInfo").click(function() {
-            var userName = $("#userName").val();
-            var userCard = $("#userCard").val();
-            var userPhone = $("#userPhone").val();
-            $.ajax({
-                url: "/project",
-                type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(prjjson),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function () {
-                    if (result.code == 200) {
-                        sweetAlert("项目添加成功！");
-//                        location.href = "profiles.html";
-                        $("#prjname").attr("disabled",true);
-                        $("#prjopentime").attr("disabled",true);
-                        $("#prjclosetime").attr("disabled",true);
-                        $("#prjproduce").attr("disabled",true);
-                        $("#prjcontent").attr("disabled",true);
-                        $("#prjagree").checked = true;
-                        $("#prjagree").attr("disabled",true);
-                        $("#prjadd").css("display","none");
-                    }
-                    else {
-                        sweetAlert("项目添加失败!");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    sweetAlert("网络异常,请稍候再试!");
-                }
-            });
-            $("#ceshi").show(1000);
-        });
+    <!--jQuery(window).load(function () {-->
+        <!--$("#ceshi").hide();-->
+        <!--$("#bcUserInfo").click(function() {-->
+            <!--var userName = $("#userName").val();-->
+            <!--var userCard = $("#userCard").val();-->
+            <!--var userPhone = $("#userPhone").val();-->
+            <!--$.ajax({-->
+                <!--url: "/project",-->
+                <!--type: 'POST',-->
+                <!--timeout: 10000,//超时时间设置为10秒；-->
+                <!--data: JSON.stringify(prjjson),-->
+                <!--dataType: 'json',//服务器返回json格式数据-->
+                <!--contentType: "application/json; charset=utf-8",-->
+                <!--success: function () {-->
+                    <!--if (result.code == 200) {-->
+                        <!--sweetAlert("项目添加成功！");-->
+<!--//                        location.href = "profiles.html";-->
+                        <!--$("#prjname").attr("disabled",true);-->
+                        <!--$("#prjopentime").attr("disabled",true);-->
+                        <!--$("#prjclosetime").attr("disabled",true);-->
+                        <!--$("#prjproduce").attr("disabled",true);-->
+                        <!--$("#prjcontent").attr("disabled",true);-->
+                        <!--$("#prjagree").checked = true;-->
+                        <!--$("#prjagree").attr("disabled",true);-->
+                        <!--$("#prjadd").css("display","none");-->
+                    <!--}-->
+                    <!--else {-->
+                        <!--sweetAlert("项目添加失败!");-->
+                    <!--}-->
+                <!--},-->
+                <!--error: function (xhr, type, errerThrown) {-->
+                    <!--sweetAlert("网络异常,请稍候再试!");-->
+                <!--}-->
+            <!--});-->
+            <!--$("#ceshi").show(1000);-->
+        <!--});-->
 
-        $("#prjadd").click(function () {
-            var prjname = $("#prjname").val();
-            var prjopentime = $("#prjopentime").val();
-            var prjclosetime = $("#prjclosetime").val();
-            var prjproduce = $("#prjproduce").val();
-            var prjcontent = $("#prjcontent").val();
-            if (prjname.length <= 0) {
-                sweetAlert("项目名称不能为空！");
-                return;
-            }
-            if(prjopentime.length <= 0) {
-                sweetAlert("开始时间不能为空！");
-                return;
-            }
-            if(prjclosetime.length <= 0) {
-                sweetAlert("终止时间不能为空！");
-                return;
-            }
-            var flag = $("#prjagree").is(':checked');
-            if(flag == false) {
-                sweetAlert("请详细阅读协议并接受！");
-                return;
-            }
+        <!--$("#prjadd").click(function () {-->
+            <!--var prjname = $("#prjname").val();-->
+            <!--var prjopentime = $("#prjopentime").val();-->
+            <!--var prjclosetime = $("#prjclosetime").val();-->
+            <!--var prjproduce = $("#prjproduce").val();-->
+            <!--var prjcontent = $("#prjcontent").val();-->
+            <!--if (prjname.length <= 0) {-->
+                <!--sweetAlert("项目名称不能为空！");-->
+                <!--return;-->
+            <!--}-->
+            <!--if(prjopentime.length <= 0) {-->
+                <!--sweetAlert("开始时间不能为空！");-->
+                <!--return;-->
+            <!--}-->
+            <!--if(prjclosetime.length <= 0) {-->
+                <!--sweetAlert("终止时间不能为空！");-->
+                <!--return;-->
+            <!--}-->
+            <!--var flag = $("#prjagree").is(':checked');-->
+            <!--if(flag == false) {-->
+                <!--sweetAlert("请详细阅读协议并接受！");-->
+                <!--return;-->
+            <!--}-->
 
-            //需要获取用户的id，为项目创建者，暂时没有登录，所以没有
-            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce};
-            $.ajax({
-                url: "/project",
-                type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(prjjson),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function () {
-                    if (result.code == 200) {
-                        sweetAlert("项目添加成功！");
-//                        location.href = "profiles.html";
-                        $("#prjname").attr("disabled",true);
-                        $("#prjopentime").attr("disabled",true);
-                        $("#prjclosetime").attr("disabled",true);
-                        $("#prjproduce").attr("disabled",true);
-                        $("#prjcontent").attr("disabled",true);
-                        $("#prjagree").checked = true;
-                        $("#prjagree").attr("disabled",true);
-                        $("#prjadd").css("display","none");
-                    }
-                    else {
-                        sweetAlert("项目添加失败!");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    sweetAlert("网络异常,请稍候再试!");
-                }
-            });
-        });
-    });
+            <!--//需要获取用户的id，为项目创建者，暂时没有登录，所以没有-->
+            <!--var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce};-->
+            <!--$.ajax({-->
+                <!--url: "/project",-->
+                <!--type: 'POST',-->
+                <!--timeout: 10000,//超时时间设置为10秒；-->
+                <!--data: JSON.stringify(prjjson),-->
+                <!--dataType: 'json',//服务器返回json格式数据-->
+                <!--contentType: "application/json; charset=utf-8",-->
+                <!--success: function () {-->
+                    <!--if (result.code == 200) {-->
+                        <!--sweetAlert("项目添加成功！");-->
+<!--//                        location.href = "profiles.html";-->
+                        <!--$("#prjname").attr("disabled",true);-->
+                        <!--$("#prjopentime").attr("disabled",true);-->
+                        <!--$("#prjclosetime").attr("disabled",true);-->
+                        <!--$("#prjproduce").attr("disabled",true);-->
+                        <!--$("#prjcontent").attr("disabled",true);-->
+                        <!--$("#prjagree").checked = true;-->
+                        <!--$("#prjagree").attr("disabled",true);-->
+                        <!--$("#prjadd").css("display","none");-->
+                    <!--}-->
+                    <!--else {-->
+                        <!--sweetAlert("项目添加失败!");-->
+                    <!--}-->
+                <!--},-->
+                <!--error: function (xhr, type, errerThrown) {-->
+                    <!--sweetAlert("网络异常,请稍候再试!");-->
+                <!--}-->
+            <!--});-->
+        <!--});-->
+    <!--});-->
 
-</script>
+<!--</script>-->
 
 </body>
 </html>
