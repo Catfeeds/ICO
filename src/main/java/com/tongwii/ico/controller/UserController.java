@@ -18,6 +18,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -149,6 +150,27 @@ public class UserController {
         }
         return Result.successResult("注册成功");
     }
+
+    /**
+     * 验证验证码
+     */
+    @GetMapping("/validateCode")
+    @ResponseBody
+    public Result validateCode(@RequestParam("code") String code) {
+        if(StringUtils.isEmpty(code) || code.length() != 6) {
+            return Result.failResult("验证码格式不正确");
+        }
+        try {
+            User user = userService.findById(ContextUtils.getUserId());
+            if(user.getVerifyCode().equals(code) && user.getExpireDate().before(new Date())) {
+                return Result.successResult("验证成功");
+            }
+        } catch (Exception e) {
+            return Result.errorResult("验证失败");
+        }
+        return Result.errorResult("验证失败");
+    }
+
 
     /**
      * 验证邮箱
