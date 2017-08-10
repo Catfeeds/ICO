@@ -70,7 +70,7 @@
                                     <li><a href="about.html">关于我们</a></li>
                                     <li><a href="sign.html">登录/注册</a></li>
                                     <li><a href="services.html">服务与帮助</a></li>
-                                    <li><a href="contect.html">用户信息</a></li>
+                                    <li><a href="contect.html" id="contect">我的信息</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -150,51 +150,9 @@
                                     &nbsp;
                                 </p>
                                 <div id="projectContent">此处是项目添加时上传到后台数据库的html</div>
-                                <!--<p class="MsoNormal">
-                                    <span><span>1）</span></span><span><span><span>Delphy</span></span></span><span><span>可高效的收集多样而分散的信息;</span></span><span></span>
-                                </p>-->
-                                <div id = "designICO">ICO方案</div>
-                                <h3 style="text-align:center;">
-                                    <span style="font-size:24px;">ICO方案</span>
-                                </h3>
-                            <span style="font-size:9px;"><span
-                                    style="font-size:14px;">Delphy将发行一种基于以太坊ERC20标准的代币DPY，代币总量为1亿个。DPY代币的分配细则如下：</span><br>
-                            <span style="font-size:14px;"> 本次ico会释放26%（2600万个DPY）</span><br>
-                            <span style="font-size:14px;"> ICO期间种子轮释放1800万个DPY（18%），第二轮释放800万个DPY（8%)</span><br>
-                            <span style="font-size:14px;"> 种子轮（1800万DPY, 18%）：</span><br>
-                            <span style="font-size:14px;"> 7月31日 20:00 ~ 8月2日 19:59，每个ETH可以兑换500 DPY代币。</span><br>
-                            <span style="font-size:14px;"> 8月2日20:00 ~ 8月6日19:59，每个ETH可以兑换470 DPY代币。</span><br>
-                            <span style="font-size:14px;"> 8月6日20:00 ~ 8月13日19:59，每个ETH可以兑换430 DPY代币。</span><br>
-                            <span style="font-size:14px;"> 第二轮（800万DPY, 8%）：</span><br>
-                            <span style="font-size:14px;"> 8月31日20:00 ~ 9月5日19:59，每个ETH可以兑换250 DPY代币。</span><br>
-                            <p>
-                                <strong><span style="font-size:14px;">团队持有10%：</span></strong>
-                            </p>
-                            <p style="text-align:left;">
-                                <span style="font-size:14px;">1000万个DPY（10%）将会分配给创始及开发团队（代币将会在1年内被锁定，不可以进行流通，在锁定结束后的两年时间内线性释放）。</span>
-                            </p>
-                            <span style="color:#000000;">
-                            <p style="font-size:14px;">
-                                <span style="font-size:9px;"> <strong><span
-                                        style="font-size:14px;">Pre-ICO 5%：</span></strong><br>
-                            <span style="font-size:14px;"> 500万个DPY（5%）代币将在Pre-ICO中释放给早期投资者（锁定6个月）。</span></span>
-                            </p>
-                            <p style="font-size:14px;">
-                                <span style="font-size:9px;"><strong><span style="font-size:14px;">其他9%：</span></strong></span>
-                            </p>
-                            <p style="font-size:14px;">
-                                <span style="font-size:9px;"><span style="font-size:14px;"><span><span>500万个DPY代币（5％）将由决策委员会用于激励生态建设; 400万个DPY代币（4％）将用于科学研究和法律合规。</span></span></span></span>
-                            </p>
-                            <p>
-                                <span style="font-size:14px;"><br></span>
-                                <span style="font-size:14px;"><span><span> 系统将会把另外50％代币（5000万个DPY）届时按累计1:1的比例以免费赠送的方式，逐月地线性释放给包括团队的所有DPY持有者（具体分配按每月某个时点的持币数量快照为准）。
-                                </span></span></span>
-                            </p>
-                            <p style="font-size:14px;">
-                                <br>
-                            </p>
-                            <p></p>
 
+
+                             <div>
                             <div class="col-md-4"><h3>项目情况</h3>
                                  <style>
                                    y{
@@ -224,7 +182,8 @@
                                     <dd id="cornTotleCount">18000000 DPY</dd>
                                 </dl>
                             </div>
-                            <div class="col-md-4"><h3>目标代币情况</h3>
+                            <div class="col-md-4">
+                                <h3>目标代币情况</h3>
                                 <dl>
                                     <y>接受币种</y>
                                     <dd id="getCornType">eth</dd>
@@ -234,6 +193,8 @@
                                     <dd id="highTarget">23000 以太坊</dd>
                                 </dl>
                             </div>
+                        </div>
+                        <div>
                             <div class="col-md-4"><h3>相关链接</h3>
                                 <dl>
                                     <y>官网链接</y>
@@ -260,6 +221,7 @@
                                     </dd>
                                 </dl>
                             </div>
+                        </div>
                                 </span></span>
                             </div>
                         </article>
@@ -272,7 +234,7 @@
                             <span class="thumb-info mb-xlg">
                             <div style="margin:10px;">
                                 <div><h4>目前进展</h4></div>
-                                <div>目标金额: 2.3万ETH</div>
+                                <div>目标金额: <span id="targetMoney"></span></div>
                                 <div>开始时间: <span id="startTime"></span></div>
                                 <div>结束时间:  <span id="endTime"></span></div>
                                 <div class="row" style="padding:16px 0 16px 0;">
@@ -319,7 +281,7 @@
                                     <span id="clock" style="font-family:Impact;font-size:42px;color:#111111;"></span>
                                 </div>
                                 <div style="width:100%;text-align:center;padding:0px 0 0px 0;">
-                                    <button type="button" class="btn btn-3d btn-primary btn-lg" onclick="">马上参与</button>
+                                    <button type="button" class="btn btn-3d btn-primary btn-lg" onclick="join()">马上参与</button>
                                 </div>
                                 <br>
                             </div>
@@ -402,6 +364,7 @@
         var id = app.getQueryString("id");
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
+            $("#contect").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
@@ -424,6 +387,8 @@
                     var startTime = new Date(startDate);
                     var endTime =  new Date(endDate);
                     var thirdEndorsement = result.data.thirdEndorsement;
+                    //接收货币数据
+                    var inputTokenDetails = result.data.inputTokenDetails;
                     //发行货币数据
                     var outNameEnShort = result.data.outPutTokenDetail.tokenMoney.nameEnShort;//简称
                     var outCurrentNumber = result.data.outPutTokenDetail.currentNumber;//代币总量
@@ -460,6 +425,7 @@
                     //目前进展
                     $("#startTime").text(startDate);
                     $("#endTime").text(endDate);
+
                     //距结束时间
                     setInterval(function () {
                         var nowtime = new Date();
@@ -488,9 +454,20 @@
                     $("#cornName").text(outNameEnShort);
                     $("#cornCount").text(outCurrentNumber);
                     $("#cornTotleCount").text(outTargetNumber+outNameEnShort);
+                    $("#targetMoney").text(outTargetNumber+outNameEnShort);
                     $("#cnName1").text(outTargetNumber);
 
+
                     //接收货币
+                    var jshb = "";
+                    $.each(inputTokenDetails, function (i, item) {
+                        if(jshb==""){
+                            jshb = item.tokenMoney.name;
+                        }else{
+                            jshb =","+ item.tokenMoney.name;
+                        }
+                    });
+                    $("#getCornType").text(jshb);
 
                     //链接
                     $('#officialLink').attr('href',officialUrl);
@@ -524,6 +501,13 @@
         });
 
     });
+    function join() {
+        if (app.getUserInfo().emailAccount == null) {
+            location.href="sign.html";
+        } else {
+            location.href="tokeninvestment.html";
+        }
+    }
 
 </script>
 </body>

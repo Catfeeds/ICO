@@ -150,50 +150,7 @@
                                     &nbsp;
                                 </p>
                                 <div id="projectContent">此处是项目添加时上传到后台数据库的html</div>
-                                <!--<p class="MsoNormal">
-                                    <span><span>1）</span></span><span><span><span>Delphy</span></span></span><span><span>可高效的收集多样而分散的信息;</span></span><span></span>
-                                </p>-->
-                                <div id = "designICO">ICO方案</div>
-                                <h3 style="text-align:center;">
-                                    <span style="font-size:24px;">ICO方案</span>
-                                </h3>
-                            <span style="font-size:9px;"><span
-                                    style="font-size:14px;">Delphy将发行一种基于以太坊ERC20标准的代币DPY，代币总量为1亿个。DPY代币的分配细则如下：</span><br>
-                            <span style="font-size:14px;"> 本次ico会释放26%（2600万个DPY）</span><br>
-                            <span style="font-size:14px;"> ICO期间种子轮释放1800万个DPY（18%），第二轮释放800万个DPY（8%)</span><br>
-                            <span style="font-size:14px;"> 种子轮（1800万DPY, 18%）：</span><br>
-                            <span style="font-size:14px;"> 7月31日 20:00 ~ 8月2日 19:59，每个ETH可以兑换500 DPY代币。</span><br>
-                            <span style="font-size:14px;"> 8月2日20:00 ~ 8月6日19:59，每个ETH可以兑换470 DPY代币。</span><br>
-                            <span style="font-size:14px;"> 8月6日20:00 ~ 8月13日19:59，每个ETH可以兑换430 DPY代币。</span><br>
-                            <span style="font-size:14px;"> 第二轮（800万DPY, 8%）：</span><br>
-                            <span style="font-size:14px;"> 8月31日20:00 ~ 9月5日19:59，每个ETH可以兑换250 DPY代币。</span><br>
-                            <p>
-                                <strong><span style="font-size:14px;">团队持有10%：</span></strong>
-                            </p>
-                            <p style="text-align:left;">
-                                <span style="font-size:14px;">1000万个DPY（10%）将会分配给创始及开发团队（代币将会在1年内被锁定，不可以进行流通，在锁定结束后的两年时间内线性释放）。</span>
-                            </p>
-                            <span style="color:#000000;">
-                            <p style="font-size:14px;">
-                                <span style="font-size:9px;"> <strong><span
-                                        style="font-size:14px;">Pre-ICO 5%：</span></strong><br>
-                            <span style="font-size:14px;"> 500万个DPY（5%）代币将在Pre-ICO中释放给早期投资者（锁定6个月）。</span></span>
-                            </p>
-                            <p style="font-size:14px;">
-                                <span style="font-size:9px;"><strong><span style="font-size:14px;">其他9%：</span></strong></span>
-                            </p>
-                            <p style="font-size:14px;">
-                                <span style="font-size:9px;"><span style="font-size:14px;"><span><span>500万个DPY代币（5％）将由决策委员会用于激励生态建设; 400万个DPY代币（4％）将用于科学研究和法律合规。</span></span></span></span>
-                            </p>
-                            <p>
-                                <span style="font-size:14px;"><br></span>
-                                <span style="font-size:14px;"><span><span> 系统将会把另外50％代币（5000万个DPY）届时按累计1:1的比例以免费赠送的方式，逐月地线性释放给包括团队的所有DPY持有者（具体分配按每月某个时点的持币数量快照为准）。
-                                </span></span></span>
-                            </p>
-                            <p style="font-size:14px;">
-                                <br>
-                            </p>
-                            <p></p>
+
 
                             <div class="col-md-4"><h3>项目情况</h3>
                                  <style>
@@ -417,6 +374,8 @@
                     var startTime = new Date(startDate);
                     var endTime =  new Date(endDate);
                     var thirdEndorsement = result.data.thirdEndorsement;
+                    //接收货币数据
+                    var inputTokenDetails = result.data.inputTokenDetails;
                     //发行货币数据
                     var outNameEnShort = result.data.outPutTokenDetail.tokenMoney.nameEnShort;//简称
                     var outCurrentNumber = result.data.outPutTokenDetail.currentNumber;//代币总量
@@ -471,6 +430,16 @@
                     $("#cnName1").text(outTargetNumber);
 
                     //接收货币
+                    var jshb = "";
+                    $.each(inputTokenDetails, function (i, item) {
+                        if(jshb==""){
+                            jshb = item.tokenMoney.name;
+                        }else{
+                            jshb =","+ item.tokenMoney.name;
+                        }
+                    });
+                    $("#getCornType").text(jshb);
+
 
                     //链接
                     $('#officialLink').attr('href',officialUrl);
