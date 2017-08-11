@@ -312,8 +312,10 @@
                                     <label class="col-md-3 control-label"> 手机 </label>
                                     <div class="col-md-6">
                                         <div class="input-group">
-                                            <label class="control-label"><a href='addphone.html'
+                                            <label class="control-label" id="phone_a"><a href='addphone.html'
                                                                             style="color:#fe6500; font-weight: bold">添加手机号</a>
+                                            </label>
+                                            <label class="control-label" id="phonelable" style="display: none">
                                             </label>
                                         </div>
                                     </div>
@@ -425,6 +427,11 @@
                 $("#truename").css('display', 'none');
                 $("#identitycard").css('display', 'none');
                 $("#submitRealInfo").css('display', 'none');
+            }
+            if(app.getUserInfo().validatePhone){
+                $("#phone_a").css('display', 'none');
+                $("#phonelable").text(app.getUserInfo().phone);
+                $("#phonelable").css('display', 'block');
             }
         }
         jQuery('.flexslider').flexslider({
