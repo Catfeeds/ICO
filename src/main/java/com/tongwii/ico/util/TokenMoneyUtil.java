@@ -75,7 +75,7 @@ public class TokenMoneyUtil {
 
         final File walletFile;
 
-        if(env.equals(CurrentConfig.DEVELOPMENT)) {
+        if(env.equals(CurrentConfig.DEVELOPMENT.getConfig())) {
             netParams = TestNet3Params.get();
         } else {
             netParams = MainNetParams.get();

@@ -56,7 +56,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure ( HttpSecurity httpSecurity ) throws Exception {
         // 开发者模式，放行所有
         // token将拿不到用户信息
-        if (env.equals(CurrentConfig.DEVELOPMENT)) {
+        if (env.equals(CurrentConfig.DEVELOPMENT.getConfig())) {
             httpSecurity
                     // jwt不需要csrf
                     .csrf().disable()
