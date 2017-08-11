@@ -47,7 +47,7 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
         for(int i=0;i<userWallets.size();i++){
             JSONObject wallet = new JSONObject();
             wallet.put("tokenMoneyId",userWallets.get(i).getTokenMoneyId());
-            wallet.put("tokenMoneyURL",userWallets.get(i).getTokenMoneyUrl());
+//            wallet.put("tokenMoneyURL",userWallets.get(i).getTokenMoneyUrl());
             wallet.put("walletState",userWallets.get(i).getState());
             wallet.put("tokenMoneyName",tokenMoneyService.findById(userWallets.get(i).getTokenMoneyId()).getName());
             wallet.put("tokenMoneyEnName",tokenMoneyService.findById(userWallets.get(i).getTokenMoneyId()).getNameEnShort());
