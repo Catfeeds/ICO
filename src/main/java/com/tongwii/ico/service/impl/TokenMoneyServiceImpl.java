@@ -6,8 +6,10 @@ import com.tongwii.ico.service.TokenMoneyService;
 import com.tongwii.ico.core.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -19,4 +21,14 @@ public class TokenMoneyServiceImpl extends AbstractService<TokenMoney> implement
     @Resource
     private TokenMoneyMapper tokenMoneyMapper;
 
+    @Override
+    public TokenMoney findByName(String ICOname) {
+        TokenMoney tokenMoney = new TokenMoney();
+        tokenMoney.setName(ICOname);
+        List<TokenMoney> tokenMoneys = tokenMoneyMapper.select(tokenMoney);
+        if(CollectionUtils.isEmpty(tokenMoneys)){
+            return null;
+        }
+        return tokenMoneys.get(0);
+    }
 }

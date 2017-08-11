@@ -233,83 +233,101 @@
                     </div>
 
                     <div class="col-md-9">
-                        <div class="col-md-12" id="warningInfo" style="display: block">
-                            <div class="featured-box featured-box-primary featured-box-text-left">
-                                <div class="box-content">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h2>提示信息 </h2>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <p>
-                                                    <strong>为了保障您的权益，请先填写您的真实姓名和身份证信息，为了确保您最终可以获得您的投资收益，请务必填写真实信息</strong>
-                                                </p>
-
-                                            </div>
-                                            <div class="col-md-12 row">
-                                                <input class="cs-bgcolor m-xs m-lg btn btn-lg" type="button" value="返回"
-                                                       style="color: #ffffff; font-weight: bold;"
-                                                       onclick="javascript:window.location.href='contect.html';"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <h2><strong>数字代币ICO</strong></h2>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-md-12 control-label" style="text-align: center;" id="numMoney">目前持有数字代币
+                                    BTC：<span class='strong1'>0.00000</span> |
+                                    ETH：<span class='strong1'>0.00000</span> |
+                                    Qtum：<span class='strong1'>0.00000</span>
+                                </label>
                             </div>
                         </div>
-                        <div id="officalInfo" style="display:none">
-                            <h2><strong>数字代币ICO</strong></h2>
+                        <div class="row">
+                            <header class="panel-heading">
+                                <h2 class="panel-title">填写数字代币ICO信息</h2>
+                            </header>
                             <div class="row">
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label" style="text-align: center;" id="numMoney">目前持有数字代币
-                                        BTC：<span class='strong1'>0.00000</span> |
-                                        ETH：<span class='strong1'>0.00000</span> |
-                                        Qtum：<span class='strong1'>0.00000</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <header class="panel-heading">
-                                    <h2 class="panel-title">填写数字代币ICO信息</h2>
-                                </header>
-                                <div class="form-group">
-                                    <div class='col-md-12' style="padding-top:40px;padding-bottom:20px;font-size:16px;">
-                                        请选择锁定即将开始项目
-                                    </div>
-                                </div>
-                                <div class="panel-body" id="IcoProject"></div>
-                                <div class="form-group">
-                                    <div class='col-md-12' style="padding-top:40px;padding-bottom:20px;font-size:16px;">
-                                        已锁定的投资项目
-                                    </div>
-                                </div>
-                                <div class="panel-body" id="investedIcoProject"></div>
+                                <form name="" action="https://www.icoage.com/?p=invest&amp;do=invest" class="form-horizontal mb-lg" method="post">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-md-10" style="padding-left:40px;">单用户以太币最低投资金额为 <span style="font-size:18px;font-weight:bold;color:#FF8000;">.01</span> ETH</label><label class="col-md-10" style="padding-left:40px;"><li><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></li></label>
+                                        </div>
+                                        <input type="hidden" value="2" name="investtype" id="investtype2">
+                                        <div class="form-group" onclick="investtype2.checked=&#39;true&#39;">
+                                            <div class="col-sm-12" style="padding-left:80px;">我将 投资 <input type="text" value="" name="number2" style="width:60px;" id="number2" onclick="investtype2.checked=&#39;true&#39;;"> <select style="width:80px;" name="moneytype2" id="moneytype2">eth<option value="ETH">ETH</option></select> 到 正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
+                                                <input type="hidden" name="project2" id="project2" value="Indorse"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12" style="padding-left:80px;">
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#formModal" type="button" onclick="javascript:showdiag();">递交委托单</button>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            function showdiag(){
+                                                MoneyNumber.innerHTML=number2.value;
+                                                Showmoneytype.innerHTML=moneytype2.options[moneytype2.selectedIndex].text;
+                                                Showproject.innerHTML=project2.value;
+                                            }
+                                        </script>
+                                        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <h4 class="modal-title" id="formModalLabel">再次确认投资ICO信息</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>我确认在ICOAGE使用 <span id="MoneyNumber" style="font-size:18px;font-weight:bold;color:#FF8000;"></span> <span id="Showmoneytype" style="font-size:18px;font-weight:bold;color:#FF8000;"></span> 用于投资项目 <span id="Showproject" style="font-size:18px;font-weight:bold;color:#FF8000;"></span> 吗？</p>
 
-                            <div class="alert alert-info fade in nomargin" id="bar"></div>
-                            <div class="col-md-12" id="form">
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>时间</th>
-                                        <th>投资描述</th>
-                                        <th>目标项目</th>
-                                        <th>状态</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                                        <p><input type="checkbox" name="agreement3" value="3" required="">我确认已经阅读并理解该项目的原理、愿景、目标和实现手段，同意将按照该项目的公开认购条件来购买相关数字代币或参与数字代币众筹。我也已经充分了解该项目的所有风险，并且愿意承担所有风险。我本人清楚明白ICOAGE仅仅是作为我所委托的代理人来代表我操作购买该项目的数字代币或参与众筹，而不是项目发起人或代币出售方本身，ICOAGE除操作前述代理行为外不承担任何其他义务，也不会对相关数字代币本身或该项目的任何缺陷或因此导致的任何损失而负责。</p>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                        <button type="submit" id="submitbtn" class="btn btn-primary">确定</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
+
                         </div>
-                        <hr>
+
+
+
+
+
+                        <div class="alert alert-info fade in nomargin">
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>投资描述</th>
+                                    <th>目标项目</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
+
                 </div>
-                </div>
+
+            </div>
+
         </div>
-        </div>
-    </main>
-</div>
 
 
 <!--// Main Content //-->
@@ -372,6 +390,7 @@
         </div>
     </div>
 </div>
+    </main>
 </div>
 <!-- jQuery (necessary JavaScript) -->
 <script src="assets/scripts/jquery.js"></script>
@@ -384,18 +403,19 @@
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-        var userId=app.getUserInfo().id;
+        var pid = app.getQueryString("pid");
+        var projectName = decodeURI(app.getQueryString("name"));
         var userWallet = app.getUserInfo().userWallets;
+        //添加用户钱包信息
+        var  Wallet = "目前持有数字代币: ";
+        $.each(userWallet, function (i, item) {
+            Wallet= Wallet+item.tokenMoneyEnName+":";
+        });
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
-            //此处需要看看是否有身份证验证，如果验证通过就展现具体的界面，如果没有就不展现界面展现提示信息
-            if (app.getUserInfo().validateUser) {
-                $("#warningInfo").css('display', 'none');
-                $("#officalInfo").css('display', 'block');
-            }
         }
         jQuery('.flexslider').flexslider({
             animation: "slide",
@@ -415,79 +435,7 @@
             app.setUserInfo({});
             location.href = "index.html";
         });
-        //添加用户钱包信息
-        var  Wallet = "目前持有数字代币: ";
-        $.each(userWallet, function (i, item) {
-            Wallet= Wallet+item.tokenMoneyEnName+":";
-        });
-        $("#numMoney").text(Wallet);
-        //添加可投资项目数据
-        $.ajax({
-            url: "/project/findProjectsAndSort",
-            type: 'GET',
-            timeout: 10000,//超时时间设置为10秒；
-            success: function (result) {
-                var ICOList = result.data.ICO;
-                $("#IcoProject").append(
-                    "<div class='form-group'>"
-                );
-                $.each(ICOList, function (i, item) {
-                    $("#IcoProject").append(
-                        "                <div class='col-md-3 'style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a href='tokenmessage.html?pid="+item.id+"&name="+item.name
-                        +"'><span class='thumb-info thumb-info-hide-wrapper-bg'"
-                        +"                                                     style='width:200px;'><span"
-                        +"                        class='thumb-info-wrapper'><img src='assets/extra-images/img.jpg'"
-                        +"                                                        class='img-responsive'></span></span></a><span"
-                        +"                        style='font-size:20px;color:#FF8000;font-weight:bold;'>"+item.name+"</span><BR>"+item.startTime+"——"+item.endTime
-                        +"                </div>"
-
-                        );
-                });
-                $("#IcoProject").append("</div>");
-                //添加已投资项目
-
-                console.log(ICOList);
-            },
-            error: function (xhr, type, errerThrown) {
-                alert('网络异常,请稍候再试');
-            }
-        });
-        if(userId!=undefined){
-            //添加已投资项目数据
-            $.ajax({
-                url: "/project/user/relation/getUserProject/"+userId,
-                type: 'GET',
-                timeout: 10000,//超时时间设置为10秒；
-                success: function (result) {
-                    var ICOList = result.data;
-                    $("#investedIcoProject").append(
-                        "<div class='form-group'>"
-                    );
-                    $.each(ICOList, function (i, item) {
-                        $("#investedIcoProject").append(
-                            "                <div class='col-md-3 'style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a href='tokenmessage.html?pid="+item.id+"&name="+item.name
-                            +"'><span class='thumb-info thumb-info-hide-wrapper-bg'"
-                            +"                                                     style='width:200px;'><span"
-                            +"                        class='thumb-info-wrapper'><img src='assets/extra-images/img.jpg'"
-                            +"                                                        class='img-responsive'></span></span></a><span"
-                            +"                        style='font-size:20px;color:#FF8000;font-weight:bold;'>"+item.name+"</span><BR>"+item.startTime+"——"+item.endTime
-                            +"                </div>"
-
-                        );
-                    });
-                    $("#investedIcoProject").append("</div>");
-                    //添加已投资项目
-
-                    console.log(ICOList);
-                },
-                error: function (xhr, type, errerThrown) {
-                    alert('网络异常,请稍候再试');
-                }
-            });
-
-        }
-
-
+        $("#projectName").text(projectName);
     });
 </script>
 </body>

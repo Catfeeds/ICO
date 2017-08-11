@@ -43,11 +43,23 @@ public class TokenMoneyController {
         return Result.successResult(tokenMoney);
     }
 
+    @GetMapping("/ICO/{ICOname}")
+    public Result detail(@PathVariable String ICOname) {
+        TokenMoney tokenMoney = tokenMoneyService.findByName(ICOname);
+        return Result.successResult(tokenMoney);
+    }
+
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
         List<TokenMoney> list = tokenMoneyService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult(pageInfo);
+    }
+
+    @GetMapping("/findAll")
+    public Result ICOList() {
+        List<TokenMoney> list = tokenMoneyService.findAll();
+        return Result.successResult(list);
     }
 }
