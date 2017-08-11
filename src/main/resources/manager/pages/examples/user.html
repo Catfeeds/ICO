@@ -522,7 +522,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table  class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>邮箱账号</th>
@@ -535,20 +535,8 @@
                   <th>操作</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 4.0</td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                  <td>Trident</td>
-                  <td>Internet Explorer 4.0</td>
-                  <td>
-                    <a href="usereditor.html" title="编辑" class="glyphicon glyphicon-edit"></a>
-                    <a title="删除" class="glyphicon glyphicon-trash"></a>
-                  </td>
-                </tr>
+                <tbody id="tableData">
+
                 </tbody>
                 <tfoot>
                 <tr>
@@ -808,6 +796,54 @@
             "ordering": true,
             "info": true,
             "autoWidth": false
+        });
+    });
+    jQuery(window).load(function () {
+        $.ajax({
+            url: "/user",
+            type: 'GET',
+            success: function (result) {
+                if (result.code == 200) {
+                    var userList = result.data.list;
+                    $.each(userList, function (i, item) {
+                        $("#tableData").append(
+                            "       <tr id='"+ item.id +"'>"
+                            +"         <td>" + item.emailAccount + "</td>"
+                            +"         <td>" + item.nickName + "</td>"
+                            +"         <td>" + item.realName + "</td>"
+                            +"         <td>" + item.phone + "</td>"
+                            +"         <td>" + item.idCard + "</td>"
+                            +"         <td>" + item.des + "</td>"
+                            +"       </tr>"
+                        );
+                        if(item.enabled == true) {
+                            $("#"+item.id).append(
+                                "<td>可用</td>"
+
+                                );
+                        } else {
+                            $("#"+item.id).append(
+                                "<td>不可用</td>"
+
+                            );
+                        }
+                        $("#"+item.id).append(
+                            "        <td>"
+                            +"           <a href='usereditor.html' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                            +"           <a title='删除' class='glyphicon glyphicon-trash'></a>"
+                            +"         </td>"
+                        );
+                    });
+
+                    console.log(result.data);
+                }
+                else {
+                    sweetAlert("操作失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
         });
     });
 </script>
