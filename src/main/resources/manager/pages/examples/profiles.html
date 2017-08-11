@@ -1175,9 +1175,9 @@
 //            }
 
             var moneyJson = {minTargetNumber: minnumber, targetNumber: mbnumber, icoNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId};
-            $.ajaxFileUpload({
-                url : "",
-                secureuri : false,
+            $.ajaxFil eUpload({
+                url : "", //后台接口
+                secureuri : false, //是否启动安全提交，默认为false
                 //fileElementId:'uploadfile1',//原使用方法
                 fileElementId : ['znbook','enbook'],//现使用方法
                 data: JSON.stringify(moneyJson),
