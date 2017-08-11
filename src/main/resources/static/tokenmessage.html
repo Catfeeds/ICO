@@ -254,8 +254,12 @@
                                             <label class="col-md-10" style="padding-left:40px;">单用户以太币最低投资金额为 <span style="font-size:18px;font-weight:bold;color:#FF8000;">.01</span> ETH</label><label class="col-md-10" style="padding-left:40px;"><li><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></li></label>
                                         </div>
                                         <input type="hidden" value="2" name="investtype" id="investtype2">
-                                        <div class="form-group" onclick="investtype2.checked=&#39;true&#39;">
-                                            <div class="col-sm-12" style="padding-left:80px;">我将 投资 <input type="text" value="" name="number2" style="width:60px;" id="number2" onclick="investtype2.checked=&#39;true&#39;;"> <select style="width:80px;" name="moneytype2" id="moneytype2">eth<option value="ETH">ETH</option></select> 到 正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
+                                        <div class="form-group">
+                                            <div class="col-sm-12" style="padding-left:80px;">我将 投资 <input type="text" value="" name="number2" style="width:60px;" id="number2" >
+                                                <select style="width:80px;" name="moneytype2" id="moneytype2">
+
+                                                </select>
+                                                到 正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
                                                 <input type="hidden" name="project2" id="project2" value="Indorse"></div>
                                         </div>
                                         <div class="form-group">
@@ -411,6 +415,43 @@
         $.each(userWallet, function (i, item) {
             Wallet= Wallet+item.tokenMoneyEnName+":";
         });
+        $("#numMoney").text(Wallet);
+        //添加用户投资货币分类（该项目接收货币类型）
+
+        $.ajax({
+            url: "/project/"+pid,
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    var jshb = "";
+                    //接收货币数据
+                    var inputTokenDetails = result.data.inputTokenDetails;
+                    //接收货币
+                    $.each(inputTokenDetails, function (i, item) {
+                        if(jshb==""){
+                            jshb = item.tokenMoney.nameEnShort;
+                        }else{
+                            jshb =","+ item.tokenMoney.nameEnShort;
+                        }
+                    });
+                    if(jshb!=""){
+                        var types =jshb.split(",");
+                        $.each(types, function (i, item) {
+                            $("#moneytype2").append("<option value='"+item+"'>"+item+"</option>");
+                        });
+                    }
+                }else{
+                    location.href = "404.html";
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试");
+            }
+        });
+
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
         } else {
