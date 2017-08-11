@@ -236,7 +236,7 @@
                         <h2><strong>数字代币ICO</strong></h2>
                         <div class="row">
                             <div class="form-group">
-                                <label class="col-md-12 control-label" style="text-align: center;">目前持有数字代币
+                                <label class="col-md-12 control-label" style="text-align: center;" id="numMoney">目前持有数字代币
                                     BTC：<span class='strong1'>0.00000</span> |
                                     ETH：<span class='strong1'>0.00000</span> |
                                     Qtum：<span class='strong1'>0.00000</span>
@@ -255,7 +255,7 @@
                                         </div>
                                         <input type="hidden" value="2" name="investtype" id="investtype2">
                                         <div class="form-group" onclick="investtype2.checked=&#39;true&#39;">
-                                            <div class="col-sm-12" style="padding-left:80px;">我将 投资 <input type="text" value="" name="number2" style="width:60px;" id="number2" onclick="investtype2.checked=&#39;true&#39;;"> <select style="width:80px;" name="moneytype2" id="moneytype2">eth<option value="ETH">ETH</option></select> 到 正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;">Indorse</span>
+                                            <div class="col-sm-12" style="padding-left:80px;">我将 投资 <input type="text" value="" name="number2" style="width:60px;" id="number2" onclick="investtype2.checked=&#39;true&#39;;"> <select style="width:80px;" name="moneytype2" id="moneytype2">eth<option value="ETH">ETH</option></select> 到 正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
                                                 <input type="hidden" name="project2" id="project2" value="Indorse"></div>
                                         </div>
                                         <div class="form-group">
@@ -403,10 +403,14 @@
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-        var id = app.getQueryString("id");
-        var projectName = decodeURI(app.getQueryString("projectName"));
-        var startDate = app.getQueryString("startDate");
-        var endDate = app.getQueryString("endDate");
+        var pid = app.getQueryString("pid");
+        var projectName = decodeURI(app.getQueryString("name"));
+        var userWallet = app.getUserInfo().userWallets;
+        //添加用户钱包信息
+        var  Wallet = "目前持有数字代币: ";
+        $.each(userWallet, function (i, item) {
+            Wallet= Wallet+item.tokenMoneyEnName+":";
+        });
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
         } else {
@@ -431,19 +435,7 @@
             app.setUserInfo({});
             location.href = "index.html";
         });
-        //添加锁定项目数据
-        $("#IcoProject").append(
-            "<div class='form-group'>"
-            +"                <div class='col-md-3 '"
-            +"                     style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a"
-            +"                        href='?id="+id+"'><span class='thumb-info thumb-info-hide-wrapper-bg'"
-            +"                                                     style='width:200px;'><span"
-            +"                        class='thumb-info-wrapper'><img src='assets/extra-images/img-partner1.jpg'"
-            +"                                                        class='img-responsive'></span></span></a><span"
-            +"                        style='font-size:20px;color:#FF8000;font-weight:bold;'>"+projectName+"</span><BR>"+startDate+"——"+endDate
-            +"                </div>"
-            +"                </div>"
-        )
+        $("#projectName").text(projectName);
     });
 </script>
 </body>
