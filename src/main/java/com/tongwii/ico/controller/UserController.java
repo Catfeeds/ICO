@@ -140,11 +140,11 @@ public class UserController {
     @PostMapping("/validatePhone")
     @ResponseBody
     public Result validatePhone(@RequestParam("phone") String phone) {
-        if(!ValidateUtil.validateEmail(phone)) {
+        if(!ValidateUtil.validateMobile(phone)) {
             return Result.failResult("手机号码格式不正确");
         }
+        User user = userService.findById(ContextUtils.getUserId());
         try {
-            User user = userService.findById(ContextUtils.getUserId());
             user.setPhone(phone);
             Integer code = messageUtil.getSixRandNum();
             user.setVerifyCode(code);
@@ -154,7 +154,7 @@ public class UserController {
         } catch (Exception e) {
             return Result.errorResult("发送验证码失败");
         }
-        return Result.successResult("注册成功");
+        return Result.successResult("注册成功").add("userInfo",user);
     }
 
     /**

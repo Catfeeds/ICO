@@ -201,7 +201,7 @@ public class ProjectController {
                 update(p);
             }else{
                 //删除残缺项目
-                projectService.deleteById(p.getId());
+//                projectService.deleteById(p.getId());
             }
         }
         JSONObject jsonObject = new JSONObject();
