@@ -2,8 +2,11 @@ package com.conpany.project;
 
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
+import com.tongwii.ico.service.TransactionsService;
 import com.tongwii.ico.util.MessageUtil;
+import com.tongwii.ico.util.TokenMoneyUtil;
 import com.tongwii.ico.util.ValidateUtil;
+import org.bitcoinj.core.Coin;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,10 @@ public class UtilTest extends Tester {
     private MessageUtil messageUtil;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private TokenMoneyUtil tokenMoneyUtil;
+    @Autowired
+    private TransactionsService transactionsService;
 
     @Test
     public void validateUtilTest() {
@@ -45,5 +52,17 @@ public class UtilTest extends Tester {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void generaterBitCoinAddress() {
+        tokenMoneyUtil.generaterBitCoinWallet();
+    }
+
+    @Test
+    public void getBalanceFromAddress() {
+        String address = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4";
+        Coin coin = transactionsService.getBitCoinAddressBalance(address);
+        System.out.println(coin);
     }
 }

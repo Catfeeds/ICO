@@ -141,7 +141,7 @@ public class UserController {
     @PostMapping("/validatePhone")
     @ResponseBody
     public Result validatePhone(@RequestParam("phone") String phone) {
-        if(!ValidateUtil.validateEmail(phone)) {
+        if(!ValidateUtil.validateMobile(phone)) {
             return Result.failResult("手机号码格式不正确");
         }
         try {
