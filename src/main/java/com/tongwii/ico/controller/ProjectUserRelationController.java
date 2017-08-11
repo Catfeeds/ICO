@@ -1,6 +1,7 @@
 package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
+import com.tongwii.ico.model.Project;
 import com.tongwii.ico.model.ProjectUserRelation;
 import com.tongwii.ico.service.ProjectUserRelationService;
 import com.github.pagehelper.PageHelper;
@@ -43,6 +44,11 @@ public class ProjectUserRelationController {
         return Result.successResult(projectUserRelation);
     }
 
+    @GetMapping("/getUserProject/{userId}")
+    public Result getUserProject(@PathVariable Integer userId) {
+        List<Project> userRoleRelations = projectUserRelationService.findByUserId(userId);
+        return Result.successResult(userRoleRelations);
+    }
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
