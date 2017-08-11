@@ -604,12 +604,7 @@
                                            <label  class="col-sm-2 control-label">代币种类</label>
                                            <div class="col-sm-2">
                                                <select name="select" id="selected_id" style="width: 100px;" class="form-control">
-                                                   <option value="1">比特币</option>
-                                                   <option value="2">金币</option>
-                                                   <option value="3">银币</option>
-                                                   <option value="4">米特比</option>
-                                                   <option value="5">艾比</option>
-                                                   <option value="6">铜币</option>
+
                                                </select>
                                            </div>
                                        </div>
@@ -679,12 +674,6 @@
                                            <label class="col-sm-2 control-label">发布类型</label>
                                            <div class="col-sm-3">
                                                <select name="select" id="select_id" style="width: 100px;" class="form-control">
-                                                   <option value="1">比特币</option>
-                                                   <option value="2">金币</option>
-                                                   <option value="3">银币</option>
-                                                   <option value="4">米特比</option>
-                                                   <option value="5">艾比</option>
-                                                   <option value="6">铜币</option>
                                                </select>
                                            </div>
                                            <label class="col-sm-1 control-label">发布个数</label>
@@ -1029,6 +1018,25 @@
     });
 
     jQuery(window).load(function () {
+        //添加可投资项目数据
+        $.ajax({
+            url: "/token/money/findAll",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (result) {
+                $.each(result.data, function (i, item) {
+                    $("#selected_id").append(
+                        "<option value='" + item.id + "'>" + item.name
+                        + "</option>"
+                    );
+                });
+
+                console.log(result.data);
+            },
+            error: function (xhr, type, errerThrown) {
+                alert('网络异常,请稍候再试');
+            }
+        });
 
         $("#bcUserInfo").click(function() {
             var userName = $("#userName").val();
@@ -1134,7 +1142,7 @@
             });
         });
         $("#bcMoneyType").click(function() {
-            var moneyType = $("#select_id option:selected").val();
+            var moneyTypeId = $("#select_id option:selected").val();
             var minnumber = $("#minnumber").val();
             var mbnumber = $("#mbnumber").val();
             var maxnumber = $("#maxnumber").val();
@@ -1166,7 +1174,7 @@
 //                return ;
 //            }
 
-            var moneyJson = {minTargetNumber: minnumber, targetNumber: mbnumber, icoNumber: maxnumber, inputTokenMoneyProjectId: prjId};
+            var moneyJson = {minTargetNumber: minnumber, targetNumber: mbnumber, icoNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId};
             $.ajaxFileUpload({
                 url : "",
                 secureuri : false,
