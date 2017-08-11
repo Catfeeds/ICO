@@ -11,4 +11,11 @@ import java.util.List;
 public interface UserWalletService extends Service<UserWallet> {
 
     List<UserWallet> findByUserId(Integer userId);
+
+    /**
+     * 根据用户ID获取指定信息的钱包信息
+     * @param userId
+     * @return
+     */
+    List<Object> findWalletByUserId(Integer userId);
 }

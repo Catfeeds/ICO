@@ -2,11 +2,9 @@ package com.tongwii.ico.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 public class User {
     @Id
@@ -54,6 +52,12 @@ public class User {
     private Date expireDate;
 
     private String des;
+
+    /**
+     * 用户钱包信息
+     */
+    @Transient
+    private List<Object> userWallets;
 
     /**
      * @return id
@@ -247,5 +251,13 @@ public class User {
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public List<Object> getUserWallets() {
+        return userWallets;
+    }
+
+    public void setUserWallets(List<Object> userWallets) {
+        this.userWallets = userWallets;
     }
 }
