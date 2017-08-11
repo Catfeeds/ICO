@@ -615,7 +615,7 @@
                                            <label class="col-sm-2 control-label">最低发布量</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="form-control" type="number"/>
+                                                   <input class="form-control" type="number" id="minnumber"/>
                                                </div>
                                            </div>
                                        </div>
@@ -623,7 +623,7 @@
                                            <label class="col-sm-2 control-label">目标发布量</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="form-control" type="number"/>
+                                                   <input class="form-control" type="number" id="mbnumber"/>
                                                </div>
                                            </div>
                                        </div>
@@ -631,25 +631,25 @@
                                            <label class="col-sm-2 control-label">代币总量</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="form-control" type="number"/>
+                                                   <input class="form-control" type="number" id="maxnumber"/>
                                                </div>
                                            </div>
                                        </div>
                                        <div class="form-group">
                                            <label class="col-sm-2 control-label">中文白皮书链接</label>
                                            <div class="col-sm-2">
-                                                   <input class="mui-input-numbox" type="file"/>
+                                                   <input class="mui-input-numbox" type="file" id="znbook"/>
                                            </div>
                                        </div>
                                        <div class="form-group">
                                            <label class="col-sm-2 control-label">英文白皮书链接</label>
                                            <div class="col-sm-2">
-                                               <input class="mui-input-numbox" type="file"/>
+                                               <input class="mui-input-numbox" type="file" id="enbook"/>
                                            </div>
                                        </div>
                                        <div class="form-group">
                                            <div class="col-sm-offset-2 col-sm-10">
-                                               <button type="submit" class="btn btn-danger">保存</button>
+                                               <button type="button" class="btn btn-danger" id="bcMoneyType">保存</button>
                                            </div>
                                        </div>
                                    </form>
@@ -688,25 +688,25 @@
                                            <label class="col-sm-1 control-label">发布个数</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="form-control" type="number"/>
+                                                   <input class="form-control" type="number" id="fxnumber"/>
                                                </div>
                                            </div>
                                        </div>
                                        <div class="form-group">
                                            <label lass="col-sm-2 control-label">中文白皮书链接</label>
                                            <div class="col-sm-2">
-                                               <input class="mui-input-numbox" type="file"/>
+                                               <input class="mui-input-numbox" type="file" id="zhbook1"/>
                                            </div>
                                            <label class="col-sm-2 control-label">英文白皮书链接</label>
                                            <div class="col-sm-2">
-                                               <input class="mui-input-numbox" type="file"/>
+                                               <input class="mui-input-numbox" type="file" id="enbook1"/>
                                            </div>
                                        </div>
                                        <br>
                                        <br>
                                        <div class="form-group">
                                            <div class="col-sm-offset-2 col-sm-10">
-                                               <button type="submit" class="btn btn-danger">保存</button>
+                                               <button type="button" class="btn btn-danger" id="bcMoneyType1">保存</button>
                                            </div>
                                        </div>
                                    </form>
@@ -992,6 +992,7 @@
 <script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="../../scripts/sweet-alert.js"></script>
 <script src="../../scripts/app.js"></script>
+<script src="../../scripts/ajaxfileupload.js"></script>
 
 <script>
     layui.use('laydate', function(){
@@ -1109,7 +1110,9 @@
                 success: function (result) {
                     if (result.code == 200) {
                         sweetAlert("项目添加成功！");
-//                        location.href = "profiles.html";
+                        $("#ceshi").append(
+                            "<input value='" + result.data.id + "' id='prjId' type='hidden'/>"
+                        );
                         $("#prjname").attr("disabled",true);
                         $("#prjopentime").attr("disabled",true);
                         $("#prjclosetime").attr("disabled",true);
@@ -1128,7 +1131,72 @@
                 }
             });
         });
+        $("#bcMoneyType").click(function() {
+            var moneyType = $("#select_id option:selected").val();
+            var minnumber = $("#minnumber").val();
+            var mbnumber = $("#mbnumber").val();
+            var maxnumber = $("#maxnumber").val();
+            var znbook = $("#znbook").val();
+            var enbook = $("#enbook").val();
+            var prjId = $("prjId").val();
+//            if (minnumber.length <= 0) {
+//                sweetAlert("请填写最低发行量！");
+//                return;
+//            }
+//            if(mbnumber.length <= 0) {
+//                sweetAlert("请填写目标发行量！");
+//                return;
+//            }
+//            if(maxnumber.length <= 0) {
+//                sweetAlert("请填写代币总量！");
+//                return;
+//            }
+            if(Utils.isEmpty(znbook)){
+                sweetAlert("请选择中文白皮书文件!");
+                return ;
+            }
+            if(Utils.isEmpty(enbook)){
+                sweetAlert("请选择英文白皮书文件!");
+                return ;
+            }
+//            if(!value.match(/.jpg|.jpeg|.gif|.png|.bmp/i)){
+//                sweetAlert("文件格式错误!");
+//                return ;
+//            }
+
+            var moneyJson = {minTargetNumber: minnumber, targetNumber: mbnumber, icoNumber: maxnumber, inputTokenMoneyProjectId: prjId};
+            $.ajaxFileUpload({
+                url : "",
+                secureuri : false,
+                //fileElementId:'uploadfile1',//原使用方法
+                fileElementId : ['znbook','enbook'],//现使用方法
+                data: JSON.stringify(moneyJson),
+                dataType: 'json',//服务器返回json格式数据
+                contentType: "application/json; charset=utf-8",
+                success : function(result) {
+                    ajaxLoadEnd();
+                    if (result.code == 200) {
+                        sweetAlert("导入成功！");
+                        $("#select_id option:selected").attr("disabled",true);
+                        $("#minnumber").attr("disabled",true);
+                        $("#mbnumber").attr("disabled",true);
+                        $("#maxnumber").attr("disabled",true);
+                        $("#znbook").attr("disabled",true);
+                        $("#enbook").attr("disabled",true);
+                        $("#bcMoneyType").css("display","none")
+                    } else {
+                        sweetAlert("导入失败！");
+                    }
+                },
+                error : function(data, status, e)
+                {
+                    ajaxLoadEnd();
+                    sweetAlert("导入失败，网络异常或表单数据错误！");
+                }
+            });
+        });
     });
+
 
 </script>
 
