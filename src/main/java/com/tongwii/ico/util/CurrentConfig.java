@@ -13,6 +13,10 @@ public enum CurrentConfig {
 
     private String config;
 
+    public String getConfig() {
+        return config;
+    }
+
     CurrentConfig(String config) {
         this.config = config;
     }
