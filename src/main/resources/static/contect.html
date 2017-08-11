@@ -471,7 +471,7 @@
             if(isValidate == null){
                 var json = {idCard:cardNO,realName:realName,id:app.getUserInfo().id,isValidateUser:true};
                 $.ajax({
-                    url: app.getServerUrl() + "/user",
+                    url: "/user",
                     type: 'PUT',
                     timeout: 10000,//超时时间设置为10秒；
                     data: JSON.stringify(json),

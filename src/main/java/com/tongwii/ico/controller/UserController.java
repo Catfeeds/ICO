@@ -66,6 +66,13 @@ public class UserController {
     @PutMapping
     @ResponseBody
     public Result update(@RequestBody User user) {
+        //设置身份证信息的唯一性更改
+        if(user.getIdCard() != null || !user.getIdCard().isEmpty()){
+            //校验身份证是否在数据库中存在
+            if(userService.findByIdCard(user.getIdCard()) != null){
+                return Result.failResult("身份证信息已存在!");
+            }
+        }
         userService.update(user);
         User u = userService.findById(user.getId());
         return Result.successResult().add("userInfo",u);
@@ -133,11 +140,11 @@ public class UserController {
     @PostMapping("/validatePhone")
     @ResponseBody
     public Result validatePhone(@RequestParam("phone") String phone) {
-        if(!ValidateUtil.validateEmail(phone)) {
+        if(!ValidateUtil.validateMobile(phone)) {
             return Result.failResult("手机号码格式不正确");
         }
+        User user = userService.findById(ContextUtils.getUserId());
         try {
-            User user = userService.findById(ContextUtils.getUserId());
             user.setPhone(phone);
             Integer code = messageUtil.getSixRandNum();
             user.setVerifyCode(code);
@@ -147,7 +154,7 @@ public class UserController {
         } catch (Exception e) {
             return Result.errorResult("发送验证码失败");
         }
-        return Result.successResult("注册成功");
+        return Result.successResult("注册成功").add("userInfo",user);
     }
 
     /**
