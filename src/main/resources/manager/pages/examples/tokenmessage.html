@@ -17,6 +17,8 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../../css/sweet-alert.css">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -459,42 +461,42 @@
                                     <div class="form-group">
                                         <label  class="col-sm-2 control-label">代币民称</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="email" placeholder="">
+                                            <input type="text" class="form-control" id="name" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label  class="col-sm-2 control-label">代币英文简称</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="username" placeholder="">
+                                            <input type="text" class="form-control" id="nameEnShort" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label  class="col-sm-2 control-label">代币介绍</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="realname" placeholder="">
+                                            <input type="text" class="form-control" id="des" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label  class="col-sm-2 control-label">代币官方链接</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="idcard" placeholder="">
+                                            <input type="text" class="form-control" id="officialUrl" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label  class="col-sm-2 control-label">Twitter链接</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="description" placeholder="">
+                                            <input type="text" class="form-control" id="twitterUrl" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label  class="col-sm-2 control-label">github链接</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="" placeholder="">
+                                            <input type="text" class="form-control" id="githubUrl" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">保存</button>
+                                            <button type="button" id="updateMoney" class="btn btn-danger">保存</button>
                                         </div>
                                     </div>
                                 </form>
@@ -504,20 +506,6 @@
                 </div>
             </div>
         </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </div>
     <!-- /.content-wrapper -->
@@ -737,21 +725,74 @@
 <!-- FastClick -->
 <script src="../../plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+<script src="../../scripts/app.js"></script>
+<script src="../../scripts/sweet-alert.js"></script>
 <!-- page script -->
 <script>
-    $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false
+
+    jQuery(window).load(function () {
+        var moneyId = app.getQueryString("id")
+        $.ajax({
+            url: "/token/money/"+moneyId,
+            type: 'GET',
+            success: function (result) {
+                if (result.code == 200) {
+                    var name = $("#name").val(result.data.name);
+                    var nameEnShort = $("#nameEnShort").val(result.data.nameEnShort);
+                    var officalInfo= $("#officalInfo").val(result.data.officalInfo);
+                    var des = $("#des").val(result.data.des);
+                    var githubUrl = $("#githubUrl").val(result.data.githubUrl);
+                    var twitterUrl = $("#twitterUrl").val(result.data.twitterUrl);
+                    console.log(result.data);
+                }
+                else {
+                    sweetAlert("查询失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
         });
+        $("#updateMoney").click(function () {
+            var name = $("#name").val();
+            var nameEnShort = $("#nameEnShort").val();
+            var officalInfo= $("#officalInfo").val();
+            var des = $("#des").val();
+            var githubUrl = $("#githubUrl").val();
+            var twitterUrl = $("#twitterUrl").val();
+            var moneyJson = {
+                id:moneyId,
+                name: name,
+                nameEnShort: nameEnShort,
+                officalInfo: officalInfo,
+                githubUrl: githubUrl,
+                des: des,
+                twitterUrl: twitterUrl
+            };
+            $.ajax({
+                url: "/token/money",
+                type: 'PUT',
+                timeout: 10000,//超时时间设置为10秒；
+                data: JSON.stringify(moneyJson),
+                dataType: 'json',//服务器返回json格式数据
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.code == 200) {
+                        sweetAlert("信息修改成功!");
+                    }
+                    else {
+                        sweetAlert("修改失败！");
+                        console.log("修改失败！");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("修改失败,请稍候再试!");
+                }
+            });
+        });
+
     });
 </script>
 </body>

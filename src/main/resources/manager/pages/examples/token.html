@@ -760,7 +760,7 @@
                     var moneyList = result.data.list;
                     $.each(moneyList, function (i, item) {
                         $("#moneyData").append(
-                            "       <tr>"
+                            "        <tr id='"+ item.id +"'>"
                             +"         <td>" + item.name + "</td>"
                             +"         <td>" + item.nameEnShort + "</td>"
                             +"         <td>" + item.des + "</td>"
@@ -789,7 +789,25 @@
     });
     function tomoney(id) {
         location.href = "tokenmessage.html?id="+id;
-
+    }
+    function dodel(id) {
+        $.ajax({
+            url: "/token/money/"+id,
+            type: 'Delete',
+            success: function (result) {
+                if (result.code == 200) {
+                    $("#moneyData").find("#"+id).remove();
+                    sweetAlert("删除成功!");
+                    console.log(result.data);
+                }
+                else {
+                    sweetAlert("删除失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
+        });
     }
 </script>
 </body>
