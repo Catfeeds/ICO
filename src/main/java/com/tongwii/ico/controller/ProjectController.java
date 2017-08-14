@@ -213,7 +213,7 @@ public class ProjectController {
     */
    @GetMapping("/findAllProject")
     public Result findProjectsByState(@RequestParam(required = true,defaultValue = "0") Integer page,
-                                      @RequestParam(required = true,defaultValue = "1") Integer size){
+                                      @RequestParam(required = true,defaultValue = "0") Integer size){
        PageHelper.startPage(page, size);
        List<Project> projectList = projectService.findAll();
        List<Project> projects = new ArrayList<>();

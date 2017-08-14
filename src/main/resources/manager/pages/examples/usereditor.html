@@ -110,7 +110,6 @@
                         <li><a href="../tables/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
                         <li><a href="../examples/404.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
                         <li><a href="../examples/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
-                        <li><a href="../examples/500.html"><i class="fa fa-circle-o"></i> 项目钱包交易记录</a></li>
                     </ul>
                 </li>
             </ul>
@@ -417,6 +416,7 @@
         $.ajax({
             url: "/user/"+userId,
             type: 'GET',
+            headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
                     $("#emailAccount").val(result.data.emailAccount);
@@ -494,6 +494,7 @@
                 data: JSON.stringify(userJson),
                 dataType: 'json',//服务器返回json格式数据
                 contentType: "application/json; charset=utf-8",
+                headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
                     if (result.code == 200) {
                         sweetAlert("信息修改成功!");

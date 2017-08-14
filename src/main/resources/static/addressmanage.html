@@ -67,7 +67,6 @@
                                     <li><a href="about.html">关于我们</a></li>
                                     <li><a href="sign.html">登录/注册</a></li>
                                     <li><a href="services.html">服务与帮助</a></li>
-                                    <li><a href="contect.html" id="contect">我的信息</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -86,19 +85,15 @@
                         </form>
                     </div>
                     <div class="profile-view">
-                        <ul id="personInfo" style="display:none">
+                        <!--<ul id="personInfo" style="display:none">-->
+                        <ul id="personInfo" style="display:block">
                             <li>
                                 <img alt="#" src="assets/extra-images/user-img.jpg">
                                 <i class="icon-arrow-down8"></i>
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
                                     <ul class="dropdown">
-                                        <li><a href="causes.html"><i class="icon-flag5"></i>我的目标</a></li>
-                                        <li><a href="saved.html"><i class="icon-file-text-o"></i>保存目标</a></li>
-                                        <li><a href="my-donation.html"><i class="icon-file-text-o"></i>我的众筹</a></li>
-                                        <li><a href="donation.html"><i class="icon-ticket6"></i>众筹</a></li>
-                                        <li><a href="profilesetting.html"><i class="icon-pie2"></i>个人档案</a></li>
-                                        <li><a href="create-new-cause.html"><i class="icon-plus6"></i>创建新项目</a></li>
+                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a></li>
                                     </ul>
                                     <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
@@ -128,47 +123,6 @@
     <!-- Main Content -->
     <main id="main-content">
         <div class="main-section">
-            <div class="page-section">
-                <div class="container">
-                    <div class="row">
-                        <div class="section-fullwidth col-lg-12">
-                            <div class="cs-content-holder">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-6">
-                                        <div class="cs-services list">
-                                            <figure><img alt="" src="assets/extra-images/ico-services1.png"></figure>
-                                            <div class="text">
-                                                <p>
-                                                    关于Primas（原本）项目锁定通知：ICO.TT将于7月31日（周一）20:00正式开放原本锁定通道，该项目只接受ETH，锁定期间兑换比例均为首日比例，即1ETH=1350PST，更多关于项目的信息请参考：Primas.io</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-6">
-                                        <div class="cs-services list">
-                                            <figure><img alt="" src="assets/extra-images/ico-services2.png"></figure>
-                                            <div class="text">
-                                                <p>
-                                                    通知：ICO.TT不再接受人民币充值，本网站也不再提供人民币代购数字货币服务来参与任何ICO项目，请勿再充值人民币到ICOAGE账户，在ICOAGE账户还存有人民币的用户请在本月内尽快申请提现。</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-6">
-                                        <div class="cs-services list">
-                                            <figure><img alt="" src="assets/extra-images/ico-services3.png"></figure>
-                                            <div class="text">
-                                                <p>
-                                                    目前WeTrust(TRST)、iEx.ec(RLC)、Gnosis(GNO)、Aragon(ANT)、Mobilego(MGO)、印链(INS)、Omisego(OMG)、Storj、QTUM、币飞（FID）等代币均可提现，提现时间一般为1-3个工作日，请耐心等待。</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
             <div class="container">
                 <div class="row">
                     <div class="col-md-3">
@@ -193,9 +147,9 @@
                                 <li>
                                     <a href="addressmanage.html"> 提现地址管理</a>
                                 </li>
-                                <li>
-                                    <a href="rmbpush.html"> 人民币提现</a>
-                                </li>
+                                <!--<li>-->
+                                    <!--<a href="rmbpush.html"> 人民币提现</a>-->
+                                <!--</li>-->
                                 <li class="active">
                                     <a href="securitycenter.html"> 安全中心</a>
                                     <ul>
@@ -224,16 +178,11 @@
                                 </li>
                             </ul>
                             <hr>
-                            <h4 class="heading-primary">关于我们</h4>
-                            <p>客服微信号: <strong>ICO.TT</strong>
-                                <BR>客服QQ: <strong>2304668586</strong>
-                                <BR>官方QQ群: <strong>467591242</strong>
-                                <BR>ICO.TT是一个专业为ICO项目提供完整服务解决方案的平台，能够帮助投资者更好的了解进行ICO的区块链项目，并且帮助投资者更好的管理自己的投资资金和投资项目。</p>
                         </aside>
                     </div>
 
                     <div class="col-md-9">
-                        <div class="col-md-12" id="warningInfo" style="display: block">
+                            <div class="col-md-12" id="warningInfo" style="display: block">
                             <div class="featured-box featured-box-primary featured-box-text-left">
                                 <div class="box-content">
                                     <div class="row">
@@ -378,11 +327,14 @@
 <footer id="footer-sec">
     <div class="container">
         <div class="row">
+            <div class="ads-sec col-lg-12"> <img src="assets/images/ads.jpg" alt="" > </div>
             <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
                 <div class="widget-section-title"><strong class="title">关于我们</strong></div>
                 <ul>
                     <li>
-                        <a>ICO.TT所提供的各项服务的所有权和运营权均归ICOAGE网站所有（网站中简称为“ICO.TT”）。ICOAGE用户通过访问或使用本网站，即表示接受并同意网站协议的所有条件和条款。</a>
+                        <a>ICO.TT是一个专业为ICO项目提供完整服务解决方案的平台，能够帮助投资者更好的了解进行ICO的区块链项目，并且帮助投资者更好的管理自己的投资资金和投资项目。
+                            <br>ICO.TT所提供的各项服务的所有权和运营权均归ICO.TT网站所有（网站中简称为“ICO.TT”）。
+                            <br>ICO.TT用户通过访问或使用本网站，即表示接受并同意网站协议的所有条件和条款。</a>
                     </li>
                 </ul>
             </aside>
@@ -414,7 +366,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="footer_icon"><a href="#"><img src="assets/images/footer-logo.png" alt=""></a></div>
                 <div class="fnav-area">
-                    <p>© Copyright 2017. All Rights Reserved. 沪ICP备15049655号-3</p>
+                    <p>© 0000</p>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
