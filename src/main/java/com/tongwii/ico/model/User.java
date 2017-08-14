@@ -43,11 +43,9 @@ public class User {
     @Column(name = "avator_url")
     private String avatorUrl;
 
-    @JSONField(serialize = false)
     @Column(name = "verify_code")
     private Integer verifyCode;
 
-    @JSONField(serialize = false)
     @Column(name = "expire_date")
     private Date expireDate;
 
@@ -158,44 +156,6 @@ public class User {
     }
 
     /**
-     * @return is_validate_email
-     */
-    public Boolean getIsValidateEmail() {
-        return isValidateEmail;
-    }
-
-    /**
-     * @param isValidateEmail
-     */
-    public void setIsValidateEmail(Boolean isValidateEmail) {
-        this.isValidateEmail = isValidateEmail;
-    }
-
-    public Boolean getValidateEmail() {
-        return isValidateEmail;
-    }
-
-    public void setValidateEmail(Boolean validateEmail) {
-        isValidateEmail = validateEmail;
-    }
-
-    public Boolean getValidatePhone() {
-        return isValidatePhone;
-    }
-
-    public void setValidatePhone(Boolean validatePhone) {
-        isValidatePhone = validatePhone;
-    }
-
-    public Boolean getValidateUser() {
-        return isValidateUser;
-    }
-
-    public void setValidateUser(Boolean validateUser) {
-        isValidateUser = validateUser;
-    }
-
-    /**
      * @return is_enabled
      */
     public Boolean getEnabled() {
@@ -259,5 +219,29 @@ public class User {
 
     public void setUserWallets(List<Object> userWallets) {
         this.userWallets = userWallets;
+    }
+
+    public Boolean getValidateEmail() {
+        return isValidateEmail;
+    }
+
+    public void setValidateEmail(Boolean validateEmail) {
+        isValidateEmail = validateEmail;
+    }
+
+    public Boolean getValidatePhone() {
+        return isValidatePhone;
+    }
+
+    public void setValidatePhone(Boolean validatePhone) {
+        isValidatePhone = validatePhone;
+    }
+
+    public Boolean getValidateUser() {
+        return isValidateUser;
+    }
+
+    public void setValidateUser(Boolean validateUser) {
+        isValidateUser = validateUser;
     }
 }

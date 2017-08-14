@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
@@ -49,6 +52,8 @@ public class UserController {
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private MessageUtil messageUtil;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Value( "${jwt.header}" )
     private String tokenHeader;
 
@@ -127,6 +132,41 @@ public class UserController {
     }
 
     /**
+     * 修改用户密码
+     */
+    @PutMapping("/updatePassword")
+    @ResponseBody
+    public Result updatePassword(@RequestBody Map<Object,String> passwordInfo) {
+        Integer userId = ContextUtils.getUserId();
+        String oldPassword = passwordInfo.get("oldPassword");
+        String newPassword = passwordInfo.get("newPassword");
+        String verifycode = passwordInfo.get("verifycode");
+        // 通过userID查询用户信息
+        User u = userService.findById(userId);
+        // 判断旧密码是否正确
+        if(passwordEncoder.matches(oldPassword,u.getPassword())){
+            // 如果旧密码验证成功，接着验证验证码
+            if(verifycode.equals(u.getVerifyCode().toString())){
+                // 如果验证码验证成功则进行修改密码操作
+                User user = new User();
+                user.setId(userId);
+                BCryptPasswordEncoder encoderPassword = new BCryptPasswordEncoder();
+                user.setPassword(encoderPassword.encode(newPassword));
+                userService.update(user);
+                user = userService.findById(userId);
+                user.setUserWallets(userWalletService.findWalletByUserId(user.getId()));
+                return Result.successResult("密码修改成功!").add("userInfo",user);
+            }
+            else{
+                return Result.errorResult("验证码错误!");
+            }
+        }else{
+            return Result.errorResult("旧密码错误!");
+        }
+
+    }
+
+    /**
      * 发送认证邮箱
      */
     @GetMapping("/sendVerifyEmail")
@@ -143,7 +183,11 @@ public class UserController {
      */
     @PostMapping("/validatePhone")
     @ResponseBody
-    public Result validatePhone(@RequestParam("phone") String phone) {
+    public Result validatePhone(@RequestBody Map<String, String> map) {
+        String phone = "";
+        if(map.containsKey("phone")) {
+            phone = map.get("phone");
+        }
         if(!ValidateUtil.validateMobile(phone)) {
             return Result.failResult("手机号码格式不正确");
         }
@@ -160,27 +204,19 @@ public class UserController {
         } catch (Exception e) {
             return Result.errorResult("发送验证码失败");
         }
-        return Result.successResult("注册成功").add("userInfo",user);
+        return Result.successResult("验证码发送成功!").add("userInfo",user);
     }
 
     /**
-     * 验证验证码
+     * 修改验证手机成功字段
      */
-    @GetMapping("/validateCode")
+    @PostMapping("/phoneValidated")
     @ResponseBody
-    public Result validateCode(@RequestParam("code") String code) {
-        if(StringUtils.isEmpty(code) || code.length() != 6) {
-            return Result.failResult("验证码格式不正确");
-        }
-        try {
-            User user = userService.findById(ContextUtils.getUserId());
-            if(user.getVerifyCode().equals(code) && user.getExpireDate().before(new Date())) {
-                return Result.successResult("验证成功");
-            }
-        } catch (Exception e) {
-            return Result.errorResult("验证失败");
-        }
-        return Result.errorResult("验证失败");
+    public Result phoneValidated(@RequestBody User user) {
+        User oldUser = userService.findById(ContextUtils.getUserId());
+        oldUser.setValidatePhone(true);
+        userService.update(oldUser);
+        return Result.successResult("验证成功").add("userInfo",oldUser);
     }
 
 
@@ -191,7 +227,7 @@ public class UserController {
     public String validateEmail() {
         Integer userId = ContextUtils.getUserId();
         User user = userService.findById(userId);
-        user.setIsValidateEmail(true);
+        user.setValidateEmail(true);
         userService.update(user);
         return "/sign";
     }
