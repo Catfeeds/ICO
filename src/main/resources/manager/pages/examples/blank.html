@@ -17,6 +17,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="../../css/sweet-alert.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -398,17 +399,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="invoice.html"><i class="fa fa-circle-o"></i>增加代币信息</a></li>
-            <li class="active"><a href="profile.html"><i class="fa fa-circle-o"></i> 增加项目</a></li>
-            <li><a href="login.html"><i class="fa fa-circle-o"></i> 注册</a></li>
-            <li><a href="register.html"><i class="fa fa-circle-o"></i> 登录</a></li>
-            <li><a href="lockscreen.html"><i class="fa fa-circle-o"></i>编辑用户信息</a></li>
-            <li><a href="../examples/404.html"><i class="fa fa-circle-o"></i>钱包信息管理</a></li>
-            <li><a href="500.html"><i class="fa fa-circle-o"></i>项目钱包交易记录</a></li>
-            <li><a href="blank.html"><i class="fa fa-circle-o"></i>增加用户信息</a></li>
-            <li><a href="pace.html"><i class="fa fa-circle-o"></i>增加项目钱包信息</a></li>
+            <li><a href="../examples/404.html"><i class="fa fa-circle-o"></i>项目钱包信息管理</a></li>
+            <li><a href="../tables/data.html"><i class="fa fa-circle-o"></i>项目信息管理</a></li>
             <li><a href="../examples/user.html"><i class="fa fa-circle-o"></i> 用户信息管理</a></li>
-            <li><a href="../examples/user.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
+            <li><a href="../examples/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -470,38 +464,38 @@
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">邮箱账号</label>
                     <div class="col-sm-2">
-                      <input type="text" class="form-control" id="email" placeholder="不超过10个字">
+                      <input type="text" class="form-control"  placeholder="不超过10个字" id="emailAccount">
                     </div>
                   </div>
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">用户昵称</label>
                     <div class="col-sm-2">
-                      <input type="text" class="form-control" id="username" placeholder="不超过10个字">
+                      <input type="text" class="form-control"  placeholder="不超过10个字" id="nickName">
                     </div>
                   </div>
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">真实姓名</label>
                     <div class="col-sm-2">
-                      <input type="text" class="form-control" id="name" placeholder="">
+                      <input type="text" class="form-control"  placeholder="" id="realName">
                     </div>
                   </div>
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">手机号</label>
                     <div class="col-sm-2">
-                      <input type="text" class="form-control" id="number" placeholder="">
+                      <input type="text" class="form-control" placeholder="" id="phone">
                     </div>
                   </div>
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">身份证号</label>
                     <div class="col-sm-2">
-                      <input type="text" class="form-control" id="input" placeholder="输入18位身份证号">
+                      <input type="text" class="form-control" placeholder="输入18位身份证号" id="idCard">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">用户状态</label>
                     <div class="col-sm-2">
                       <select name="select" id="selected_id" style="width: 100px;" class="form-control">
-                        <option value="1">正常</option>
+                        <option value="1" selected>正常</option>
                         <option value="2">禁用</option>
                       </select>
                     </div>
@@ -509,12 +503,12 @@
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">用户描述</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id="discription" placeholder="">
+                      <input type="text" class="form-control" placeholder="" id="des">
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">保存</button>
+                      <button type="button" class="btn btn-danger" id="addUser">保存</button>
                     </div>
                   </div>
                 </form>
@@ -742,5 +736,80 @@
 <script src="../../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+<script src="../../scripts/app.js"></script>
+<script src="../../scripts/sweet-alert.js"></script>
+<script>
+    jQuery(window).load(function () {
+        $("#addUser").click(function () {
+            var emailAccount = $("#emailAccount").val();
+            var nickName = $("#nickName").val();
+            var realName = $("#realName").val();
+            var phone = $("#phone").val();
+            var idCard = $("#idCard").val();
+            var des = $("#des").val();
+            var statue = $("#selected_id option:selected").val();
+            if (statue == 1) {
+                var enabled = true;
+            } else {
+                enabled = false;
+            }
+//          if (emailAccount.length <= 0) {
+//              sweetAlert("邮箱不能为空!");
+//              return;
+//          }
+//          if (nickName.length <= 0  {
+//              sweetAlert("昵称不能为空!");
+//              return;
+//          }
+//          if (realName.length <= 0) {
+//              sweetAlert("真实姓名不能为空!");
+//              return;
+            //      }
+//          if (phone.length <= 0) {
+//              sweetAlert("手机号码不能为空!");
+//              return;
+//          }
+//          if (des.length <= 0 || againPassword.length <= 0) {
+//              sweetAlert("描述不能为空!");
+//              return;
+//          }
+//          if (idCard.length <8 || registPassword.length >30) {
+//              sweetAlert("身份证号码不能为空!");
+//              return;
+
+            var userJson = {
+                emailAccount: emailAccount,
+                nickName: nickName,
+                realName: realName,
+                phone: phone,
+                idCard: idCard,
+                des: des,
+                enabled: enabled
+            };
+            $.ajax({
+                url: "/user",
+                type: 'PUT',
+                timeout: 10000,//超时时间设置为10秒；
+                data: JSON.stringify(userJson),
+                dataType: 'json',//服务器返回json格式数据
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.code == 200) {
+                        sweetAlert("增加用户成功!");
+                        location.href = "user.html";
+                    }
+                    else {
+                        sweetAlert("新增失败，用户信息已存在！");
+                        console.log("新增失败，用户信息已存在！");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("网络异常,请稍候再试!");
+                }
+            });
+        });
+ });
+
+</script>
 </body>
 </html>

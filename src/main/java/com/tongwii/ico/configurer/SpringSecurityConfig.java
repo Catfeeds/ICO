@@ -2,6 +2,7 @@ package com.tongwii.ico.configurer;
 
 import com.tongwii.ico.security.JWTAuthenticationFilter;
 import com.tongwii.ico.security.JwtAuthenticationEntryPoint;
+import com.tongwii.ico.util.CurrentConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -54,7 +55,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure ( HttpSecurity httpSecurity ) throws Exception {
         // 开发者模式，放行所有
-        if (env.equals("dev")) {
+        // token将拿不到用户信息
+        if (env.equals(CurrentConfig.DEVELOPMENT.getConfig())) {
             httpSecurity
                     // jwt不需要csrf
                     .csrf().disable()
@@ -80,11 +82,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/user/register").permitAll()
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                    .antMatchers("/admin/**").hasAnyRole("ADMIN");
+                    .antMatchers("/admin/**").hasRole("ADMIN");
             // 基于定制JWT安全过滤器
             httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         }
         // 禁用页面缓存
         httpSecurity.headers().cacheControl();
     }
+
 }

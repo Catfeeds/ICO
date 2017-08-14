@@ -221,10 +221,10 @@ references user (id) on delete restrict on update restrict;
 alter table project add constraint fk_project_2_token_money_detail_intput_token_money_detail_id foreign key (input_token_money_datail_id)
 references token_detail (id) on delete restrict on update restrict;
 
-alter table project_user_relation add constraint fk_user_project_2_user_user_id foreign key (project_id)
+alter table project_user_relation add constraint fk_user_project_2_user_user_id foreign key (user_id)
 references user (id) on delete restrict on update restrict;
 
-alter table project_user_relation add constraint fk_user_project_2_project_project_id foreign key (user_id)
+alter table project_user_relation add constraint fk_user_project_2_project_project_id foreign key (project_id)
 references project (id) on delete restrict on update restrict;
 
 alter table project_user_wallet_relation add constraint fk_user_project_wallet_2_user_wallet_user_wallet_id foreign key (user_wallet)

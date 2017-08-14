@@ -2,9 +2,11 @@ package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.User;
+import com.tongwii.ico.model.UserWallet;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.security.JwtUser;
 import com.tongwii.ico.service.UserService;
+import com.tongwii.ico.service.UserWalletService;
 import com.tongwii.ico.util.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 授权controller
@@ -38,6 +41,8 @@ public class AuthController {
     private UserDetailsService userDetailsService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserWalletService userWalletService;
 
     /**
      * 创建身份验证token
@@ -56,6 +61,10 @@ public class AuthController {
         final String token = jwtTokenUtil.generateToken( userDetails);
         // 通过email查询数据库中的唯一记录
         User userInfo = userService.findByUsername(user.getEmailAccount());
+        // 通过用户Id查询用户钱包
+        List<Object> userWallets = userWalletService.findWalletByUserId(userInfo.getId());
+        // 给用户信息中添加用户钱包信息
+        userInfo.setUserWallets(userWallets);
         // 返回
         return Result.successResult().add( "token", token ).add("userInfo", userInfo);
     }
