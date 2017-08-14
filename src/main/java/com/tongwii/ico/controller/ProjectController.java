@@ -207,27 +207,14 @@ public class ProjectController {
     }
 
     /*
-    * 根据项目状态查询项目信息
+    * 获取所有项目信息的接口
     */
- /*   @RequestMapping("/findProjectByState")
-    admin Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
-                                      @RequestParam(required = true,defaultValue = "0") Integer page,
+   @GetMapping("/findAllProject")
+    public Result findProjectsByState(@RequestParam(required = true,defaultValue = "0") Integer page,
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);
         List<Project> projectList = projectService.findAll();
-        if(!state.equals("3")){
-            // 分类查询
-            List subProjects = new ArrayList();
-            for (int i = 0; i<projectList.size(); i++){
-                if(projectList.get(i).getState().equals(state)){
-                    subProjects.add(projectList.get(i));
-                }
-            }
-            PageInfo pageInfo = new PageInfo(subProjects);
-            return Result.successResult(pageInfo);
-        }else{
-            PageInfo pageInfo = new PageInfo(projectList);
-            return Result.successResult(pageInfo);
-        }
-    }*/
+       PageInfo pageInfo = new PageInfo(projectList);
+       return Result.successResult(pageInfo);
+    }
 }

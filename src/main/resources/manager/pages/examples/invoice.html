@@ -17,6 +17,8 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="../../css/sweet-alert.css">
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -463,42 +465,42 @@
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">代币名称</label>
                     <div class="col-sm-2">
-                      <input type="text" class="form-control" id="tokenname" placeholder="不超过10个字">
+                      <input type="text" class="form-control" id="name" placeholder="不超过10个字">
                     </div>
                   </div>
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">代币英文简称</label>
                     <div class="col-sm-2">
-                      <input type="text" class="form-control" id="tokenabb" placeholder="不超过10个字">
+                      <input type="text" class="form-control" id="nameEnShort" placeholder="不超过10个字">
                     </div>
                   </div>
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">代币介绍</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="introduce" placeholder="用简短的语言概括介绍该代币">
+                      <input type="text" class="form-control" id="des" placeholder="用简短的语言概括介绍该代币">
                     </div>
                   </div>
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">代币官方链接</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="token" placeholder="输入链接">
+                      <input type="text" class="form-control" id="officalInfo" placeholder="输入链接">
                     </div>
                   </div>
                   <div class="form-group">
                     <label  class="col-sm-2 control-label">Twitter链接</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="twitterlink" placeholder="输入链接">
+                      <input type="text" class="form-control" id="twitterUrl" placeholder="输入链接">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Github链接</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="githublink" placeholder="输入链接">
+                      <input type="text" class="form-control" id="githubUrl" placeholder="输入链接">
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">保存</button>
+                      <button type="button" class="btn btn-danger" id="addMoney">保存</button>
                     </div>
                   </div>
                 </form>
@@ -724,5 +726,50 @@
 <script src="../../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+<script src="../../scripts/sweet-alert.js"></script>
+<script src="../../scripts/app.js"></script>
+<script>
+
+    jQuery(window).load(function () {
+        $("#addMoney").click(function () {
+            var name = $("#name").val();
+            var nameEnShort = $("#nameEnShort").val();
+            var officalInfo= $("#officalInfo").val();
+            var des = $("#des").val();
+            var githubUrl = $("#githubUrl").val();
+            var twitterUrl = $("#twitterUrl").val();
+            var moneyJson = {
+                name: name,
+                nameEnShort: nameEnShort,
+                officalInfo: officalInfo,
+                githubUrl: githubUrl,
+                des: des,
+                twitterUrl: twitterUrl
+            };
+            $.ajax({
+                url: "/token/money",
+                type: 'POST',
+                timeout: 10000,//超时时间设置为10秒；
+                data: JSON.stringify(moneyJson),
+                dataType: 'json',//服务器返回json格式数据
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.code == 200) {
+                        location.href = "token.html";
+                        sweetAlert("信息保存成功!");
+                    }
+                    else {
+                        sweetAlert("保存失败！");
+                        console.log("保存失败！");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("修改失败,请稍候再试!");
+                }
+            });
+        });
+
+    });
+</script>
 </body>
 </html>

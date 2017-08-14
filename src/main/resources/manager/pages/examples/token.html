@@ -19,6 +19,9 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="../../css/sweet-alert.css">
+
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -497,31 +500,8 @@
                   <th>操作</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 4.0</td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                  <td>Trident</td>
-                  <td>
-                    <a href="tokenmessage.html" title="编辑" class="glyphicon glyphicon-edit"></a>
-                    <a title="删除" class="glyphicon glyphicon-trash"></a>
-                  </td>
-                </tr>
+                <tbody id="moneyData">
                 </tbody>
-                <tfoot>
-                <tr>
-                  <th>代币名称</th>
-                  <th>代币英文简称</th>
-                  <th>代币介绍</th>
-                  <th>代币官方链接</th>
-                  <th>twitter链接</th>
-                  <th>github链接</th>
-                  <th>操作</th>
-                </tr>
-                </tfoot>
               </table>
               <div class="btn-group">
                 <a href="invoice.html" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>增加</a>
@@ -757,6 +737,8 @@
 <script src="../../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+<script src="../../scripts/sweet-alert.js"></script>
+<script src="../../scripts/app.js"></script>
 <!-- page script -->
 <script>
     $(function () {
@@ -765,11 +747,68 @@
             "paging": true,
             "lengthChange": false,
             "searching": false,
-            "ordering": true,
             "info": true,
             "autoWidth": false
         });
     });
+    jQuery(window).load(function () {
+        $.ajax({
+            url: "/token/money",
+            type: 'GET',
+            success: function (result) {
+                if (result.code == 200) {
+                    var moneyList = result.data.list;
+                    $.each(moneyList, function (i, item) {
+                        $("#moneyData").append(
+                            "        <tr id='"+ item.id +"'>"
+                            +"         <td>" + item.name + "</td>"
+                            +"         <td>" + item.nameEnShort + "</td>"
+                            +"         <td>" + item.des + "</td>"
+                            +"         <td>" + item.officialUrl + "</td>"
+                            +"         <td>" + item.twitterUrl + "</td>"
+                            +"         <td>" + item.githubUrl + "</td>"
+                            +"        <td>"
+                            +"           <a href='javascript:tomoney("+ item.id +")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                            +"           <a href='javascript:dodel("+ item.id +")' title='刪除' class='glyphicon glyphicon-trash'></a>"
+                            +"         </td>"
+                            +"       </tr>"
+                        );
+                    });
+
+                    console.log(result.data);
+                }
+                else {
+                    sweetAlert("操作失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
+        });
+
+    });
+    function tomoney(id) {
+        location.href = "tokenmessage.html?id="+id;
+    }
+    function dodel(id) {
+        $.ajax({
+            url: "/token/money/"+id,
+            type: 'Delete',
+            success: function (result) {
+                if (result.code == 200) {
+                    $("#moneyData").find("#"+id).remove();
+                    sweetAlert("删除成功!");
+                    console.log(result.data);
+                }
+                else {
+                    sweetAlert("删除失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
+        });
+    }
 </script>
 </body>
 </html>
