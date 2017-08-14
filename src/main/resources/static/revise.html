@@ -244,8 +244,8 @@
                                         <label class="col-md-3 control-label">原密码</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input type="password" name="oldpwd" class="form-control" value=""
-                                                       placeholder="" required>
+                                                <input type="password" id="oldPassword" class="form-control"
+                                                       placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -253,8 +253,8 @@
                                         <label class="col-md-3 control-label">新密码</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input type="password" name="zpassword" class="form-control" value=""
-                                                       placeholder="" required>
+                                                <input type="password" id="newPassword" class="form-control"
+                                                       placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -262,25 +262,25 @@
                                         <label class="col-md-3 control-label">重复新密码</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input type="password" name="zpassword2" class="form-control" value=""
-                                                       placeholder="" required>
+                                                <input type="password" id="newPassword2" class="form-control"
+                                                       placeholder="">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin-left: 80px;">
                                         <label class="col-sm-3 control-label">验证码</label>
                                         <div class="col-sm-3">
-                                            <input type="text" name="verifycode" value="" class="form-control"
-                                                   style="width:140px;" required/>
+                                            <input type="text" id="verifycode" class="form-control"
+                                                   style="width:140px;"/>
                                         </div>
                                         <div class="col-sm-6">
                                             <input type="button" id="sendsms" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;"
-                                                   onclick="javascript:sendSMS('');myrefresh();" value="发送手机验证码"/>
+                                                   value="发送手机验证码"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label"></label>
-                                        <button data-toggle="modal" data-target="#formModal"
+                                        <button data-toggle="modal" data-target="#formModal" id="updatePassword"
                                                 class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" type="button">修改密码
                                         </button>
                                     </div>
@@ -373,7 +373,6 @@
 <script src="assets/scripts/counter.js"></script>
 <script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
-<script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
@@ -390,16 +389,59 @@
                 jQuery('body').removeClass('loading');
             }
         });
-        $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
+    });
+    $("#updatePassword").click(function () {
+        // 获取表单中的值
+        var oldPassword = $("#oldPassword").val();
+        var newPassword = $("#newPassword").val();
+        var newPassword2 = $("#newPassword2").val();
+        var verifycode = $("#verifycode").val();
+        if(oldPassword.length <= 0){
+            sweetAlert("旧密码不可为空!");
+        }
+        if(newPassword.length <= 0){
+            sweetAlert("新密码不可为空!");
+        }
+        if(newPassword2.length <= 0){
+            sweetAlert("重复新密码!");
+        }
+        if(verifycode.length <= 0){
+            sweetAlert("验证码信息不可为空");
+        }
+        if(newPassword != newPassword2){
+            sweetAlert("两次输入的新密码不一样!");
+        }
+        var updatePassword = {"oldPassword":oldPassword,"newPassword":newPassword,"verifycode":verifycode,"userId":app.getUserInfo().id,"prasentPassword":app.getUserInfo().password}
+        $.ajax({
+            url: "/user/updatePassword",
+            type: 'PUT',
+            timeout: 10000,//超时时间设置为10秒；
+            data: updatePassword,
+            dataType: "json",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    app.setUserInfo(result.data.userInfo);
+                }
+                else {
+                    sweetAlert(result.message);
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
         });
-        $("#signOut").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
+    });
+
+    $("#sign_out").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
+    });
+    $("#signOut").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
     });
 </script>
 </body>
