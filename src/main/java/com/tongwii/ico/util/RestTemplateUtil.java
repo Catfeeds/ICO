@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * rest请求工具
@@ -61,8 +60,8 @@ public class RestTemplateUtil {
             case POST:
                 return restTemplate.postForObject(url, request, var, params);
             case GET:
-                String getParams = "?" + params.keySet().stream().map(k -> String.format("%s={%s}", k, k)).collect(Collectors.joining("&"));
-                return restTemplate.getForObject(url + getParams, var, params);
+                /*String getParams = "?" + params.keySet().stream().map(k -> String.format("%s={%s}", k, k)).collect(Collectors.joining("&"));*/
+                return restTemplate.getForObject(url, var, params);
             case PUT:
                 restTemplate.put(url, request, params);
             case DELETE:
