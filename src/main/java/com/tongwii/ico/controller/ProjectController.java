@@ -4,14 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.model.Project;
-import com.tongwii.ico.model.TokenDetail;
-import com.tongwii.ico.model.TokenMoney;
-import com.tongwii.ico.model.User;
-import com.tongwii.ico.service.ProjectService;
-import com.tongwii.ico.service.TokenDetailService;
-import com.tongwii.ico.service.TokenMoneyService;
-import com.tongwii.ico.service.UserService;
+import com.tongwii.ico.model.*;
+import com.tongwii.ico.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
@@ -39,6 +33,9 @@ public class ProjectController {
     private TokenMoneyService tokenMoneyService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProjectWalletService projectWalletService;
+
 
     @PostMapping("/add")
     public Result add(@RequestBody Project project) {
@@ -212,27 +209,47 @@ public class ProjectController {
     }
 
     /*
-    * 根据项目状态查询项目信息
+    * 获取所有项目信息的接口
     */
- /*   @RequestMapping("/findProjectByState")
-    admin Result findProjectsByState(@RequestParam(required = true,defaultValue = "3") Integer state,
-                                      @RequestParam(required = true,defaultValue = "0") Integer page,
-                                      @RequestParam(required = true,defaultValue = "1") Integer size){
-        PageHelper.startPage(page, size);
-        List<Project> projectList = projectService.findAll();
-        if(!state.equals("3")){
-            // 分类查询
-            List subProjects = new ArrayList();
-            for (int i = 0; i<projectList.size(); i++){
-                if(projectList.get(i).getState().equals(state)){
-                    subProjects.add(projectList.get(i));
-                }
-            }
-            PageInfo pageInfo = new PageInfo(subProjects);
-            return Result.successResult(pageInfo);
-        }else{
-            PageInfo pageInfo = new PageInfo(projectList);
-            return Result.successResult(pageInfo);
-        }
-    }*/
+   @GetMapping("/findAllProject")
+    public Result findProjectsByState(@RequestParam(required = true,defaultValue = "0") Integer page,
+                                      @RequestParam(required = true,defaultValue = "0") Integer size){
+       PageHelper.startPage(page, size);
+       List<Project> projectList = projectService.findAll();
+       List<Project> projects = new ArrayList<>();
+       for(int i=0; i<projectList.size(); i++){
+           Integer projectId = projectList.get(i).getId();
+           // 根据项目ID查询项目钱包
+           List<ProjectWallet> projectWallets = projectWalletService.findWalletByProjectId(projectId);
+           projectList.get(i).setProjectWallets(projectWallets);
+
+           // 根据createUserId查询用户信息
+           User createUser = userService.findById( projectList.get(i).getCreateUserId());
+           projectList.get(i).setCreateUser(createUser);
+
+           // 根据项目ID查寻目标代币信息
+           List<TokenDetail> tokenDetails  = tokenDetailService.findByProjectId(projectId);
+           List<TokenDetail> inputTokenDetails = new ArrayList<>();
+           if(!CollectionUtils.isEmpty(tokenDetails)){
+               for(int j=0; j<tokenDetails.size();j++){
+                   // 目标代币
+                   if(!tokenDetails.get(j).getTokenMoneyId().equals(projectList.get(i).getOutputTokenMoneyDetailId())){
+                       TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(j).getTokenMoneyId());
+                       tokenDetails.get(j).setTokenMoney(inputMoney);
+                       inputTokenDetails.add(tokenDetails.get(j));
+                   }else {
+                       // 根据发行代币ID查寻发行代币信息
+                       TokenMoney outputMoney = tokenMoneyService.findById(projectList.get(i).getOutputTokenMoneyDetailId());
+                       tokenDetails.get(j).setTokenMoney(outputMoney);
+                       projectList.get(i).setOutPutTokenDetail(tokenDetails.get(j));
+                   }
+               }
+               projectList.get(i).setInputTokenDetails(inputTokenDetails);
+           }
+           projects.add(projectList.get(i));
+       }
+       PageInfo pageInfo = new PageInfo(projectList);
+
+       return Result.successResult(pageInfo);
+    }
 }
