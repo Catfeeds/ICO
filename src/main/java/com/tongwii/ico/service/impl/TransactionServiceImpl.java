@@ -31,6 +31,7 @@ public class TransactionServiceImpl implements TransactionsService {
      */
     @Override
     public Coin getBitCoinAddressBalance(String address) {
+
         Map<String, String> params = Maps.newHashMap();
         params.put("address", address);
         String response = RestTemplateUtil.restTemplate(host+"/api/addr/{address}/balance", null, String.class, params, HttpMethod.GET);

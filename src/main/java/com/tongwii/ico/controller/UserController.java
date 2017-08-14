@@ -211,12 +211,12 @@ public class UserController {
      */
     @PostMapping("/avator")
     @ResponseBody
-    public Result handleFileUpload(@RequestParam("file") MultipartFile file) {
+    public Result handleFileUpload(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
         fileService.store(file);
         Path path = fileService.load(file.getOriginalFilename());
         JSONObject object = new JSONObject();
         String url = MvcUriComponentsBuilder.fromMethodName(UserController.class,
-                "avatorFile", path.getFileName().toString()).build().toString();
+                "avatorFile", path.getFileName().toString(), response).build().toString();
         object.put("path", url);
 
         Integer userId = ContextUtils.getUserId();
