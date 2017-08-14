@@ -19,6 +19,9 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../../css/sweet-alert.css">
+    <script src="../../scripts/sweet-alert.js"></script>
+    <script src="../../scripts/app.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -90,23 +93,22 @@
                 <li class="header">导航栏</li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-table"></i> <span> 用户管理</span>
+                        <i class="fa fa-table"></i> <span>项目信息管理</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/user.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+                        <li><a href="../tables/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
                     </ul>
                 </li>
                 <li class="treeview active">
                     <a href="#">
-                        <i class="fa fa-folder"></i> <span>项目管理</span>
+                        <i class="fa fa-folder"></i> <span>例子</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
-                        <li><a href="../tables/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
+                        <li><a href="../examples/user.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
                         <li><a href="../examples/404.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
                         <li><a href="../examples/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
                         <li><a href="../examples/500.html"><i class="fa fa-circle-o"></i> 项目钱包交易记录</a></li>
@@ -153,48 +155,19 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td>Internet Explorer 4.0</td>
-                                    <td>Win 95+</td>
-                                    <td> 4</td>
-                                    <td>X</td>
-                                    <td>Trident</td>
-                                    <td>Internet Explorer 4.0</td>
-                                    <td>Win 95+</td>
-                                    <td> 4</td>
-                                    <td>X</td>
-                                    <td>X</td>
-                                    <td>X</td>
-                                    <td>
-                                        <a href="../examples/projectupdate.html" title="编辑"
-                                           class="glyphicon glyphicon-edit"></a>
-                                        <a title="删除" class="glyphicon glyphicon-trash"></a>
-                                    </td>
-                                </tr>
+                                <tbody id="tableData">
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>项目名称</th>
-                                    <th>项目中文名称</th>
-                                    <th>项目开始时间</th>
-                                    <th>项目结束时间</th>
-                                    <th>项目状态</th>
-                                    <th>第三方背书</th>
-                                    <th>发行代币详情</th>
-                                    <th>目标代币详情</th>
-                                    <th>参与人数</th>
-                                    <th>项目发起人</th>
-                                    <th>项目钱包</th>
-                                    <th>项目详情</th>
-                                    <th>操作</th>
-                                </tr>
-                                </tfoot>
                             </table>
                             <div class="btn-group">
-                                <a href="../examples/profile.html" class="btn btn-default"><i
-                                        class="glyphicon glyphicon-plus"></i>增加</a>
+                                <div class="pull-left">
+                                    <a href="../examples/profile.html" class="btn btn-default"><i
+                                            class="glyphicon glyphicon-plus"></i>增加</a>
+                                </div>
+                                <div class="pull-right">
+                                    <ul id="pagination" class="pagination">
+
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -216,195 +189,7 @@
         reserved.
     </footer>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">Recent Activity</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                                <p>Will be 23 on April 24th</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                                <p>New phone +1(800)555-1234</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                                <p>nora@example.com</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                                <p>Execution time 5 seconds</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Custom Template Design
-                                <span class="label label-danger pull-right">70%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Update Resume
-                                <span class="label label-success pull-right">95%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Laravel Integration
-                                <span class="label label-warning pull-right">50%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Back End Framework
-                                <span class="label label-primary pull-right">68%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Some information about this general settings option
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Allow mail redirect
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Other sets of options are available
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Expose author name in posts
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Allow the user to show his name in blog posts
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Show me as online
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Turn off notifications
-                            <input type="checkbox" class="pull-right">
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Delete chat history
-                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
-            <!-- /.tab-pane -->
-        </div>
-    </aside>
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
@@ -429,17 +214,163 @@
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
 <script>
-    $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false
-        });
+    jQuery(window).load(function () {
+        pageProject(1);
+
     });
+    function pageProject(page) {
+        var page = page;
+        var size = "2";
+        $.ajax({
+            url: "/project/findAllProject",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            contentType: "application/json; charset=utf-8",
+            data: {page:page,size:size},
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    var lastPage = result.data.lastPage;
+                    $('#pagination li').remove();
+                    if(page>1){
+                        var minpage = page-1;
+                        $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>&laquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
+                    }
+                    for(var i = 1;i<=lastPage;i++){
+                        if(i==page){
+                            $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                        }else{
+                            $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                        }
+                    }
+                    if(page<lastPage){
+                        var nextpage = page+1;
+                        $("#pagination").append("<li><a onclick='pageProject("+nextpage+")'>&raquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
+                    }
+                    var projectList = result.data.list;
+                    $("#tableData").html("");
+                    $.each(projectList, function (i, item) {
+                        var state ="";
+                        var thirdEndorsement = "是";
+                        var inputTokenDetails = item.inputTokenDetails;//接收代币
+                        var outPutTokenDetail = item.outPutTokenDetail;//接收代币
+                        var createUser = item.createUser;//项目发起人
+                        var projectWallets = item.projectWallets;//项目钱包
+                        var des = item.des;
+                        if (des.length > 30) {
+                            des = des.substr(0, 30) + "...";
+                        }
+                        //发行代币
+                        var tokenMoneyname= "";
+                        if(outPutTokenDetail!=null){
+                            tokenMoneyname = outPutTokenDetail.tokenMoney.name;
+                        }
+
+                        //接收货币
+                        var jshb = "";
+                        $.each(inputTokenDetails, function (i, item) {
+                            if(jshb==""){
+                                jshb = item.tokenMoney.name;
+                            }else{
+                                jshb =","+ item.tokenMoney.name;
+                            }
+                        });
+                        //项目钱包
+                        var walletAddress = "";
+                        $.each(projectWallets, function (i, item) {
+                            if(walletAddress==""){
+                                walletAddress = item.walletAddress.name;
+                            }else{
+                                walletAddress =","+ item.walletAddress.name;
+                            }
+                        });
+                        //项目状态
+                        if(item.state = 1) {
+                            state="即将ICO";
+                        } else if(item.state = 2){
+                            state="已结束ICO";
+                        }else{
+                            state="ICO中";
+                        }
+                        if(item.thirdEndorsement==false){
+                            thirdEndorsement="否";
+                        }
+                        //项目发起人
+                        var createName ="";
+                        if(createUser!=null){
+                            createName = createUser.realName;
+                        }
+                        $("#tableData").append(
+                            "       <tr id='"+ item.id +"'>"
+                            +"         <td>" + item.name + "</td>"
+                            +"         <td>" + item.nameCn + "</td>"
+                            +"         <td>" + item.startTime + "</td>"
+                            +"         <td>" + item.endTime + "</td>"
+                            +"         <td>" + state + "</td>"
+                            +"         <td>" + thirdEndorsement + "</td>"
+                            +"         <td>" + tokenMoneyname + "</td>"
+                            +"         <td>" + jshb + "</td>"
+                            +"         <td>" + item.partPersonNumber + "</td>"
+                            +"         <td>" + createName+ "</td>"
+                            +"         <td>" + walletAddress + "</td>"
+                            +"          <td title='"+item.des+"'>" +des+ "</td>"
+                            +"           <td>"
+                            +"                    <a href='../examples/projectupdate.html?id="+item.id+"' title='编辑'"
+                            +"                       class='glyphicon glyphicon-edit'></a>"
+                            +"                    <a title='删除' onclick='dodel("+item.id+")' class='glyphicon glyphicon-trash'></a>"
+                            +"            </td>"
+                            +"       </tr>"
+                        );
+                    });
+
+                    console.log(result.data);
+                }
+                else {
+
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+
+            }
+        });
+    }
+    $(function () {
+//        $("#example1").DataTable({
+//            "paging": true,
+//            "lengthChange": false,
+//            "searching": true,
+//            "ordering": true,
+//            "info": true,
+//            "autoWidth": false
+//        });
+    });
+    function dodel(id) {
+        $.ajax({
+            url: "/project/money/"+id,
+            type: 'PUT',
+            contentType: "application/json; charset=utf-8",
+            data: {id:id,state:-1},
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+//                    $("#moneyData").find("#"+id).remove();
+//                    sweetAlert("删除成功!");
+//                    console.log(result.data);
+                }
+                else {
+                    sweetAlert("删除失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
+        });
+    }
+
 </script>
 </body>
 </html>
