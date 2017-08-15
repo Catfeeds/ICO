@@ -36,7 +36,7 @@
             <div class="main-head">
                 <div class="left-side">
                     <div class="logo"><a href="index.html"><img src="assets/images/logo.png" alt=""></a></div>
-                    <nav class="navigation">
+                    <nav class="navigation" style="font-family: 微软雅黑;">
                         <ul>
                             <li><a href="index.html" class="dropdown active">首页</a></li>
                             <li><a href="listing-grid.html">ICO中</a></li>
@@ -129,7 +129,8 @@
                                 <div class="row">
                                     <div class="main-heading top-center">
                                         <h1>世界融资引擎。</h1>
-                                        <strong class="title">我们每周向世界各地的运动者分发数百万元。不管你是筹集500元还是500万欧元。</strong></div>
+                                        <strong class="title">我们每周向世界各地的运动者分发数百万元。不管你是筹集500元还是500万欧元。</strong>
+                                    </div>
                                     <div class="col-lg-4 col-md-4 col-sm-6">
                                         <article class="cs-services modren top-center ">
                                             <figure><img src="assets/extra-images/ico-services1.png" alt=""></figure>
@@ -536,8 +537,10 @@
 <script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/sweet-alert.min.js"></script>
+<script src="assets/scripts/tokenmoney.js"></script>
 <script>
-     jQuery(window).load(function () {
+    jQuery(window).load(function () {
+        console.log(getBitCoinBalance("1KirQsnVEo6LCxcBvV7eQcmVoyRsXfRmrE"));
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
             $("#contect").css('display', 'none');
@@ -667,7 +670,7 @@
                         var id = $(this).attr("id");
                         location.href = "finishICO.html?id=" + id;
                     });
-                } else {
+                }else{
                     location.href = "404.html";
                 }
             },

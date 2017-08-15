@@ -63,6 +63,6 @@ public class UtilTest extends Tester {
     public void getBalanceFromAddress() {
         String address = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4";
         Coin coin = transactionsService.getBitCoinAddressBalance(address);
-        System.out.println(coin);
+        System.out.printf("friendlyString ----> %s, plainString ------> %s",  coin.toFriendlyString(), coin.toPlainString());
     }
 }
