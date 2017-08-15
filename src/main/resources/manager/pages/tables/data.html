@@ -156,17 +156,17 @@
                                 <tbody id="tableData">
                                 </tbody>
                             </table>
-                            <div class="btn-group">
-                                <div class="pull-left">
-                                    <a href="../examples/profile.html" class="btn btn-default"><i
-                                            class="glyphicon glyphicon-plus"></i>增加</a>
-                                </div>
+
+                                <!--<div class="pull-left">-->
+                                    <!--<a href="../examples/profile.html" class="btn btn-default"><i-->
+                                            <!--class="glyphicon glyphicon-plus"></i>增加</a>-->
+                                <!--</div>-->
                                 <div class="pull-right">
                                     <ul id="pagination" class="pagination">
 
                                     </ul>
                                 </div>
-                            </div>
+
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -347,17 +347,18 @@
 //        });
     });
     function dodel(id) {
+        var aa = app.createAuthorizationTokenHeader();
+        var projectJson = {id:id,state:-1};
         $.ajax({
-            url: "/project/money/"+id,
+            url: "/project",
             type: 'PUT',
+            headers: app.createAuthorizationTokenHeader(),
             contentType: "application/json; charset=utf-8",
-            data: {id:id,state:-1},
+            data: JSON.stringify(projectJson),
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
-//                    $("#moneyData").find("#"+id).remove();
-//                    sweetAlert("删除成功!");
-//                    console.log(result.data);
+                    sweetAlert("删除成功!");
                 }
                 else {
                     sweetAlert("删除失败!");

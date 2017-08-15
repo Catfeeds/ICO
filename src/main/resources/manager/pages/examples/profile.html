@@ -18,9 +18,15 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-    <link rel="stylesheet" href="../../bootstrap/css/layui.css">
-    <link rel="stylesheet" href="../../bootstrap/css/laydate.css">
     <link rel="stylesheet" href="../../bootstrap/css/layer.css">
+    <script src="../../scripts/app.js"></script>
+    <script src="../../scripts/sweet-alert.js"></script>
+    <link rel="stylesheet" href="../../css/sweet-alert.css">
+    <!--时间控件-->
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../layui/css/modules/laydate/laydate.css">
+    <link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css">
+    <script src="../../layui/layui.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -144,30 +150,24 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">项目中文名称</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="chinesename" name="chinesename"
+                                            <input type="text" class="form-control" id="nameCn" name="chinesename"
                                                    placeholder="项目名称请务必包含产品的关键词（项目中文名称不超过25个字）">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">开始时间</label>
                                         <div class="col-sm-2">
-                                            <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
                                             <div class="layui-inline">
-                                                <!--<label class="layui-form-label">验证日期</label>-->
                                                 <div class="layui-input-inline">
-                                                    <input autocomplete="off" class="layui-input" id="starttime" name="starttime"
-                                                           onclick="layui.laydate({elem: this})" type="date">
+                                                    <input class="layui-input" placeholder="项目开始时间" id="startTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                 </div>
                                             </div>
                                         </div>
                                         <label class="col-sm-2 control-label">结束时间</label>
                                         <div class="col-sm-2">
-                                            <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
                                             <div class="layui-inline">
-                                                <!--<label class="layui-form-label">验证日期</label>-->
                                                 <div class="layui-input-inline">
-                                                    <input autocomplete="off" class="layui-input" id="endtime" name="endtime"
-                                                           onclick="layui.laydate({elem: this})" type="date">
+                                                    <input class="layui-input" placeholder="项目结束时间" id="endTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                 </div>
                                             </div>
                                         </div>
@@ -175,43 +175,38 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">第三方背书</label>
                                         <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="endorsement" dirname="endorsement" placeholder="第三方背书">
+                                            <select name="select" id="thirdEndorsement"
+                                                    class="form-control">
+                                                <option value="true">是</option>
+                                                <option value="false">否</option>
+                                            </select>
                                         </div>
                                         <label class="col-sm-2 control-label">项目状态</label>
                                         <div class="col-sm-2">
-                                            <select name="select" id="select_id"
+                                            <select name="select" id="state"
                                                     class="form-control">
-                                                <option value="1">ICO中</option>
-                                                <option value="2">即将ICO</option>
-                                                <option value="3">已结束ICO</option>
+                                                <option value="0">ICO中</option>
+                                                <option value="1">即将ICO</option>
+                                                <option value="2">已结束ICO</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">参与人数</label>
                                         <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="input" placeholder="人数">
-                                        </div>
-                                        <label class="col-sm-2 control-label">项目发起人</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="sponsor" placeholder="项目发起人">
+                                            <input type="text" class="form-control" id="partPersonNumber" name="partPersonNumber" value="" placeholder="人数">
                                         </div>
                                     </div>
+
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">项目钱包</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="wallet" placeholder="项目钱包">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">项目详情</label>
+                                        <label class="col-sm-2 control-label">项目简介</label>
                                         <div class="col-sm-8">
-                                            <textarea type="text" class="form-control" id="detail" placeholder="项目详情"></textarea>
+                                            <textarea rows="10" cols="20" type="text" class="form-control" id="des" name="detail" placeholder="项目详情"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">保存</button>
+                                            <button type="button" id="save" onclick="saveProject()" class="btn btn-danger">保存</button>
                                         </div>
                                     </div>
                                 </form>
@@ -245,174 +240,7 @@
             <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
             <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
         </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">最近活动</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">老吴的生日</h4>
-
-                                <p>在6月24日将是21岁</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">老王收益已更新</h4>
-
-                                <p>新的号码是： +1(800)555-1234</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">加入邮箱列表</h4>
-
-                                <p>nora@example.com</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading"> 25个任务需要执行</h4>
-
-                                <p>执行时间5秒</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-                <h3 class="control-sidebar-heading">任务进程</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                当前发行货币众筹
-                                <span class="label label-danger pull-right">70%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                确保更新
-                                <span class="label label-success pull-right">95%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Laravel积分
-                                <span class="label label-warning pull-right">50%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">统计表的内容</div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">设置</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            使用报告
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            关于设置的选择
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            允许邮件重定位
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-                        <p>
-                            其他选项集可用
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            在帖子中显示作者姓名
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            允许用户在博客帖子中显示自己的名字
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <h3 class="control-sidebar-heading">聊天设置</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            显示在线
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            关闭提醒
-                            <input type="checkbox" class="pull-right">
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            删除记录
-                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
-            <!-- /.tab-pane -->
-        </div>
     </aside>
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
@@ -431,42 +259,77 @@
 <script src="../../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
-<script src="../../bootstrap/js/layui.js" charset="utf-8"></script>
 <script>
-    layui.use('laydate', function () {
+
+    function saveProject() {
+        var enName =   $("#name").val();
+        var cnName =   $("#nameCn").val();
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
+        var partPersonNumber =  $("#partPersonNumber").val();
+        var des = $("#des").val();
+        var thirdEndorsement = $("#thirdEndorsement option:selected").val();
+        var state =  $("#state option:selected").val();
+
+        var projectJson = {name:enName,nameCn:cnName,startTime:startTime,endTime:endTime,partPersonNumber:partPersonNumber,des:des,thirdEndorsement:thirdEndorsement,state:state};
+        $.ajax({
+            url: "/project/add",
+            type: 'POST',
+            headers: app.createAuthorizationTokenHeader(),
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(projectJson),
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    sweetAlert({title:"",text:"项目保存成功！"}, function() {
+                        window.location="../../pages/tables/data.html";
+                    });
+                }
+                else {
+                    sweetAlert("项目保存失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
+        });
+    }
+    layui.use('laydate', function(){
         var laydate = layui.laydate;
 
         var start = {
+            format: 'YYYY-MM-DD hh:mm:ss',
+            istime: true, //是否开启时间选择<br/>
             min: laydate.now()
-            , max: '2099-06-16 23:59:59'
-            , istoday: false
-            , choose: function (datas) {
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
                 end.min = datas; //开始日选好后，重置结束日的最小日期
                 end.start = datas //将结束日的初始值设定为开始日
             }
         };
 
         var end = {
+            format: 'YYYY-MM-DD hh:mm:ss',
+            istime: true, //是否开启时间选择<br/>
             min: laydate.now()
-            , max: '2099-06-16 23:59:59'
-            , istoday: false
-            , choose: function (datas) {
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
                 start.max = datas; //结束日选好后，重置开始日的最大日期
             }
         };
 
-        document.getElementById('LAY_demorange_s').onclick = function () {
+        document.getElementById('startTime').onclick = function(){
             start.elem = this;
             laydate(start);
         }
-        document.getElementById('LAY_demorange_e').onclick = function () {
+        document.getElementById('endTime').onclick = function(){
             end.elem = this
             laydate(end);
         }
+
     });
-    //    $("one").click(function(){
-    //        window.location.hash = "#activity";
-    //    });
     window.onload = function () {
         $("#one").on("click", function () {
             window.location.hash = "404.html";
