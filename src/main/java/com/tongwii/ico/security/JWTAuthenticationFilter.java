@@ -82,9 +82,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails( new WebAuthenticationDetailsSource().buildDetails( request ) );
 
                 if ( logger.isDebugEnabled() ) {
-                    logger.debug( "authToken : {},username : {}", authToken, username );
-                }
-                if ( logger.isDebugEnabled() ) {
                     logger.debug( "该{}用户已认证, 设置安全上下文, 登陆ip:{}", username, getIpAddress(request) );
                 }
                 SecurityContextHolder.getContext().setAuthentication( authentication );
