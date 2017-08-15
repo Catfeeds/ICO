@@ -9,6 +9,7 @@ import com.tongwii.ico.util.ValidateUtil;
 import org.bitcoinj.core.Coin;
 import org.junit.Assert;
 import org.junit.Test;
+import org.spongycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.UnsupportedEncodingException;
@@ -56,7 +57,7 @@ public class UtilTest extends Tester {
 
     @Test
     public void generaterBitCoinAddress() {
-        tokenMoneyUtil.generaterBitCoinWallet();
+        tokenMoneyUtil.generaterBitCoinAddress();
     }
 
     @Test
@@ -65,4 +66,10 @@ public class UtilTest extends Tester {
         Coin coin = transactionsService.getBitCoinAddressBalance(address);
         System.out.printf("friendlyString ----> %s, plainString ------> %s",  coin.toFriendlyString(), coin.toPlainString());
     }
+
+    @Test
+    public void generaterEthAddress() {
+        System.out.println(Hex.toHexString(tokenMoneyUtil.generaterEthAddress().getPubKey()));
+    }
+
 }

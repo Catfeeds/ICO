@@ -126,8 +126,8 @@
                         <div class="section-fullwidth col-lg-12">
                             <div class="cs-content-holder">
                                 <div class="row">
-                                    <div class="widget widget-recent-blog">
-                                        <div class="widget-section-title">
+                                    <div class="widget widget-recent-blog"  id="notify">
+                                        <div class="widget-section-title" >
                                             <h3>公告</h3>
                                         </div>
                                         <article class="col-lg-12">
@@ -135,9 +135,11 @@
                                             <h4><a href="#">DELPHY白皮书解读: 预测市场如何保证准确性，打破专家预测垄断</a></h4>
                                             <h4><a href="#">普华永道携手ICOAGE开发ICO项目评估体系</a></h4>
                                         </article>
+                                        <div id="notifyList">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" id="news">
                                     <div class="page-content col-lg-12">
                                         <div class="cs-blog blog-medium">
                                             <div class="row">
@@ -180,6 +182,8 @@
                                                         </div>
                                                     </div>
                                                 </article>
+                                                <div id="newsList">
+                                                </div>
                                             </div>
                                         </div>
                                         <nav class="pagination" style="text-align: center">
@@ -237,7 +241,7 @@
                         <a>客服微信号: ICO.TT</a>
                         <a>客服QQ: 2318798407</a>
                         <a>官方QQ群: 389428765</a>
-                        <a> Email:2318798407@qq.com</a>
+                        <a>Email:2318798407@qq.com</a>
                     </li>
                 </ul>
             </aside>
@@ -302,7 +306,48 @@
             }
         });
         // 获取所有公告信息以及通知
-
+        $.ajax({
+            url: "/message/getOfficalMessage?page=0&size=10",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (result) {
+                if (result.code == 200) {
+                    var newsMessages = result.data.newsMessages.list;
+                    var notifyMessages = result.data.notifyMessages.list;
+                    if(notifyMessages.length == 0){
+                        $("#notify").css("display","none");
+                    }else{
+                        $.each(notifyMessages, function (i, item) {
+                            $("#notifyList").append(
+                                    "<article><div class='text'><h4><a href='#'>"+item.content+"</a></h4></div></article>"
+                            );
+                        });
+                    }
+                    if(newsMessages.length == 0){
+                        $("#news").css("display","none");
+                    }else{
+                        $.each(newsMessages, function (i, item) {
+                            $("#newsList").append(
+                                    "<article class='col-lg-12'><div class='main-thumb'><figure><a href='#'>"
+                                    +"<img src='assets/extra-images/PRIMAS.jpg' alt='blog'></a><figcaption>"
+                                    +"<a href='#'><i class='icon-uniEAB5'></i></a></figcaption></figure></div>"
+                                    +"<div class='bloginfo-sec'><div class='blog-text'>"
+                                    +"<h4><a href='#'>"+item.title+"</a></h4>"
+                                    +"<p>"+item.des+"</p><div>"
+                                    +"<a href='#'class='Continue-Readingbtn cscolor'>继续阅读</a></div></div></div></article>"
+                            );
+                        });
+                    }
+                }
+                else {
+                    location.href = "404.html";
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                location.href = "404.html";
+//                sweetAlert("网络异常,请稍候再试");
+            }
+        });
     });
     $("#sign_out").click(function () {
         $("#personInfo").css('display', 'none');

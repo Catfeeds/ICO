@@ -1,5 +1,6 @@
 package com.tongwii.ico.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.exception.StorageFileNotFoundException;
@@ -47,6 +48,25 @@ public class FileController {
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {
         return ResponseEntity.notFound().build();
+    }
+
+    /**
+     * 上传文件多个文件
+     */
+    @PostMapping("/files")
+    @ResponseBody
+    public Result handleFilesUpload(@RequestParam("files") MultipartFile [] files, HttpServletResponse response) {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < files.length; i++) {
+            fileService.store(files[i]);
+            Path path = fileService.load(files[i].getOriginalFilename());
+            JSONObject object = new JSONObject();
+            String url = MvcUriComponentsBuilder.fromMethodName(FileController.class,
+                    "getFile", path.getFileName().toString(), response).build().toString();
+            object.put("path", url);
+            jsonArray.add(object);
+        }
+        return Result.successResult(jsonArray);
     }
 
     /**
