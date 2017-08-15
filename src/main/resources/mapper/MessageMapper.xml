@@ -12,5 +12,7 @@
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="des" jdbcType="LONGVARCHAR" property="des" />
+    <result column="pictureUrl" jdbcType="LONGVARCHAR" property="pictureUrl" />
   </resultMap>
 </mapper>

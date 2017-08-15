@@ -126,69 +126,22 @@
                         <div class="section-fullwidth col-lg-12">
                             <div class="cs-content-holder">
                                 <div class="row">
-                                    <div class="widget widget-recent-blog">
-                                        <div class="widget-section-title">
+                                    <div class="widget widget-recent-blog"  id="notify">
+                                        <div class="widget-section-title" >
                                             <h3>公告</h3>
                                         </div>
-                                        <article>
-                                            <div class="text">
-                                                <h4><a href="#">同业首次换币合作Primas和InkChain携手布局内容行业</a></h4>
-                                            </div>
-                                        </article>
-                                        <article>
-                                            <div class="text">
-                                                <h4><a href="#">DELPHY白皮书解读: 预测市场如何保证准确性，打破专家预测垄断</a></h4>
-                                            </div>
-                                        </article>
-                                        <article>
-                                            <div class="text">
-                                                <h4><a href="#">普华永道携手ICOAGE开发ICO项目评估体系</a></h4>
-                                            </div>
-                                        </article>
+                                        <div id="notifyList">
+                                        </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" id="news">
                                         <div class="page-content col-lg-12">
                                             <div class="cs-blog blog-medium">
                                                 <div class="row">
                                                     <div class="widget-section-title">
                                                         <h3>新闻</h3>
                                                     </div>
-                                                    <article class="col-lg-12">
-                                                        <div class="main-thumb">
-                                                            <figure><a href="#"><img
-                                                                    src="assets/extra-images/PRIMAS.jpg"
-                                                                    alt="blog"></a>
-                                                                <figcaption>
-                                                                    <a href="#"><i class="icon-uniEAB5"></i></a>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                        <div class="bloginfo-sec">
-                                                            <div class="blog-text">
-                                                                <h4><a href="#">同业首次换币合作Primas和InkChain携手布局内容行业</a></h4>
-                                                                <p>
-                                                                    据区块链铅笔（chainB.com）了解，目前正在进行ICO的Primas项目将与InkChain项目公平互换token，
-                                                                    项目方没有透露具体互换的token数量，
-                                                                    但表示双方将以社区的方式来共建生态。
-                                                                    Primas与InkChain互换互换token，是区块链圈内的同业项目第一次换币合作，也是一种心态、格局和视野的体现。
-                                                                    区块链铅笔获悉，这一业内的首次合作是由Bitshares联合创始人、中国规模最大的区块链投资基金“分布式资本“合伙人沈波与知名投资人薛蛮子所牵线促成。</p>
-                                                                <div class="post-thumb">
-                                                                    <figure>
-                                                                        <a href="#"><img
-                                                                                src="assets/extra-images/user-img.jpg"
-                                                                                alt="#"> </a>
-                                                                    </figure>
-                                                                    <ul class="thumb-options">
-                                                                        <li>发表者 <br>
-                                                                            <a href="#">lancy</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <a href="https://www.icoage.com/?p=C&id=149"
-                                                                       class="Continue-Readingbtn cscolor">继续阅读</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
+                                                    <div id="newsList">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <nav class="pagination" style="text-align: center">
@@ -312,7 +265,48 @@
             }
         });
         // 获取所有公告信息以及通知
-
+        $.ajax({
+            url: "/message/getOfficalMessage?page=0&size=10",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (result) {
+                if (result.code == 200) {
+                    var newsMessages = result.data.newsMessages.list;
+                    var notifyMessages = result.data.notifyMessages.list;
+                    if(notifyMessages.length == 0){
+                        $("#notify").css("display","none");
+                    }else{
+                        $.each(notifyMessages, function (i, item) {
+                            $("#notifyList").append(
+                                    "<article><div class='text'><h4><a href='#'>"+item.content+"</a></h4></div></article>"
+                            );
+                        });
+                    }
+                    if(newsMessages.length == 0){
+                        $("#news").css("display","none");
+                    }else{
+                        $.each(newsMessages, function (i, item) {
+                            $("#newsList").append(
+                                    "<article class='col-lg-12'><div class='main-thumb'><figure><a href='#'>"
+                                    +"<img src='assets/extra-images/PRIMAS.jpg' alt='blog'></a><figcaption>"
+                                    +"<a href='#'><i class='icon-uniEAB5'></i></a></figcaption></figure></div>"
+                                    +"<div class='bloginfo-sec'><div class='blog-text'>"
+                                    +"<h4><a href='#'>"+item.title+"</a></h4>"
+                                    +"<p>"+item.des+"</p><div>"
+                                    +"<a href='#'class='Continue-Readingbtn cscolor'>继续阅读</a></div></div></div></article>"
+                            );
+                        });
+                    }
+                }
+                else {
+                    location.href = "404.html";
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                location.href = "404.html";
+//                sweetAlert("网络异常,请稍候再试");
+            }
+        });
     });
     $("#sign_out").click(function () {
         $("#personInfo").css('display', 'none');
