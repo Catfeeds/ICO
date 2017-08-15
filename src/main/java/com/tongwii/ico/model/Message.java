@@ -10,12 +10,12 @@ public class Message {
 
     private String title;
 
-    private Byte state;
+    private int state;
 
     @Column(name = "create_date")
     private Date createDate;
 
-    private Byte type;
+    private int type;
 
     @Column(name = "create_user_id")
     private Integer createUserId;
@@ -53,14 +53,14 @@ public class Message {
     /**
      * @return state
      */
-    public Byte getState() {
+    public int getState() {
         return state;
     }
 
     /**
      * @param state
      */
-    public void setState(Byte state) {
+    public void setState(int state) {
         this.state = state;
     }
 
@@ -81,14 +81,14 @@ public class Message {
     /**
      * @return type
      */
-    public Byte getType() {
+    public int getType() {
         return type;
     }
 
     /**
      * @param type
      */
-    public void setType(Byte type) {
+    public void setType(int type) {
         this.type = type;
     }
 
