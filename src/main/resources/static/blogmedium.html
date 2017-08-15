@@ -27,10 +27,24 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .text {
+            background-color: #fe6500;
+            border-radius: 15px;
+            height: 80px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .text h4 {
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper">
-
     <!-- Header -->
     <header id="main-header">
         <div class="container">
@@ -53,7 +67,6 @@
                             </li>
                         </ul>
                     </nav>
-
                 </div>
                 <div class="right-side">
                     <div class="cs-search-block">
@@ -74,7 +87,8 @@
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
                                     <ul class="dropdown">
-                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a></li>
+                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a>
+                                        </li>
                                     </ul>
                                     <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
@@ -112,418 +126,86 @@
                         <div class="section-fullwidth col-lg-12">
                             <div class="cs-content-holder">
                                 <div class="row">
-                                    <aside class="page-sidebar col-lg-3">
-                                        <div class="widget widget-recent-blog">
-                                            <div class="widget-section-title">
-                                                <h3>本周热门新闻</h3>
-                                            </div>
-                                            <article>
-                                                <figure><a href="https://www.icoage.com/?p=C&id=149"><img src="assets/extra-images/PRIMAS.jpg"
-                                                                         alt="#"></a></figure>
-                                                <div class="text">
-                                                    <h4><a href="https://www.icoage.com/?p=C&id=149">同业首次换币合作Primas和InkChain携手布局内容行业</a></h4>
-                                                    <ul>
-                                                        <li>
-                                                            <time datetime="2011-01-12">4天前</time>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </article>
-                                            <article>
-                                                <figure><a href="https://www.icoage.com/?p=C&id=140"><img src="assets/extra-images/DELAPHY.jpg"
-                                                                         alt="#"></a></figure>
-                                                <div class="text">
-                                                    <h4><a href="https://www.icoage.com/?p=C&id=140">DELPHY白皮书解读: 预测市场如何保证准确性，打破专家预测垄断</a></h4>
-                                                    <ul>
-                                                        <li>
-                                                            <time datetime="2011-01-12">3天前</time>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </article>
-                                            <article>
-                                                <figure><a href="https://www.icoage.com/?p=C&id=138"><img src="assets/extra-images/ICOAGE.jpg"
-                                                                         alt="#"></a></figure>
-                                                <div class="text">
-                                                    <h4><a href="https://www.icoage.com/?p=C&id=138">普华永道携手ICOAGE开发ICO项目评估体系</a></h4>
-                                                    <ul>
-                                                        <li>
-                                                            <time datetime="2011-01-12">2天前</time>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </article>
+                                    <div class="widget widget-recent-blog">
+                                        <div class="widget-section-title">
+                                            <h3>公告</h3>
                                         </div>
-
-                                        <div class="widget widget-recent-blog">
-                                            <div class="widget-section-title">
-                                                <h3>最近项目</h3>
+                                        <article>
+                                            <div class="text">
+                                                <h4><a href="#">同业首次换币合作Primas和InkChain携手布局内容行业</a></h4>
                                             </div>
-                                            <article>
-                                                <figure><a href="https://www.icoage.com/?p=C&id=149"><img src="assets/extra-images/PRIMAS.jpg"
-                                                                                                          alt="#"></a></figure>
-                                                <div class="text">
-                                                    <h4><a href="https://www.icoage.com/?p=C&id=149">同业首次换币合作Primas和InkChain携手布局内容行业</a></h4>
-                                                    <ul>
-                                                        <li>
-                                                            <time datetime="2011-01-12">4天前</time>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </article>
-                                            <article>
-                                                <figure><a href="https://www.icoage.com/?p=C&id=140"><img src="assets/extra-images/DELAPHY.jpg"
-                                                                                                          alt="#"></a></figure>
-                                                <div class="text">
-                                                    <h4><a href="https://www.icoage.com/?p=C&id=140">DELPHY白皮书解读: 预测市场如何保证准确性，打破专家预测垄断</a></h4>
-                                                    <ul>
-                                                        <li>
-                                                            <time datetime="2011-01-12">3天前</time>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </article>
-                                            <article>
-                                                <figure><a href="https://www.icoage.com/?p=C&id=138"><img src="assets/extra-images/ICOAGE.jpg"
-                                                                                                          alt="#"></a></figure>
-                                                <div class="text">
-                                                    <h4><a href="https://www.icoage.com/?p=C&id=138">普华永道携手ICOAGE开发ICO项目评估体系</a></h4>
-                                                    <ul>
-                                                        <li>
-                                                            <time datetime="2011-01-12">2天前</time>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </article>
-                                        </div>
-
-                                        <div class="widget widget_gallery">
-                                            <div class="widget-section-title">
-                                                <h3>热门</h3>
+                                        </article>
+                                        <article>
+                                            <div class="text">
+                                                <h4><a href="#">DELPHY白皮书解读: 预测市场如何保证准确性，打破专家预测垄断</a></h4>
                                             </div>
-                                            <ul class="gallery-list">
-                                                <li><a href="#"><img src="assets/extra-images/gallery-img1.png" alt="#"></a>
-                                                </li>
-                                                <li><a href="#"><img src="assets/extra-images/gallery-img2.png" alt="#"></a>
-                                                </li>
-                                                <li><a href="#"><img src="assets/extra-images/gallery-img3.png" alt="#"></a>
-                                                </li>
-                                                <li><a href="#"><img src="assets/extra-images/gallery-img4.png" alt="#"></a>
-                                                </li>
-                                                <li><a href="#"><img src="assets/extra-images/gallery-img5.png" alt="#"></a>
-                                                </li>
-                                                <li><a href="#"><img src="assets/extra-images/gallery-img6.png" alt="#"></a>
-                                                </li>
-                                                <li><a href="#"><img src="assets/extra-images/gallery-img7.png" alt="#"></a>
-                                                </li>
-                                                <li><a href="#"><img src="assets/extra-images/gallery-img8.png" alt="#"></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="widget widget_calendar">
-                                            <div class="widget-section-title"><h2>日历表</h2>
+                                        </article>
+                                        <article>
+                                            <div class="text">
+                                                <h4><a href="#">普华永道携手ICOAGE开发ICO项目评估体系</a></h4>
                                             </div>
-                                            <div id="calendar_wrap">
-                                                <table id="wp-calendar">
-                                                    <caption>2017</caption>
-                                                    <thead>
-                                                    <tr>
-                                                        <th title="Monday" scope="col">星期一</th>
-                                                        <th title="Tuesday" scope="col">星期二</th>
-                                                        <th title="Wednesday" scope="col">星期三</th>
-                                                        <th title="Thursday" scope="col">星期四</th>
-                                                        <th title="Friday" scope="col">星期五</th>
-                                                        <th title="Saturday" scope="col">星期六</th>
-                                                        <th title="Sunday" scope="col">星期 日</th>
-                                                    </tr>
-                                                    </thead>
-
-                                                    <tfoot>
-                                                    <tr>
-                                                        <td id="prev" colspan="3"><a href="#">« Nov</a></td>
-                                                        <td class="pad">&nbsp;</td>
-                                                        <td class="pad" id="next" colspan="3">&nbsp;</td>
-                                                    </tr>
-                                                    </tfoot>
-
-                                                    <tbody>
-                                                    <tr>
-                                                        <td class="pad">28</td>
-                                                        <td class="pad">29</td>
-                                                        <td class="pad">30</td>
-                                                        <td class="pad">31</td>
-                                                        <td>1</td>
-                                                        <td>2</td>
-                                                        <td>3</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>5</td>
-                                                        <td>6</td>
-                                                        <td class="active">7</td>
-                                                        <td>8</td>
-                                                        <td>9</td>
-                                                        <td>10</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>11</td>
-                                                        <td>12</td>
-                                                        <td>13</td>
-                                                        <td>14</td>
-                                                        <td>15</td>
-                                                        <td>16</td>
-                                                        <td>17</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>18</td>
-                                                        <td>19</td>
-                                                        <td>20</td>
-                                                        <td>21</td>
-                                                        <td>22</td>
-                                                        <td class="active">23</td>
-                                                        <td>24</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>25</td>
-                                                        <td id="today">26</td>
-                                                        <td>27</td>
-                                                        <td>28</td>
-                                                        <td>29</td>
-                                                        <td>30</td>
-                                                        <td>1</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                    </aside>
-                                    <div class="page-content col-lg-9">
-                                        <div class="cs-blog blog-medium">
-                                            <div class="row">
-                                                <article class="col-lg-12">
-                                                    <div class="main-thumb">
-                                                        <figure><a href="#"><img src="assets/extra-images/PRIMAS.jpg"
-                                                                                 alt="blog"></a>
-                                                            <figcaption>
-                                                                <a href="#"><i class="icon-uniEAB5"></i></a>
-                                                            </figcaption>
-                                                        </figure>
+                                        </article>
+                                    </div>
+                                    <div class="row">
+                                        <div class="page-content col-lg-12">
+                                            <div class="cs-blog blog-medium">
+                                                <div class="row">
+                                                    <div class="widget-section-title">
+                                                        <h3>新闻</h3>
                                                     </div>
-                                                    <div class="bloginfo-sec">
-                                                        <div class="blog-text">
-                                                            <ul class="post-options">
-                                                                <li class="categories">
-                                                                    <a href="#">最新消息</a>
-                                                                    <time datetime="2011-01-12"> 查看人数：25人</time>
-                                                                </li>
-                                                            </ul>
-                                                            <h2><a href="https://www.icoage.com/?p=C&id=149">同业首次换币合作Primas和InkChain携手布局内容行业</a></h2>
-                                                            <p>
-                                                                据区块链铅笔（chainB.com）了解，目前正在进行ICO的Primas项目将与InkChain项目公平互换token， 项目方没有透露具体互换的token数量，
-                                                                但表示双方将以社区的方式来共建生态。 Primas与InkChain互换互换token，是区块链圈内的同业项目第一次换币合作，也是一种心态、格局和视野的体现。
-                                                                区块链铅笔获悉，这一业内的首次合作是由Bitshares联合创始人、中国规模最大的区块链投资基金“分布式资本“合伙人沈波与知名投资人薛蛮子所牵线促成。</p>
-                                                            <div class="post-thumb">
-                                                                <figure>
-                                                                    <a href="#"><img
-                                                                            src="assets/extra-images/img-adminpost2.png"
-                                                                            alt="#"> </a>
-                                                                </figure>
-                                                                <ul class="thumb-options">
-                                                                    <li>发表者 <br>
-                                                                        <a href="#">lancy</a>
-                                                                    </li>
-                                                                </ul>
-                                                                <a href="https://www.icoage.com/?p=C&id=149"
-                                                                   class="Continue-Readingbtn cscolor">继续阅读</a>
-                                                            </div>
+                                                    <article class="col-lg-12">
+                                                        <div class="main-thumb">
+                                                            <figure><a href="#"><img
+                                                                    src="assets/extra-images/PRIMAS.jpg"
+                                                                    alt="blog"></a>
+                                                                <figcaption>
+                                                                    <a href="#"><i class="icon-uniEAB5"></i></a>
+                                                                </figcaption>
+                                                            </figure>
                                                         </div>
-                                                    </div>
-                                                </article>
-                                                <article class="col-lg-12">
-                                                    <div class="main-thumb">
-                                                        <figure><a href="#"><img src="assets/extra-images/DELAPHY.jpg"
-                                                                                 alt="blog"></a>
-                                                            <figcaption>
-                                                                <a href="#"><i class="icon-uniEAB5"></i></a>
-                                                            </figcaption>
-                                                        </figure>
-                                                    </div>
-                                                    <div class="bloginfo-sec">
-                                                        <div class="blog-text">
-                                                            <ul class="post-options">
-                                                                <li class="categories">
-                                                                    <a href="#">最新消息</a>
-                                                                    <time datetime="2011-01-12"> 查看人数：25人</time>
-                                                                </li>
-                                                            </ul>
-                                                            <h2><a href="https://www.icoage.com/?p=C&id=140">DELPHY白皮书解读: 预测市场如何保证准确性，打破专家预测垄断</a></h2>
-                                                            <p>
-                                                                预测市场，又被称为“信息市场”、“观点市场”和“事件市场”，通过参与者交易特定事件发生概率的合约，形成一个市场预期来预测未来。
-                                                                近日， 国内首个基于区块链的预测市场Delphy发布了自己的白皮书，旨在打造中国的Augur、Gnosis(此二者都是以太坊区块链上的明星应用，
-                                                                排名加密货币市值前列)，此举一石激起千层浪。</p>
-                                                            <div class="post-thumb">
-                                                                <figure>
-                                                                    <a href="#"><img
-                                                                            src="assets/extra-images/img-adminpost2.png"
-                                                                            alt="#"> </a>
-                                                                </figure>
-                                                                <ul class="thumb-options">
-                                                                    <li>发表者 <br>
-                                                                        <a href="#">lancy</a>
-                                                                    </li>
-                                                                </ul>
-                                                                <a href="https://www.icoage.com/?p=C&id=140"
-                                                                   class="Continue-Readingbtn cscolor">继续阅读</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                                <article class="col-lg-12">
-                                                    <div class="main-thumb">
-                                                        <figure><a href="#"><img src="assets/extra-images/ICOAGE.jpg"
-                                                                                 alt="blog"></a>
-                                                            <figcaption>
-                                                                <a href="#"><i class="icon-uniEAB5"></i></a>
-                                                            </figcaption>
-                                                        </figure>
-                                                    </div>
-                                                    <div class="bloginfo-sec">
-                                                        <div class="blog-text">
-                                                            <ul class="post-options">
-                                                                <li class="categories">
-                                                                    <a href="#">最新消息</a>
-                                                                    <time datetime="2011-01-12"> 查看人数：25人</time>
-                                                                </li>
-                                                            </ul>
-                                                            <h2><a href="https://www.icoage.com/?p=C&id=138">普华永道携手ICOAGE开发ICO项目评估体系</a></h2>
-                                                            <p>
-                                                                谈起区块链，很多人是通过ICO了解并知道其背后的项目技术；“ICO”也逐渐成为区块链上的主要融资渠道，
-                                                                根据Coindesk发布的2016年区块链市场调查，2016年区块链项目通过ICO的方式总共筹集了2.36亿美元，
-                                                                接近区块链行业风险投资总额的一半。而在2017年5月，数据显示ICO项目筹集的资金已经超过了风险投资，增长速度之快令人惊讶。 </p>
-                                                            <div class="post-thumb">
-                                                                <figure>
-                                                                    <a href="#"><img
-                                                                            src="assets/extra-images/img-adminpost2.png"
-                                                                            alt="#"> </a>
-                                                                </figure>
-                                                                <ul class="thumb-options">
-                                                                    <li>发表者 <br>
-                                                                        <a href="#">lancy</a>
-                                                                    </li>
-                                                                </ul>
-                                                                <a href="https://www.icoage.com/?p=C&id=138"
-                                                                   class="Continue-Readingbtn cscolor">继续阅读</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-
-                                                <article class="col-lg-12">
-                                                    <div class="main-thumb">
-                                                        <figure><a href="#"><img src="assets/extra-images/blog-med1.png"
-                                                                                 alt="blog"></a>
-                                                            <figcaption>
-                                                                <a href="#"><i class="icon-uniEAB5"></i></a>
-                                                            </figcaption>
-                                                        </figure>
-                                                    </div>
-                                                    <div class="bloginfo-sec">
-                                                        <div class="blog-text">
-                                                            <ul class="post-options">
-                                                                <li class="categories">
-                                                                    <a href="#">最新消息</a>
-                                                                    <time datetime="2011-01-12"> 查看人数：25人</time>
-                                                                </li>
-                                                            </ul>
-                                                            <h2><a href="#">2017年7月17日起启用全新充值地址，IC0.TT系统全面升级完成</a></h2>
-                                                            <p>
-                                                                感谢各位用户的耐心等待和配合，IC0.TT于7月17日开始的全面系统升级已完成。现重新开放充值、投资业务。我们为每个用户提供了全新的BTC和ETH充值地址。请用户在进行充值业务时，务必使用ICO365网站“资金充值”面板所显示的新地址，以确保充值及时到账。
-                                                                如您发现充值错误，不小心充到了老地址上，请不要慌张，请点击“帮助中心”右上角的“提交工单”向我们反馈问题，告知充值的地址、时间。并选择“充值没到账”。我们会统一处理，并直接返还到您的账户。
-                                                                您的资产绝对安全，请放心。 </p>
-                                                            <div class="post-thumb">
-                                                                <figure>
-                                                                    <a href="#"><img
-                                                                            src="assets/extra-images/img-adminpost2.png"
-                                                                            alt="#"> </a>
-                                                                </figure>
-                                                                <ul class="thumb-options">
-                                                                    <li>发表者 <br>
-                                                                        <a href="#">lancy</a>
-                                                                    </li>
-                                                                </ul>
-                                                                <a href="detail.html"
-                                                                   class="Continue-Readingbtn cscolor">继续阅读</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                                <article class="col-lg-12">
-                                                    <div class="main-thumb">
-                                                        <figure><a href="#"><img src="assets/extra-images/blog-med2.png"
-                                                                                 alt="blog"></a>
-                                                            <figcaption>
-                                                                <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-                                                                <div id="jp_container_1" class="jp-audio"
-                                                                     role="application" aria-label="media player">
-                                                                    <div class="jp-type-single">
-                                                                        <div class="jp-gui jp-interface">
-                                                                            <div class="jp-controls">
-                                                                                <button class="jp-play"></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                        <div class="bloginfo-sec">
+                                                            <div class="blog-text">
+                                                                <h4><a href="#">同业首次换币合作Primas和InkChain携手布局内容行业</a></h4>
+                                                                <p>
+                                                                    据区块链铅笔（chainB.com）了解，目前正在进行ICO的Primas项目将与InkChain项目公平互换token，
+                                                                    项目方没有透露具体互换的token数量，
+                                                                    但表示双方将以社区的方式来共建生态。
+                                                                    Primas与InkChain互换互换token，是区块链圈内的同业项目第一次换币合作，也是一种心态、格局和视野的体现。
+                                                                    区块链铅笔获悉，这一业内的首次合作是由Bitshares联合创始人、中国规模最大的区块链投资基金“分布式资本“合伙人沈波与知名投资人薛蛮子所牵线促成。</p>
+                                                                <div class="post-thumb">
+                                                                    <figure>
+                                                                        <a href="#"><img
+                                                                                src="assets/extra-images/user-img.jpg"
+                                                                                alt="#"> </a>
+                                                                    </figure>
+                                                                    <ul class="thumb-options">
+                                                                        <li>发表者 <br>
+                                                                            <a href="#">lancy</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <a href="https://www.icoage.com/?p=C&id=149"
+                                                                       class="Continue-Readingbtn cscolor">继续阅读</a>
                                                                 </div>
-                                                                <a href="#"><i class="icon-uniEAB5"></i></a>
-                                                            </figcaption>
-                                                        </figure>
-                                                    </div>
-                                                    <div class="bloginfo-sec">
-                                                        <div class="blog-text">
-                                                            <ul class="post-options">
-                                                                <li class="categories">
-                                                                    <a href="#">最新消息</a>
-                                                                    <time datetime="2011-01-12"> 查看人数：25人</time>
-                                                                </li>
-                                                            </ul>
-                                                            <h2><a href="#">2017年7月17日起启用全新充值地址，IC0.TT系统全面升级完成</a></h2>
-                                                            <p>
-                                                                感谢各位用户的耐心等待和配合，IC0.TT于7月17日开始的全面系统升级已完成。现重新开放充值、投资业务。我们为每个用户提供了全新的BTC和ETH充值地址。请用户在进行充值业务时，务必使用ICO365网站“资金充值”面板所显示的新地址，以确保充值及时到账。
-                                                                如您发现充值错误，不小心充到了老地址上，请不要慌张，请点击“帮助中心”右上角的“提交工单”向我们反馈问题，告知充值的地址、时间。并选择“充值没到账”。我们会统一处理，并直接返还到您的账户。
-                                                                您的资产绝对安全，请放心。 </p>
-                                                            <div class="post-thumb">
-                                                                <figure>
-                                                                    <a href="#"><img
-                                                                            src="assets/extra-images/img-adminpost2.png"
-                                                                            alt="#"> </a>
-                                                                </figure>
-                                                                <ul class="thumb-options">
-                                                                    <li>发表者 <br>
-                                                                        <a href="#">lancy</a>
-                                                                    </li>
-                                                                </ul>
-                                                                <a href="detail.html"
-                                                                   class="Continue-Readingbtn cscolor">继续阅读</a>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </article>
+                                                    </article>
+                                                </div>
                                             </div>
+                                            <nav class="pagination" style="text-align: center">
+                                                <ul>
+                                                    <li class="pgprev"><a href="#"><i
+                                                            class="cscolor icon-angle-left"></i>
+                                                        上一页</a></li>
+                                                    <li><a href="#">1</a></li>
+                                                    <li><a class="active">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li class="pgnext"><a href="#" class="icon">下一页<i
+                                                            class="cscolor icon-angle-right"></i></a></li>
+                                                </ul>
+                                            </nav>
                                         </div>
-                                        <nav class="pagination">
-                                            <ul>
-                                                <li class="pgprev"><a href="#"><i class="cscolor icon-angle-left"></i>
-                                                    上一页</a></li>
-                                                <li><a href="#">1</a></li>
-                                                <li><a class="active">2</a></li>
-                                                <li><a href="#">3</a></li>
-                                                <li><a href="#">4</a></li>
-                                                <li><a href="#">5</a></li>
-                                                <li class="pgnext"><a href="#" class="icon">下一页<i
-                                                        class="cscolor icon-angle-right"></i></a></li>
-                                            </ul>
-                                        </nav>
                                     </div>
                                 </div>
                             </div>
@@ -611,18 +293,13 @@
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/jquery.jplayer.min.js"></script>
 <script src="assets/scripts/functions.js"></script>
-<!--<script type="text/javascript">-->
-<!--jQuery(document).ready(function () {-->
-<!--jQuery('.navigation>ul').slicknav();-->
-<!--});-->
-<!--</script>-->
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display','none');
+            $("#personInfo").css('display', 'none');
             $("#contect").css('display', 'none');
         } else {
-            $("#personInfo").css('display','block');
+            $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
         }
 
@@ -634,14 +311,17 @@
                 jQuery('body').removeClass('loading');
             }
         });
-        $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
+        // 获取所有公告信息以及通知
+
+    });
+    $("#sign_out").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
     });
 
-    $(document).ready(function () {
+
+    /*$(document).ready(function () {
         $("#jquery_jplayer_1").jPlayer({
             ready: function () {
                 $(this).jPlayer("setMedia", {
@@ -658,7 +338,7 @@
             remainingDuration: true,
             toggleDuration: true
         });
-    });
+    });*/
 </script>
 </body>
 </html>
