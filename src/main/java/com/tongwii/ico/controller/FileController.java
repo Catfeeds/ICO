@@ -30,7 +30,7 @@ public class FileController {
 
 
     /**
-     * 上传头像
+     * 上传文件
      */
     @PostMapping()
     @ResponseBody
@@ -50,7 +50,7 @@ public class FileController {
     }
 
     /**
-     * 获取头像文件
+     * 获取文件
      */
     @GetMapping("/{filename:.+}")
     @ResponseBody

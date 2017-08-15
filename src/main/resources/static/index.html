@@ -36,7 +36,7 @@
             <div class="main-head">
                 <div class="left-side">
                     <div class="logo"><a href="index.html"><img src="assets/images/logo.png" alt=""></a></div>
-                    <nav class="navigation">
+                    <nav class="navigation" style="font-family: 微软雅黑;">
                         <ul>
                             <li><a href="index.html" class="dropdown active">首页</a></li>
                             <li><a href="listing-grid.html">ICO中</a></li>
@@ -128,7 +128,8 @@
                                 <div class="row">
                                     <div class="main-heading top-center">
                                         <h1>世界融资引擎。</h1>
-                                        <strong class="title">我们每周向世界各地的运动者分发数百万元。不管你是筹集500元还是500万欧元。</strong></div>
+                                        <strong class="title">我们每周向世界各地的运动者分发数百万元。不管你是筹集500元还是500万欧元。</strong>
+                                    </div>
                                     <div class="col-lg-4 col-md-4 col-sm-6">
                                         <article class="cs-services modren top-center ">
                                             <figure><img src="assets/extra-images/ico-services1.png" alt=""></figure>
@@ -459,7 +460,6 @@
     <footer id="footer-sec">
         <div class="container">
             <div class="row">
-                <div class="ads-sec col-lg-12"> <img src="assets/images/ads.jpg" alt="" > </div>
                 <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
                     <div class="widget-section-title"><strong class="title">关于我们</strong></div>
                     <ul>
@@ -474,7 +474,8 @@
                     <div class="widget-section-title"><strong class="title">法律说明</strong></div>
                     <ul>
                         <li><a>ICO.TT的所有运营行为将会尊重客户所在地相关法律和法规，本网站法律声明未涉及的问题参见当地国家有关法律法规，当本声明与当地国家法律法规冲突时，以当地国家法律法规为准。
-                            因用户使用本网站而引起或与之相关的一切争议、权利主张或其它事项，均受当地法律法规区域的管辖。</a></li>
+                            因用户使用本网站而引起或与之相关的一切争议、权利主张或其它事项，均受当地法律法规区域的管辖。</a>
+                        </li>
                     </ul>
                 </aside>
                 <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
@@ -483,7 +484,8 @@
                         <li><a>客服微信号: ICO.TT</a>
                             <a>客服QQ: 2318798407</a>
                             <a>官方QQ群: 389428765</a>
-                            <a>Email:2318798407@qq.com</a></li>
+                            <a>Email:2318798407@qq.com</a>
+                        </li>
                     </ul>
                 </aside>
             </div>
@@ -531,8 +533,10 @@
 <script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/sweet-alert.min.js"></script>
+<script src="assets/scripts/tokenmoney.js"></script>
 <script>
     jQuery(window).load(function () {
+        console.log(getBitCoinBalance("1KirQsnVEo6LCxcBvV7eQcmVoyRsXfRmrE"));
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
             $("#contect").css('display', 'none');

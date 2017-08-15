@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="assets/css/theme-blog.css">
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
-    <link rel="stylesheet" href="assets/css/default.css">
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -56,7 +55,7 @@
             <div class="main-head">
                 <div class="left-side">
                     <div class="logo"><a href="index.html"><img src="assets/images/logo.png" alt=""></a></div>
-                    <nav class="navigation">
+                    <nav class="navigation" style="font-family: 微软雅黑;">
                         <ul>
                             <li><a href="index.html" class="dropdown active">首页</a></li>
                             <li><a href="listing-grid.html">ICO中</a></li>
@@ -176,14 +175,13 @@
                         </aside>
                     </div>
                     <div class="col-md-9">
-                        <h2><strong>修改手机号码</strong></h2>
+                        <h2><strong>添加手机号码</strong></h2>
                         <div class="row">
                             <header class="panel-heading">
-                                <h2 class="panel-title">修改手机号码</h2>
+                                <h2 class="panel-title">添加手机号码</h2>
                             </header>
                             <div class="panel-body">
-                                <form class="form-horizontal form-bordered" action="?p=editmobile&do=updatecontact"
-                                      method="post">
+                                <form class="form-horizontal form-bordered">
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">新手机号码</label>
                                         <div class="col-md-6">
@@ -207,8 +205,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label"></label>
-                                        <button class="cs-bgcolor m-xs m-lg btn btn-lg" data-toggle="modal" data-target="#formModal"
-                                                id="commit" style="color: #ffffff; font-weight: bold;">提交
+                                        <button class="cs-bgcolor btn" type="button" id="commit" style="color: #ffffff; font-weight: bold;">提交
                                         </button>
                                     </div>
                                 </form>
@@ -226,7 +223,6 @@
 <footer id="footer-sec">
     <div class="container">
         <div class="row">
-            <div class="ads-sec col-lg-12"> <img src="assets/images/ads.jpg" alt="" > </div>
             <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
                 <div class="widget-section-title"><strong class="title">关于我们</strong></div>
                 <ul>
@@ -310,14 +306,87 @@
                 jQuery('body').removeClass('loading');
             }
         });
-        //给发送验证码按钮绑定监听事件
         var phoneNum = $("#mobile").val();
-        var verifycode = $("#verifycode").val();
-        $("#sendsms").onclick(function () {
+
+        //给发送验证码按钮绑定监听事件
+        $("#sendsms").click(function () {
             if(phoneNum.length != 11 ){
                 sweetAlert("请填写正确的手机号码!");
+                return;
             }
+            // 此处判断该用户信息中是否有同样的手机号
+            if(app.getUserInfo().phone != null){
+                if(app.getUserInfo().phone == phoneNum){
+                    sweetAlert("此手机号码已经验证过!");
+                    return;
+                }
+            }
+
+            var phoneJson = {"phone":phoneNum};
             // 此处调用发送手机验证码的接口获取手机验证码
+            $.ajax({
+                url: "/user/validatePhone",
+                type: 'POST',
+                timeout: 10000,//超时时间设置为10秒；
+                data: JSON.stringify(phoneJson),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: app.createAuthorizationTokenHeader(),
+                success: function (result) {
+                    if (result.code == 200) {
+                       app.setUserInfo(result.data.userInfo);
+                    }
+                    else {
+                        sweetAlert(result.message);
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("网络异常,请稍候再试!");
+                }
+            });
+        });
+        //提交按钮触发事件
+        $("#commit").click(function () {
+            var verifycode = $("#verifycode").val();
+            if(phoneNum.length != 11 ){
+                sweetAlert("请填写正确的手机号码!");
+                return;
+            }
+            if(verifycode.length <=0){
+                sweetAlert("验证码不能为空!");
+                return;
+            }
+            if(verifycode != app.getUserInfo().verifyCode){
+                sweetAlert("验证码信息错误，请重新输入!");
+                return;
+            }else if(app.getUserInfo().expireDate < new Date()){
+                sweetAlert("验证码已过期，请重新发送！");
+                return;
+            }else{
+                var verifycodeJson = {"validatePhone":true} ;
+                // 此处调用发送手机验证码的接口获取手机验证码
+                $.ajax({
+                    url: "/user/phoneValidated",
+                    type: 'POST',
+                    timeout: 10000,//超时时间设置为10秒；
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(verifycodeJson),
+                    dataType: "json",
+                    headers: app.createAuthorizationTokenHeader(),
+                    success: function (result) {
+                        if (result.code == 200) {
+                            app.setUserInfo(result.data.userInfo);
+                            sweetAlert("手机验证成功!");
+                        }
+                        else {
+                            sweetAlert(result.message);
+                        }
+                    },
+                    error: function (xhr, type, errerThrown) {
+                        sweetAlert("网络异常,请稍候再试!");
+                    }
+                });
+            }
         });
 
         $("#sign_out").click(function () {
