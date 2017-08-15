@@ -104,7 +104,7 @@ create table project
   end_time             timestamp default CURRENT_TIMESTAMP,
   state                tinyint,
   third_endorsement    bool,
-  output_token_money_datail_id int(11) unsigned,
+  output_token_money_detail_id int(11) unsigned,
   part_person_number   int,
   des                  text,
   create_user_id       int(11) unsigned,
@@ -261,7 +261,7 @@ references user (id) on delete restrict on update restrict;
 alter table project add constraint fk_project_2_user_create_user_id foreign key (create_user_id)
 references user (id) on delete restrict on update restrict;
 
-alter table project add constraint fk_project_2_token_money_detail_intput_token_money_detail_id foreign key (output_token_money_datail_id)
+alter table project add constraint fk_project_2_token_money_detail_intput_token_money_detail_id foreign key (output_token_money_detail_id)
 references token_detail (id) on delete restrict on update restrict;
 
 alter table project_user_relation add constraint fk_user_project_2_user_user_id foreign key (project_id)

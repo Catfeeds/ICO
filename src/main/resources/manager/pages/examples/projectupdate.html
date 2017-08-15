@@ -18,9 +18,6 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-    <link rel="stylesheet" href="../../bootstrap/css/layui.css">
-    <link rel="stylesheet" href="../../bootstrap/css/laydate.css">
-    <link rel="stylesheet" href="../../bootstrap/css/layer.css">
     <script src="../../scripts/app.js"></script>
     <script src="../../scripts/sweet-alert.js"></script>
     <link rel="stylesheet" href="../../css/sweet-alert.css">
@@ -156,11 +153,10 @@
                                         <div class="col-sm-2">
                                             <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
                                             <div class="layui-inline">
-                                                <input type="text" value="2012-05-15 21:05" id="datetimepicker">
                                                 <!--<label class="layui-form-label">验证日期</label>-->
                                                 <div class="layui-input-inline">
-                                                    <input class="layui-input" id="starttime" name="starttime"
-                                                           onclick="layui.laydate({elem: this})" type="datatime">
+                                                    <input autocomplete="off" class="layui-input" id="starttime" name="starttime"
+                                                           onclick="layui.laydate({elem: this})" type="date">
                                                 </div>
                                             </div>
                                         </div>
@@ -233,7 +229,7 @@
         <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
         reserved.
     </footer>
-
+</div>
 
 
 <!-- jQuery 2.2.3 -->
@@ -246,11 +242,7 @@
 <script src="../../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
-<script src="../../bootstrap/js/layui.js" charset="utf-8"></script>
 <script>
-    $('#datetimepicker').datetimepicker({
-    format: 'yyyy-mm-dd hh:ii'
-});
 
     jQuery(window).load(function () {
         var id = app.getQueryString("id");
@@ -317,7 +309,7 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert({title:"",text:"项目修改成功！",type:success}, function() {
+                    sweetAlert({title:"",text:"项目修改成功！"}, function() {
                         window.location="../../pages/tables/data.html";
                     });
 
@@ -337,57 +329,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
-
-        var start = {
-            min: laydate.now()
-            , max: '2099-06-16 23:59:59'
-            , istoday: false
-            , choose: function (datas) {
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-            }
-        };
-
-        var end = {
-            min: laydate.now()
-            , max: '2099-06-16 23:59:59'
-            , istoday: false
-            , choose: function (datas) {
-                start.max = datas; //结束日选好后，重置开始日的最大日期
-            }
-        };
-
-        document.getElementById('LAY_demorange_s').onclick = function () {
-            start.elem = this;
-            laydate(start);
-        }
-        document.getElementById('LAY_demorange_e').onclick = function () {
-            end.elem = this
-            laydate(end);
-        }
-    });
 
 </script>
 
