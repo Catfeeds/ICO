@@ -48,5 +48,5 @@ INSERT INTO `token_detail` VALUES (2, 2, NULL, 20, 50, 20, NULL, NULL, 1);
 -- Records of user_wallet
 -- ----------------------------
 
-INSERT INTO `user_wallet` VALUES (3, 1, NULL, 2, '比特币钱包', 1, NULL);
-INSERT INTO `user_wallet` VALUES (4, 2, NULL, 2, '云币钱包', 1, NULL);
+INSERT INTO `user_wallet` VALUES (3, 1, NULL, NULL, 2, '比特币钱包', 1, NULL);
+INSERT INTO `user_wallet` VALUES (4, 2, NULL, NULL, 2, '云币钱包', 1, NULL);
