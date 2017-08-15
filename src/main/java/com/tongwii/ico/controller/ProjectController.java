@@ -40,7 +40,7 @@ public class ProjectController {
     @PostMapping("/add")
     public Result add(@RequestBody Project project) {
         projectService.save(project);
-        return Result.successResult();
+        return Result.successResult(project);
     }
 
 

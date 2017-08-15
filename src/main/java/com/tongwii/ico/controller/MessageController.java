@@ -8,6 +8,7 @@ import com.tongwii.ico.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
+    private static int NOTIFYMESSAGE = 2;
+    private static int NEWSMESSAGE = 1;
     @PostMapping
     public Result add(@RequestBody Message message) {
         messageService.save(message);
@@ -49,5 +52,29 @@ public class MessageController {
         List<Message> list = messageService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult(pageInfo);
+    }
+    // 获取所有正常状态下的message信息
+    @GetMapping("/getOfficalMessage")
+    public Result officalMessageList(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "1") Integer size) {
+        PageHelper.startPage(page, size);
+        List<Message> list = messageService.findOfficalMessages();
+        //分离公告类信息与新闻信息
+        List<Message> notifyMessages = new ArrayList<>();
+        List<Message> newsMessages = new ArrayList<>();
+        try {
+            for(int i=0; i<list.size(); i++){
+                if(list.get(i).getType() == NEWSMESSAGE){
+                    notifyMessages.add(list.get(i));
+                }
+                if(list.get(i).getType() == NEWSMESSAGE){
+                    newsMessages.add(list.get(i));
+                }
+            }
+            PageInfo pageInfo1 = new PageInfo(notifyMessages);
+            PageInfo pageInfo2 = new PageInfo(newsMessages);
+            return Result.successResult("获取信息成功!").add("newsMessages", pageInfo2).add("notifyMessages", pageInfo1);
+        }catch (Exception e){
+            return Result.errorResult("获取信息失败!");
+        }
     }
 }
