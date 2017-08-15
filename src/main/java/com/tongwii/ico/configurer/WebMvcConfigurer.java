@@ -6,7 +6,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.core.ServiceException;
+import com.tongwii.ico.exception.ServiceException;
 import netscape.security.ForbiddenTargetException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

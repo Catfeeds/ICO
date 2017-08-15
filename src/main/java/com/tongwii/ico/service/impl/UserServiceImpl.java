@@ -1,26 +1,26 @@
 package com.tongwii.ico.service.impl;
 
-import com.tongwii.ico.controller.UserController;
 import com.tongwii.ico.core.AbstractService;
 import com.tongwii.ico.dao.UserMapper;
-import com.tongwii.ico.exception.EmailExistException;
-import com.tongwii.ico.model.Role;
-import com.tongwii.ico.model.User;
-import com.tongwii.ico.model.UserRoleRelation;
-import com.tongwii.ico.service.FileService;
-import com.tongwii.ico.service.RoleService;
-import com.tongwii.ico.service.UserRoleRelationService;
-import com.tongwii.ico.service.UserService;
+import com.tongwii.ico.model.*;
+import com.tongwii.ico.service.*;
+import com.tongwii.ico.util.CurrentConfigEnum;
+import com.tongwii.ico.util.TokenMoneyEnum;
+import com.tongwii.ico.util.TokenMoneyUtil;
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.MainNetParams;
+import org.bitcoinj.params.TestNet3Params;
+import org.spongycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.annotation.Resource;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +40,12 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     private RoleService roleService;
     @Resource
     private UserRoleRelationService userRoleRelationService;
+    @Resource
+    private UserWalletService userWalletService;
+    @Resource
+    private TokenMoneyService tokenMoneyService;
+    @Value("${spring.profiles.active}")
+    private String env;//当前激活的配置文件
 
     @Override
     public User findByIdCard(String idCard) {
@@ -74,6 +80,37 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         userRoleRelation.setUserId(user.getId());
         // 保存用户关系
         userRoleRelationService.save(userRoleRelation);
+
+        // 生成用户钱包，保存钱包信息
+        // 比特币钱包
+        TokenMoney bitCoin = tokenMoneyService.findByENShortName(TokenMoneyEnum.BTC.name());
+        UserWallet bitCoinWallet = new UserWallet();
+        bitCoinWallet.setTokenMoneyId(bitCoin.getId());
+        bitCoinWallet.setUserId(user.getId());
+        ECKey bitCoinKey = new ECKey();
+        final NetworkParameters netParams;
+
+        if(env.equals(CurrentConfigEnum.DEV)) {
+            netParams = TestNet3Params.get();
+        } else {
+            netParams = MainNetParams.get();
+        }
+
+        Address addressFromKey = bitCoinKey.toAddress(netParams);
+
+        bitCoinWallet.setTokenMoneyUrl(addressFromKey.toBase58());
+        bitCoinWallet.setTokenPrivateKey(bitCoinKey.getPrivateKeyAsHex());
+        userWalletService.save(bitCoinWallet);
+
+        // 以太坊钱包
+        TokenMoney ethMoney = tokenMoneyService.findByENShortName(TokenMoneyEnum.ETH.name());
+        UserWallet ethWallet = new UserWallet();
+        ethWallet.setTokenMoneyId(ethMoney.getId());
+        ethWallet.setUserId(user.getId());
+        org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
+        bitCoinWallet.setTokenMoneyUrl(Hex.toHexString(ethKey.getAddress()));
+        bitCoinWallet.setTokenPrivateKey(Hex.toHexString(ethKey.getPrivKeyBytes()));
+        userWalletService.save(ethWallet);
     }
 
     @Override

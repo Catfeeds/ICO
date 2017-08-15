@@ -1,5 +1,7 @@
 package com.tongwii.ico.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 
 @Table(name = "user_wallet")
@@ -17,6 +19,13 @@ public class UserWallet {
     @Column(name = "token_money_url")
     private String tokenMoneyUrl;
 
+    /**
+     * 钱包密钥，加密过后的
+     */
+    @JSONField(serialize = false)
+    @Column(name = "token_private_key")
+    private String tokenPrivateKey;
+
     @Column(name = "user_id")
     private Integer userId;
 
@@ -24,7 +33,7 @@ public class UserWallet {
 
     /**
      * - 存入钱包
-            - 转出钱包
+     * - 转出钱包
      */
     private Byte type;
 
@@ -141,6 +150,14 @@ public class UserWallet {
      */
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public String getTokenPrivateKey() {
+        return tokenPrivateKey;
+    }
+
+    public void setTokenPrivateKey(String tokenPrivateKey) {
+        this.tokenPrivateKey = tokenPrivateKey;
     }
 
     public TokenMoney getTokenMoney() {

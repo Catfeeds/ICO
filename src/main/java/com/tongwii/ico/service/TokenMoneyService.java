@@ -13,4 +13,10 @@ public interface TokenMoneyService extends Service<TokenMoney> {
      * @return
      */
     TokenMoney findByName(String ICOname);
+
+    /**
+     * 根据代币英文简称查询代币信息
+     *
+     */
+    TokenMoney findByENShortName(String enShort);
 }

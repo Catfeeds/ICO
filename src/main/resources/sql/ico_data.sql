@@ -34,8 +34,8 @@ INSERT INTO `project` VALUES (6, 'OmiseGo', 'OmiseGo代币', '2017-08-03 16:04:3
 -- Records of token_money
 -- ----------------------------
 
-INSERT INTO `token_money` VALUES (1, '云币', 'ETC', NULL, NULL, NULL, NULL);
-INSERT INTO `token_money` VALUES (2, '比特币', 'BTC', NULL, NULL, NULL, NULL);
+INSERT INTO `token_money` VALUES (1, '比特币', 'BTC', NULL, NULL, NULL, NULL);
+INSERT INTO `token_money` VALUES (2, '以太坊', 'ETH', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Records of token_detail
@@ -48,5 +48,5 @@ INSERT INTO `token_detail` VALUES (2, 2, NULL, 20, 50, 20, NULL, NULL, 1);
 -- Records of user_wallet
 -- ----------------------------
 
-INSERT INTO `user_wallet` VALUES (3, 1, NULL, NULL, 2, '比特币钱包', 1, NULL);
-INSERT INTO `user_wallet` VALUES (4, 2, NULL, NULL, 2, '云币钱包', 1, NULL);
+INSERT INTO `user_wallet` VALUES (1, 1, 1, NULL, NULL, '比特币钱包', 1, NULL);
+INSERT INTO `user_wallet` VALUES (2, 2, 2, NULL, NULL, '云币钱包', 1, NULL);

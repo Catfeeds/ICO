@@ -2,7 +2,7 @@ package com.tongwii.ico.configurer;
 
 import com.tongwii.ico.security.JWTAuthenticationFilter;
 import com.tongwii.ico.security.JwtAuthenticationEntryPoint;
-import com.tongwii.ico.util.CurrentConfig;
+import com.tongwii.ico.util.CurrentConfigEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +56,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure ( HttpSecurity httpSecurity ) throws Exception {
         // 开发者模式，放行所有
         // token将拿不到用户信息
-        if (env.equals(CurrentConfig.DEVELOPMENT.getConfig())) {
+        if (env.equals(CurrentConfigEnum.DEV)) {
             httpSecurity
                     // jwt不需要csrf
                     .csrf().disable()
