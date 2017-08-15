@@ -459,7 +459,6 @@
     <footer id="footer-sec">
         <div class="container">
             <div class="row">
-                <div class="ads-sec col-lg-12"> <img src="assets/images/ads.jpg" alt="" > </div>
                 <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
                     <div class="widget-section-title"><strong class="title">关于我们</strong></div>
                     <ul>
@@ -531,8 +530,10 @@
 <script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/sweet-alert.min.js"></script>
+<script src="assets/scripts/tokenmoney.js"></script>
 <script>
     jQuery(window).load(function () {
+        console.log(getBitCoinBalance("1KirQsnVEo6LCxcBvV7eQcmVoyRsXfRmrE"));
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
             $("#contect").css('display', 'none');
