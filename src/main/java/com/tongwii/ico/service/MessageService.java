@@ -14,4 +14,11 @@ public interface MessageService extends Service<Message> {
      * @return
      */
     List<Message> findOfficalMessages();
+
+    /**
+     * 根据消息类型查找信息
+     * @param type
+     * @return
+     */
+    List<Message> findMessagesByType(int type);
 }

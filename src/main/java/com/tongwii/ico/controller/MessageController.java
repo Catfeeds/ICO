@@ -63,9 +63,11 @@ public class MessageController {
         List<Message> newsMessages = new ArrayList<>();
         try {
             for(int i=0; i<list.size(); i++){
-                if(list.get(i).getType() == NEWSMESSAGE){
+                // 获取公告信息
+                if(list.get(i).getType() == NOTIFYMESSAGE){
                     notifyMessages.add(list.get(i));
                 }
+                // 获取新闻信息
                 if(list.get(i).getType() == NEWSMESSAGE){
                     newsMessages.add(list.get(i));
                 }
@@ -76,5 +78,13 @@ public class MessageController {
         }catch (Exception e){
             return Result.errorResult("获取信息失败!");
         }
+    }
+    // 获取新闻消息
+    @GetMapping("/getNewsMessage")
+    public Result getNewsMessage(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "1") Integer size) {
+        PageHelper.startPage(page, size);
+        List<Message> list = messageService.findMessagesByType(NEWSMESSAGE);
+        PageInfo pageInfo = new PageInfo(list);
+        return Result.successResult("获取信息成功!").add("newsMessages", pageInfo);
     }
 }
