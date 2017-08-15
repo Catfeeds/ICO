@@ -27,6 +27,11 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!--时间控件-->
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../layui/css/modules/laydate/laydate.css">
+    <link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css">
+    <script src="../../layui/layui.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -151,12 +156,9 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">开始时间</label>
                                         <div class="col-sm-2">
-                                            <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
                                             <div class="layui-inline">
-                                                <!--<label class="layui-form-label">验证日期</label>-->
                                                 <div class="layui-input-inline">
-                                                    <input autocomplete="off" class="layui-input" id="starttime" name="starttime"
-                                                           onclick="layui.laydate({elem: this})" type="date">
+                                                    <input class="layui-input" placeholder="项目开始时间" id="startTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                 </div>
                                             </div>
                                         </div>
@@ -164,8 +166,7 @@
                                         <div class="col-sm-2">
                                             <div class="layui-inline">
                                                 <div class="layui-input-inline">
-                                                    <input autocomplete="off" class="layui-input" id="endtime" name="endtime"
-                                                           onclick="layui.laydate({elem: this})" type="date">
+                                                    <input class="layui-input" placeholder="项目结束时间" id="endTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                 </div>
                                             </div>
                                         </div>
@@ -243,7 +244,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <script>
-
+    var endTime;
+    var startTime;
     jQuery(window).load(function () {
         var id = app.getQueryString("id");
         $.ajax({
@@ -259,15 +261,15 @@
                     var enName = result.data.name;//英文
                     var cnName = result.data.nameCn;//中文
                     var  des= result.data.des;//描述
-                    var endtime = result.data.endTime;
-                    var startDate = result.data.startTime;
+                     endTime = result.data.endTime;
+                     startTime = result.data.startTime;
                     var thirdEndorsement = result.data.thirdEndorsement;
                     var state = result.data.state;
                     var partPersonNumber = result.data.partPersonNumber;
                     $("#name").val(enName);
                     $("#nameCn").val(cnName);
-                    $("#starttime").val(startDate);
-                    $("#endtime").val(endtime);
+                    $("#startTime").val(startTime);
+                    $("#endTime").val(endTime);
                     $("#partPersonNumber").val(partPersonNumber);
                     $("#des").val(des);
                     $("#thirdEndorsement").find("option[value = '"+thirdEndorsement+"']").attr("selected","selected");
@@ -292,14 +294,14 @@
         var id = app.getQueryString("id");
         var enName =   $("#name").val();
         var cnName =   $("#nameCn").val();
-        var startTime = $("#starttime").val();
-        var endtime = $("#endtime").val();
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
         var partPersonNumber =  $("#partPersonNumber").val();
         var des = $("#des").val();
         var thirdEndorsement = $("#thirdEndorsement option:selected").val();
         var state =  $("#state option:selected").val();
 
-        var projectJson = {id:id,name:enName,nameCn:cnName,partPersonNumber:partPersonNumber,des:des,thirdEndorsement:thirdEndorsement,state:state};
+        var projectJson = {id:id,name:enName,nameCn:cnName,startTime:startTime,endTime:endTime,partPersonNumber:partPersonNumber,des:des,thirdEndorsement:thirdEndorsement,state:state};
         $.ajax({
             url: "/project",
             type: 'PUT',
@@ -326,7 +328,44 @@
         });
     }
 
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
 
+        var start = {
+            format: 'YYYY-MM-DD hh:mm:ss',
+            start: startTime,    //开始日期<br/>
+            istime: true, //是否开启时间选择<br/>
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            format: 'YYYY-MM-DD hh:mm:ss',
+            start: endTime,    //开始日期<br/>
+            istime: true, //是否开启时间选择<br/>
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        document.getElementById('startTime').onclick = function(){
+            start.elem = this;
+            laydate(start);
+        }
+        document.getElementById('endTime').onclick = function(){
+            end.elem = this
+            laydate(end);
+        }
+
+    });
 
 
 
