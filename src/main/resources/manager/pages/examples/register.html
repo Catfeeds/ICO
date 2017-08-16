@@ -16,10 +16,11 @@
   <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
-
+  <link rel="stylesheet" href="../../css/sweet-alert.css">
 
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
   <![endif]-->
 </head>
 <body class="hold-transition register-page">
@@ -33,44 +34,25 @@
 
     <form action="../../index.html" method="post">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="用户名">
+        <input type="text" class="form-control" id="userName" placeholder="用户名">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
+        <input type="email" class="form-control" id="email" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="密码">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="再次输入密码">
-        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        <input type="text" class="form-control" id="idCard" placeholder="身份证号码">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> <a href="#">同意</a>
-            </label>
-          </div>
-        </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">注册</button>
+          <button type="button" id="regist" class="btn btn-primary btn-block btn-flat">注册</button>
         </div>
         <!-- /.col -->
       </div>
     </form>
-
-    <div class="social-auth-links text-center">
-      <br>
-      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="glyphicon glyphicon-envelope"></i> 认识潜力区块链项目</a>
-      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="glyphicon glyphicon-th"></i> 参与ICO可以很简单</a>
-    </div>
-
-    <a href="login.html" class="text-center">已成为会员</a>
   </div>
   <!-- /.form-box -->
 </div>
@@ -82,6 +64,8 @@
 <script src="../../bootstrap/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="../../plugins/iCheck/icheck.min.js"></script>
+<script src="../../scripts/sweet-alert.js"></script>
+
 <script>
   $(function () {
     $('input').iCheck({
@@ -89,6 +73,40 @@
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
+  });
+  jQuery(window).load(function () {
+      $("#regist").click(function () {
+          var email = $("#email").val().toString();
+          var userName = $("#userName").val();
+          var idCard = $("#idCard").val();
+
+          var registJson = {emailAccount: email, nickName: userName, idCard:idCard};
+          $.ajax({
+              url: "/user/register",
+              type: 'POST',
+              timeout: 10000,//超时时间设置为10秒；
+              data: JSON.stringify(registJson),
+              dataType: 'json',//服务器返回json格式数据
+              contentType: "application/json; charset=utf-8",
+              success: function (result) {
+                  if (result.code == 200) {
+                      sweetAlert("注册成功，请登录!");
+                      location.href = "profiles.html";
+                    
+                  }
+                  else {
+                      sweetAlert(result.message);
+                      return;
+                      console.log("注册失败!");
+                  }
+              },
+              error: function (xhr, type, errerThrown) {
+                  sweetAlert("网络异常,请稍候再试!");
+                  return;
+              }
+          });
+      });
+
   });
 </script>
 </body>

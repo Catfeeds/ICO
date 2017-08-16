@@ -101,7 +101,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         bitCoinWallet.setTokenMoneyUrl(addressFromKey.toBase58());
         // 使用des加密密钥
         DesEncoder desEncoder = new DesEncoder();
-        bitCoinWallet.setTokenPrivateKey(desEncoder.decrypt(bitCoinKey.getPrivateKeyAsHex()));
+        bitCoinWallet.setTokenPrivateKey(desEncoder.encrypt(bitCoinKey.getPrivateKeyAsHex()));
         bitCoinWallet.setDes("比特币钱包");
         userWalletService.save(bitCoinWallet);
 
@@ -113,7 +113,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
         ethWallet.setTokenMoneyUrl("0x"+Hex.toHexString(ethKey.getAddress()));
         // 使用des加密密钥
-        ethWallet.setTokenPrivateKey(desEncoder.decrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
+        ethWallet.setTokenPrivateKey(desEncoder.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
         ethWallet.setDes("以太坊钱包");
         userWalletService.save(ethWallet);
     }
