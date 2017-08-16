@@ -23,7 +23,7 @@ public class TokenDetailController {
     public Result add(@RequestBody TokenDetail tokenDetail) {
         // 通过传来的tokenmoneyId来获取
         tokenDetailService.save(tokenDetail);
-        return Result.successResult();
+        return Result.successResult(tokenDetail);
     }
 
     @DeleteMapping("/{id}")
