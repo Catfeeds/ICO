@@ -303,14 +303,13 @@
                     });
                 }
                 else {
-//                    alert("aaa");
-                    location.href = "404.html";
+                    sweetAlert(result.message);
+                    return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-//                alert("bbb");
-//                location.href = "404.html";
                 sweetAlert("网络异常,请稍候再试");
+                return;
             }
         });
     });

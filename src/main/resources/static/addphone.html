@@ -382,10 +382,12 @@
                     }
                     else {
                         sweetAlert(result.message);
+                        return;
                     }
                 },
                 error: function (xhr, type, errerThrown) {
                     sweetAlert("网络异常,请稍候再试!");
+                    return;
                 }
             });
         }

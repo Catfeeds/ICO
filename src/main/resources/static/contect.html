@@ -412,9 +412,11 @@
                     if (result.code == 200) {
                         isValidate = true;
                         sweetAlert("身份证验证成功!");
+                        return;
                     }
                     else {
                         sweetAlert("身份证验证失败!");
+                        return;
                     }
                 },
                 error: function (xhr, type, errerThrown) {
@@ -443,11 +445,13 @@
                             $("#identityCardlable").css('display', 'block');
                         }
                         else {
-                            console.log("信息修改失败!");
+                            sweetAlert(result.message);
+                            return;
                         }
                     },
                     error: function (xhr, type, errerThrown) {
                         sweetAlert("网络异常,请重新验证!");
+                        return;
                     }
                 });
             }
