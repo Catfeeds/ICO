@@ -215,8 +215,7 @@
                         <br>
                         <div class="row">
                             <header class="panel-heading">
-                                <h2 class="panel-title"> 我的账户信息 <a href="?p=Deposit"
-                                                                   style='font-size:12px;'>刷新BTC/ETH充值</a></h2>
+                                <h2 class="panel-title"> 我的账户信息 <a href="?p=Deposit" style='font-size:12px;'>刷新BTC/ETH充值</a></h2>
                             </header>
                             <div class="panel-body">
                                 <form class="form-horizontal form-bordered" method="post">
@@ -369,8 +368,10 @@
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
             if(app.getUserInfo().validateUser){
-                $("#trueNamelable").text(app.getUserInfo().realName).css('display', 'block');
-                $("#identityCardlable").text(app.getUserInfo().idCard).css('display','block');
+                var name = app.getUserInfo().realName.substr(0,1)+"**";
+                var idcard = app.getUserInfo().idCard.substr(0,4)+"****"+app.getUserInfo().idCard.substr(app.getUserInfo().idCard.length-4);
+                $("#trueNamelable").text(name).css('display', 'block');
+                $("#identityCardlable").text(idcard).css('display','block');
                 $("#truename").css('display', 'none');
                 $("#identitycard").css('display', 'none');
                 $("#submitRealInfo").css('display', 'none');
@@ -413,9 +414,11 @@
                     if (result.code == 200) {
                         isValidate = true;
                         sweetAlert("身份证验证成功!");
+                        return;
                     }
                     else {
                         sweetAlert("身份证验证失败!");
+                        return;
                     }
                 },
                 error: function (xhr, type, errerThrown) {
@@ -444,11 +447,13 @@
                             $("#identityCardlable").css('display', 'block');
                         }
                         else {
-                            console.log("信息修改失败!");
+                            sweetAlert(result.message);
+                            return;
                         }
                     },
                     error: function (xhr, type, errerThrown) {
                         sweetAlert("网络异常,请重新验证!");
+                        return;
                     }
                 });
             }

@@ -6,14 +6,21 @@ import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.*;
 import com.tongwii.ico.service.*;
+import com.tongwii.ico.util.CurrentConfigEnum;
+import com.tongwii.ico.util.TokenMoneyEnum;
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.MainNetParams;
+import org.bitcoinj.params.TestNet3Params;
+import org.spongycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,14 +42,45 @@ public class ProjectController {
     private UserService userService;
     @Autowired
     private ProjectWalletService projectWalletService;
-
+    @Value("${spring.profiles.active}")
+    private String env;//当前激活的配置文件
 
     @PostMapping("/add")
     public Result add(@RequestBody Project project) {
         projectService.save(project);
+        // 生成项目钱包，保存钱包信息
+        // 比特币钱包
+        TokenMoney bitCoin = tokenMoneyService.findByENShortName(TokenMoneyEnum.BTC.name());
+        ProjectWallet bitCoinWallet = new ProjectWallet();
+        bitCoinWallet.setTokenMoneyId(bitCoin.getId());
+        bitCoinWallet.setProjectId(project.getId());
+        ECKey bitCoinKey = new ECKey();
+        final NetworkParameters netParams;
+
+        if(env.equals(CurrentConfigEnum.DEV)) {
+            netParams = TestNet3Params.get();
+        } else {
+            netParams = MainNetParams.get();
+        }
+
+        Address addressFromKey = bitCoinKey.toAddress(netParams);
+
+        bitCoinWallet.setWalletAddress(addressFromKey.toBase58());
+        bitCoinWallet.setWalletPrivateKey(bitCoinKey.getPrivateKeyAsHex());
+        projectWalletService.save(bitCoinWallet);
+
+        // 以太坊钱包
+        TokenMoney ethMoney = tokenMoneyService.findByENShortName(TokenMoneyEnum.ETH.name());
+        ProjectWallet ethWallet = new ProjectWallet();
+        ethWallet.setTokenMoneyId(ethMoney.getId());
+        ethWallet.setProjectId(project.getId());
+        org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
+        bitCoinWallet.setWalletAddress(Hex.toHexString(ethKey.getAddress()));
+        bitCoinWallet.setWalletPrivateKey(Hex.toHexString(ethKey.getPrivKeyBytes()));
+        projectWalletService.save(ethWallet);
+
         return Result.successResult(project);
     }
-
 
     /**
      * Update input token money of Project.
@@ -122,7 +160,6 @@ public class ProjectController {
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         Project project = projectService.findById(id);
-        // TODO 需要重写，目标代币为多个
         // 首先需要通过项目id查询token_details表数据
         List<TokenDetail> tokenDetails = tokenDetailService.findByProjectId(id);
         List<TokenDetail> inputTokenDetails = new ArrayList<>();
@@ -215,8 +252,7 @@ public class ProjectController {
     public Result findProjectsByState(@RequestParam(required = true,defaultValue = "0") Integer page,
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
        PageHelper.startPage(page, size);
-       List<Project> projectList = projectService.findAll();
-       List<Project> projects = new ArrayList<>();
+       List<Project> projectList = projectService.findOfficalProject();
        for(int i=0; i<projectList.size(); i++){
            Integer projectId = projectList.get(i).getId();
            // 根据项目ID查询项目钱包
@@ -246,7 +282,6 @@ public class ProjectController {
                }
                projectList.get(i).setInputTokenDetails(inputTokenDetails);
            }
-           projects.add(projectList.get(i));
        }
        PageInfo pageInfo = new PageInfo(projectList);
 

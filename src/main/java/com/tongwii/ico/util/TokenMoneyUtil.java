@@ -1,13 +1,14 @@
 package com.tongwii.ico.util;
 
+import com.tongwii.ico.service.TokenMoneyService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.wallet.Wallet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -32,34 +33,20 @@ public class TokenMoneyUtil {
     @Value("${storage.wallet.location}")
     private String walletPath;
 
+    @Autowired
+    private TokenMoneyService tokenMoneyService;
+
     /**
      * <pre>
-     *      生成比特币地址，{@link ECKey#getPrivKey}密钥被保存在地址表中
+     *      生成比特币地址Base85通用格式，{@link ECKey#getPrivKey}密钥被保存在地址表中
      * </pre>
      *
      * @return
      */
-    public String generaterBitCoinAddress() {
-        final NetworkParameters netParams;
-
-        if(env.equals(CurrentConfig.DEVELOPMENT)) {
-            netParams = TestNet3Params.get();
-        } else {
-            netParams = MainNetParams.get();
-        }
-
+    public ECKey generaterBitCoinAddress() {
         // create a new EC Key ...
         ECKey key = new ECKey();
-
-        // ... and look at the key pair
-        logger.info("We created key: {}", key);
-
-        // get valid Bitcoin address from public key
-        Address addressFromKey = key.toAddress(netParams);
-
-        logger.info("On the {} network, we can use this address: {}", env, addressFromKey);
-
-        return addressFromKey.toBase58();
+        return key;
     }
 
 
@@ -75,7 +62,7 @@ public class TokenMoneyUtil {
 
         final File walletFile;
 
-        if(env.equals(CurrentConfig.DEVELOPMENT.getConfig())) {
+        if(env.equals(CurrentConfigEnum.DEV)) {
             netParams = TestNet3Params.get();
         } else {
             netParams = MainNetParams.get();
@@ -106,7 +93,17 @@ public class TokenMoneyUtil {
         return wallet;
     }
 
-
+    /**
+     * <pre>
+     *      生成比特币地址，{@link ECKey#getPrivKey}密钥被保存在地址表中
+     * </pre>
+     *
+     * @return
+     */
+    public org.ethereum.crypto.ECKey generaterEthAddress() {
+        org.ethereum.crypto.ECKey key = new org.ethereum.crypto.ECKey();
+        return key;
+    }
 
 
 }

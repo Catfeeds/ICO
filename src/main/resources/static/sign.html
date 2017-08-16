@@ -407,11 +407,14 @@
                         $("#sign_name").text(result.data.userInfo.emailAccount);
                     }
                     else {
+                        sweetAlert(result.message);
+                        return;
                         console.log("注册失败!");
                     }
                 },
                 error: function (xhr, type, errerThrown) {
                     sweetAlert("网络异常,请稍候再试!");
+                    return;
                 }
             });
         });

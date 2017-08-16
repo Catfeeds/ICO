@@ -4,6 +4,8 @@ import com.tongwii.ico.core.Service;
 import com.tongwii.ico.model.TokenDetail;
 import com.tongwii.ico.model.User;
 
+import java.util.List;
+
 
 /**
  * Created by Zeral on 2017-08-02.
@@ -25,4 +27,10 @@ public interface ProjectService extends Service<Project> {
      * @param user the user
      */
     void updateCreateUser(Integer id, User user);
+
+    /**
+     * 查询所有状态非-1的project信息
+     * @return
+     */
+    List<Project> findOfficalProject();
 }

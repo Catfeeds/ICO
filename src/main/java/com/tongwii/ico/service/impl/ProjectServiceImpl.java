@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -42,5 +43,21 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
         Project project = findById(id);
         project.setCreateUserId(user.getId());
         update(project);
+    }
+
+    @Override
+    public List<Project> findOfficalProject() {
+        Project project = new Project();
+        project.setState(-1);
+        List<Project> projects = projectMapper.select(project);
+        List<Project> projectList = findAll();
+        for(int i=0; i<projectList.size(); i++){
+            for(int j=0; j<projects.size(); j++){
+                if(projectList.get(i).getId() == projects.get(j).getId()){
+                    projectList.remove(i);
+                }
+            }
+        }
+        return projectList;
     }
 }

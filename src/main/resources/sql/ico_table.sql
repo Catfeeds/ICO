@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/15 9:56:26                            */
+/* Created on:     2017/8/16 10:50:59                           */
 /*==============================================================*/
 
 
@@ -49,7 +49,7 @@ alter table Role comment '角色';
 /*==============================================================*/
 create table file
 (
-  id                   int(11) unsigned not null,
+  id                   int(11) unsigned not null auto_increment,
   file_url             text,
   project_id           int(11) unsigned,
   file_type            varchar(32),
@@ -63,13 +63,15 @@ alter table file comment '附件';
 /*==============================================================*/
 create table message
 (
-  id                   int(11) unsigned not null,
+  id                   int(11) unsigned not null auto_increment,
   title                varchar(120),
+  des                  varchar(255),
   content              text,
   state                tinyint,
   create_date          datetime,
   type                 tinyint,
   create_user_id       int(11) unsigned,
+  pictureUrl           varchar(255),
   primary key (id)
 );
 
@@ -104,7 +106,7 @@ create table project
   end_time             timestamp default CURRENT_TIMESTAMP,
   state                tinyint,
   third_endorsement    bool,
-  output_token_money_detail_id int(11) unsigned,
+  output_token_money_datail_id int(11) unsigned,
   part_person_number   int,
   des                  text,
   create_user_id       int(11) unsigned,
@@ -145,11 +147,11 @@ alter table project_user_wallet_relation comment '用户钱包项目钱包关系
 /*==============================================================*/
 create table project_wallet
 (
-  id                   int(11) unsigned not null,
+  id                   int(11) unsigned not null auto_increment,
   wallet_address       varchar(255),
-  wallet_private_key    varchar(255),
+  wallet_private_key   varchar(255),
+  token_money_id       int(11) unsigned,
   project_id           int(11) unsigned,
-  token_money_detail   int(11) unsigned,
   des                  text,
   primary key (id)
 );
@@ -161,7 +163,7 @@ alter table project_wallet comment '项目钱包';
 /*==============================================================*/
 create table token_detail
 (
-  id                   int(11) unsigned not null,
+  id                   int(11) unsigned not null auto_increment,
   token_money_id       int(11) unsigned,
   current_number       int,
   ico_number           int,
@@ -237,9 +239,9 @@ create table user_wallet
 (
   id                   int(11) unsigned not null auto_increment,
   token_money_id       int(11) unsigned,
+  user_id              int(11) unsigned,
   token_money_url      varchar(255) comment '需要加密',
   token_private_key    varchar(255),
-  user_id              int(11) unsigned,
   des                  text,
   state                tinyint,
   type                 tinyint comment '- 存入钱包
@@ -261,7 +263,7 @@ references user (id) on delete restrict on update restrict;
 alter table project add constraint fk_project_2_user_create_user_id foreign key (create_user_id)
 references user (id) on delete restrict on update restrict;
 
-alter table project add constraint fk_project_2_token_money_detail_intput_token_money_detail_id foreign key (output_token_money_detail_id)
+alter table project add constraint fk_project_2_token_money_detail_intput_token_money_detail_id foreign key (output_token_money_datail_id)
 references token_detail (id) on delete restrict on update restrict;
 
 alter table project_user_relation add constraint fk_user_project_2_user_user_id foreign key (project_id)
@@ -276,8 +278,8 @@ references user_wallet (id) on delete restrict on update restrict;
 alter table project_user_wallet_relation add constraint fk_user_project_wallet_2_project_wallet_project_wallet_id foreign key (project_wallet)
 references project_wallet (id) on delete restrict on update restrict;
 
-alter table project_wallet add constraint FK_Reference_16 foreign key (token_money_detail)
-references token_detail (id) on delete restrict on update restrict;
+alter table project_wallet add constraint fk_project_wallet_2_token_money_id foreign key (token_money_id)
+references token_money (id) on delete restrict on update restrict;
 
 alter table project_wallet add constraint FK_Reference_18 foreign key (project_id)
 references project (id) on delete restrict on update restrict;
@@ -298,5 +300,5 @@ alter table user_wallet add constraint fk_user_wallet_2_user_user_id foreign key
 references user (id) on delete restrict on update restrict;
 
 alter table user_wallet add constraint fk_user_wallet_2_token_money_detail_token_money_detail_id foreign key (token_money_id)
-references token_detail (id) on delete restrict on update restrict;
+references token_money (id) on delete restrict on update restrict;
 

@@ -10,6 +10,9 @@ public class Message {
 
     private String title;
 
+    @Column(name = "des")
+    private String des;
+
     private int state;
 
     @Column(name = "create_date")
@@ -22,6 +25,8 @@ public class Message {
 
     private String content;
 
+    @Column(name = "pictureUrl")
+    private String pictureUrl;
     /**
      * @return id
      */
@@ -48,6 +53,20 @@ public class Message {
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /**
+     * @return des
+     */
+    public String getDes() {
+        return des;
+    }
+
+    /**
+     * @param des
+     */
+    public void setDes(String des) {
+        this.des = des;
     }
 
     /**
@@ -118,5 +137,19 @@ public class Message {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    /**
+     * @return pictureUrl
+     */
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    /**
+     * @param pictureUrl
+     */
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }

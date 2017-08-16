@@ -148,7 +148,7 @@
 
                             <div class="col-md-4"><h3>项目情况</h3>
                                  <style>
-                                   y{
+                                   .y{
                                        font-size: 14px;
                                        font-family:"微软雅黑", "Open Sans", Arial, sans-serif;
                                        font-weight: 700;
@@ -429,7 +429,6 @@
                     $("#cornTotleCount").text(outTargetNumber+outNameEnShort);
                     $("#cnName1").text(outTargetNumber);
 
-
                     //接收货币
                     var jshb = "";
                     $.each(inputTokenDetails, function (i, item) {
@@ -448,14 +447,13 @@
                     $('#github').attr('href',githubUrl);
                     $('#cnWhitepaper').attr('href',tokenMoneyWhitepaperCnUrl);
                     $('#enWhitepaper').attr('href',tokenMoneyWhitepaperEnUrl);
-
-
                 }else{
                     location.href = "404.html";
                 }
             },
             error: function (xhr, type, errerThrown) {
                 sweetAlert("网络异常,请稍候再试");
+                return;
             }
         });
         jQuery('.flexslider').flexslider({

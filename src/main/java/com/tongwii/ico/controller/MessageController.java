@@ -57,24 +57,22 @@ public class MessageController {
     @GetMapping("/getOfficalMessage")
     public Result officalMessageList(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "1") Integer size) {
         PageHelper.startPage(page, size);
-        List<Message> list = messageService.findOfficalMessages();
-        //分离公告类信息与新闻信息
-        List<Message> notifyMessages = new ArrayList<>();
-        List<Message> newsMessages = new ArrayList<>();
         try {
-            for(int i=0; i<list.size(); i++){
-                if(list.get(i).getType() == NEWSMESSAGE){
-                    notifyMessages.add(list.get(i));
-                }
-                if(list.get(i).getType() == NEWSMESSAGE){
-                    newsMessages.add(list.get(i));
-                }
-            }
-            PageInfo pageInfo1 = new PageInfo(notifyMessages);
-            PageInfo pageInfo2 = new PageInfo(newsMessages);
-            return Result.successResult("获取信息成功!").add("newsMessages", pageInfo2).add("notifyMessages", pageInfo1);
+            // 获取新闻消息列表
+            List<Message> newsMessages = messageService.findMessagesByType(NEWSMESSAGE);
+            PageInfo pageInfo = new PageInfo(newsMessages);
+            return Result.successResult("获取信息成功!").add("newsMessages", pageInfo).add("notifyMessages", messageService.findMessagesByType(NOTIFYMESSAGE));
         }catch (Exception e){
             return Result.errorResult("获取信息失败!");
         }
+    }
+
+    // 获取新闻消息
+    @GetMapping("/getNewsMessage")
+    public Result getNewsMessage(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "1") Integer size) {
+        PageHelper.startPage(page, size);
+        List<Message> list = messageService.findMessagesByType(NEWSMESSAGE);
+        PageInfo pageInfo = new PageInfo(list);
+        return Result.successResult("获取信息成功!").add("newsMessages", pageInfo);
     }
 }

@@ -9,9 +9,11 @@ import java.util.List;
  * Created by Zeral on 2017-08-15.
  */
 public interface MessageService extends Service<Message> {
+
     /**
-     * 获取所有正常状态下的message信息
+     * 根据消息类型查找信息
+     * @param type
      * @return
      */
-    List<Message> findOfficalMessages();
+    List<Message> findMessagesByType(int type);
 }

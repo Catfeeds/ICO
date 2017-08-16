@@ -22,13 +22,14 @@ public class MessageServiceImpl extends AbstractService<Message> implements Mess
     private MessageMapper messageMapper;
 
     @Override
-    public List<Message> findOfficalMessages() {
+    public List<Message> findMessagesByType(int type) {
         Message message = new Message();
         message.setState(1);
-        List<Message> messages = messageMapper.select(message);
-        if(CollectionUtils.isEmpty(messages)){
+        message.setType(type);
+        List<Message> newsMessages = messageMapper.select(message);
+        if(CollectionUtils.isEmpty(newsMessages)){
             return null;
         }
-        return messages;
+        return newsMessages;
     }
 }

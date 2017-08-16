@@ -7,6 +7,7 @@ import com.tongwii.ico.core.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -25,6 +26,17 @@ public class TokenMoneyServiceImpl extends AbstractService<TokenMoney> implement
     public TokenMoney findByName(String ICOname) {
         TokenMoney tokenMoney = new TokenMoney();
         tokenMoney.setName(ICOname);
+        List<TokenMoney> tokenMoneys = tokenMoneyMapper.select(tokenMoney);
+        if(CollectionUtils.isEmpty(tokenMoneys)){
+            return null;
+        }
+        return tokenMoneys.get(0);
+    }
+
+    @Override
+    public TokenMoney findByENShortName(String enShort) {
+        TokenMoney tokenMoney = new TokenMoney();
+        tokenMoney.setNameEnShort(enShort);
         List<TokenMoney> tokenMoneys = tokenMoneyMapper.select(tokenMoney);
         if(CollectionUtils.isEmpty(tokenMoneys)){
             return null;

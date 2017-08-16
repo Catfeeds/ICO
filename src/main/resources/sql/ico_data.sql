@@ -34,8 +34,8 @@ INSERT INTO `project` VALUES (6, 'OmiseGo', 'OmiseGo代币', '2017-08-03 16:04:3
 -- Records of token_money
 -- ----------------------------
 
-INSERT INTO `token_money` VALUES (1, '云币', 'ETC', NULL, NULL, NULL, NULL);
-INSERT INTO `token_money` VALUES (2, '比特币', 'BTC', NULL, NULL, NULL, NULL);
+INSERT INTO `token_money` VALUES (1, '比特币', 'BTC', NULL, NULL, NULL, NULL);
+INSERT INTO `token_money` VALUES (2, '以太坊', 'ETH', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Records of token_detail
@@ -48,5 +48,12 @@ INSERT INTO `token_detail` VALUES (2, 2, NULL, 20, 50, 20, NULL, NULL, 1);
 -- Records of user_wallet
 -- ----------------------------
 
-INSERT INTO `user_wallet` VALUES (3, 1, NULL, NULL, 2, '比特币钱包', 1, NULL);
-INSERT INTO `user_wallet` VALUES (4, 2, NULL, NULL, 2, '云币钱包', 1, NULL);
+INSERT INTO `user_wallet` VALUES (1, 1, 1, NULL, NULL, '比特币钱包', 1, NULL);
+INSERT INTO `user_wallet` VALUES (2, 2, 2, NULL, NULL, '云币钱包', 1, NULL);
+
+INSERT INTO `message` VALUES ('1', '同业首次换币合作Primas和InkChain携手布局内容行业', '<p>据区块链铅笔（chainB.com）了解，目前正在进行ICO的Primas项目将与InkChain项目公平互换token， 项目方没有透露具体互换的token数量，但表示双方将以社区的方式来共建生态。 Primas与InkChain互换互换token，是区块链圈内的同业项目第一次换币合作，也是一种心态、格局和视野的体现。区块链铅笔获悉，这一业内的首次合作是由Bitshares联合创始人、中国规模最大的区块链投资基金“分布式资本“合伙人沈波与知名投资人薛蛮子所牵线促成。</p>', '<p>\r\n                                                                据区块链铅笔（chainB.com）了解，目前正在进行ICO的Primas项目将与InkChain项目公平互换token， 项目方没有透露具体互换的token数量，\r\n                                                                但表示双方将以社区的方式来共建生态。 Primas与InkChain互换互换token，是区块链圈内的同业项目第一次换币合作，也是一种心态、格局和视野的体现。\r\n                                                                区块链铅笔获悉，这一业内的首次合作是由Bitshares联合创始人、中国规模最大的区块链投资基金“分布式资本“合伙人沈波与知名投资人薛蛮子所牵线促成。</p>', '1', '2017-08-02 14:37:51', '1', '1', null);
+INSERT INTO `message` VALUES ('2', 'DELPHY白皮书解读: 预测市场如何保证准确性，打破专家预测垄断', '<p>预测市场，又被称为“信息市场”、“观点市场”和“事件市场”，通过参与者交易特定事件发生概率的合约，形成一个市场预期来预测未来。 近日， 国内首个基于区块链的预测市场Delphy发布了自己的白皮书，旨在打造中国的Augur、Gnosis(此二者都是以太坊区块链上的明星应用，排名加密货币市值前列)，此举一石激起千层浪。</p>', '<p>\r\n                                                                预测市场，又被称为“信息市场”、“观点市场”和“事件市场”，通过参与者交易特定事件发生概率的合约，形成一个市场预期来预测未来。\r\n                                                                近日， 国内首个基于区块链的预测市场Delphy发布了自己的白皮书，旨在打造中国的Augur、Gnosis(此二者都是以太坊区块链上的明星应用，\r\n                                                                排名加密货币市值前列)，此举一石激起千层浪。</p>', '1', '2017-08-11 14:40:20', '1', '1', null);
+INSERT INTO `message` VALUES ('3', '普华永道携手ICOAGE开发ICO项目评估体系', '<p>谈起区块链，很多人是通过ICO了解并知道其背后的项目技术；“ICO”也逐渐成为区块链上的主要融资渠道，根据Coindesk发布的2016年区块链市场调查，2016年区块链项目通过ICO的方式总共筹集了2.36亿美元，接近区块链行业风险投资总额的一半。而在2017年5月，数据显示ICO项目筹集的资金已经超过了风险投资，增长速度之快令人惊讶。 </p>', '<p>\r\n                                                                谈起区块链，很多人是通过ICO了解并知道其背后的项目技术；“ICO”也逐渐成为区块链上的主要融资渠道，\r\n                                                                根据Coindesk发布的2016年区块链市场调查，2016年区块链项目通过ICO的方式总共筹集了2.36亿美元，\r\n                                                                接近区块链行业风险投资总额的一半。而在2017年5月，数据显示ICO项目筹集的资金已经超过了风险投资，增长速度之快令人惊讶。 </p>', '1', '2017-08-14 14:41:23', '1', '1', null);
+INSERT INTO `message` VALUES ('4', '2017年7月17日起启用全新充值地址，IC0.TT系统全面升级完成', '<p>感谢各位用户的耐心等待和配合，IC0.TT于7月17日开始的全面系统升级已完成。现重新开放充值、投资业务。我们为每个用户提供了全新的BTC和ETH充值地址。请用户在进行充值业务时，务必使用ICO365网站“资金充值”面板所显示的新地址，以确保充值及时到账。 如您发现充值错误，不小心充到了老地址上，请不要慌张，请点击“帮助中心”右上角的“提交工单”向我们反馈问题，告知充值的地址、时间。并选择“充值没到账”。我们会统一处理，并直接返还到您的账户。您的资产绝对安全，请放心。 </p>', '<p>\r\n                                                                感谢各位用户的耐心等待和配合，IC0.TT于7月17日开始的全面系统升级已完成。现重新开放充值、投资业务。我们为每个用户提供了全新的BTC和ETH充值地址。请用户在进行充值业务时，务必使用ICO365网站“资金充值”面板所显示的新地址，以确保充值及时到账。\r\n                                                                如您发现充值错误，不小心充到了老地址上，请不要慌张，请点击“帮助中心”右上角的“提交工单”向我们反馈问题，告知充值的地址、时间。并选择“充值没到账”。我们会统一处理，并直接返还到您的账户。\r\n                                                                您的资产绝对安全，请放心。 </p>', '1', '2017-08-12 14:42:50', '1', '1', null);
+INSERT INTO `message` VALUES ('5', null, null, '同业首次换币合作Primas和InkChain携手布局内容行业', '1', null, '2', '1', null);
+INSERT INTO `message` VALUES ('6', null, null, 'DELPHY白皮书解读: 预测市场如何保证准确性，打破专家预测垄断', '1', null, '2', '1', null);
