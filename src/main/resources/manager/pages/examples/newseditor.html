@@ -109,273 +109,129 @@
                         <li><a href="../examples/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
                     </ul>
                 </li>
+
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-edit"></i> <span>编辑器</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../examples/newseditor.html"><i class="fa fa-circle-o"></i>新闻/公告编辑</a></li>
+                    </ul>
+                </li>
             </ul>
         </section>
-        <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
+
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                新闻编辑
-                <small>最潮流的编辑框</small>
+                新闻/公告编辑
+                <small>新闻、公告每一天在这里发生 </small>
             </h1>
         </section>
-
-        <!-- Main content -->
         <section class="content">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header">
-                            <h3 class="box-title">CK编辑器
-                                <small>功能最强大的编辑器</small>
-                            </h3>
-                            <!-- tools box -->
-                            <div class="pull-right box-tools">
-                                <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                    <i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
-                                    <i class="fa fa-times"></i></button>
-                            </div>
-                            <!-- /. tools -->
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body pad">
-                            <form>
-                    <textarea id="editor1" name="editor1" rows="10" cols="80">
-                                            This is my textarea to be replaced with CKEditor.
-                    </textarea>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /.box -->
+                <div class="col-md-10">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#set" data-toggle="tab">新闻编辑</a></li>
+                            <li><a href="#activity" data-toggle="tab">公告编辑</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="set">
+                                <form class="form-horizontal">
+                                    <div class="box box-info">
+                                        <div class="box-header">
+                                            <h3 class="box-title">新闻制造从这里开始
+                                                <small>时刻关注新闻 </small>
+                                            </h3>
+                                            <!-- tools box -->
+                                            <div class="pull-right box-tools">
+                                                <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                                    <i class="fa fa-minus"></i></button>
+                                                <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
+                                                    <i class="fa fa-times"></i></button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">新闻标题</label>
+                                            <div class="col-sm-4" style="margin-left: 10px">
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                       placeholder="新闻标题不超过15个字">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">新闻描述</label>
+                                            <div class="col-sm-10" style="margin-left: 10px">
+                                                <textarea type="text" id="nameCn" name="chinesename" style="width:98%;height:30%"
+                                                          placeholder="简单的对这则新闻做一个概括"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">上传图片</label>
+                                            <div class="col-sm-4" style="margin-left: 10px">
+                                                <input name="file" class="layui-upload-file" type="file">
 
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Bootstrap 编辑器
-                                <small>简单 便捷</small>
-                            </h3>
-                            <!-- tools box -->
-                            <div class="pull-right box-tools">
-                                <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                    <i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
-                                    <i class="fa fa-times"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">编辑详情</label>
+                                            <div class="col-md-10">
+                                                <div class="box-body pad">
+                                                    <form>
+                                              <textarea id="editor1" name="editor1" >
+                                                  This is my textarea to be replaced with CKEditor.
+                                              </textarea>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-5 col-sm-10">
+                                                <button type="submit" class="btn btn-danger">提交</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
                             </div>
-                            <!-- /. tools -->
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body pad">
-                            <form>
-                                <textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                            </form>
+                            <div class="tab-pane" id="activity">
+                                <form class="form-horizontal">
+                                    <div class="box">
+                                        <div class="box-header">
+                                            <h3 class="box-title">公告编辑器
+                                                <small>简单 便捷</small>
+                                            </h3>
+                                            <div class="pull-right box-tools">
+                                                <button type="button" class="btn btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                                    <i class="fa fa-minus"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
+                                                    <i class="fa fa-times"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="box-body pad">
+                                            <form>
+                                               <textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                            </form>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-5 col-sm-10">
+                                                <button type="submit" class="btn btn-danger">提交</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- /.col-->
             </div>
-            <!-- ./row -->
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 2.3.8
-        </div>
-        <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-        reserved.
-    </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-        </ul>
-        <!-- Tab panes -->
-
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Create the tabs -->
-            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <!-- Home tab content -->
-                <div class="tab-pane" id="control-sidebar-home-tab">
-                    <h3 class="control-sidebar-heading">最近活动</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">老吴的生日</h4>
-
-                                    <p>在6月24日将是21岁</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">老王收益已更新</h4>
-
-                                    <p>新的号码是： +1(800)555-1234</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">加入邮箱列表</h4>
-
-                                    <p>nora@example.com</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading"> 25个任务需要执行</h4>
-
-                                    <p>执行时间5秒</p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.control-sidebar-menu -->
-
-                    <h3 class="control-sidebar-heading">任务进程</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    当前发行货币众筹
-                                    <span class="label label-danger pull-right">70%</span>
-                                </h4>
-
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    确保更新
-                                    <span class="label label-success pull-right">95%</span>
-                                </h4>
-
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    Laravel积分
-                                    <span class="label label-warning pull-right">50%</span>
-                                </h4>
-
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.control-sidebar-menu -->
-
-                </div>
-                <!-- /.tab-pane -->
-                <!-- Stats tab content -->
-                <div class="tab-pane" id="control-sidebar-stats-tab">统计表的内容</div>
-                <!-- /.tab-pane -->
-                <!-- Settings tab content -->
-                <div class="tab-pane" id="control-sidebar-settings-tab">
-                    <form method="post">
-                        <h3 class="control-sidebar-heading">设置</h3>
-
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                使用报告
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-
-                            <p>
-                                关于设置的选择
-                            </p>
-                        </div>
-                        <!-- /.form-group -->
-
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                允许邮件重定位
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                            <p>
-                                其他选项集可用
-                            </p>
-                        </div>
-                        <!-- /.form-group -->
-
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                在帖子中显示作者姓名
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-
-                            <p>
-                                允许用户在博客帖子中显示自己的名字
-                            </p>
-                        </div>
-                        <!-- /.form-group -->
-
-                        <h3 class="control-sidebar-heading">聊天设置</h3>
-
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                显示在线
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                        </div>
-                        <!-- /.form-group -->
-
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                关闭提醒
-                                <input type="checkbox" class="pull-right">
-                            </label>
-                        </div>
-                        <!-- /.form-group -->
-
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                删除记录
-                                <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                            </label>
-                        </div>
-                        <!-- /.form-group -->
-                    </form>
-                </div>
-                <!-- /.tab-pane -->
-            </div>
-        </aside>
-    </aside>
 </div>
 <!-- ./wrapper -->
 

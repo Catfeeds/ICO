@@ -368,8 +368,10 @@
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
             if(app.getUserInfo().validateUser){
-                $("#trueNamelable").text(app.getUserInfo().realName).css('display', 'block');
-                $("#identityCardlable").text(app.getUserInfo().idCard).css('display','block');
+                var name = app.getUserInfo().realName.substr(0,1)+"**";
+                var idcard = app.getUserInfo().idCard.substr(0,4)+"****"+app.getUserInfo().idCard.substr(app.getUserInfo().idCard.length-4);
+                $("#trueNamelable").text(name).css('display', 'block');
+                $("#identityCardlable").text(idcard).css('display','block');
                 $("#truename").css('display', 'none');
                 $("#identitycard").css('display', 'none');
                 $("#submitRealInfo").css('display', 'none');

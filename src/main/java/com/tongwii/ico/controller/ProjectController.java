@@ -82,7 +82,6 @@ public class ProjectController {
         return Result.successResult(project);
     }
 
-
     /**
      * Update input token money of Project.
      *
@@ -253,8 +252,7 @@ public class ProjectController {
     public Result findProjectsByState(@RequestParam(required = true,defaultValue = "0") Integer page,
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
        PageHelper.startPage(page, size);
-       List<Project> projectList = projectService.findAll();
-       List<Project> projects = new ArrayList<>();
+       List<Project> projectList = projectService.findOfficalProject();
        for(int i=0; i<projectList.size(); i++){
            Integer projectId = projectList.get(i).getId();
            // 根据项目ID查询项目钱包
@@ -284,7 +282,6 @@ public class ProjectController {
                }
                projectList.get(i).setInputTokenDetails(inputTokenDetails);
            }
-           projects.add(projectList.get(i));
        }
        PageInfo pageInfo = new PageInfo(projectList);
 

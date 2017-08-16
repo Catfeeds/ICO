@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="../../css/sweet-alert.css">
 
 
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -114,6 +113,15 @@
                         <li><a href="../examples/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
                     </ul>
                 </li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-edit"></i> <span>编辑器</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../examples/newseditor.html"><i class="fa fa-circle-o"></i>新闻/公告编辑</a></li>
+                    </ul>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -133,7 +141,7 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" id="people">
             <div class="row">
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
@@ -159,7 +167,7 @@
                                         <label class="col-sm-2 control-label">手机号</label>
 
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="number" placeholder="请输入手机号">
+                                            <input type="text" class="form-control" id="userPhone" placeholder="请输入手机号">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -229,11 +237,11 @@
                                                <textarea class="form-control" id="prjcontent" placeholder=""></textarea>
                                            </div>
                                        </div>
-                                       <div class="form-group">
-                                           <div class="col-sm-offset-2 col-sm-10">
-                                               <button type="button" id="prjadd" class="btn btn-danger">保存</button>
-                                           </div>
-                                       </div>
+                                       <!--<div class="form-group">-->
+                                           <!--<div class="col-sm-offset-2 col-sm-10">-->
+                                               <!--<button type="button" id="prjadd" class="btn btn-danger">保存</button>-->
+                                           <!--</div>-->
+                                       <!--</div>-->
                                    </form>
                                </div>
                            </div>
@@ -253,15 +261,15 @@
                                <div class="active tab-pane" id="activity">
                                    <form class="form-horizontal">
                                        <div class="form-group">
-                                           <label  class="col-sm-2 control-label">代币种类</label>
+                                           <label  class="col-sm-2 control-label">接受币种</label>
                                            <div class="col-sm-2">
-                                               <select name="select" id="selected_id" style="width: 100px;" class="form-control">
+                                               <select name="select" id="jieshouMoney" style="width: 100px;" class="form-control">
 
                                                </select>
                                            </div>
                                        </div>
                                        <div class="form-group">
-                                           <label class="col-sm-2 control-label">最低发布量</label>
+                                           <label class="col-sm-2 control-label">最低目标</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
                                                    <input class="form-control" type="number" id="minnumber"/>
@@ -269,15 +277,7 @@
                                            </div>
                                        </div>
                                        <div class="form-group">
-                                           <label class="col-sm-2 control-label">目标发布量</label>
-                                           <div class="col-sm-2">
-                                               <div class="mui-numbox">
-                                                   <input class="form-control" type="number" id="mbnumber"/>
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="form-group">
-                                           <label class="col-sm-2 control-label">代币总量</label>
+                                           <label class="col-sm-2 control-label">最高目标</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
                                                    <input class="form-control" type="number" id="maxnumber"/>
@@ -287,20 +287,21 @@
                                        <div class="form-group">
                                            <label class="col-sm-2 control-label">中文白皮书链接</label>
                                            <div class="col-sm-2">
-                                                   <input class="mui-input-numbox" type="file" id="znbook"/>
+                                                   <input class="form-control" type="url"  id="znbook"/>
                                            </div>
                                        </div>
                                        <div class="form-group">
                                            <label class="col-sm-2 control-label">英文白皮书链接</label>
                                            <div class="col-sm-2">
-                                               <input class="mui-input-numbox" type="file" id="enbook"/>
+                                               <input class="form-control" type="url" id="enbook"/>
+
                                            </div>
                                        </div>
-                                       <div class="form-group">
-                                           <div class="col-sm-offset-2 col-sm-10">
-                                               <button type="button" class="btn btn-danger" id="bcMoneyType">保存</button>
-                                           </div>
-                                       </div>
+                                       <!--<div class="form-group">-->
+                                           <!--<div class="col-sm-offset-2 col-sm-10">-->
+                                               <!--<input type="button" class="btn btn-danger" id="bcMoneyType" value="保存"/>-->
+                                           <!--</div>-->
+                                       <!--</div>-->
                                    </form>
                                </div>
                            </div>
@@ -323,9 +324,9 @@
                                <div class="active tab-pane" id="time">
                                    <form class="form-horizontal">
                                        <div class="form-group">
-                                           <label class="col-sm-2 control-label">发布类型</label>
+                                           <label class="col-sm-2 control-label">发布币种</label>
                                            <div class="col-sm-3">
-                                               <select name="select" id="select_id" style="width: 100px;" class="form-control">
+                                               <select name="select" id="fabuMoney" style="width: 100px;" class="form-control">
                                                </select>
                                            </div>
                                        </div>
@@ -333,25 +334,25 @@
                                            <label class="col-sm-2 control-label">发布个数</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="form-control" type="number" id="fxnumber"/>
+                                                   <input class="form-control" type="number" id="fbnumber"/>
                                                </div>
                                            </div>
                                        </div>
                                        <div class="form-group">
                                            <label class="col-sm-2 control-label">中文白皮书链接</label>
                                            <div class="col-sm-2">
-                                               <input class="mui-input-numbox" type="file" id="zhbook1"/>
+                                               <input class="form-control" type="url" id="znbook1"/>
                                            </div>
                                        </div>
                                        <div class="form-group">
                                            <label class="col-sm-2 control-label">英文白皮书链接</label>
                                            <div class="col-sm-2">
-                                               <input class="mui-input-numbox" type="file" id="enbook1"/>
+                                               <input class="form-control" type="url" id="enbook1"/>
                                            </div>
                                        </div>
                                        <div class="form-group">
                                            <div class="col-sm-offset-2 col-sm-10">
-                                               <button type="button" class="btn btn-danger" id="bcMoneyType1">保存</button>
+                                               <button type="button" class="btn btn-danger" id="bcPro">发起项目</button>
                                            </div>
                                        </div>
                                    </form>
@@ -359,8 +360,13 @@
                            </div>
                        </div>
                    </div>
+
                </div>
            </section>
+
+       </div>
+        <!-- /.col-->
+    </div>
            <!-- /.tab-pane -->
        </div>
     </div>
@@ -374,9 +380,6 @@
         <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
         reserved.
     </footer>
-
-
-
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -575,9 +578,9 @@
 <script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="../../scripts/sweet-alert.js"></script>
 <script src="../../scripts/app.js"></script>
-<script src="../../scripts/ajaxfileupload.js"></script>
 
 <script>
+
     layui.use('laydate', function(){
         var laydate = layui.laydate;
         var start = {
@@ -617,7 +620,11 @@
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
                 $.each(result.data, function (i, item) {
-                    $("#selected_id").append(
+                    $("#jieshouMoney").append(
+                        "<option value='" + item.id + "'>" + item.name
+                        + "</option>"
+                    );
+                    $("#fabuMoney").append(
                         "<option value='" + item.id + "'>" + item.name
                         + "</option>"
                     );
@@ -649,6 +656,7 @@
             $.ajax({
                 url: "/user/findByIdCard/" + userCard,
                 type: 'GET',
+                headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
                     if (result.code == 200) {
                         if(result.data == null) {
@@ -659,10 +667,7 @@
                             $("#ceshi").append(
                                 "<input value='" + userId + "' id='userId' type='hidden'/>"
                             );
-                            $("#userName").attr("disabled",true);
-                            $("#userPhone").attr("disabled",true);
-                            $("#userCard").attr("disabled",true);
-                            $("#bcUserInfo").css("display","none");
+                            $("#people").css("display","none");
                             $("#ceshi").css("display","inline");
                         }
                     }
@@ -676,130 +681,166 @@
             });
         });
 
-        $("#prjadd").click(function () {
-            var prjname = $("#prjname").val();
-            var prjopentime = $("#prjopentime").val();
-            var prjclosetime = $("#prjclosetime").val();
-            var prjproduce = $("#prjproduce").val();
-            var prjcontent = $("#prjcontent").val();
-//            if (prjname.length <= 0) {
-//                sweetAlert("项目名称不能为空！");
-//                return;
-//            }
-//            if(prjopentime.length <= 0) {
-//                sweetAlert("开始时间不能为空！");
-//                return;
-//            }
-//            if(prjclosetime.length <= 0) {
-//                sweetAlert("终止时间不能为空！");
-//                return;
-//            }
-//            var flag = $("#prjagree").is(':checked');
-//            if(flag == false) {
-//                sweetAlert("请详细阅读协议并接受！");
-//                return;
-//            }
-            var id = $("#userId").val();
-            //需要获取用户的id，为项目创建者，暂时没有登录，所以没有
-            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id};
+        $("#bcPro").click(function () {
+            //发行代币字段
+            var moneyTypeId = $("#fabuMoney option:selected").val();
+            var fbnumber = $("#fbnumber").val();
+            var znbook1  = $("#znbook1").val();
+            var enbook1 = $("#enbook1").val();
+            var jsmoneyJson = {targetNumber: fbnumber,tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook1, tokenMoneyWhitepaperEnUrl: enbook1};
             $.ajax({
-                url: "/project/add",
+                url : "/token/detail", //后台接口
                 type: 'POST',
                 timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(prjjson),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    if (result.code == 200) {
-                        sweetAlert("项目添加成功！");
-                        $("#ceshi").append(
-                            "<input value='" + result.data.id + "' id='prjId' type='hidden'/>"
-                        );
-                        $("#prjname").attr("disabled",true);
-                        $("#prjopentime").attr("disabled",true);
-                        $("#prjclosetime").attr("disabled",true);
-                        $("#prjproduce").attr("disabled",true);
-                        $("#prjcontent").attr("disabled",true);
-                        $("#prjagree").checked = true;
-                        $("#prjagree").attr("disabled",true);
-                        $("#prjadd").css("display","none");
-                    }
-                    else {
-                        sweetAlert("项目添加失败!");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    sweetAlert("网络异常,请稍候再试!");
-                }
-            });
-        });
-        $("#bcMoneyType").click(function() {
-            var moneyTypeId = $("#select_id option:selected").val();
-            var minnumber = $("#minnumber").val();
-            var mbnumber = $("#mbnumber").val();
-            var maxnumber = $("#maxnumber").val();
-            var znbook = $("#znbook").val();
-            var enbook = $("#enbook").val();
-            var prjId = $("prjId").val();
-//            if (minnumber.length <= 0) {
-//                sweetAlert("请填写最低发行量！");
-//                return;
-//            }
-//            if(mbnumber.length <= 0) {
-//                sweetAlert("请填写目标发行量！");
-//                return;
-//            }
-//            if(maxnumber.length <= 0) {
-//                sweetAlert("请填写代币总量！");
-//                return;
-//            }
-            if(Utils.isEmpty(znbook)){
-                sweetAlert("请选择中文白皮书文件!");
-                return ;
-            }
-            if(Utils.isEmpty(enbook)){
-                sweetAlert("请选择英文白皮书文件!");
-                return ;
-            }
-//            if(!value.match(/.jpg|.jpeg|.gif|.png|.bmp/i)){
-//                sweetAlert("文件格式错误!");
-//                return ;
-//            }
-
-            var moneyJson = {minTargetNumber: minnumber, targetNumber: mbnumber, icoNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId};
-            $.ajaxFileUpload({
-                url : "", //后台接口
-                secureuri : false, //是否启动安全提交，默认为false
-                //fileElementId:'uploadfile1',//原使用方法
-                fileElementId : ['znbook','enbook'],//现使用方法
-                data: JSON.stringify(moneyJson),
+                data: JSON.stringify(jsmoneyJson),
                 dataType: 'json',//服务器返回json格式数据
                 contentType: "application/json; charset=utf-8",
                 success : function(result) {
-                    ajaxLoadEnd();
                     if (result.code == 200) {
-                        sweetAlert("导入成功！");
-                        $("#select_id option:selected").attr("disabled",true);
-                        $("#minnumber").attr("disabled",true);
-                        $("#mbnumber").attr("disabled",true);
-                        $("#maxnumber").attr("disabled",true);
-                        $("#znbook").attr("disabled",true);
-                        $("#enbook").attr("disabled",true);
-                        $("#bcMoneyType").css("display","none")
+                        $("#ceshi").append(
+                            "<input value='" + result.data.id + "' id='outputTokenMoneyDetailId' type='hidden'/>"
+                        );
                     } else {
                         sweetAlert("导入失败！");
                     }
                 },
                 error : function(data, status, e)
                 {
-                    ajaxLoadEnd();
                     sweetAlert("导入失败，网络异常或表单数据错误！");
                 }
             });
+//            //项目的字段
+//            var prjname = $("#prjname").val();
+//            var prjopentime = $("#prjopentime").val();
+//            var prjclosetime = $("#prjclosetime").val();
+//            var prjproduce = $("#prjproduce").val();
+//            var prjcontent = $("#prjcontent").val();
+//            var id = $("#userId").val();
+//            var outputTokenMoneyDetailId =$("#outputTokenMoneyDetailId").val();
+//            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId};
+//            $.ajax({
+//                url: "/project/add",
+//                type: 'POST',
+//                timeout: 10000,//超时时间设置为10秒；
+//                data: JSON.stringify(prjjson),
+//                dataType: 'json',//服务器返回json格式数据
+//                contentType: "application/json; charset=utf-8",
+//                success: function (result) {
+//                    if (result.code == 200) {
+//                        sweetAlert("项目添加成功！");
+//                        $("#ceshi").append(
+//                            "<input value='" + result.data.id + "' id='prjId' type='hidden'/>"
+//                        );
+//                    }
+//                    else {
+//                        sweetAlert("项目添加失败!");
+//                    }
+//                },
+//                error: function (xhr, type, errerThrown) {
+//                    sweetAlert("网络异常,请稍候再试!");
+//                }
+//            });
+//
+//            //接受代币的字段
+//            var moneyTypeId = $("#jieshouMoney option:selected").val();
+//            var minnumber = $("#minnumber").val();
+//            var maxnumber = $("#maxnumber").val();
+//            var znbook  = $("#znbook").val();
+//            var enbook = $("#enbook").val();
+//            var prjId = $("prjId").val();
+//           var jsmoneyJson = {minTargetNumber: minnumber, targetNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook, tokenMoneyWhitepaperEnUrl: enbook};
+//            $.ajax({
+//                url : "/token/detai", //后台接口
+//                data: JSON.stringify(jsmoneyJson),
+//                dataType: 'json',//服务器返回json格式数据
+//                contentType: "application/json; charset=utf-8",
+//                success : function(result) {
+//                    if (result.code == 200) {
+//                            location.href = "../tables/data.html";
+//                    } else {
+//                        sweetAlert("导入失败！");
+//                    }
+//                },
+//                error : function(data, status, e)
+//                {
+//                    sweetAlert("导入失败，网络异常或表单数据错误！");
+//                }
+//            });
         });
+//        $("#prjadd").click(function () {
+//            var prjname = $("#prjname").val();
+//            var prjopentime = $("#prjopentime").val();
+//            var prjclosetime = $("#prjclosetime").val();
+//            var prjproduce = $("#prjproduce").val();
+//            var prjcontent = $("#prjcontent").val();
+//            var id = $("#userId").val();
+//            //需要获取用户的id，为项目创建者，暂时没有登录，所以没有
+//            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id};
+//            $.ajax({
+//                url: "/project/add",
+//                type: 'POST',
+//                timeout: 10000,//超时时间设置为10秒；
+//                data: JSON.stringify(prjjson),
+//                dataType: 'json',//服务器返回json格式数据
+//                contentType: "application/json; charset=utf-8",
+//                success: function (result) {
+//                    if (result.code == 200) {
+//                        sweetAlert("项目添加成功！");
+//                        $("#ceshi").append(
+//                            "<input value='" + result.data.id + "' id='prjId' type='hidden'/>"
+//                        );
+//                        $("#prjname").attr("disabled",true);
+//                        $("#prjopentime").attr("disabled",true);
+//                        $("#prjclosetime").attr("disabled",true);
+//                        $("#prjproduce").attr("disabled",true);
+//                        $("#prjcontent").attr("disabled",true);
+//                        $("#prjadd").css("display","none");
+//                    }
+//                    else {
+//                        sweetAlert("项目添加失败!");
+//                    }
+//                },
+//                error: function (xhr, type, errerThrown) {
+//                    sweetAlert("网络异常,请稍候再试!");
+//                }
+//            });
+//        });
+//        $("#bcMoneyType").click(function() {
+//            var moneyTypeId = $("#select_id option:selected").val();
+//            var minnumber = $("#minnumber").val();
+//            var mbnumber = $("#mbnumber").val();
+//            var maxnumber = $("#maxnumber").val();
+//            var prjId = $("prjId").val();
+//            var znbook  = $("#znbook").val();
+//            var enbook = $("#enbook").val();
+//
+//            var moneyJson = {minTargetNumber: minnumber, targetNumber: mbnumber, icoNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId};
+//            $.ajax({
+//                url : "/token/money", //后台接口
+//                data: JSON.stringify(moneyJson),
+//                dataType: 'json',//服务器返回json格式数据
+//                contentType: "application/json; charset=utf-8",
+//                success : function(result) {
+//                    if (result.code == 200) {
+//                        sweetAlert("导入成功！");
+//                        $("#select_id option:selected").attr("disabled",true);
+//                        $("#minnumber").attr("disabled",true);
+//                        $("#mbnumber").attr("disabled",true);
+//                        $("#maxnumber").attr("disabled",true);
+//                        $("#znbook").attr("disabled",true);
+//                        $("#enbook").attr("disabled",true);
+//                        $("#bcMoneyType").css("display","none")
+//                    } else {
+//                        sweetAlert("导入失败！");
+//                    }
+//                },
+//                error : function(data, status, e)
+//                {
+//                    sweetAlert("导入失败，网络异常或表单数据错误！");
+//                }
+//            });
+//        });
     });
-
-
 </script>
 
 </body>
