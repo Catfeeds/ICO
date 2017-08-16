@@ -20,33 +20,12 @@ import java.util.List;
 public class MessageServiceImpl extends AbstractService<Message> implements MessageService {
     @Autowired
     private MessageMapper messageMapper;
-    private static int NOTIFYMESSAGE = 2;
-    private static int NEWSMESSAGE = 1;
-
-    @Override
-    public List<Message> findOfficalMessages() {
-        Message message = new Message();
-        message.setState(1);
-        message.setType(NOTIFYMESSAGE);
-        List<Message> notifyMessages = messageMapper.select(message);
-        message.setType(NEWSMESSAGE);
-        List<Message> newsMessages = messageMapper.select(message);
-        if(!CollectionUtils.isEmpty(notifyMessages)){
-            for(int i=0; i<notifyMessages.size(); i++){
-                newsMessages.add(notifyMessages.get(i));
-            }
-        }
-        if(CollectionUtils.isEmpty(newsMessages)){
-            return null;
-        }
-        return newsMessages;
-    }
 
     @Override
     public List<Message> findMessagesByType(int type) {
         Message message = new Message();
         message.setState(1);
-        message.setType(NEWSMESSAGE);
+        message.setType(type);
         List<Message> newsMessages = messageMapper.select(message);
         if(CollectionUtils.isEmpty(newsMessages)){
             return null;
