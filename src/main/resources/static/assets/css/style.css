@@ -700,7 +700,7 @@ ellipsis
 /* Footer Widget */
 #footer-sec .widget ul li{
 	float:left;
-	width:50%;
+	width:70%;
 	padding:0 12px 0 0;
 	box-sizing:border-box;
 }

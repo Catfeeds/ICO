@@ -18,6 +18,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -73,7 +74,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                     result = Result.unavailable("接口 [" + request.getRequestURI() + "] 不存在");
                 } else if (e instanceof ServletException) {
                     result = Result.failResult(e.getMessage());
-                } else if (e instanceof AuthenticationException || e instanceof ForbiddenTargetException) {
+                } else if (e instanceof AuthenticationException || e instanceof ForbiddenTargetException || e instanceof AccessDeniedException) {
                     result = Result.unauthorized("未经授权:身份验证令牌丢失或无效。");
                 } else if (e instanceof SQLException || e instanceof DataAccessException) {
                     result = Result.errorResult( "服务器内部错误");
