@@ -408,32 +408,90 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
-                    var lastPage = result.data.lastPage;
-                    $("#pagination li").remove();
-                    if (page > 1) {
-                        var minpage = page - 1;
-                        $("#pagination").append("<li><a onclick='pageProject(" + minpage + ")'>&laquo;</a></li>");
-                    } else {
+                    var lastPage = result.data.pages;
+                    $('#pagination li').remove();
+                    if(page>1){
+                        var minpage = page-1;
+                        $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>&laquo;</a></li>");
+                    }else{
                         $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
                     }
-                    for (var i = 1; i < lastPage; i++) {
-                        if (i == page) {
-                            $("#pagination").append("<li class='active'><a onclick='pageProject(" + i + ")'>" + i + "</a></li>");
-                        } else {
-                            $("#pagination").append("<li><a onclick='pageProject(" + i + ")'>" + i + "</a></li>");
+                    if(lastPage>10){
+                        if(page<10){
+                            for(var i = 1;i<=10;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }
+                            }
+                            if(page<lastPage){
+                                var nextpage = page+1;
+                                $("#pagination").append("<li><a onclick='pageProject("+11+")'>...</a></li>");
+                            }
+                        }else {
+                            var i  = page - 4;
+                            var j  = (page+4)>lastPage?lastPage:(page+4);
+                            if(i>1){
+                                var minpage = page-1;
+                                $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>...</a></li>");
+                            }
+                            for(i;i<=j;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }
+                            }
+                            if(j<lastPage){
+                                if((j+1)<lastPage){
+                                    $("#pagination").append("<li><a onclick='pageProject("+(j+1)+")'>...</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+lastPage+")'>...</a></li>");
+                                }
+
+                            }
+                        }
+
+                    }else{
+                        for(var i = 1;i<=lastPage;i++){
+                            if(i==page){
+                                $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                            }else{
+                                $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                            }
                         }
                     }
-                    if (page < lastPage) {
-                        var nextpage = page + 1;
-                        $("#pagination").append("<li><a onclick='pageProject(" + nextpage + ")'>&raquo;</a></li>");
-                    } else {
+
+                    if(page<lastPage){
+                        var nextpage = page+1;
+                        $("#pagination").append("<li><a onclick='pageProject("+nextpage+")'>&raquo;</a></li>");
+                    }else{
                         $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
                     }
-                    var walletList = result.data.list;
+                    var projectList = result.data.list;
                     $("#data").html("");
-                    $.each(walletList, function (i, item) {
-                        $.each(item.projectWallets, function (j, wallet) {
-                            $.each(item.inputTokenDetails, function (k, token) {
+                    $.each(projectList, function (i, item) {
+                        var projectWallets = item.projectWallets;
+                        var inputTokenDetails = item.inputTokenDetails;
+                        if(projectWallets.length==0||inputTokenDetails.length==0){
+                            $("#data").append(
+                                "        <tr id='" + item.id + "'>"
+                                + "        <td>" + item.name + "</td>"
+                                + "         <td>" + item.nameCn + "</td>"
+                                + "         <td>暂无钱包地址</td>"
+                                + "         <td>无</td>"
+                                + "         <td>无</td>"
+                                + "         <td>无</td>"
+                                + "        <td>"
+                                + "           <a href='javascript:towallet()' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                                + "           <a href='javascript:dodel()' title='刪除' class='glyphicon glyphicon-trash'></a>"
+                                + "         </td>"
+                                + "       </tr>"
+                            );
+                        }
+                        $.each(projectWallets, function (j, wallet) {
+                            $.each(inputTokenDetails, function (k, token) {
                                            $("#data").append(
                                                 "        <tr id='" + item.id + "'>"
                                                 + "        <td>" + item.name + "</td>"
@@ -464,28 +522,6 @@
         });
 
     }
-   /* function tomoney(id) {
-        location.href = "tokenmessage.html?id="+id;
-    }
-    function dodel(id) {
-        $.ajax({
-            url: "/project/wallet/"+id,
-            type: 'Delete',
-            success: function (result) {
-                if (result.code == 200) {
-                    $("#data").find("#"+id).remove();
-                    sweetAlert("删除成功!");
-                    console.log(result.data);
-                }
-                else {
-                    sweetAlert("删除失败!");
-                }
-            },
-            error: function (xhr, type, errerThrown) {
-                sweetAlert("网络异常,请稍候再试!");
-            }
-        });*/
-//    }
 </script>
 </body>
 </html>

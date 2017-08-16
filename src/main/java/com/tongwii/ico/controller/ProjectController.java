@@ -1,5 +1,6 @@
 package com.tongwii.ico.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -9,6 +10,7 @@ import com.tongwii.ico.service.*;
 import com.tongwii.ico.util.CurrentConfigEnum;
 import com.tongwii.ico.util.TokenMoneyEnum;
 import org.bitcoinj.core.Address;
+import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
@@ -42,6 +44,9 @@ public class ProjectController {
     private UserService userService;
     @Autowired
     private ProjectWalletService projectWalletService;
+    @Autowired
+    private TransactionsService transactionsService;
+
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
 
@@ -243,6 +248,25 @@ public class ProjectController {
         jsonObject.put("willICO", willICOList);
         jsonObject.put("finishICO", finishICOList);
         return Result.successResult(jsonObject);
+    }
+
+
+    /***
+     * 根据钱包地址获取交易记录
+     * @return
+     */
+    @GetMapping("/getBitCoinAddressTransaction")
+    public Result getBitCoinAddressTransaction(@RequestParam(required = true,defaultValue = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4") String  address){
+        JSONArray coin = transactionsService.getBitCoinAddressTransaction(address);
+        JSONArray data = new JSONArray();
+        for(int i = 0;i<coin.size();i++){
+            JSONObject jsonObj =  coin.getJSONObject(i);
+            String inputsvalue =  Coin.valueOf(jsonObj.getLong("inputs_value")).toFriendlyString();
+            jsonObj.put("inputs_value",inputsvalue);
+            data.add(jsonObj);
+            System.out.println(jsonObj);
+        }
+        return Result.successResult(data);
     }
 
     /*

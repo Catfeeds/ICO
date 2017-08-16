@@ -161,28 +161,11 @@
                                     <th>用户昵称</th>
                                     <th>打入金额</th>
                                     <th>币种类别</th>
-                                    <th>购买数量</th>
                                     <th>交易时间</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td>Internet Explorer 4.0</td>
-                                    <td>Win 95+</td>
-                                    <td> 4</td>
-                                    <td>X</td>
-                                </tr>
+                                <tbody id="tableData">
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>用户昵称</th>
-                                    <th>打入金额</th>
-                                    <th>币种类别</th>
-                                    <th>购买数量</th>
-                                    <th>交易时间</th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -412,16 +395,60 @@
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
 <script>
-    $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false
-        });
+    jQuery(window).load(function () {
+        pageProject(1);
     });
+    function pageProject(page) {
+        var page = page;
+        var size = "4";
+        $.ajax({
+            url: "/project/getBitCoinAddressTransaction",
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            data: {address: "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4"},
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    var jyjlList = result.data;
+                    $.each(jyjlList, function (i, item) {
+                        //交易金额
+                        var inputs_value = item.inputs_value;
+                        //币种
+                        var coinType = "";
+                        var addresses = "";
+                        var inputs = item.inputs;
+                        //获取用户地址
+                        $.each(inputs, function (j, input) {
+                            var prev_address =  input.prev_addresses;
+                            $.each(prev_address, function (k, prv) {
+                                if(addresses ==""){
+                                    addresses =prv;
+                                }else{
+                                    addresses = addresses+","+prv;
+                                }
+                            });
+
+                        });
+                        $("#tableData").append(
+                            "       <tr >"
+                            +"         <td>" + addresses + "</td>"
+                            +"         <td>" + inputs_value + "</td>"
+                            +"         <td>" + coinType + "</td>"
+                            +"         <td>" +coinType+ "</td>"
+                            +"       </tr>"
+                        );
+                    });
+                    console.log(result.data);
+                }
+                else {
+                    sweetAlert("操作失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
+        });
+
+    }
 </script>
 </body>
