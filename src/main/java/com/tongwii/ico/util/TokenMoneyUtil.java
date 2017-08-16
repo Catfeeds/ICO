@@ -3,7 +3,6 @@ package com.tongwii.ico.util;
 import com.tongwii.ico.service.TokenMoneyService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
@@ -45,26 +44,8 @@ public class TokenMoneyUtil {
      * @return
      */
     public ECKey generaterBitCoinAddress() {
-        final NetworkParameters netParams;
-
-        if(env.equals(CurrentConfigEnum.DEV)) {
-            netParams = TestNet3Params.get();
-        } else {
-            netParams = MainNetParams.get();
-        }
-
         // create a new EC Key ...
         ECKey key = new ECKey();
-
-        // ... and look at the key pair
-        logger.info("We created key: {}", key);
-
-        // get valid Bitcoin address from public key
-        Address addressFromKey = key.toAddress(netParams);
-        addressFromKey.toBase58();
-
-        logger.info("On the {} network, we can use this address: {}", env, addressFromKey);
-
         return key;
     }
 
