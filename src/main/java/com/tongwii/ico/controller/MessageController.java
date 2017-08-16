@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.Message;
+import com.tongwii.ico.model.User;
 import com.tongwii.ico.service.MessageService;
+import com.tongwii.ico.util.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +21,8 @@ import java.util.List;
 public class MessageController {
     @Autowired
     private MessageService messageService;
+/*    @Autowired
+    private UserService userService;*/
 
     private static int NOTIFYMESSAGE = 2;
     private static int NEWSMESSAGE = 1;
@@ -74,5 +78,18 @@ public class MessageController {
         List<Message> list = messageService.findMessagesByType(NEWSMESSAGE);
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult("获取信息成功!").add("newsMessages", pageInfo);
+    }
+    // 添加新闻消息
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/insertMessage")
+    public Result insertMessage(@RequestBody Message message) {
+        User user = ContextUtils.getUser();
+//        User user = new User();
+//        user.setNickName("雅默");
+
+        message.setState(1);
+        message.setCreateUser(user);
+        messageService.save(message);
+        return Result.successResult();
     }
 }

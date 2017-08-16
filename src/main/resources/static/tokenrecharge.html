@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="assets/css/theme-blog.css">
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
-    <link rel="stylesheet" href="assets/css/default.css">
     <!--<script src="master/style-switcher/style.switcher.localstorage.js"></script>-->
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
@@ -25,7 +24,7 @@
     <link rel="stylesheet" href="assets/css/component.css" media="screen">
     <link rel="stylesheet" href="assets/css/skin-corporate-hosting.css">
     <link rel="stylesheet" href="assets/css/custom.css">
-
+    <link rel="stylesheet" href="assets/css/sweet-alert.css">
     <!-- Css (necessary Css) -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-theme.css" rel="stylesheet">
@@ -185,18 +184,12 @@
                                         <div class="row">
                                             <div class="form-group" style="height:60px;">
                                                 <label class="col-sm-3 control-label" style="text-align:right;">我的BTC充值地址</label>
-                                                <div class="col-sm-9">1H1nxLx8Cdi7ut28BuMUHxviJ27FoZuQbm</div>
+                                                <div class="col-sm-9" id="BTC"></div>
                                             </div>
-
                                             <div class="form-group" style="height:60px;">
                                                 <label class="col-sm-3 control-label" style="text-align:right;">我的ETH充值地址</label>
-                                                <div class="col-sm-9">0xa0f6ac163f2d649302922300b3b0f17f77523f83</div>
+                                                <div class="col-sm-9" id="ETH"></div>
                                             </div>
-                                            <div class="form-group" style="height:60px;">
-                                                <label class="col-sm-3 control-label" style="text-align:right;">我的QTUM充值地址</label>
-                                                <div class="col-sm-9">0xa0f6ac163f2d649302922300b3b0f17f77523f83</div>
-                                            </div>
-
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -304,6 +297,7 @@
 <script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
+<script SRC="assets/scripts/sweet-alert.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
@@ -312,6 +306,7 @@
             $("#personInfo").css('display','block');
             $("#userName").text(app.getUserInfo().nickName);
         }
+
         jQuery('.flexslider').flexslider({
             animation: "slide",
             prevText: "<em class='icon-arrow-left9'></em>",
@@ -320,16 +315,36 @@
                 jQuery('body').removeClass('loading');
             }
         });
-        $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
+        $.ajax({
+            url: "/user/wallet/findWalletByUser",
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            headers: app.createAuthorizationTokenHeader(),
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (result) {
+                if (result.code == 200) {
+                    $("#BTC").text(result.data.BTCWallet.tokenMoneyUrl);
+                    $("#ETH").text(result.data.ETHWallet.tokenMoneyUrl);
+                } else {
+                    sweetAlert(result.message);
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络连接异常，请稍后再试!");
+                return;
+            }
         });
-        $("#signOut").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
+
+    });
+    $("#sign_out").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
+    });
+    $("#signOut").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
     });
 </script>
 </body>

@@ -56,4 +56,14 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
         return userWalletList;
     }
 
+    @Override
+    public List<UserWallet> findWalletByUser(Integer userId) {
+        UserWallet userWallet = new UserWallet();
+        userWallet.setUserId(userId);
+        List<UserWallet> userWallets = userWalletMapper.select(userWallet);
+        if(CollectionUtils.isEmpty(userWallets)){
+            return null;
+        }
+        return userWallets;
+    }
 }

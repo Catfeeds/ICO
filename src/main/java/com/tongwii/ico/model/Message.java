@@ -23,6 +23,9 @@ public class Message {
     @Column(name = "create_user_id")
     private Integer createUserId;
 
+    @Transient
+    private User createUser;
+
     private String content;
 
     @Column(name = "pictureUrl")
@@ -152,4 +155,19 @@ public class Message {
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
     }
+
+    /**
+     * @return createUser
+     */
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    /**
+     * @param createUser
+     */
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
 }
