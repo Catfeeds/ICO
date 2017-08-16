@@ -117,15 +117,18 @@ public class UserController {
         if(user.getPassword() == null){
             user.setPassword("11111111");
         }
+
         if(user.getIdCard() != null){
             User u = userService.findByIdCard(user.getIdCard());
             if(u!=null){
                 return Result.failResult("此身份用户已存在!");
             }
         }
+
         if(!ValidateUtil.validateEmail(user.getEmailAccount())) {
             return Result.failResult("邮箱格式不正确!");
         }
+
         if(userService.emailAccountExist(user.getEmailAccount())) {
             return Result.failResult("该账号已存在:" + user.getEmailAccount());
         }
