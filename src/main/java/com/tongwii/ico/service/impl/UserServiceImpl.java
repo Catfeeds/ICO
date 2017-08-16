@@ -5,8 +5,8 @@ import com.tongwii.ico.dao.UserMapper;
 import com.tongwii.ico.model.*;
 import com.tongwii.ico.service.*;
 import com.tongwii.ico.util.CurrentConfigEnum;
+import com.tongwii.ico.util.DesEncoder;
 import com.tongwii.ico.util.TokenMoneyEnum;
-import com.tongwii.ico.util.TokenMoneyUtil;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
@@ -99,7 +99,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         Address addressFromKey = bitCoinKey.toAddress(netParams);
 
         bitCoinWallet.setTokenMoneyUrl(addressFromKey.toBase58());
-        bitCoinWallet.setTokenPrivateKey(bitCoinKey.getPrivateKeyAsHex());
+        // 使用des加密密钥
+        DesEncoder desEncoder = new DesEncoder();
+        bitCoinWallet.setTokenPrivateKey(desEncoder.decrypt(bitCoinKey.getPrivateKeyAsHex()));
+        bitCoinWallet.setDes("比特币钱包");
         userWalletService.save(bitCoinWallet);
 
         // 以太坊钱包
@@ -108,8 +111,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         ethWallet.setTokenMoneyId(ethMoney.getId());
         ethWallet.setUserId(user.getId());
         org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
-        bitCoinWallet.setTokenMoneyUrl(Hex.toHexString(ethKey.getAddress()));
-        bitCoinWallet.setTokenPrivateKey(Hex.toHexString(ethKey.getPrivKeyBytes()));
+        ethWallet.setTokenMoneyUrl("0x"+Hex.toHexString(ethKey.getAddress()));
+        // 使用des加密密钥
+        ethWallet.setTokenPrivateKey(desEncoder.decrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
+        ethWallet.setDes("以太坊钱包");
         userWalletService.save(ethWallet);
     }
 

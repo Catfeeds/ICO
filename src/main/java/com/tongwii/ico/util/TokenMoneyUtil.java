@@ -1,6 +1,5 @@
 package com.tongwii.ico.util;
 
-import com.tongwii.ico.service.TokenMoneyService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bitcoinj.core.ECKey;
@@ -8,7 +7,6 @@ import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.wallet.Wallet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -32,22 +30,6 @@ public class TokenMoneyUtil {
 
     @Value("${storage.wallet.location}")
     private String walletPath;
-
-    @Autowired
-    private TokenMoneyService tokenMoneyService;
-
-    /**
-     * <pre>
-     *      生成比特币地址Base85通用格式，{@link ECKey#getPrivKey}密钥被保存在地址表中
-     * </pre>
-     *
-     * @return
-     */
-    public ECKey generaterBitCoinAddress() {
-        // create a new EC Key ...
-        ECKey key = new ECKey();
-        return key;
-    }
 
 
     /**
@@ -92,18 +74,4 @@ public class TokenMoneyUtil {
         logger.info("Complete content of the wallet: {}", wallet);
         return wallet;
     }
-
-    /**
-     * <pre>
-     *      生成比特币地址，{@link ECKey#getPrivKey}密钥被保存在地址表中
-     * </pre>
-     *
-     * @return
-     */
-    public org.ethereum.crypto.ECKey generaterEthAddress() {
-        org.ethereum.crypto.ECKey key = new org.ethereum.crypto.ECKey();
-        return key;
-    }
-
-
 }
