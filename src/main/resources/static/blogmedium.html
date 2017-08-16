@@ -272,7 +272,7 @@
             success: function (result) {
                 if (result.code == 200) {
                     var newsMessages = result.data.newsMessages.list;
-                    var notifyMessages = result.data.notifyMessages.list;
+                    var notifyMessages = result.data.notifyMessages;
                     if(notifyMessages.length == 0){
                         $("#notify").css("display","none");
                     }else{

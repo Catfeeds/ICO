@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -25,10 +26,14 @@ public class ProjectWalletServiceImpl extends AbstractService<ProjectWallet> imp
     public List<ProjectWallet> findWalletByProjectId(Integer projectId) {
         ProjectWallet projectWallet = new ProjectWallet();
         projectWallet.setProjectId(projectId);
-        List<ProjectWallet> projectWallets = projectWalletMapper.select(projectWallet);
-        if(CollectionUtils.isEmpty(projectWallets)){
+        try{
+            List<ProjectWallet> projectWallets = projectWalletMapper.select(projectWallet);
+            if(CollectionUtils.isEmpty(projectWallets)){
+                return null;
+            }
+            return projectWallets;
+        }catch (Exception e){
             return null;
         }
-        return projectWallets;
     }
 }
