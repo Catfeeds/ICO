@@ -49,8 +49,8 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     public List<Project> findOfficalProject() {
         Project project = new Project();
         project.setState(-1);
-        List<Project> projects = projectMapper.select(project);
         List<Project> projectList = findAll();
+        List<Project> projects = projectMapper.select(project);
         for(int i=0; i<projectList.size(); i++){
             for(int j=0; j<projects.size(); j++){
                 if(projectList.get(i).getId() == projects.get(j).getId()){
