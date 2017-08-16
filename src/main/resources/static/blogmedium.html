@@ -266,7 +266,7 @@
         });
         // 获取所有公告信息以及通知
         $.ajax({
-            url: "/message/getOfficalMessage?page=0&size=10",
+            url: "/message/getOfficalMessage?page=0&size=6",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
@@ -293,18 +293,23 @@
                                     +"<div class='bloginfo-sec'><div class='blog-text'>"
                                     +"<h4><a href='#'>"+item.title+"</a></h4>"
                                     +"<p>"+item.des+"</p><div>"
-                                    +"<a href='#'class='Continue-Readingbtn cscolor'>继续阅读</a></div></div></div></article>"
+                                    +"<a href='#'class='Continue-Readingbtn cscolor' id='"+item.id+"'>继续阅读</a></div></div></div></article>"
                             );
                         });
                     }
+                    $('.Continue-Readingbtn').click(function () {
+                        var id = $(this).attr("id");
+                        location.href = "detail.html?id=" + id;
+                    });
                 }
                 else {
-                    location.href = "404.html";
+                    sweetAlert(result.message);
+                    return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-                location.href = "404.html";
-//                sweetAlert("网络异常,请稍候再试");
+                sweetAlert("网络异常,请稍候再试");
+                return;
             }
         });
     });

@@ -65,11 +65,13 @@ create table message
 (
   id                   int(11) unsigned not null,
   title                varchar(120),
+  des                  varchar(255) DEFAULT NULL,
   content              text,
   state                tinyint,
   create_date          datetime,
   type                 tinyint,
   create_user_id       int(11) unsigned,
+  pictureUrl           varchar(255) DEFAULT NULL,
   primary key (id)
 );
 
