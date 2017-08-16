@@ -146,7 +146,8 @@
                                             </div>
                                         </div>
                                         <nav class="pagination" style="text-align: center">
-                                            <ul>
+                                            </ul>
+                                            <ul id="pagination">
                                                 <li class="pgprev"><a href="#"><i
                                                         class="cscolor icon-angle-left"></i>
                                                     上一页</a></li>
@@ -282,21 +283,7 @@
                             );
                         });
                     }
-                    if(newsMessages.length == 0){
-                        $("#news").css("display","none");
-                    }else{
-                        $.each(newsMessages, function (i, item) {
-                            $("#newsList").append(
-                                    "<article class='col-lg-12'><div class='main-thumb'><figure><a href='#'>"
-                                    +"<img src='assets/extra-images/PRIMAS.jpg' alt='blog'></a><figcaption>"
-                                    +"<a href='#'><i class='icon-uniEAB5'></i></a></figcaption></figure></div>"
-                                    +"<div class='bloginfo-sec'><div class='blog-text'>"
-                                    +"<h4><a href='#'>"+item.title+"</a></h4>"
-                                    +"<p>"+item.des+"</p><div>"
-                                    +"<a href='#'class='Continue-Readingbtn cscolor' id='"+item.id+"'>继续阅读</a></div></div></div></article>"
-                            );
-                        });
-                    }
+
                     $('.Continue-Readingbtn').click(function () {
                         var id = $(this).attr("id");
                         location.href = "detail.html?id=" + id;
@@ -312,6 +299,7 @@
                 return;
             }
         });
+        pageNews(1);
     });
     $("#sign_out").click(function () {
         $("#personInfo").css('display', 'none');
@@ -319,7 +307,68 @@
         location.href = "index.html";
     });
 
+    function pageNews(page) {
+        var page = page;
+        var size = "2";
+        $.ajax({
+            url: "/message/getNewsMessage",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            contentType: "application/json; charset=utf-8",
+            data: {page:page,size:size},
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    var lastPage = result.data.newsMessages.lastPage;
+                    var newsMessages = result.data.newsMessages.list;
+                    $('#pagination li').remove();
+                    if(page>1){
+                        var minpage = page-1;
+                        $("#pagination").append("<li class='pgprev'><a  style=' cursor:pointer;' onclick='pageNews("+minpage+")'><i class='cscolor icon-angle-left'></i>上一页</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='pgprev disabled'><a ><i class='cscolor icon-angle-left'></i>上一页</a></li>");
+                    }
+                    for(var i = 1;i<=lastPage;i++){
+                        if(i==page){
+                            $("#pagination").append("<li ><a class='active'  style=' cursor:pointer;' onclick='pageNews("+i+")'>"+i+"</a></li>");
+                        }else{
+                            $("#pagination").append("<li><a  style=' cursor:pointer;' onclick='pageNews("+i+")'>"+i+"</a></li>");
+                        }
+                    }
+                    if(page<lastPage){
+                        var nextpage = page+1;
+                        $("#pagination").append("<li class='pgnext'><a style=' cursor:pointer;' onclick='pageNews("+nextpage+")' class='icon'>下一页<i  class='cscolor icon-angle-right'></i></a></li>");
+                    }else{
+                        $("#pagination").append("<li class='pgnext disabled'><a class='icon'>下一页<i  class='cscolor icon-angle-right'></i></a></li>");
+                    }
+                    if(newsMessages.length == 0){
+                        $("#news").css("display","none");
+                    }else{
+                        $("#newsList").html("");
+                        $.each(newsMessages, function (i, item) {
+                            $("#newsList").append(
+                                "<article class='col-lg-12'><div class='main-thumb'><figure><a href='#'>"
+                                +"<img src='assets/extra-images/PRIMAS.jpg' alt='blog'></a><figcaption>"
+                                +"<a href='#'><i class='icon-uniEAB5'></i></a></figcaption></figure></div>"
+                                +"<div class='bloginfo-sec'><div class='blog-text'>"
+                                +"<h4><a href='#'>"+item.title+"</a></h4>"
+                                +"<p>"+item.des+"</p><div>"
+                                +"<a href='#'class='Continue-Readingbtn cscolor' id='"+item.id+"'>继续阅读</a></div></div></div></article>"
+                            );
+                        });
+                    }
 
+                    console.log(result.data);
+                }
+                else {
+
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+
+            }
+        });
+    }
     /*$(document).ready(function () {
         $("#jquery_jplayer_1").jPlayer({
             ready: function () {
