@@ -687,6 +687,7 @@
             var fbnumber = $("#fbnumber").val();
             var znbook1  = $("#znbook1").val();
             var enbook1 = $("#enbook1").val();
+            var outputTokenMoneyDetailId;
             var jsmoneyJson = {targetNumber: fbnumber,tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook1, tokenMoneyWhitepaperEnUrl: enbook1};
             $.ajax({
                 url : "/token/detail", //后台接口
@@ -697,149 +698,72 @@
                 contentType: "application/json; charset=utf-8",
                 success : function(result) {
                     if (result.code == 200) {
-                        $("#ceshi").append(
-                            "<input value='" + result.data.id + "' id='outputTokenMoneyDetailId' type='hidden'/>"
-                        );
+                        outputTokenMoneyDetailId =  result.data.id;
+                        //项目的字段
+                        var prjname = $("#prjname").val();
+                        var prjopentime = $("#prjopentime").val();
+                        var prjclosetime = $("#prjclosetime").val();
+                        var prjproduce = $("#prjproduce").val();
+                        var prjcontent = $("#prjcontent").val();
+                        var id = $("#userId").val();
+                        var prjId;
+                        var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId};
+                        $.ajax({
+                            url: "/project/add",
+                            type: 'POST',
+                            timeout: 10000,//超时时间设置为10秒；
+                            data: JSON.stringify(prjjson),
+                            dataType: 'json',//服务器返回json格式数据
+                            contentType: "application/json; charset=utf-8",
+                            success: function (result) {
+                                if (result.code == 200) {
+                                    sweetAlert("项目添加成功！");
+                                    prjId = result.data.id;
+                                    //接受代币的字段
+                                    var moneyTypeId1 = $("#jieshouMoney option:selected").val();
+                                    var minnumber = $("#minnumber").val();
+                                    var maxnumber = $("#maxnumber").val();
+                                    var znbook  = $("#znbook").val();
+                                    var enbook = $("#enbook").val();
+                                    var moneyJson = {minTargetNumber: minnumber, targetNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId1, tokenMoneyWhitepaperCnUrl:znbook, tokenMoneyWhitepaperEnUrl: enbook};
+                                    $.ajax({
+                                        url : "/token/detail", //后台接口
+                                        type: 'POST',
+                                        timeout: 10000,//超时时间设置为10秒；
+                                        data: JSON.stringify(moneyJson),
+                                        dataType: 'json',//服务器返回json格式数据
+                                        contentType: "application/json; charset=utf-8",
+                                        success : function(result) {
+                                            if (result.code == 200) {
+                                                location.href = "../tables/data.html";
+                                            } else {
+                                                sweetAlert("导入失败2！");
+                                            }
+                                        },
+                                        error : function(data, status, e)
+                                        {
+                                            sweetAlert("导入失败，网络异常或表单数据错误3！");
+                                        }
+                                    });
+                                }
+                                else {
+                                    sweetAlert("项目添加失败!");
+                                }
+                            },
+                            error: function (xhr, type, errerThrown) {
+                                sweetAlert("网络异常,请稍候再试2!");
+                            }
+                        });
                     } else {
-                        sweetAlert("导入失败！");
+                        sweetAlert("导入失败1！");
                     }
                 },
                 error : function(data, status, e)
                 {
-                    sweetAlert("导入失败，网络异常或表单数据错误！");
+                    sweetAlert("导入失败，网络异常或表单数据错误1！");
                 }
             });
-//            //项目的字段
-//            var prjname = $("#prjname").val();
-//            var prjopentime = $("#prjopentime").val();
-//            var prjclosetime = $("#prjclosetime").val();
-//            var prjproduce = $("#prjproduce").val();
-//            var prjcontent = $("#prjcontent").val();
-//            var id = $("#userId").val();
-//            var outputTokenMoneyDetailId =$("#outputTokenMoneyDetailId").val();
-//            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId};
-//            $.ajax({
-//                url: "/project/add",
-//                type: 'POST',
-//                timeout: 10000,//超时时间设置为10秒；
-//                data: JSON.stringify(prjjson),
-//                dataType: 'json',//服务器返回json格式数据
-//                contentType: "application/json; charset=utf-8",
-//                success: function (result) {
-//                    if (result.code == 200) {
-//                        sweetAlert("项目添加成功！");
-//                        $("#ceshi").append(
-//                            "<input value='" + result.data.id + "' id='prjId' type='hidden'/>"
-//                        );
-//                    }
-//                    else {
-//                        sweetAlert("项目添加失败!");
-//                    }
-//                },
-//                error: function (xhr, type, errerThrown) {
-//                    sweetAlert("网络异常,请稍候再试!");
-//                }
-//            });
-//
-//            //接受代币的字段
-//            var moneyTypeId = $("#jieshouMoney option:selected").val();
-//            var minnumber = $("#minnumber").val();
-//            var maxnumber = $("#maxnumber").val();
-//            var znbook  = $("#znbook").val();
-//            var enbook = $("#enbook").val();
-//            var prjId = $("prjId").val();
-//           var jsmoneyJson = {minTargetNumber: minnumber, targetNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook, tokenMoneyWhitepaperEnUrl: enbook};
-//            $.ajax({
-//                url : "/token/detai", //后台接口
-//                data: JSON.stringify(jsmoneyJson),
-//                dataType: 'json',//服务器返回json格式数据
-//                contentType: "application/json; charset=utf-8",
-//                success : function(result) {
-//                    if (result.code == 200) {
-//                            location.href = "../tables/data.html";
-//                    } else {
-//                        sweetAlert("导入失败！");
-//                    }
-//                },
-//                error : function(data, status, e)
-//                {
-//                    sweetAlert("导入失败，网络异常或表单数据错误！");
-//                }
-//            });
         });
-//        $("#prjadd").click(function () {
-//            var prjname = $("#prjname").val();
-//            var prjopentime = $("#prjopentime").val();
-//            var prjclosetime = $("#prjclosetime").val();
-//            var prjproduce = $("#prjproduce").val();
-//            var prjcontent = $("#prjcontent").val();
-//            var id = $("#userId").val();
-//            //需要获取用户的id，为项目创建者，暂时没有登录，所以没有
-//            var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id};
-//            $.ajax({
-//                url: "/project/add",
-//                type: 'POST',
-//                timeout: 10000,//超时时间设置为10秒；
-//                data: JSON.stringify(prjjson),
-//                dataType: 'json',//服务器返回json格式数据
-//                contentType: "application/json; charset=utf-8",
-//                success: function (result) {
-//                    if (result.code == 200) {
-//                        sweetAlert("项目添加成功！");
-//                        $("#ceshi").append(
-//                            "<input value='" + result.data.id + "' id='prjId' type='hidden'/>"
-//                        );
-//                        $("#prjname").attr("disabled",true);
-//                        $("#prjopentime").attr("disabled",true);
-//                        $("#prjclosetime").attr("disabled",true);
-//                        $("#prjproduce").attr("disabled",true);
-//                        $("#prjcontent").attr("disabled",true);
-//                        $("#prjadd").css("display","none");
-//                    }
-//                    else {
-//                        sweetAlert("项目添加失败!");
-//                    }
-//                },
-//                error: function (xhr, type, errerThrown) {
-//                    sweetAlert("网络异常,请稍候再试!");
-//                }
-//            });
-//        });
-//        $("#bcMoneyType").click(function() {
-//            var moneyTypeId = $("#select_id option:selected").val();
-//            var minnumber = $("#minnumber").val();
-//            var mbnumber = $("#mbnumber").val();
-//            var maxnumber = $("#maxnumber").val();
-//            var prjId = $("prjId").val();
-//            var znbook  = $("#znbook").val();
-//            var enbook = $("#enbook").val();
-//
-//            var moneyJson = {minTargetNumber: minnumber, targetNumber: mbnumber, icoNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId};
-//            $.ajax({
-//                url : "/token/money", //后台接口
-//                data: JSON.stringify(moneyJson),
-//                dataType: 'json',//服务器返回json格式数据
-//                contentType: "application/json; charset=utf-8",
-//                success : function(result) {
-//                    if (result.code == 200) {
-//                        sweetAlert("导入成功！");
-//                        $("#select_id option:selected").attr("disabled",true);
-//                        $("#minnumber").attr("disabled",true);
-//                        $("#mbnumber").attr("disabled",true);
-//                        $("#maxnumber").attr("disabled",true);
-//                        $("#znbook").attr("disabled",true);
-//                        $("#enbook").attr("disabled",true);
-//                        $("#bcMoneyType").css("display","none")
-//                    } else {
-//                        sweetAlert("导入失败！");
-//                    }
-//                },
-//                error : function(data, status, e)
-//                {
-//                    sweetAlert("导入失败，网络异常或表单数据错误！");
-//                }
-//            });
-//        });
     });
 </script>
 
