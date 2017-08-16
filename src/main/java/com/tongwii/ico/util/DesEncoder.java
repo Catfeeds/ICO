@@ -11,7 +11,7 @@ import java.security.Security;
  * @date 2017-08-08
  */
 public class DesEncoder {
-    private static String strDefaultKey = "tianjian_xike.abc#1234";// 字符串默认键值
+    private static String strDefaultKey = "ico.TT_zeral.com#935375351";// 字符串默认键值
     private Cipher encryptCipher = null;// 加密工具
     private Cipher decryptCipher = null;// 解密工具
 
