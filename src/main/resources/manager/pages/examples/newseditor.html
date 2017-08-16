@@ -158,31 +158,44 @@
                                         <br>
                                         <br>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">标题</label>
-                                            <div class="col-sm-6">
+                                            <label class="col-sm-1 control-label">新闻标题</label>
+                                            <div class="col-sm-4" style="margin-left: 10px">
                                                 <input type="text" class="form-control" id="name" name="name"
                                                        placeholder="新闻标题不超过15个字">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">描述</label>
-                                            <div class="col-sm-10" style="height: 100px" >
-                                                <input type="text" class="form-control" id="nameCn" name="chinesename"
-                                                       placeholder="简单的对这则新闻做一个概括">
+                                            <label class="col-sm-1 control-label">新闻描述</label>
+                                            <div class="col-sm-10" style="margin-left: 10px">
+                                                <textarea type="text" id="nameCn" name="chinesename" style="width:98%;height:30%"
+                                                          placeholder="简单的对这则新闻做一个概括"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">上传图片</label>
+                                            <div class="col-sm-4" style="margin-left: 10px">
+                                                <input name="file" class="layui-upload-file" type="file">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">编辑详情</label>
+                                            <div class="col-md-10">
+                                                <div class="box-body pad">
+                                                    <form>
+                                              <textarea id="editor1" name="editor1" >
+                                                  This is my textarea to be replaced with CKEditor.
+                                              </textarea>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-5 col-sm-10">
+                                                <button type="submit" class="btn btn-danger">提交</button>
                                             </div>
                                         </div>
 
-
-
-
-
-                                        <div class="box-body pad">
-                                            <form>
-                                              <textarea id="editor1" name="editor1" rows="8" cols="60">
-                                                  This is my textarea to be replaced with CKEditor.
-                                              </textarea>
-                                            </form>
-                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -204,6 +217,11 @@
                                             <form>
                                                <textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                             </form>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-5 col-sm-10">
+                                                <button type="submit" class="btn btn-danger">提交</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
