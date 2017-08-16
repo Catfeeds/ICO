@@ -186,6 +186,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <button type="button" class="btn btn-danger" id="addUser">保存</button>
+                                            <button  type="button" class="btn btn-danger" style="margin-left: 25px" id="back">返回</button>
                                         </div>
                                     </div>
                                 </form>
@@ -485,7 +486,16 @@
                 }
             });
         });
+
+        $("#back").click(function () {
+            history.back();
+        });
+
+
+
     });
+
+
 
 </script>
 </body>
