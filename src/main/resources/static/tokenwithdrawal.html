@@ -197,7 +197,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="officalInfo" style="display: none">
+                        <div id="officalInfo" style="display:none">
                             <h2><strong>提现地址管理</strong></h2>
                             <div class="row">
                                 <header class="panel-heading">
@@ -277,7 +277,7 @@
                                                             <div class="col-sm-3">
                                                                 <input type="text" name="verifycode" value=""
                                                                        class="form-control" style="width:140px;"
-                                                                       required/>
+                                                                       required onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="6"/>
                                                             </div>
                                                             <div class="col-sm-7">
                                                                 <input type="button" id="sendsms" name="sendsms"
