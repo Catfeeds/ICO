@@ -70,6 +70,17 @@ public class MessageController {
             return Result.errorResult("获取信息失败!");
         }
     }
+    // 获取新闻消息
+    @GetMapping("/getNotifyMessage")
+    public Result getNotifyMessage() {
+        try{
+            List<Message> list = messageService.findMessagesByType(NOTIFYMESSAGE);
+            return Result.successResult("获取信息成功!").add("notifyMessages", list);
+        }catch (Exception e){
+            return Result.failResult("公告信息获取失败!");
+        }
+
+    }
 
     // 获取新闻消息
     @GetMapping("/getNewsMessage")
@@ -84,9 +95,6 @@ public class MessageController {
     @PostMapping("/insertMessage")
     public Result insertMessage(@RequestBody Message message) {
         User user = ContextUtils.getUser();
-//        User user = new User();
-//        user.setNickName("雅默");
-
         message.setState(1);
         message.setCreateUser(user);
         messageService.save(message);

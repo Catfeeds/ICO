@@ -25,7 +25,7 @@
             background-color: #fe6500;
             border-radius: 15px;
             height: 80px;
-            width: 800px;
+            width: 100%;
             text-align: center;
         }
 
@@ -34,15 +34,6 @@
             margin-right: 10px;
             margin-top: 5px;
             padding-top: 35px;
-        }
-
-        .slideShow {
-            /*width: 300px;*/
-            height: 210px; /*其实就是图片的高度*/
-            border: 1px #eeeeee solid;
-            margin: 100px auto;
-            position: relative;
-            overflow: hidden; /*此处需要将溢出框架的图片部分隐藏*/
         }
 
         .slideShow ul {
@@ -75,10 +66,17 @@
             color: #fff;
         }
 
-        .slideShow .showNav .active {
-            background: #b63e1a;
+        .widget-recent-blog article figure {
+            width: 100%;
         }
 
+        .cs-banner .flex-next {
+            color: #fe6500;
+        }
+
+        .cs-banner .flex-prev {
+            color: #fe6500;
+        }
 
     </style>
 </head>
@@ -140,6 +138,7 @@
         </div>
     </header>
     <!-- Header -->
+
     <div class="breadcrumb-sec"
          style="background:url(assets/extra-images/banner.jpg) no-repeat; background-size:100% auto; min-height:157px!important;">
         <div class="absolute-sec">
@@ -147,7 +146,7 @@
                 <div class="cs-table">
                     <div class="cs-tablerow">
                         <div class="pageinfo page-title-align-left">
-                            <h1 style="color:#fff !important; text-transform:none;">实时更新你的消息</h1>
+                            <h1 style="color:#fff !important; text-transform:none;">实时更新</h1>
                             <strong style="text-align:center; display:block; color:#fff; font-weight:normal;"
                                     class="title">像你一样的人已经用Razoo创造超过90000的筹款网站并且给他们关心的事业250000000多美元。</strong>
                         </div>
@@ -159,65 +158,34 @@
     <!-- Main Content -->
 
     <main id="main-content">
+
         <div class="main-section">
             <div class="page-section">
                 <div class="container">
                     <div class="row">
                         <div class="section-fullwidth col-lg-12">
                             <div class="cs-content-holder">
-                                <div class="row">
-                                    <div class="widget widget-recent-blog" id="notify">
-
+                                <div class="row" id="notify">
+                                    <div class="widget widget-recent-blog">
                                         <div class="widget-section-title">
                                             <h3>公告</h3>
                                         </div>
-
-                                        <div id="notifyList">
-                                            <article>
-                                                <div class="">
-                                                    <div class="flexslider">
-                                                        <ul class="slides">
-                                                            <li>
-                                                                <figure>
-                                                                    <article>
-                                                                        <div class="text"><h4><a href='#'>1nghfcdmkj</a>
-                                                                        </h4></div>
-                                                                    </article>
-                                                                    <figcaption>
-
-                                                                    </figcaption>
-                                                                </figure>
-                                                            </li>
-                                                            <li>
-                                                                <figure>
-                                                                    <article>
-                                                                        <div class="text"><h4><a
-                                                                                href='#'>2sdfzhbfgvh</a></h4></div>
-                                                                    </article>
-                                                                    <figcaption>
-
-                                                                    </figcaption>
-                                                                </figure>
-                                                            </li>
-                                                            <li>
-                                                                <figure>
-                                                                    <article>
-                                                                        <div class="text"><h4><a
-                                                                                href='#'>3sdfzhbfgvh</a></h4></div>
-                                                                    </article>
-                                                                    <figcaption>
-
-                                                                    </figcaption>
-                                                                </figure>
-                                                            </li>
-                                                        </ul>
+                                        <article>
+                                            <div class="cs-banner">
+                                                <div class="flexslider">
+                                                    <div class="flex-viewport"
+                                                         style="overflow: hidden; position: relative;">
+                                                        <div>
+                                                            <ul class="slides" id="notifyList">
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </article>
-                                        </div>
+                                            </div>
+                                        </article>
                                     </div>
-
                                 </div>
+
                                 <div class="row" id="news">
                                     <div class="page-content col-lg-12">
                                         <div class="cs-blog blog-medium">
@@ -230,7 +198,6 @@
                                             </div>
                                         </div>
                                         <nav class="pagination" style="text-align: center">
-                                            </ul>
                                             <ul id="pagination">
                                                 <li class="pgprev"><a href="#"><i
                                                         class="cscolor icon-angle-left"></i>
@@ -251,6 +218,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </main>
     <!--// Main Content //-->
 
@@ -334,18 +302,6 @@
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            controlNav: false,
-            prevText: "<em class='icon-arrow-left10'></em>",
-            nextText: "<em class='icon-arrow-right10'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
-            }
-        });
-
-
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
             $("#contect").css('display', 'none');
@@ -354,50 +310,43 @@
             $("#userName").text(app.getUserInfo().nickName);
         }
 
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            prevText: "<em class='icon-arrow-left9'></em>",
-            nextText: "<em class='icon-arrow-right9'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
-            }
-        });
         // 获取所有公告信息以及通知
         $.ajax({
-            url: "/message/getOfficalMessage?page=0&size=6",
+            url: "/message/getNotifyMessage",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
                 if (result.code == 200) {
-                    var newsMessages = result.data.newsMessages.list;
                     var notifyMessages = result.data.notifyMessages;
                     if (notifyMessages.length == 0) {
                         $("#notify").css("display", "none");
                     } else {
                         $.each(notifyMessages, function (i, item) {
                             $("#notifyList").append(
-                                "<article><div class='text'><h4><a href='#'>" + item.content + "</a></h4></div></article>"
+                                    "<li><div class='text'><h4><a href='#'>" + item.content + "</a></h4></div></li>"
                             );
                         });
+                        jQuery('.flexslider').flexslider({
+                            animation: "slide",
+                            prevText: "<em class='icon-arrow-left9'></em>",
+                            nextText: "<em class='icon-arrow-right9'></em>",
+                            start: function (slider) {
+                                jQuery('body').removeClass('loading');
+                            }
+                        });
                     }
-
-                    $('.Continue-Readingbtn').click(function () {
-                        var id = $(this).attr("id");
-                        location.href = "detail.html?id=" + id;
-                    });
-                }
-                else {
-                    sweetAlert(result.message);
-                    return;
+                } else {
+                    $("#notify").css("display", "none");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("网络异常,请稍候再试");
-                return;
+                $("#notify").css("display", "none");
             }
         });
         pageNews(1);
     });
+
+
     $("#sign_out").click(function () {
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});
@@ -444,25 +393,31 @@
                         $("#newsList").html("");
                         $.each(newsMessages, function (i, item) {
                             $("#newsList").append(
-                                "<article class='col-lg-12'><div class='main-thumb'><figure><a href='#'>"
-                                + "<img src='assets/extra-images/PRIMAS.jpg' alt='blog'></a><figcaption>"
-                                + "<a href='#'><i class='icon-uniEAB5'></i></a></figcaption></figure></div>"
-                                + "<div class='bloginfo-sec'><div class='blog-text'>"
-                                + "<h4><a href='#'>" + item.title + "</a></h4>"
-                                + "<p>" + item.des + "</p><div>"
-                                + "<a href='#' class='Continue-Readingbtn cscolor' id='" + item.id + "'>继续阅读</a></div></div></div></article>"
+                                    "<article class='col-lg-12'><div class='main-thumb'><figure><a href='#'>"
+                                    + "<img src='" + item.pictureUrl + "' alt='blog'></a><figcaption>"
+                                    + "<a href='#'><i class='icon-uniEAB5'></i></a></figcaption></figure></div>"
+                                    + "<div class='bloginfo-sec'><div class='blog-text'>"
+                                    + "<h4><a href='#'>" + item.title + "</a></h4>"
+                                    + "<p>" + item.des + "</p><div>"
+                                    + "<a href='#' class='Continue-Readingbtn cscolor' id='" + item.id + "'>继续阅读</a></div></div></div></article>"
                             );
                         });
                     }
-
+                    $('.Continue-Readingbtn').click(function () {
+                        var id = $(this).attr("id");
+                        location.href = "detail.html?id=" + id;
+                    });
                     console.log(result.data);
                 }
                 else {
-
+                    $("#news").css("display", "none");
+                    sweetAlert(result.message);
+                    return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-
+                sweetAlert("网络异常,请稍候再试");
+                return;
             }
         });
     }

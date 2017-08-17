@@ -17,6 +17,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+    <script src="../../scripts/app.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -143,22 +144,12 @@
                             <h3 class="box-title">交易记录</h3>
                         </div>
 
-                        <form class="search-form">
-                            <div class="input-group" style="width: 20%;float: right;">
-                                <input type="text" name="search" class="form-control" placeholder="搜索">
-                                <div class="input-group-btn">
-                                    <button type="submit" name="submit" class="btn btn-warning btn-flat"><i
-                                            class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
                         <br>
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>用户昵称</th>
+                                    <th>用户钱包地址</th>
                                     <th>打入金额</th>
                                     <th>币种类别</th>
                                     <th>交易时间</th>
@@ -167,6 +158,11 @@
                                 <tbody id="tableData">
                                 </tbody>
                             </table>
+                            <div class="pull-right">
+                                <ul id="pagination" class="pagination">
+
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -396,47 +392,122 @@
 <!-- page script -->
 <script>
     jQuery(window).load(function () {
-        pageProject(1);
+        var coinType = app.getQueryString("coinType");
+        var address = app.getQueryString("address");
+        pageProject(1,coinType,address);
     });
-    function pageProject(page) {
+    function pageProject(page,coinType,address) {
         var page = page;
-        var size = "4";
+        var size = "10";
+        var coinType = coinType;
+        var address = address;
         $.ajax({
             url: "/project/getBitCoinAddressTransaction",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
-            data: {address: "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4"},
+            data: {address: address},
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
                     var jyjlList = result.data;
-                    $.each(jyjlList, function (i, item) {
-                        //交易金额
-                        var inputs_value = item.inputs_value;
-                        //币种
-                        var coinType = "";
-                        var addresses = "";
-                        var inputs = item.inputs;
-                        //获取用户地址
-                        $.each(inputs, function (j, input) {
-                            var prev_address =  input.prev_addresses;
-                            $.each(prev_address, function (k, prv) {
-                                if(addresses ==""){
-                                    addresses =prv;
+                    var startRow = (page*size)-size;
+                    var toalPage = Math.ceil((jyjlList.length)/size);
+                    var endRow1 = parseInt(startRow)+parseInt(size);
+                    var endRow = endRow1>jyjlList.length?jyjlList.length:endRow1
+                    //分页
+                    $('#pagination li').remove();
+                    if(page>1){
+                        var minpage = page-1;
+                        $("#pagination").append("<li><a onclick='pageProject(\""+minpage+"\",\""+coinType+"\",\""+address+"\")'>&laquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
+                    }
+                    if(toalPage>10){
+                        if(page<10){
+                            for(var i = 1;i<=10;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
                                 }else{
-                                    addresses = addresses+","+prv;
+                                    $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
                                 }
-                            });
+                            }
+                            if(page<toalPage){
+                                var nextpage = page+1;
+                                $("#pagination").append("<li><a onclick='pageProject(\""+11+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
+                            }
+                        }else {
+                            var i  = page - 4;
+                            var j  = (page+4)>toalPage?toalPage:(page+4);
+                            if(i>1){
+                                var minpage = page-1;
+                                $("#pagination").append("<li><a onclick='pageProject(\""+minpage+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
+                            }
+                            for(i;i<=j;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                                }
+                                if(j<toalPage){
+                                    if((j+1)<toalPage){
+                                        $("#pagination").append("<li><a onclick='pageProject(\""+(j+1)+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
+                                    }else{
+                                        $("#pagination").append("<li><a onclick='pageProject(\""+toalPage+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
+                                    }
+                                }
+                            }
+                        }}else{
+                        for(var i = 1;i<=toalPage;i++){
+                            if(i==page){
+                                $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                            }else{
+                                $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                            }
+                        }
+                    }
 
-                        });
-                        $("#tableData").append(
-                            "       <tr >"
-                            +"         <td>" + addresses + "</td>"
-                            +"         <td>" + inputs_value + "</td>"
-                            +"         <td>" + coinType + "</td>"
-                            +"         <td>" +coinType+ "</td>"
-                            +"       </tr>"
-                        );
+                    if(page<toalPage){
+                        var nextpage = parseInt(page)+1;
+                        $("#pagination").append("<li><a onclick='pageProject(\""+nextpage+"\",\""+coinType+"\",\""+address+"\")'>&raquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
+                    }
+
+                    $("#tableData").html("");
+                    //显示数据
+                    $.each(jyjlList, function (i, item) {
+                        if(i>=startRow&&i<endRow){
+                            //交易金额
+                            var inputs_value = item.inputs_value;
+                            //币种
+                            var addresses = "";
+                            var inputs = item.inputs;
+                            //获取用户地址
+                            $.each(inputs, function (j, input) {
+                                var prev_address =  input.prev_addresses;
+                                $.each(prev_address, function (k, prv) {
+                                    if(addresses ==""){
+                                        addresses =prv;
+                                    }else{
+                                        addresses = addresses+","+prv;
+                                    }
+                                });
+                            });
+                            //获取交易时间
+                            var createTime = item.created_at;
+                            if(createTime!=undefined){
+                                createTime =   datetimeFormat_2(createTime);
+                            }
+                            $("#tableData").append(
+                                "       <tr >"
+                                +"         <td>" + addresses + "</td>"
+                                +"         <td>" + inputs_value + "</td>"
+                                +"         <td>" + coinType + "</td>"
+                                +"         <td>" +createTime+ "</td>"
+                                +"       </tr>"
+                            );
+                        }
+
                     });
                     console.log(result.data);
                 }
@@ -449,6 +520,58 @@
             }
         });
 
+    }
+    function datetimeFormat_2(longTypeDate){
+        var datetimeType = "";
+        var date = new Date();
+        date.setTime(longTypeDate);
+        datetimeType = date.getFullYear()+"-"+getMonth(date)+"-"+getDay(date)+" "+getHours(date)+":"+getMinutes(date)+":"+getSeconds(date);//yyyy-MM-dd 00:00:00格式日期
+        return datetimeType;
+    }
+    //返回 01-12 的月份值
+    function getMonth(date){
+        var month = "";
+        month = date.getMonth() + 1; //getMonth()得到的月份是0-11
+        if(month<10){
+            month = "0" + month;
+        }
+        return month;
+    }
+    //返回01-30的日期
+    function getDay(date){
+        var day = "";
+        day = date.getDate();
+        if(day<10){
+            day = "0" + day;
+        }
+        return day;
+    }
+    //返回小时
+    function getHours(date){
+        var hours = "";
+        hours = date.getHours();
+        if(hours<10){
+            hours = "0" + hours;
+        }
+        return hours;
+    }
+    //返回分
+    function getMinutes(date){
+        var minute = "";
+        minute = date.getMinutes();
+        if(minute<10){
+            minute = "0" + minute;
+        }
+        return minute;
+    }
+    //返回秒
+    function getSeconds(date){
+        var second = "";
+        second = date.getSeconds();
+        if(second<10){
+            second = "0" + second;
+        }
+        return second;
     }
 </script>
 </body>

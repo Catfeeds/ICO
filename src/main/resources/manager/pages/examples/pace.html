@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
     <!-- Pace style -->
     <link rel="stylesheet" href="../../plugins/pace/pace.min.css">
+    <script src="../../scripts/app.js"></script>
+    <script src="../../scripts/sweet-alert.js"></script>
+    <link rel="stylesheet" href="../../css/sweet-alert.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -126,7 +129,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>增加项目钱包信息</h1>
+            <h1>编辑项目钱包信息</h1>
         </section>
         <!-- Main content -->
         <section class="content">
@@ -150,7 +153,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">保存</button>
+                                            <button type="button" id="save" onclick="saveWallet()" class="btn btn-danger">保存</button>
                                             <button  type="button" class="btn btn-danger" style="margin-left: 25px" onclick="history.back()">返回</button>
                                         </div>
                                     </div>
@@ -383,10 +386,66 @@
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
 <script type="text/javascript">
+    jQuery(window).load(function () {
+        var id = app.getQueryString("id");
+        if(id!=undefined){
+            $.ajax({
+                url: "/project/wallet/"+id,
+                type: 'GET',
+                timeout: 10000,//超时时间设置为10秒；
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 200) {
+                        var des = result.data.des;
+                        var walletAddress = result.data.walletAddress;
+                        $("#payaddress").val(walletAddress);
+                        $("#paydescription").val(des);
+                    }else{
+                        location.href = "404.html";
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    sweetAlert("网络异常,请稍候再试");
+                    return;
+                }
+            });
+        }
+
+    });
+    function saveWallet() {
+        var id = app.getQueryString("id");
+        var des =  $("#paydescription").val();
+        var walletAddress =  $("#payaddress").val();
+        var walletJson = {id:id,des:des,walletAddress:walletAddress};
+        $.ajax({
+            url: "/project/wallet",
+            type: 'PUT',
+            timeout: 10000,//超时时间设置为10秒；
+            headers: app.createAuthorizationTokenHeader(),
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(walletJson),
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    sweetAlert({title:"",text:"项目钱包信息修改成功！"}, function() {
+                        window.location="../../pages/examples/404.html";});
+                    return;
+                }else{
+                    lsweetAlert("项目钱包信息修改失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试");
+                return;
+            }
+        });
+    }
     // To make Pace works on Ajax calls
     $(document).ajaxStart(function () {
         Pace.restart();
     });
+
     $('.ajax').click(function () {
         $.ajax({
             url: '#', success: function (result) {
