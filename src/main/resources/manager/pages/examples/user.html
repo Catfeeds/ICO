@@ -161,22 +161,15 @@
                                 <tbody id="tableData">
 
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>邮箱账号</th>
-                                    <th>用户昵称</th>
-                                    <th>真实姓名</th>
-                                    <th>手机号</th>
-                                    <th>身份证号</th>
-                                    <th>用户描述</th>
-                                    <th>用户状态</th>
-                                    <th>操作</th>
-                                </tr>
-                                </tfoot>
                             </table>
-                            <div class="btn-group">
-                                <a href="blank.html" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>增加</a>
+                            <!--<div class="btn-group">-->
+                                <!--<a href="blank.html" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>增加</a>-->
+                            <!--</div>-->
+                            <div class="pull-right">
+                                <ul id="pagination" class="pagination">
+                                </ul>
                             </div>
+
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -422,13 +415,83 @@
         });
     });
     jQuery(window).load(function () {
+        pageProject(1);
+    });
+    function pageProject(page) {
+        var page = page;
+        var size = "10";
         $.ajax({
             url: "/user",
             type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            data: {page: page, size: size},
+            dataType: "json",
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
+                    var lastPage = result.data.pages;
+                    $('#pagination li').remove();
+                    if(page>1){
+                        var minpage = page-1;
+                        $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>&laquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
+                    }
+                    if(lastPage>10){
+                        if(page<10){
+                            for(var i = 1;i<=10;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }
+                            }
+                            if(page<lastPage){
+                                var nextpage = page+1;
+                                $("#pagination").append("<li><a onclick='pageProject("+11+")'>...</a></li>");
+                            }
+                        }else {
+                            var i  = page - 4;
+                            var j  = (page+4)>lastPage?lastPage:(page+4);
+                            if(i>1){
+                                var minpage = page-1;
+                                $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>...</a></li>");
+                            }
+                            for(i;i<=j;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }
+                            }
+                            if(j<lastPage){
+                                if((j+1)<lastPage){
+                                    $("#pagination").append("<li><a onclick='pageProject("+(j+1)+")'>...</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+lastPage+")'>...</a></li>");
+                                }
+
+                            }
+                        }
+
+                    }else{
+                        for(var i = 1;i<=lastPage;i++){
+                            if(i==page){
+                                $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                            }else{
+                                $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                            }
+                        }
+                    }
+
+                    if(page<lastPage){
+                        var nextpage = page+1;
+                        $("#pagination").append("<li><a onclick='pageProject("+nextpage+")'>&raquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
+                    }
                     var userList = result.data.list;
+                    $("#tableData").html("");
                     $.each(userList, function (i, item) {
                         $("#tableData").append(
                             "       <tr id='" + item.id + "'>"
@@ -443,18 +506,21 @@
                         if (item.enabled == true) {
                             $("#" + item.id).append(
                                 "<td>可用</td>"
+                            +"        <td>"
+                            + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                            + "           <a href='javascript:dodel(" + item.id + ")' title='禁用' class='glyphicon  glyphicon-ban-circle'></a>"
+                            + "         </td>"
                             );
                         } else {
                             $("#" + item.id).append(
                                 "<td>不可用</td>"
+                                +"        <td>"
+                                + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                                + "           <a href='javascript:doope(" + item.id + ")' title='启用' class='glyphicon glyphicon-ok-circle'></a>"
+                                + "         </td>"
                             );
                         }
-                        $("#" + item.id).append(
-                            "        <td>"
-                            + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
-                            + "           <a href='javascript:dodel(" + item.id + ")' title='刪除' class='glyphicon glyphicon-trash'></a>"
-                            + "         </td>"
-                        );
+
                     });
 
                     console.log(result.data);
@@ -468,30 +534,68 @@
             }
         });
 
-    });
+    }
     function touser(id) {
         location.href = "usereditor.html?id=" + id;
     }
-//    function dodel(id) {
-//        $.ajax({
-//            url: "/token/money/"+id,
-//            type: 'Delete',
-//            headers: app.createAuthorizationTokenHeader(),
-//            success: function (result) {
-//                if (result.code == 200) {
-//                    $("#moneyData").find("#"+id).remove();
-//                    sweetAlert("删除成功!");
-//                    console.log(result.data);
-//                }
-//                else {
-//                    sweetAlert("删除失败!");
-//                }
-//            },
-//            error: function (xhr, type, errerThrown) {
-//                sweetAlert("网络异常,请稍候再试!");
-//            }
-//        });
-//    }
+    function dodel(id) {
+        var userJson = {
+            id: id,
+            enabled: 2
+        };
+        $.ajax({
+            url: "/user/state",
+            type: 'PUT',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(userJson),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    sweetAlert({title:"",text:"用户已禁用！"}, function() {
+                        window.location="user.html";
+                    });
+                }
+                else {
+                    sweetAlert("删除失败");
+                    console.log("删除用户信息失败");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("修改失败,请稍候再试!");
+            }
+        });
+    }
+    function doope(id) {
+        var userJson = {
+            id: id,
+            enabled: 1
+        };
+        $.ajax({
+            url: "/user/state",
+            type: 'PUT',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(userJson),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    sweetAlert({title:"",text:"用户已启用！"}, function() {
+                        window.location="user.html";
+                    });
+                }
+                else {
+                    sweetAlert("启用失败");
+                    console.log("启用用户失败");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("修改失败,请稍候再试!");
+            }
+        });
+    }
 </script>
 </body>
 </html>

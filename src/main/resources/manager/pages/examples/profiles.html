@@ -18,9 +18,11 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-    <link rel="stylesheet" href="../../bootstrap/css/layui.css">
-    <link rel="stylesheet" href="../../bootstrap/css/laydate.css">
-    <link rel="stylesheet" href="../../bootstrap/css/layer.css">
+    <!--时间控件-->
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../layui/css/modules/laydate/laydate.css">
+    <link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css">
+
     <link rel="stylesheet" href="../../css/sweet-alert.css">
 
 
@@ -29,6 +31,11 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+     <!--时间控件-->
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../layui/css/modules/laydate/laydate.css">
+    <link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css">
+    <script src="../../layui/layui.js"></script>
     <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -203,24 +210,20 @@
                                        </div>
                                        <div class="form-group">
                                            <label class="col-sm-2 control-label">开始时间</label>
-                                           <div class="col-sm-3">
-                                               <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
+                                           <div class="col-sm-2">
                                                <div class="layui-inline">
-                                                   <!--<label class="layui-form-label">验证日期</label>-->
                                                    <div class="layui-input-inline">
-                                                       <input name="date" id="prjopentime"   autocomplete="off" class="layui-input"  type="date">
+                                                       <input class="layui-input" placeholder="项目开始时间" id="startTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                    </div>
                                                </div>
                                            </div>
                                        </div>
                                        <div class="form-group">
                                            <label class="col-sm-2 control-label">结束时间</label>
-                                           <div class="col-sm-3">
-                                               <!--<input type="email" class="form-control" id="inputEmail" placeholder="Email">-->
+                                           <div class="col-sm-2">
                                                <div class="layui-inline">
-                                                   <!--<label class="layui-form-label">验证日期</label>-->
                                                    <div class="layui-input-inline">
-                                                       <input name="date" id="prjclosetime"  autocomplete="off" class="layui-input" type="date">
+                                                       <input class="layui-input" placeholder="项目结束时间" id="endTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                    </div>
                                                </div>
                                            </div>
@@ -573,17 +576,19 @@
 <script src="../../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>;
-<script src="../../bootstrap/js/layui.js" charset="utf-8"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="../../scripts/sweet-alert.js"></script>
 <script src="../../scripts/app.js"></script>
-
 <script>
-
+    var endTime;
+    var startTime;
     layui.use('laydate', function(){
         var laydate = layui.laydate;
+
         var start = {
+            format: 'YYYY-MM-DD hh:mm:ss',
+            istime: true, //是否开启时间选择<br/>
             min: laydate.now()
             ,max: '2099-06-16 23:59:59'
             ,istoday: false
@@ -594,6 +599,8 @@
         };
 
         var end = {
+            format: 'YYYY-MM-DD hh:mm:ss',
+            istime: true, //是否开启时间选择<br/>
             min: laydate.now()
             ,max: '2099-06-16 23:59:59'
             ,istoday: false
@@ -602,16 +609,16 @@
             }
         };
 
-        document.getElementById('LAY_demorange_s').onclick = function(){
+        document.getElementById('startTime').onclick = function(){
             start.elem = this;
             laydate(start);
         }
-        document.getElementById('LAY_demorange_e').onclick = function(){
+        document.getElementById('endTime').onclick = function(){
             end.elem = this
             laydate(end);
         }
-    });
 
+    });
     jQuery(window).load(function () {
         //添加可投资项目数据
         $.ajax({
@@ -701,8 +708,8 @@
                         outputTokenMoneyDetailId =  result.data.id;
                         //项目的字段
                         var prjname = $("#prjname").val();
-                        var prjopentime = $("#prjopentime").val();
-                        var prjclosetime = $("#prjclosetime").val();
+                        var prjopentime = $("#startTime").val();
+                        var prjclosetime = $("#endTime").val();
                         var prjproduce = $("#prjproduce").val();
                         var prjcontent = $("#prjcontent").val();
                         var id = $("#userId").val();

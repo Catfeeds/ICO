@@ -419,7 +419,7 @@
                 if (result.code == 200) {
                     var name = $("#name").val(result.data.name);
                     var nameEnShort = $("#nameEnShort").val(result.data.nameEnShort);
-                    var officalInfo= $("#officalInfo").val(result.data.officalInfo);
+                    var officialUrl= $("#officialUrl").val(result.data.officialUrl);
                     var des = $("#des").val(result.data.des);
                     var githubUrl = $("#githubUrl").val(result.data.githubUrl);
                     var twitterUrl = $("#twitterUrl").val(result.data.twitterUrl);
@@ -436,7 +436,7 @@
         $("#updateMoney").click(function () {
             var name = $("#name").val();
             var nameEnShort = $("#nameEnShort").val();
-            var officalInfo= $("#officalInfo").val();
+            var officialUrl= $("#officialUrl").val();
             var des = $("#des").val();
             var githubUrl = $("#githubUrl").val();
             var twitterUrl = $("#twitterUrl").val();
@@ -444,7 +444,7 @@
                 id:moneyId,
                 name: name,
                 nameEnShort: nameEnShort,
-                officalInfo: officalInfo,
+                officialUrl: officialUrl,
                 githubUrl: githubUrl,
                 des: des,
                 twitterUrl: twitterUrl

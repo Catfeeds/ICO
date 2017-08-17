@@ -39,10 +39,13 @@ public class TransactionServiceImpl implements TransactionsService {
         String response = RestTemplateUtil.restTemplate(BITCOIN_HOST+"/address/{address}", null, String.class, params, HttpMethod.GET);
         JSONObject result = JSON.parseObject(response);
         if(result.getIntValue("err_no") == 0) {
-            JSONObject data = result.getJSONObject("data");
-            return Coin.valueOf(data.getLong("balance")).toFriendlyString();
+            try{
+                JSONObject data = result.getJSONObject("data");
+                return Coin.valueOf(data.getLong("balance")).toFriendlyString();
+            }catch (Exception e){
+                return Coin.valueOf(0).toFriendlyString();
+            }
         }
-
         return null;
     }
 

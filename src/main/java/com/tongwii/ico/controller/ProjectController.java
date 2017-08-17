@@ -238,9 +238,6 @@ public class ProjectController {
                     ICOList.add(p);
                 }
                 update(p);
-            }else{
-                //删除残缺项目
-//                projectService.deleteById(p.getId());
             }
         }
         JSONObject jsonObject = new JSONObject();
@@ -310,5 +307,16 @@ public class ProjectController {
        PageInfo pageInfo = new PageInfo(projectList);
 
        return Result.successResult(pageInfo);
+    }
+
+    // test
+    @GetMapping("/test")
+    public Result test(){
+        try{
+            List<Project> projectList = projectService.test();
+            return Result.successResult("查询成功!").add("projectList", projectList);
+        }catch (Exception e){
+            return Result.errorResult("查询失败!");
+        }
     }
 }
