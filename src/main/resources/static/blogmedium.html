@@ -310,14 +310,6 @@
             $("#userName").text(app.getUserInfo().nickName);
         }
 
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            prevText: "<em class='icon-arrow-left9'></em>",
-            nextText: "<em class='icon-arrow-right9'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
-            }
-        });
         // 获取所有公告信息以及通知
         $.ajax({
             url: "/message/getNotifyMessage",
@@ -331,31 +323,16 @@
                     } else {
                         $.each(notifyMessages, function (i, item) {
                             $("#notifyList").append(
-                                    "<li style='width: 100%'><div class='text'><h4><a href='#'>" + item.content + "</a></h4></div></li>"
+                                    "<li><div class='text'><h4><a href='#'>" + item.content + "</a></h4></div></li>"
                             );
                         });
-
-                        $(function () {
-                            var li = $("#notifyList").children('li'),
-                                    len = li.size() - 1,
-                                    n = 0,
-                                    outIndex = 0;
-
-                            function fade() {
-                                li.eq(n).fadeIn(2000);
-                                outIndex = (n - 1) < 0 ? len : n - 1;
-                                li.eq(outIndex).animate({left:'100%'});
-                                li.eq(outIndex).fadeOut();
-                                if (n < len) {
-                                    n++
-                                } else {
-                                    n = 0;
-                                }
+                        jQuery('.flexslider').flexslider({
+                            animation: "slide",
+                            prevText: "<em class='icon-arrow-left9'></em>",
+                            nextText: "<em class='icon-arrow-right9'></em>",
+                            start: function (slider) {
+                                jQuery('body').removeClass('loading');
                             }
-                            fade();
-                            setInterval(function () {
-                                fade();
-                            }, 10000);
                         });
                     }
                 } else {
@@ -378,7 +355,7 @@
 
     function pageNews(page) {
         var page = page;
-        var size = "2";
+        var size = "4";
         $.ajax({
             url: "/message/getNewsMessage",
             type: 'GET',

@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="assets/css/theme-blog.css">
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
-    <link rel="stylesheet" href="assets/css/default.css">
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -38,6 +37,7 @@
     <link href="assets/css/iconmoon.css" rel="stylesheet">
     <link href="assets/css/themetypo.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
+    <link href="assets/css/sweet-alert.css" rel="stylesheet">
     <link href="assets/css/theme-elements_0529.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -192,7 +192,7 @@
                                 <form name="" action="https://www.icoage.com/?p=invest&amp;do=invest" class="form-horizontal mb-lg" method="post">
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            <label class="col-md-10" style="padding-left:40px;">单用户以太币最低投资金额为 <span style="font-size:18px;font-weight:bold;color:#FF8000;">.01</span> ETH</label><label class="col-md-10" style="padding-left:40px;"><li><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></li></label>
+                                            <label class="col-md-10" style="padding-left:40px;">单用户以太币最低投资金额为 <span style="font-size:18px;font-weight:bold;color:#FF8000;">.01</span> ETH</label><label class="col-md-10" style="padding-left:40px;"><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></label>
                                         </div>
                                         <input type="hidden" value="2" name="investtype" id="investtype2">
                                         <div class="form-group">
@@ -239,10 +239,11 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="alert alert-info fade in nomargin">
-                        </div>
-                        <div class="col-md-12" style="margin-top: -20px;">
-                            <table class="table table-striped" >
+                        <header class="panel-heading">
+                            <h2 class="panel-title">ICO项目信息</h2>
+                        </header>
+                        <div class="col-md-12" >
+                            <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th>时间</th>
@@ -336,6 +337,7 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
 <script src="assets/scripts/app.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
@@ -377,7 +379,8 @@
                         });
                     }
                 }else{
-                    location.href = "404.html";
+                    sweetAlert(result.message);
+//                    location.href = "404.html";
                 }
             },
             error: function (xhr, type, errerThrown) {

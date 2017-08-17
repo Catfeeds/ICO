@@ -184,15 +184,14 @@
                                         <label class="col-md-3 control-label">新手机号码</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input type="text" id="mobile" class="form-control">
+                                                <input type="text" id="mobile" class="form-control" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3  control-label">验证码</label>
                                         <div class="col-md-3">
-                                            <input type="text" id="verifycode" class="form-control"
-                                                   style="width:140px;"/>
+                                            <input type="text" id="verifycode" class="form-control" style="width:140px;" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="6"/>
                                         </div>
                                         <div class="col-md-2">
                                             <input type="button" id="sendsms"
