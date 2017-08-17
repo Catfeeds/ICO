@@ -545,7 +545,7 @@
 <script src="assets/scripts/tokenmoney.js"></script>
 <script>
     jQuery(window).load(function () {
-        console.log(getBitCoinBalance("1KirQsnVEo6LCxcBvV7eQcmVoyRsXfRmrE"));
+//        console.log(getBitCoinBalance("1KirQsnVEo6LCxcBvV7eQcmVoyRsXfRmrE"));
         if (app.getUserInfo().emailAccount == null) {
             $("#personInfo").css('display', 'none');
             $("#contect").css('display', 'none');
@@ -674,11 +674,15 @@
                         location.href = "finishICO.html?id=" + id;
                     });
                 } else {
-                    location.href = "404.html";
+                    sweetAlert(result.message);
+                    return;
+//                    location.href = "404.html";
                 }
             },
             error: function (xhr, type, errerThrown) {
-                location.href = "404.html";
+//                location.href = "404.html";
+                sweetAlert("网络异常，请稍后再试!");
+                return;
             }
         });
 

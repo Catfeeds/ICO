@@ -18,4 +18,11 @@ public interface UserWalletService extends Service<UserWallet> {
      * @return
      */
     List<Object> findWalletByUserId(Integer userId);
+
+    /**
+     * 根据用户id查询用户钱包信息
+     * @param userId
+     * @return
+     */
+    List<UserWallet> findWalletByUser(Integer userId);
 }

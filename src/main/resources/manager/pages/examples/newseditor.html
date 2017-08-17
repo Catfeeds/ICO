@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+    <link rel="stylesheet" href="../../css/sweet-alert.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -128,7 +128,7 @@
         <section class="content-header">
             <h1>
                 新闻/公告编辑
-                <small>新闻、公告每一天在这里发生 </small>
+                <small>新闻、公告每一天在这里发生</small>
             </h1>
         </section>
         <section class="content">
@@ -141,40 +141,31 @@
                         </ul>
                         <div class="tab-content">
                             <div class="active tab-pane" id="set">
-                                <form class="form-horizontal">
+                                <form class="form-horizontal" id="myform">
                                     <div class="box box-info">
                                         <div class="box-header">
-                                            <h3 class="box-title">新闻制造从这里开始
-                                            </h3>
-                                            <!-- tools box -->
-                                            <div class="pull-right box-tools">
-                                                <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                                    <i class="fa fa-minus"></i></button>
-                                                <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
-                                                    <i class="fa fa-times"></i></button>
-                                            </div>
+                                            <h3 class="box-title">新闻制造从这里开始</h3>
                                         </div>
                                         <br>
                                         <br>
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">新闻标题</label>
-                                            <div class="col-sm-4" style="margin-left: 10px">
-                                                <input type="text" class="form-control" id="name" name="name"
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="title"
                                                        placeholder="新闻标题">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">新闻描述</label>
-                                            <div class="col-sm-10" style="margin-left: 10px">
-                                                <textarea type="text" id="nameCn" name="chinesename" class="form-control" style="width:98%"
-                                                          placeholder="简单的对这则新闻做一个概括"></textarea>
+                                            <label class="col-sm-1 control-label">描述</label>
+                                            <div class="col-sm-10" style="height: 100px">
+                                                <input type="text" class="form-control" id="descript"
+                                                       placeholder="简单的对这则新闻做一个概括">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">上传图片</label>
                                             <div class="col-sm-4" style="margin-left: 10px">
                                                 <input name="file" class="layui-upload-file" type="file">
-
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -182,17 +173,22 @@
                                             <div class="col-md-10">
                                                 <div class="box-body pad">
                                                     <form>
-                                                        <textarea id="editor" name="content" placeholder="项目详情" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                                        <textarea id="editor" name="content" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-5 col-sm-10">
-                                                <button type="submit" class="btn btn-danger">提交</button>
+                                                <button type="button" class="btn btn-danger" onclick="newsCommit()">
+                                                    提交
+                                                </button>
+                                                <button type="button" class="btn btn-danger"
+                                                        style="margin-left: 25px"
+                                                        onclick="cancleNews()">取消
+                                                </button>
                                             </div>
                                         </div>
-
                                     </div>
                                 </form>
                             </div>
@@ -200,23 +196,23 @@
                                 <form class="form-horizontal">
                                     <div class="box">
                                         <div class="box-header">
-                                            <h3 class="box-title">公告编辑器
-                                            </h3>
-                                            <div class="pull-right box-tools">
-                                                <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                                    <i class="fa fa-minus"></i></button>
-                                                <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
-                                                    <i class="fa fa-times"></i></button>
-                                            </div>
+                                            <h3 class="box-title">公告编辑器</h3>
                                         </div>
                                         <div class="box-body pad">
                                             <form>
-                                               <textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                                <textarea class="textarea" placeholder="Place some text here"
+                                                          id="notifyContent"
+                                                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                             </form>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-5 col-sm-10">
-                                                <button type="submit" class="btn btn-danger">提交</button>
+                                                <button type="button" class="btn btn-danger" onclick="notifyCommit()">
+                                                    提交
+                                                </button>
+                                                <button type="button" class="btn btn-danger" style="margin-left: 25px"
+                                                        onclick="cancleNotify()">取消
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -244,13 +240,127 @@
 <!-- KindEditor -->
 <script charset="utf-8" src="../../plugins/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="../../plugins/kindeditor/lang/zh-CN.js"></script>
+<script src="../../scripts/sweet-alert.js"></script>
+<script src="../../scripts/app.js"></script>
 <script>
+    var editor;
     $(function () {
-        var editor;
         KindEditor.ready(function(K) {
             editor = K.create('#editor');
         });
     });
+    function newsCommit() {
+        var formData = new FormData($("#myform")[0]);
+        var pictureUrl = null;
+        $.ajax({
+            url: '/file',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if(result.code == 200){
+                    pictureUrl = result.data.path;
+                }else{
+                    pictureUrl = null;
+                }
+            },
+            error: function (returndata) {
+                sweetAlert("网络异常，请稍后再试!");
+            }
+        });
+        var title = $("#title").val();
+        var descript = $("#descript").val();
+        var createTime = new Date();
+        var content = editor.html();
+        var type = 1;
+        if (title.trim().length <= 0) {
+            sweetAlert("标题内容不可为空!");
+            return;
+        }
+        if (descript.trim().length <= 0) {
+            sweetAlert("新闻描述不可为空!");
+            return;
+        }
+        if (content.trim().length <= 0) {
+            sweetAlert("新闻内容不可为空!");
+            return;
+        }
+        if(pictureUrl.trim().length <= 0){
+             sweetAlert("请上传至少一张图片!");
+             return;
+         }
+        var newsJson = {
+            title: title,
+            des: descript,
+            createDate: createTime,
+            type: type,
+            content: content,
+            pictureUrl: pictureUrl
+        };
+        $.ajax({
+            url: "/message/insertMessage", //后台接口
+            type: 'POST',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(newsJson),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            headers:app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    sweetAlert(result.message);
+                    return;
+                } else {
+                    sweetAlert(result.message);
+                    return;
+                }
+            },
+            error: function (data, status, e) {
+                sweetAlert("网络异常,请稍后再试!");
+            }
+        });
+    }
+    function notifyCommit() {
+        var createTime = new Date();
+        var content = $("#notifyContent").val();
+        var type = 2;
+        if (content.trim().length <= 0) {
+            sweetAlert("公告内容不可为空!");
+            return;
+        }
+        var notifyJson = {content: content, createDate: createTime, type: type};
+        $.ajax({
+            url: "/message/insertMessage", //后台接口
+            type: 'POST',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(notifyJson),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    sweetAlert(result.message);
+//                    return;
+                } else {
+                    sweetAlert(result.message);
+//                    return;
+                }
+            },
+            error: function (data, status, e) {
+                sweetAlert("网络异常,请稍后重试!");
+            }
+        });
+    }
+    function cancleNews() {
+        $("#title").text("");
+        $("#descript").text("");
+        $("#content").text("");
+    }
+    function cancleNotify() {
+        $("#notifyContent").text("");
+    }
 </script>
 
 </body>

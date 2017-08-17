@@ -25,6 +25,8 @@ public class UserWalletController {
     @Autowired
     private TokenMoneyService tokenMoneyService;
 
+    private static final Integer BTC = 1;
+    private static final Integer ETH = 2;
 
     @PostMapping
     public Result add(@RequestBody UserWallet userWallet) {
@@ -61,5 +63,28 @@ public class UserWalletController {
             }
         }
         return Result.successResult("获取用户钱包成功").add("userWallets", userWallets);
+    }
+
+    @GetMapping("/findWalletByUser")
+    public Result findWalletByUser() {
+        Integer userId = ContextUtils.getUserId();
+        try{
+            List<UserWallet> userWallets = userWalletService.findWalletByUser(userId);
+            UserWallet BTCWallet = new UserWallet();
+            UserWallet ETHWallet = new UserWallet();
+            for(int i=0;i<userWallets.size();i++){
+                // 获取比特币的信息
+                if(userWallets.get(i).getTokenMoneyId() == BTC){
+                    BTCWallet = userWallets.get(i);
+                }
+                if(userWallets.get(i).getTokenMoneyId() == ETH){
+                    ETHWallet = userWallets.get(i);
+                }
+            }
+            return Result.successResult().add("BTCWallet",BTCWallet).add("ETHWallet", ETHWallet);
+        }catch (Exception e){
+            return Result.errorResult("用户钱包获取失败!");
+        }
+
     }
 }
