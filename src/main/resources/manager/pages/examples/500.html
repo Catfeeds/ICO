@@ -144,16 +144,6 @@
                             <h3 class="box-title">交易记录</h3>
                         </div>
 
-                        <form class="search-form">
-                            <div class="input-group" style="width: 20%;float: right;">
-                                <input type="text" name="search" class="form-control" placeholder="搜索">
-                                <div class="input-group-btn">
-                                    <button type="submit" name="submit" class="btn btn-warning btn-flat"><i
-                                            class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
                         <br>
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">
@@ -403,22 +393,24 @@
 <script>
     jQuery(window).load(function () {
         var coinType = app.getQueryString("coinType");
-        pageProject(1,coinType);
+        var address = app.getQueryString("address");
+        pageProject(1,coinType,address);
     });
-    function pageProject(page,coinType) {
+    function pageProject(page,coinType,address) {
         var page = page;
         var size = "10";
         var coinType = coinType;
+        var address = address;
         $.ajax({
             url: "/project/getBitCoinAddressTransaction",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
-            data: {address: "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4"},
+            data: {address: address},
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
                     var jyjlList = result.data;
-                    var startRow = page*size;
+                    var startRow = (page*size)-size;
                     var toalPage = Math.ceil((jyjlList.length)/size);
                     var endRow1 = parseInt(startRow)+parseInt(size);
                     var endRow = endRow1>jyjlList.length?jyjlList.length:endRow1
@@ -426,7 +418,7 @@
                     $('#pagination li').remove();
                     if(page>1){
                         var minpage = page-1;
-                        $("#pagination").append("<li><a onclick='pageProject("+minpage+","+coinType+")'>&laquo;</a></li>");
+                        $("#pagination").append("<li><a onclick='pageProject(\""+minpage+"\",\""+coinType+"\",\""+address+"\")'>&laquo;</a></li>");
                     }else{
                         $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
                     }
@@ -434,49 +426,49 @@
                         if(page<10){
                             for(var i = 1;i<=10;i++){
                                 if(i==page){
-                                    $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
                                 }else{
-                                    $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                                    $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
                                 }
                             }
                             if(page<toalPage){
                                 var nextpage = page+1;
-                                $("#pagination").append("<li><a onclick='pageProject(\""+11+"\",\""+coinType+"\")'>...</a></li>");
+                                $("#pagination").append("<li><a onclick='pageProject(\""+11+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
                             }
                         }else {
                             var i  = page - 4;
                             var j  = (page+4)>toalPage?toalPage:(page+4);
                             if(i>1){
                                 var minpage = page-1;
-                                $("#pagination").append("<li><a onclick='pageProject(\""+minpage+"\",\""+coinType+"\")'>...</a></li>");
+                                $("#pagination").append("<li><a onclick='pageProject(\""+minpage+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
                             }
                             for(i;i<=j;i++){
                                 if(i==page){
-                                    $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
                                 }else{
-                                    $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                                    $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
                                 }
                                 if(j<toalPage){
                                     if((j+1)<toalPage){
-                                        $("#pagination").append("<li><a onclick='pageProject(\""+(j+1)+"\",\""+coinType+"\")'>...</a></li>");
+                                        $("#pagination").append("<li><a onclick='pageProject(\""+(j+1)+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
                                     }else{
-                                        $("#pagination").append("<li><a onclick='pageProject(\""+toalPage+"\",\""+coinType+"\")'>...</a></li>");
+                                        $("#pagination").append("<li><a onclick='pageProject(\""+toalPage+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
                                     }
                                 }
                             }
                         }}else{
                         for(var i = 1;i<=toalPage;i++){
                             if(i==page){
-                                $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                                $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
                             }else{
-                                $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                                $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
                             }
                         }
                     }
 
                     if(page<toalPage){
-                        var nextpage = page+1;
-                        $("#pagination").append("<li><a onclick='pageProject(\""+nextpage+"\",\""+coinType+"\")'>&raquo;</a></li>");
+                        var nextpage = parseInt(page)+1;
+                        $("#pagination").append("<li><a onclick='pageProject(\""+nextpage+"\",\""+coinType+"\",\""+address+"\")'>&raquo;</a></li>");
                     }else{
                         $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
                     }
