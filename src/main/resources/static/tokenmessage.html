@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="assets/css/theme-blog.css">
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
-    <link rel="stylesheet" href="assets/css/default.css">
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -38,6 +37,7 @@
     <link href="assets/css/iconmoon.css" rel="stylesheet">
     <link href="assets/css/themetypo.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
+    <link href="assets/css/sweet-alert.css" rel="stylesheet">
     <link href="assets/css/theme-elements_0529.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -337,6 +337,7 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
 <script src="assets/scripts/app.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
@@ -378,7 +379,8 @@
                         });
                     }
                 }else{
-                    location.href = "404.html";
+                    sweetAlert(result.message);
+//                    location.href = "404.html";
                 }
             },
             error: function (xhr, type, errerThrown) {
