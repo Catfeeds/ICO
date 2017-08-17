@@ -432,7 +432,7 @@
                     $("#realName").val(result.data.realName);
                     $("#phone").val(result.data.phone);
                     $("#des").val(result.data.des);
-                    $("#idCard").val(result.data.idCardd);
+                    $("#idCard").val(result.data.idCard);
                     if(result.data.enabled == true) {
                         $("#select_id").find("option[text='正常']").attr("selected",true);
                     } else {
@@ -505,7 +505,9 @@
                 headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
                     if (result.code == 200) {
-                        sweetAlert("信息修改成功!");
+                        sweetAlert({title:"",text:"信息修改成功！"}, function() {
+                            window.location="user.html";
+                        });
                     }
                     else {
                         sweetAlert("修改失败，用户信息已存在！");

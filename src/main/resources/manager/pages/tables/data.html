@@ -385,16 +385,6 @@
             }
         });
     }
-    $(function () {
-//        $("#example1").DataTable({
-//            "paging": true,
-//            "lengthChange": false,
-//            "searching": true,
-//            "ordering": true,
-//            "info": true,
-//            "autoWidth": false
-//        });
-    });
     function dodel(id) {
         var aa = app.createAuthorizationTokenHeader();
         var projectJson = {id:id,state:-1};
@@ -407,7 +397,9 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert("删除成功!");
+                    sweetAlert({title:"",text:"删除成功！"}, function() {
+                        window.location="data.html";
+                    });
                 }
                 else {
                     sweetAlert("删除失败!");
