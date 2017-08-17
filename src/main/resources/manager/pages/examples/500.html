@@ -168,6 +168,11 @@
                                 <tbody id="tableData">
                                 </tbody>
                             </table>
+                            <div class="pull-right">
+                                <ul id="pagination" class="pagination">
+
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -402,7 +407,7 @@
     });
     function pageProject(page,coinType) {
         var page = page;
-        var size = "4";
+        var size = "10";
         var coinType = coinType;
         $.ajax({
             url: "/project/getBitCoinAddressTransaction",
@@ -413,36 +418,104 @@
             success: function (result) {
                 if (result.code == 200) {
                     var jyjlList = result.data;
-                    $.each(jyjlList, function (i, item) {
-                        //交易金额
-                        var inputs_value = item.inputs_value;
-                        //币种
-                        var addresses = "";
-                        var inputs = item.inputs;
-                        //获取用户地址
-                        $.each(inputs, function (j, input) {
-                            var prev_address =  input.prev_addresses;
-                            $.each(prev_address, function (k, prv) {
-                                if(addresses ==""){
-                                    addresses =prv;
+                    var startRow = page*size;
+                    var toalPage = Math.ceil((jyjlList.length)/size);
+                    var endRow1 = parseInt(startRow)+parseInt(size);
+                    var endRow = endRow1>jyjlList.length?jyjlList.length:endRow1
+                    //分页
+                    $('#pagination li').remove();
+                    if(page>1){
+                        var minpage = page-1;
+                        $("#pagination").append("<li><a onclick='pageProject("+minpage+","+coinType+")'>&laquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
+                    }
+                    if(toalPage>10){
+                        if(page<10){
+                            for(var i = 1;i<=10;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
                                 }else{
-                                    addresses = addresses+","+prv;
+                                    $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
                                 }
-                            });
-                        });
-                        //获取交易时间
-                        var createTime = item.created_at;
-                        if(createTime!=undefined){
-                            createTime =   datetimeFormat_2(createTime);
+                            }
+                            if(page<toalPage){
+                                var nextpage = page+1;
+                                $("#pagination").append("<li><a onclick='pageProject(\""+11+"\",\""+coinType+"\")'>...</a></li>");
+                            }
+                        }else {
+                            var i  = page - 4;
+                            var j  = (page+4)>toalPage?toalPage:(page+4);
+                            if(i>1){
+                                var minpage = page-1;
+                                $("#pagination").append("<li><a onclick='pageProject(\""+minpage+"\",\""+coinType+"\")'>...</a></li>");
+                            }
+                            for(i;i<=j;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                                }
+                                if(j<toalPage){
+                                    if((j+1)<toalPage){
+                                        $("#pagination").append("<li><a onclick='pageProject(\""+(j+1)+"\",\""+coinType+"\")'>...</a></li>");
+                                    }else{
+                                        $("#pagination").append("<li><a onclick='pageProject(\""+toalPage+"\",\""+coinType+"\")'>...</a></li>");
+                                    }
+                                }
+                            }
+                        }}else{
+                        for(var i = 1;i<=toalPage;i++){
+                            if(i==page){
+                                $("#pagination").append("<li class='active'><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                            }else{
+                                $("#pagination").append("<li><a onclick='pageProject(\""+i+"\",\""+coinType+"\")'>"+i+"</a></li>");
+                            }
                         }
-                        $("#tableData").append(
-                            "       <tr >"
-                            +"         <td>" + addresses + "</td>"
-                            +"         <td>" + inputs_value + "</td>"
-                            +"         <td>" + coinType + "</td>"
-                            +"         <td>" +createTime+ "</td>"
-                            +"       </tr>"
-                        );
+                    }
+
+                    if(page<toalPage){
+                        var nextpage = page+1;
+                        $("#pagination").append("<li><a onclick='pageProject(\""+nextpage+"\",\""+coinType+"\")'>&raquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
+                    }
+
+                    $("#tableData").html("");
+                    //显示数据
+                    $.each(jyjlList, function (i, item) {
+                        if(i>=startRow&&i<endRow){
+                            //交易金额
+                            var inputs_value = item.inputs_value;
+                            //币种
+                            var addresses = "";
+                            var inputs = item.inputs;
+                            //获取用户地址
+                            $.each(inputs, function (j, input) {
+                                var prev_address =  input.prev_addresses;
+                                $.each(prev_address, function (k, prv) {
+                                    if(addresses ==""){
+                                        addresses =prv;
+                                    }else{
+                                        addresses = addresses+","+prv;
+                                    }
+                                });
+                            });
+                            //获取交易时间
+                            var createTime = item.created_at;
+                            if(createTime!=undefined){
+                                createTime =   datetimeFormat_2(createTime);
+                            }
+                            $("#tableData").append(
+                                "       <tr >"
+                                +"         <td>" + addresses + "</td>"
+                                +"         <td>" + inputs_value + "</td>"
+                                +"         <td>" + coinType + "</td>"
+                                +"         <td>" +createTime+ "</td>"
+                                +"       </tr>"
+                            );
+                        }
+
                     });
                     console.log(result.data);
                 }

@@ -256,13 +256,10 @@ public class ProjectController {
      * @return
      */
     @GetMapping("/getBitCoinAddressTransaction")
-    public Result getBitCoinAddressTransaction(@RequestParam(required = true,defaultValue = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4") String  address,@RequestParam(required = true,defaultValue = "1") Integer page,
-                                               @RequestParam(required = true,defaultValue = "1") Integer size){
+    public Result getBitCoinAddressTransaction(@RequestParam(required = true,defaultValue = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4") String  address){
         JSONArray coin = transactionsService.getBitCoinAddressTransaction(address);
         JSONArray data = new JSONArray();
-        int  i  = page*size;
-        int j = (page*size)+size;
-        for(;i<j;i++){
+        for(int i = 0;i<coin.size();i++){
             JSONObject jsonObj =  coin.getJSONObject(i);
             String inputsvalue =  Coin.valueOf(jsonObj.getLong("inputs_value")).toFriendlyString();
             jsonObj.put("inputs_value",inputsvalue);
