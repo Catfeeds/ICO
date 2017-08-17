@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="assets/css/theme-blog.css">
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
-    <link rel="stylesheet" href="assets/css/default.css">
+    <link rel="stylesheet" href="assets/css/sweet-alert.css">
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -29,7 +29,6 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-theme.css" rel="stylesheet">
     <link href="assets/css/language-selector-remove-able-css.css" rel="stylesheet">
-    <link href="assets/css/flexslider.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/plugin.css" rel="stylesheet">
     <link href="assets/css/menu.css" rel="stylesheet">
@@ -240,26 +239,7 @@
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">地址类型</label>
                                                             <div class="col-sm-10">
-                                                                <select class="form-control" name="a_coin" required>
-                                                                    <option value='iou'>Tokex(直通充值)</option>
-                                                                    <option value='btc'>Bitcoin(btc)</option>
-                                                                    <option value='eth'>Ethereum(eth)</option>
-                                                                    <option value='qtum'>Qtum(qtum)</option>
-                                                                    <option value='trst'>WeTrust(trst)</option>
-                                                                    <option value='rlc'>RLC(rlc)</option>
-                                                                    <option value='gno'>Gnosis(gno)</option>
-                                                                    <option value='ins'>inChain(ins)</option>
-                                                                    <option value='ant'>Aragon(ant)</option>
-                                                                    <option value='crea'>Creativechain(crea)
-                                                                    </option>
-                                                                    <option value='fid'>Bitfid(fid)</option>
-                                                                    <option value='mgo'>MobileGo(mgo)</option>
-                                                                    <option value='snt'>Status(snt)</option>
-                                                                    <option value='pay'>Tenx(pay)</option>
-                                                                    <option value='omg'>OmiseGo(omg)</option>
-                                                                    <option value='eos'>EOS(eos)</option>
-                                                                    <option value='storj'>Storj(storj)</option>
-                                                                    <option value='taas'>Taas(taas)</option>
+                                                                <select class="form-control" id="cionType">
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -409,7 +389,7 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
 <script src="assets/scripts/app.js"></script>
-<script src="assets/scripts/jquery.flexslider-min.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
@@ -424,14 +404,29 @@
                 $("#officalInfo").css('display', 'block');
             }
         }
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            prevText: "<em class='icon-arrow-left9'></em>",
-            nextText: "<em class='icon-arrow-right9'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
+
+        $.ajax({
+            url: "/token/money/findAll",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (result) {
+                if(result.code == 200){
+                    $.each(result.data, function (i, item) {
+                        $("#cionType").append(
+                                "<option value='" + item.id + "'>" + item.name
+                                + "</option>"
+                        );
+                    });
+                    console.log(result.data);
+                }else{
+                    sweetAlert(result.message);
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                alert('网络异常,请稍候再试');
             }
         });
+
         $("#sign_out").click(function () {
             $("#personInfo").css('display', 'none');
             app.setUserInfo({});

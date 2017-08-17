@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="assets/css/theme-blog.css">
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
-    <link rel="stylesheet" href="assets/css/default.css">
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -29,7 +28,6 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-theme.css" rel="stylesheet">
     <link href="assets/css/language-selector-remove-able-css.css" rel="stylesheet">
-    <link href="assets/css/flexslider.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/plugin.css" rel="stylesheet">
     <link href="assets/css/menu.css" rel="stylesheet">
@@ -93,7 +91,8 @@
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
                                     <ul class="dropdown">
-                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a></li>
+                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a>
+                                        </li>
                                     </ul>
                                     <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
@@ -148,7 +147,7 @@
                                     <a href="addressmanage.html"> 提现地址管理</a>
                                 </li>
                                 <!--<li>-->
-                                    <!--<a href="rmbpush.html"> 人民币提现</a>-->
+                                <!--<a href="rmbpush.html"> 人民币提现</a>-->
                                 <!--</li>-->
                                 <li class="active">
                                     <a href="securitycenter.html"> 安全中心</a>
@@ -160,7 +159,7 @@
                                             <a href="revise.html"> 修改登录密码</a>
                                         </li>
                                         <!--<li>-->
-                                            <!--<a href="index.html"> 修改交易密码</a>-->
+                                        <!--<a href="index.html"> 修改交易密码</a>-->
                                         <!--</li>-->
                                         <li>
                                             <a href="addphone.html"> 添加手机号码</a>
@@ -175,7 +174,7 @@
                     </div>
 
                     <div class="col-md-9">
-                                <div class="col-md-12" id="warningInfo" style="display: block">
+                        <div class="col-md-12" id="warningInfo" style="display: block">
                             <div class="featured-box featured-box-primary featured-box-text-left">
                                 <div class="box-content">
                                     <div class="row">
@@ -242,26 +241,8 @@
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">地址类型</label>
                                                             <div class="col-sm-10">
-                                                                <select class="form-control" name="a_coin" required>
-                                                                    <option value='iou'>Tokex(直通充值)</option>
-                                                                    <option value='btc'>Bitcoin(btc)</option>
-                                                                    <option value='eth'>Ethereum(eth)</option>
-                                                                    <option value='qtum'>Qtum(qtum)</option>
-                                                                    <option value='trst'>WeTrust(trst)</option>
-                                                                    <option value='rlc'>RLC(rlc)</option>
-                                                                    <option value='gno'>Gnosis(gno)</option>
-                                                                    <option value='ins'>inChain(ins)</option>
-                                                                    <option value='ant'>Aragon(ant)</option>
-                                                                    <option value='crea'>Creativechain(crea)
-                                                                    </option>
-                                                                    <option value='fid'>Bitfid(fid)</option>
-                                                                    <option value='mgo'>MobileGo(mgo)</option>
-                                                                    <option value='snt'>Status(snt)</option>
-                                                                    <option value='pay'>Tenx(pay)</option>
-                                                                    <option value='omg'>OmiseGo(omg)</option>
-                                                                    <option value='eos'>EOS(eos)</option>
-                                                                    <option value='storj'>Storj(storj)</option>
-                                                                    <option value='taas'>Taas(taas)</option>
+                                                                <select class="form-control" name="a_coin"
+                                                                        id="cionType">
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -279,13 +260,15 @@
                                                             <div class="col-sm-3">
                                                                 <input type="text" name="verifycode" value=""
                                                                        class="form-control" style="width:140px;"
-                                                                       required onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="6"/>
+                                                                       required
+                                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                                                                       maxlength="6"/>
                                                             </div>
                                                             <div class="col-sm-7">
                                                                 <input type="button" id="sendsms" name="sendsms"
                                                                        class="cs-bgcolor btn"
                                                                        style="color: #ffffff; font-weight: bold;"
-                                                                       onclick="javascript:sendSMS();myrefresh();"
                                                                        value="发送手机验证码"/>
                                                             </div>
                                                         </div>
@@ -296,7 +279,8 @@
                                                                 data-dismiss="modal">
                                                             取消
                                                         </button>
-                                                        <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="递交信息"/>
+                                                        <input type="button" class="cs-bgcolor btn"
+                                                               style="color: #ffffff; font-weight: bold;" value="递交信息"/>
                                                     </div>
                                                 </form>
                                             </div>
@@ -308,7 +292,7 @@
                                 <header class="panel-heading">
                                     <h2 class="panel-title">新建提现地址记录</h2>
                                 </header>
-                                <table class="table table-striped" >
+                                <table class="table table-striped">
                                     <thead>
                                     <tr>
                                         <th>地址说明</th>
@@ -408,7 +392,6 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
 <script src="assets/scripts/app.js"></script>
-<script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
@@ -423,25 +406,38 @@
                 $("#officalInfo").css('display', 'block');
             }
         }
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            prevText: "<em class='icon-arrow-left9'></em>",
-            nextText: "<em class='icon-arrow-right9'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
+
+        $.ajax({
+            url: "/token/money/findAll",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (result) {
+                if (result.code == 200) {
+                    $.each(result.data, function (i, item) {
+                        $("#cionType").append(
+                                "<option value='" + item.id + "'>" + item.name
+                                + "</option>"
+                        );
+                    });
+                    console.log(result.data);
+                } else {
+                    sweetAlert(result.message);
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                alert('网络异常,请稍候再试');
             }
         });
-        $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
-        $("#signOut").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
-
+    });
+    $("#sign_out").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
+    });
+    $("#signOut").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
     });
 </script>
 </body>

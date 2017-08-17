@@ -29,7 +29,6 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-theme.css" rel="stylesheet">
     <link href="assets/css/language-selector-remove-able-css.css" rel="stylesheet">
-    <link href="assets/css/flexslider.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/plugin.css" rel="stylesheet">
     <link href="assets/css/menu.css" rel="stylesheet">
@@ -203,10 +202,10 @@
                             <h2><strong>数字代币ICO</strong></h2>
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label" style="text-align: center;" id="numMoney">目前持有数字代币
-                                        BTC：<span class="strong1" style="color: darkorange">0.00000</span> |
-                                        ETH：<span class='strong1' style="color: darkorange">0.00000</span> |
-                                        Qtum：<span class='strong1' style="color:darkorange">0.00000</span>
+                                    <label class="col-md-12 control-label" style="text-align: center;" id="numMoney">目前持有数字代币:
+                                        <!--<span class="strong1" style="color: darkorange">0.00000</span> |
+                                        <span class='strong1' style="color: darkorange">0.00000</span> |
+                                        <span class='strong1' style="color:darkorange">0.00000</span>-->
                                     </label>
                                 </div>
                             </div>
@@ -322,7 +321,6 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
 <script src="assets/scripts/app.js"></script>
-<script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
@@ -339,14 +337,6 @@
                 $("#officalInfo").css('display', 'block');
             }
         }
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            prevText: "<em class='icon-arrow-left9'></em>",
-            nextText: "<em class='icon-arrow-right9'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
-            }
-        });
         $("#sign_out").click(function () {
             $("#personInfo").css('display', 'none');
             app.setUserInfo({});
@@ -358,11 +348,14 @@
             location.href = "index.html";
         });
         //添加用户钱包信息
-        var Wallet = "目前持有数字代币: ";
+//        var Wallet = "目前持有数字代币: ";
         $.each(userWallet, function (i, item) {
-            Wallet = Wallet + item.tokenMoneyEnName + ":";
+//            Wallet = +" "+ item.tokenMoneyEnName + ":"+item.walletBalance+"|";
+            $("#numMoney").append(
+                    "<span class='strong1'>"+ item.tokenMoneyEnName + ":"+"<span class='strong1' style='color: #fe6500'>"+item.walletBalance+"</span></span> | "
+            );
         });
-        $("#numMoney").text(Wallet);
+//        $("#numMoney").text(Wallet);
         //添加可投资项目数据
         $.ajax({
             url: "/project/findProjectsAndSort",
