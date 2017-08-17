@@ -330,9 +330,9 @@
                         var walletAddress = "";
                         $.each(projectWallets, function (i, item) {
                             if(walletAddress==""){
-                                walletAddress = item.walletAddress.name;
+                                walletAddress = item.des;
                             }else{
-                                walletAddress =","+ item.walletAddress.name;
+                                walletAddress =","+ item.des;
                             }
                         });
                         //项目状态
