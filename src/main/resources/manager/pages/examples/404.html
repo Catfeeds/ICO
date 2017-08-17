@@ -499,7 +499,7 @@
                                                 + "         <td>" + wallet.walletAddress + "</td>"
                                                 + "         <td>" + wallet.des + "</td>"
                                                 + "         <td>" + token.tokenMoney.name + "</td>"
-                                               + "         <td>" + "<a href='500.html'>交易记录</a>" + "</td>"
+                                               + "         <td>" + "<a href='500.html?address="+ wallet.walletAddress+"&coinType="+token.tokenMoney.nameEnShort+"'>交易记录</a>" + "</td>"
                                                 + "        <td>"
                                                 + "           <a href='javascript:towallet(" + wallet.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
                                                 + "           <a href='javascript:dodel(" + wallet.id + ")' title='刪除' class='glyphicon glyphicon-trash'></a>"

@@ -17,6 +17,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+    <script src="../../scripts/app.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -158,7 +159,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>用户昵称</th>
+                                    <th>用户钱包地址</th>
                                     <th>打入金额</th>
                                     <th>币种类别</th>
                                     <th>交易时间</th>
@@ -396,11 +397,13 @@
 <!-- page script -->
 <script>
     jQuery(window).load(function () {
-        pageProject(1);
+        var coinType = app.getQueryString("coinType");
+        pageProject(1,coinType);
     });
-    function pageProject(page) {
+    function pageProject(page,coinType) {
         var page = page;
         var size = "4";
+        var coinType = coinType;
         $.ajax({
             url: "/project/getBitCoinAddressTransaction",
             type: 'GET',
@@ -414,7 +417,6 @@
                         //交易金额
                         var inputs_value = item.inputs_value;
                         //币种
-                        var coinType = "";
                         var addresses = "";
                         var inputs = item.inputs;
                         //获取用户地址
@@ -427,14 +429,18 @@
                                     addresses = addresses+","+prv;
                                 }
                             });
-
                         });
+                        //获取交易时间
+                        var createTime = item.created_at;
+                        if(createTime!=undefined){
+                            createTime =   datetimeFormat_2(createTime);
+                        }
                         $("#tableData").append(
                             "       <tr >"
                             +"         <td>" + addresses + "</td>"
                             +"         <td>" + inputs_value + "</td>"
                             +"         <td>" + coinType + "</td>"
-                            +"         <td>" +coinType+ "</td>"
+                            +"         <td>" +createTime+ "</td>"
                             +"       </tr>"
                         );
                     });
@@ -449,6 +455,58 @@
             }
         });
 
+    }
+    function datetimeFormat_2(longTypeDate){
+        var datetimeType = "";
+        var date = new Date();
+        date.setTime(longTypeDate);
+        datetimeType = date.getFullYear()+"-"+getMonth(date)+"-"+getDay(date)+" "+getHours(date)+":"+getMinutes(date)+":"+getSeconds(date);//yyyy-MM-dd 00:00:00格式日期
+        return datetimeType;
+    }
+    //返回 01-12 的月份值
+    function getMonth(date){
+        var month = "";
+        month = date.getMonth() + 1; //getMonth()得到的月份是0-11
+        if(month<10){
+            month = "0" + month;
+        }
+        return month;
+    }
+    //返回01-30的日期
+    function getDay(date){
+        var day = "";
+        day = date.getDate();
+        if(day<10){
+            day = "0" + day;
+        }
+        return day;
+    }
+    //返回小时
+    function getHours(date){
+        var hours = "";
+        hours = date.getHours();
+        if(hours<10){
+            hours = "0" + hours;
+        }
+        return hours;
+    }
+    //返回分
+    function getMinutes(date){
+        var minute = "";
+        minute = date.getMinutes();
+        if(minute<10){
+            minute = "0" + minute;
+        }
+        return minute;
+    }
+    //返回秒
+    function getSeconds(date){
+        var second = "";
+        second = date.getSeconds();
+        if(second<10){
+            second = "0" + second;
+        }
+        return second;
     }
 </script>
 </body>
