@@ -11,6 +11,7 @@ import com.tongwii.ico.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -48,16 +49,18 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
 
     @Override
     public List<Project> findOfficalProject() {
-        Project project = new Project();
-        project.setState(-1);
-        List<Project> projectList = findAll();
-        List<Project> projects = projectMapper.select(project);
-        for(int i=0; i<projectList.size(); i++){
-            for(int j=0; j<projects.size(); j++){
-                if(projectList.get(i).getId() == projects.get(j).getId()){
-                    projectList.remove(i);
-                }
-            }
+        List<Project> projectList = projectMapper.selectOfficalProject();
+        if(CollectionUtils.isEmpty(projectList)){
+            return null;
+        }
+        return projectList;
+    }
+
+    @Override
+    public List<Project> test() {
+        List<Project> projectList = projectMapper.selectOfficalProject();
+        if(CollectionUtils.isEmpty(projectList)){
+            return null;
         }
         return projectList;
     }

@@ -192,12 +192,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label"> 身份证号码/护照号码</label>
+                                        <label class="col-md-3 control-label"> 身份证号码</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <label class="control-label" id="identityCardlable" style="display: none"></label>
                                                 <input type="text" id="identitycard" class="form-control"
-                                                       placeholder="" required>
+                                                       placeholder=""  onblur="id_card()" required  >
                                             </div>
                                         </div>
                                     </div>
@@ -468,8 +468,22 @@
             app.setUserInfo({});
             location.href = "index.html";
         });
-
     });
+
+    function id_card() {
+        var cardAccount=$("#identitycard").val();
+        var iscardAccount=/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+        if(cardAccount.length <= 0)
+        {
+            sweetAlert("身份证号码不为空！");
+            return;
+        }
+        else if (!iscardAccount.test(cardAccount))
+        {
+            sweetAlert("请输入正确的身份证号码！");
+            return;
+        }
+    }
 </script>
 </body>
 </html>

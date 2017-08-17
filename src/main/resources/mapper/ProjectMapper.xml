@@ -18,4 +18,8 @@
     <result column="des" jdbcType="LONGVARCHAR" property="des" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
+  <select id="selectOfficalProject" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from project where  state != -1
+  </select>
+
 </mapper>

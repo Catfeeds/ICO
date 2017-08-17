@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="assets/css/theme-blog.css">
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
-    <link rel="stylesheet" href="assets/css/default.css">
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
     <link rel="stylesheet" href="assets/css/settings.css" media="screen">
@@ -38,6 +37,7 @@
     <link href="assets/css/iconmoon.css" rel="stylesheet">
     <link href="assets/css/themetypo.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
+    <link href="assets/css/sweet-alert.css" rel="stylesheet">
     <link href="assets/css/theme-elements_0529.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -192,20 +192,23 @@
                                 <form name="" action="https://www.icoage.com/?p=invest&amp;do=invest" class="form-horizontal mb-lg" method="post">
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            <label class="col-md-10" style="padding-left:40px;">单用户以太币最低投资金额为 <span style="font-size:18px;font-weight:bold;color:#FF8000;">.01</span> ETH</label><label class="col-md-10" style="padding-left:40px;"><li><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></li></label>
+                                            <label class="col-md-10" style="padding-left:40px;">单用户以太币最低投资金额为 <span style="font-size:18px;font-weight:bold;color:#FF8000;">.01</span> ETH</label><label class="col-md-10" style="padding-left:40px;"><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></label>
                                         </div>
                                         <input type="hidden" value="2" name="investtype" id="investtype2">
                                         <div class="form-group">
-                                            <div class="col-sm-12" style="padding-left:80px;">我将 投资 <input type="text" value="" name="number2" style="width:60px;" id="number2" >
+                                            <div class="col-sm-12" style="padding-left:80px;">我将投资
+                                                <input type="text" value="" name="number2" style="width:60px;" id="number2"
+                                                       onkeyup="value=value.replace(/[^\d.]/g,'')">
                                                 <select style="width:80px;" name="moneytype2" id="moneytype2">
-
                                                 </select>
-                                                到 正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
+                                                到正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
                                                 <input type="hidden" name="project2" id="project2" value="Indorse"></div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12" style="padding-left:80px;">
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#formModal" type="button" onclick="javascript:showdiag();">递交委托单</button>
+                                                <input type="button" class="cs-bgcolor btn" id="commit"
+                                                       data-toggle="modal" style="color: #ffffff; font-weight: bold;"
+                                                       data-target="#formModal" value="递交委托单"/>
                                             </div>
                                         </div>
                                         <script>
@@ -225,12 +228,18 @@
                                                     <div class="modal-body">
                                                         <p>我确认在ICO.TT使用 <span id="MoneyNumber" style="font-size:18px;font-weight:bold;color:#FF8000;"></span> <span id="Showmoneytype" style="font-size:18px;font-weight:bold;color:#FF8000;"></span> 用于投资项目 <span id="Showproject" style="font-size:18px;font-weight:bold;color:#FF8000;"></span> 吗？</p>
 
-                                                        <p><input type="checkbox" name="agreement3" value="3" required="">我确认已经阅读并理解该项目的原理、愿景、目标和实现手段，同意将按照该项目的公开认购条件来购买相关数字代币或参与数字代币众筹。我也已经充分了解该项目的所有风险，并且愿意承担所有风险。我本人清楚明白ICOAGE仅仅是作为我所委托的代理人来代表我操作购买该项目的数字代币或参与众筹，而不是项目发起人或代币出售方本身，ICOAGE除操作前述代理行为外不承担任何其他义务，也不会对相关数字代币本身或该项目的任何缺陷或因此导致的任何损失而负责。</p>
+                                                        <p><input type="checkbox" name="agreement3" value="3" required="">我确认已经阅读并理解该项目的原理、愿景、目标和实现手段，同意将按照该项目的公开认购条件来购买相关数字代币或参与数字代币众筹。我也已经充分了解该项目的所有风险，并且愿意承担所有风险。我本人清楚明白ICO.TT仅仅是作为我所委托的代理人来代表我操作购买该项目的数字代币或参与众筹，而不是项目发起人或代币出售方本身，ICOAGE除操作前述代理行为外不承担任何其他义务，也不会对相关数字代币本身或该项目的任何缺陷或因此导致的任何损失而负责。</p>
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                        <button type="submit" id="submitbtn" class="btn btn-primary">确定</button>
+                                                        <input type="button" class="cs-bgcolor btn" id="cancle"
+                                                               data-dismiss="modal" style="color: #ffffff; font-weight: bold;"
+                                                               value="取消"/>
+                                                        <input type="button" class="cs-bgcolor btn" id="ok"
+                                                               data-dismiss="modal" style="color: #ffffff; font-weight: bold;"
+                                                               value="确定"/>
+                                                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                        <button type="submit" id="submitbtn" class="btn btn-primary">确定</button>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -239,10 +248,11 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="alert alert-info fade in nomargin">
-                        </div>
-                        <div class="col-md-12" style="margin-top: -20px;">
-                            <table class="table table-striped" >
+                        <header class="panel-heading">
+                            <h2 class="panel-title">ICO项目信息</h2>
+                        </header>
+                        <div class="col-md-12" >
+                            <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th>时间</th>
@@ -336,6 +346,7 @@
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
 <script src="assets/scripts/app.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
@@ -377,7 +388,8 @@
                         });
                     }
                 }else{
-                    location.href = "404.html";
+                    sweetAlert(result.message);
+//                    location.href = "404.html";
                 }
             },
             error: function (xhr, type, errerThrown) {

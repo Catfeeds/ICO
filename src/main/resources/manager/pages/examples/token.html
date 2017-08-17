@@ -146,7 +146,7 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table  class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>代币名称</th>
@@ -161,11 +161,16 @@
                                 <tbody id="moneyData">
                                 </tbody>
                             </table>
+
                             <div class="btn-group">
                                 <a href="invoice.html" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>增加</a>
                             </div>
-                        </div>
+                            <div class="pull-right">
+                                <ul id="pagination" class="pagination">
+                                </ul>
+                            </div>
                         <!-- /.box-body -->
+                        </div>
                     </div>
                     <!-- /.box -->
                 </div>
@@ -399,37 +404,108 @@
 <script src="../../scripts/app.js"></script>
 <!-- page script -->
 <script>
-    $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "info": true,
-            "autoWidth": false
-        });
-    });
+//    $(function () {
+//        $("#example1").DataTable();
+//        $('#example2').DataTable({
+//            "paging": true,
+//            "lengthChange": false,
+//            "searching": false,
+//            "info": true,
+//            "autoWidth": false
+//        });
+//    });
     jQuery(window).load(function () {
+        pageProject(1);
+
+    });
+    function pageProject(page) {
+        var page = page;
+        var size = "10";
         $.ajax({
             url: "/token/money",
             type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            data: {page: page, size: size},
+            dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
+                    var lastPage = result.data.pages;
+                    $('#pagination li').remove();
+                    if(page>1){
+                        var minpage = page-1;
+                        $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>&laquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
+                    }
+                    if(lastPage>10){
+                        if(page<10){
+                            for(var i = 1;i<=10;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }
+                            }
+                            if(page<lastPage){
+                                var nextpage = page+1;
+                                $("#pagination").append("<li><a onclick='pageProject("+11+")'>...</a></li>");
+                            }
+                        }else {
+                            var i  = page - 4;
+                            var j  = (page+4)>lastPage?lastPage:(page+4);
+                            if(i>1){
+                                var minpage = page-1;
+                                $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>...</a></li>");
+                            }
+                            for(i;i<=j;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }
+                            }
+                            if(j<lastPage){
+                                if((j+1)<lastPage){
+                                    $("#pagination").append("<li><a onclick='pageProject("+(j+1)+")'>...</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+lastPage+")'>...</a></li>");
+                                }
+
+                            }
+                        }
+
+                    }else{
+                        for(var i = 1;i<=lastPage;i++){
+                            if(i==page){
+                                $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                            }else{
+                                $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                            }
+                        }
+                    }
+
+                    if(page<lastPage){
+                        var nextpage = page+1;
+                        $("#pagination").append("<li><a onclick='pageProject("+nextpage+")'>&raquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
+                    }
                     var moneyList = result.data.list;
+                    $("#moneyData").html("");
                     $.each(moneyList, function (i, item) {
                         $("#moneyData").append(
-                            "        <tr id='"+ item.id +"'>"
-                            +"         <td>" + item.name + "</td>"
-                            +"         <td>" + item.nameEnShort + "</td>"
-                            +"         <td>" + item.des + "</td>"
-                            +"         <td>" + item.officialUrl + "</td>"
-                            +"         <td>" + item.twitterUrl + "</td>"
-                            +"         <td>" + item.githubUrl + "</td>"
-                            +"        <td>"
-                            +"           <a href='javascript:tomoney("+ item.id +")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
-                            +"           <a href='javascript:dodel("+ item.id +")' title='刪除' class='glyphicon glyphicon-trash'></a>"
-                            +"         </td>"
-                            +"       </tr>"
+                            "        <tr id='" + item.id + "'>"
+                            + "         <td>" + item.name + "</td>"
+                            + "         <td>" + item.nameEnShort + "</td>"
+                            + "         <td>" + item.des + "</td>"
+                            + "         <td>" + item.officialUrl + "</td>"
+                            + "         <td>" + item.twitterUrl + "</td>"
+                            + "         <td>" + item.githubUrl + "</td>"
+                            + "        <td>"
+                            + "           <a href='javascript:tomoney(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                            + "           <a href='javascript:dodel(" + item.id + ")' title='刪除' class='glyphicon glyphicon-trash'></a>"
+                            + "         </td>"
+                            + "       </tr>"
                         );
                     });
 
@@ -444,7 +520,7 @@
             }
         });
 
-    });
+    }
     function tomoney(id) {
         location.href = "tokenmessage.html?id="+id;
     }
