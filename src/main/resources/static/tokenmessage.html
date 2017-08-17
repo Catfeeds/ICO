@@ -196,11 +196,12 @@
                                         </div>
                                         <input type="hidden" value="2" name="investtype" id="investtype2">
                                         <div class="form-group">
-                                            <div class="col-sm-12" style="padding-left:80px;">我将 投资 <input type="text" value="" name="number2" style="width:60px;" id="number2" >
+                                            <div class="col-sm-12" style="padding-left:80px;">我将投资
+                                                <input type="text" value="" name="number2" style="width:60px;" id="number2"
+                                                       onkeyup="value=value.replace(/[^\d.]/g,'')">
                                                 <select style="width:80px;" name="moneytype2" id="moneytype2">
-
                                                 </select>
-                                                到 正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
+                                                到正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
                                                 <input type="hidden" name="project2" id="project2" value="Indorse"></div>
                                         </div>
                                         <div class="form-group">
