@@ -162,9 +162,9 @@
 
                                 </tbody>
                             </table>
-                            <div class="btn-group">
-                                <a href="blank.html" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>增加</a>
-                            </div>
+                            <!--<div class="btn-group">-->
+                                <!--<a href="blank.html" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>增加</a>-->
+                            <!--</div>-->
                             <div class="pull-right">
                                 <ul id="pagination" class="pagination">
                                 </ul>
@@ -416,7 +416,6 @@
     });
     jQuery(window).load(function () {
         pageProject(1);
-
     });
     function pageProject(page) {
         var page = page;
@@ -507,18 +506,21 @@
                         if (item.enabled == true) {
                             $("#" + item.id).append(
                                 "<td>可用</td>"
+                            +"        <td>"
+                            + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                            + "           <a href='javascript:dodel(" + item.id + ")' title='禁用' class='glyphicon  glyphicon-ban-circle'></a>"
+                            + "         </td>"
                             );
                         } else {
                             $("#" + item.id).append(
                                 "<td>不可用</td>"
+                                +"        <td>"
+                                + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                                + "           <a href='javascript:doope(" + item.id + ")' title='启用' class='glyphicon glyphicon-ok-circle'></a>"
+                                + "         </td>"
                             );
                         }
-                        $("#" + item.id).append(
-                            "        <td>"
-                            + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
-                            + "           <a href='javascript:dodel(" + item.id + ")' title='刪除' class='glyphicon glyphicon-trash'></a>"
-                            + "         </td>"
-                        );
+
                     });
 
                     console.log(result.data);
@@ -536,26 +538,64 @@
     function touser(id) {
         location.href = "usereditor.html?id=" + id;
     }
-//    function dodel(id) {
-//        $.ajax({
-//            url: "/token/money/"+id,
-//            type: 'Delete',
-//            headers: app.createAuthorizationTokenHeader(),
-//            success: function (result) {
-//                if (result.code == 200) {
-//                    $("#moneyData").find("#"+id).remove();
-//                    sweetAlert("删除成功!");
-//                    console.log(result.data);
-//                }
-//                else {
-//                    sweetAlert("删除失败!");
-//                }
-//            },
-//            error: function (xhr, type, errerThrown) {
-//                sweetAlert("网络异常,请稍候再试!");
-//            }
-//        });
-//    }
+    function dodel(id) {
+        var userJson = {
+            id: id,
+            enabled: 2
+        };
+        $.ajax({
+            url: "/user/state",
+            type: 'PUT',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(userJson),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    sweetAlert({title:"",text:"用户已禁用！"}, function() {
+                        window.location="user.html";
+                    });
+                }
+                else {
+                    sweetAlert("删除失败");
+                    console.log("删除用户信息失败");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("修改失败,请稍候再试!");
+            }
+        });
+    }
+    function doope(id) {
+        var userJson = {
+            id: id,
+            enabled: 1
+        };
+        $.ajax({
+            url: "/user/state",
+            type: 'PUT',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(userJson),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    sweetAlert({title:"",text:"用户已启用！"}, function() {
+                        window.location="user.html";
+                    });
+                }
+                else {
+                    sweetAlert("启用失败");
+                    console.log("启用用户失败");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("修改失败,请稍候再试!");
+            }
+        });
+    }
 </script>
 </body>
 </html>
