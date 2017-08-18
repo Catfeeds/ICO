@@ -72,7 +72,7 @@ public class UserController {
     @PutMapping("/state")
     @ResponseBody
     public Result updateState(@RequestBody User user) {
-        //设置身份证信息的唯一性更改
+
         userService.update(user);
         User u = userService.findById(user.getId());
         u.setUserWallets(userWalletService.findWalletByUserId(u.getId()));
@@ -82,12 +82,15 @@ public class UserController {
     @ResponseBody
     public Result update(@RequestBody User user) {
         //设置身份证信息的唯一性更改
-        if(user.getIdCard() != null && !user.getIdCard().isEmpty()){
-            //校验身份证是否在数据库中存在
-            if(userService.findByIdCard(user.getIdCard()) != null){
-                return Result.failResult("身份证信息已存在!");
+        if(user.getIdCard()!= null){
+            if(!user.getIdCard().trim().isEmpty()){
+                //校验身份证是否在数据库中存在
+                if(userService.findByIdCard(user.getIdCard()) != null){
+                    return Result.failResult("身份证信息不可修改!");
+                }
             }
         }
+
         userService.update(user);
         User u = userService.findById(user.getId());
         u.setUserWallets(userWalletService.findWalletByUserId(u.getId()));
