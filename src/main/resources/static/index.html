@@ -668,14 +668,14 @@
                         location.href = "finishICO.html?id=" + id;
                     });
                 } else {
-                    sweetAlert(result.message);
+                    app.myAlert("",result.message,"warning");
                     return;
 //                    location.href = "404.html";
                 }
             },
             error: function (xhr, type, errerThrown) {
 //                location.href = "404.html";
-                sweetAlert("网络异常，请稍后再试!");
+                app.myAlert("","网络异常，请稍后再试!","error");
                 return;
             }
         });

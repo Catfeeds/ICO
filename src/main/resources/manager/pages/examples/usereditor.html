@@ -482,7 +482,7 @@
                 headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
                     if (result.code == 200) {
-                        sweetAlert({title:"",text:"信息修改成功！"}, function() {
+                        sweetAlert({title:"",text:"信息修改成功！",confirmButtonColor: "#d9534f"}, function() {
                             window.location="user.html";
                         });
                     }

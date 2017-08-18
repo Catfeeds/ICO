@@ -99,7 +99,7 @@
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("网络异常,请稍候再试!");
+                app.myAlert("","网络异常,请稍候再试!","error");
             }
         });
     }
@@ -109,7 +109,7 @@
             title: title,
             text: text,
             type: type,
-            confirmButtonColor: "#fe6500",
+            confirmButtonColor: "#fe6500"
         },function () {
             window.location.reload();
         });
