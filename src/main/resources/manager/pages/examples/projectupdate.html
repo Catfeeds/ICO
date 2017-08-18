@@ -151,14 +151,14 @@
                                         <label class="col-sm-2 control-label">项目名称</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" id="name" name="name"
-                                                   placeholder="项目名称请务必包含产品的关键词（项目名称不超过25个字）">
+                                                   placeholder="项目名称请务必包含产品的关键词">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">项目中文名称</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" id="nameCn" name="chinesename"
-                                                   placeholder="项目名称请务必包含产品的关键词（项目中文名称不超过25个字）">
+                                                   placeholder="项目名称请务必包含产品的关键词">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -204,9 +204,14 @@
                                             <input type="text" class="form-control" id="partPersonNumber" name="partPersonNumber" value="" placeholder="人数">
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">项目简介</label>
+                                        <div class="col-sm-8">
+                                            <textarea id="des" name="content" placeholder="项目简介" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">项目详情</label>
                                         <div class="col-sm-8">
                                             <textarea id="editor" name="content" placeholder="项目详情" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                         </div>
@@ -278,8 +283,8 @@
                     var enName = result.data.name;//英文
                     var cnName = result.data.nameCn;//中文
                     var  des= result.data.des;//描述
-                     endTime = result.data.endTime;
-                     startTime = result.data.startTime;
+                    endTime = result.data.endTime;
+                    startTime = result.data.startTime;
                     var thirdEndorsement = result.data.thirdEndorsement;
                     var state = result.data.state;
                     var partPersonNumber = result.data.partPersonNumber;
@@ -318,6 +323,34 @@
         var thirdEndorsement = $("#thirdEndorsement option:selected").val();
         var state =  $("#state option:selected").val();
         var content = editor.html();
+        if (enName.length <= 0) {
+            sweetAlert("项目名称不能为空!");
+            return;
+        }
+        if (cnName.length <= 0) {
+            sweetAlert("项目中文名称不能为空!");
+            return;
+        }
+        if (startTime.length <= 0) {
+            sweetAlert("开始时间不能为空!");
+            return;
+        }
+        if (endTime.length <= 0) {
+            sweetAlert("结束时间不能为空!");
+            return;
+        }
+        var isPartPersonNumber = /^\d+$/;
+        if (partPersonNumber.length <= 0) {
+            sweetAlert("参与人数不能为空!");
+            return;
+        } else if (!isPartPersonNumber.test(partPersonNumber)) {
+            sweetAlert("参与人数只能输入正整数!");
+            return;
+        }
+        if (des.length <= 0) {
+            sweetAlert("项目描述不能为空!");
+            return;
+        }
 
         var projectJson = {id:id,name:enName,nameCn:cnName,startTime:startTime,endTime:endTime,partPersonNumber:partPersonNumber,des:des,thirdEndorsement:thirdEndorsement,state:state, content:content};
         $.ajax({

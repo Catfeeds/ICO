@@ -348,14 +348,12 @@
             location.href = "index.html";
         });
         //添加用户钱包信息
-//        var Wallet = "目前持有数字代币: ";
         $.each(userWallet, function (i, item) {
-//            Wallet = +" "+ item.tokenMoneyEnName + ":"+item.walletBalance+"|";
             $("#numMoney").append(
                     "<span class='strong1'>"+ item.tokenMoneyEnName + ":"+"<span class='strong1' style='color: #fe6500'>"+item.walletBalance+"</span></span> | "
             );
         });
-//        $("#numMoney").text(Wallet);
+
         //添加可投资项目数据
         $.ajax({
             url: "/project/findProjectsAndSort",

@@ -37,6 +37,11 @@
     <link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css">
     <script src="../../layui/layui.js"></script>
     <![endif]-->
+    <style>
+        .sweet-alert h2 {
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -161,20 +166,20 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">姓名</label>
                                         <div class="col-sm-3">
-                                            <input type="email" class="form-control" id="userName" placeholder="Name">
+                                            <input type="email" class="form-control" id="userName">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">身份证号</label>
+                                        <label class="col-sm-2 control-label">身份证号码</label>
                                         <div class="col-sm-3">
-                                            <input type="email" class="form-control" id="userCard" placeholder="18位身份证号">
+                                            <input type="email" class="form-control" id="userCard">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">手机号</label>
+                                        <label class="col-sm-2 control-label">手机号码</label>
 
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="userPhone" placeholder="请输入手机号">
+                                            <input type="text" class="form-control" id="userPhone">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -275,7 +280,7 @@
                                            <label class="col-sm-2 control-label">最低目标</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="form-control" type="number" id="minnumber"/>
+                                                   <input class="form-control" type="number" id="minnumber" min="0"/>
                                                </div>
                                            </div>
                                        </div>
@@ -283,7 +288,7 @@
                                            <label class="col-sm-2 control-label">最高目标</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="form-control" type="number" id="maxnumber"/>
+                                                   <input class="form-control" type="number" id="maxnumber" min="0"/>
                                                </div>
                                            </div>
                                        </div>
@@ -337,7 +342,7 @@
                                            <label class="col-sm-2 control-label">发布个数</label>
                                            <div class="col-sm-2">
                                                <div class="mui-numbox">
-                                                   <input class="form-control" type="number" id="fbnumber"/>
+                                                   <input class="form-control" type="number" id="fbnumber" min="0"/>
                                                </div>
                                            </div>
                                        </div>
@@ -648,18 +653,26 @@
             var userName = $("#userName").val();
             var userCard = $("#userCard").val();
             var userPhone = $("#userPhone").val();
-//            if (userName.length <= 0) {
-//                sweetAlert("发起人姓名不能为空！");
-//                return;
-//            }
-//            if(userCard.length <= 0) {
-//                sweetAlert("发起人身份证号码不能为空！");
-//                return;
-//            }
-//            if(userPhone.length <= 0) {
-//                sweetAlert("发起人联系方式不能为空！");
-//                return;
-//            }
+            if (userName.length <= 0) {
+                sweetAlert("姓名不能为空！");
+                return;
+            }
+            var isUserCard = /(^\d{15}$)|(^\d{17}(\d|X)$)/;
+            if(userCard.length <= 0) {
+                sweetAlert("身份证号码不能为空！");
+                return;
+            }  else if (!isUserCard.test(userCard)) {
+                sweetAlert("请输入正确的身份证号码!");
+                return;
+            }
+            var isUserPhone = /^1[3|4|5|8][0-9]\d{4,8}$/;
+            if(userPhone.length <= 0) {
+                sweetAlert("手机号码不能为空！");
+                return;
+            } else if (!isUserPhone.test(userPhone)) {
+                sweetAlert("请输入正确的手机号码!");
+                return;
+            }
             $.ajax({
                 url: "/user/findByIdCard/" + userCard,
                 type: 'GET',
