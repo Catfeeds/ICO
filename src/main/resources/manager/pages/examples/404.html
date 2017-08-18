@@ -527,7 +527,7 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert({title:"",text:"删除成功！"}, function() {
+                    sweetAlert({title:"",text:"删除成功！",confirmButtonColor: "#d9534f"}, function() {
                         window.location="../../pages/examples/404.html";});
                 }
                 else {

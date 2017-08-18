@@ -553,7 +553,7 @@
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert({title:"",text:"用户已禁用！"}, function() {
+                    sweetAlert({title:"",text:"用户已禁用！",confirmButtonColor: "#d9534f"}, function() {
                         window.location="user.html";
                     });
                 }
@@ -582,7 +582,7 @@
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert({title:"",text:"用户已启用！"}, function() {
+                    sweetAlert({title:"",text:"用户已启用！",confirmButtonColor: "#d9534f"}, function() {
                         window.location="user.html";
                     });
                 }

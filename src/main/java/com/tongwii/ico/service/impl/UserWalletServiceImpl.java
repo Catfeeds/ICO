@@ -43,6 +43,7 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
     public List<Object> findWalletByUserId(Integer userId) {
         UserWallet userWallet = new UserWallet();
         userWallet.setUserId(userId);
+        userWallet.setType(1);
         List<UserWallet> userWallets = userWalletMapper.select(userWallet);
         // 此处的数据需要封装成为自己需要的数据
         if(CollectionUtils.isEmpty(userWallets)){
@@ -75,9 +76,10 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
     }
 
     @Override
-    public List<UserWallet> findWalletByUser(Integer userId) {
+    public List<UserWallet> findWalletByUser(Integer userId, Integer type) {
         UserWallet userWallet = new UserWallet();
         userWallet.setUserId(userId);
+        userWallet.setType(type);
         List<UserWallet> userWallets = userWalletMapper.select(userWallet);
         if(CollectionUtils.isEmpty(userWallets)){
             return null;

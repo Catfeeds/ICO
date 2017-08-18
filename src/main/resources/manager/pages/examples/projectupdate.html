@@ -362,7 +362,7 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert({title:"",text:"项目修改成功！"}, function() {
+                    sweetAlert({title:"",text:"项目修改成功！",confirmButtonColor: "#d9534f"}, function() {
                         window.location="../../pages/tables/data.html";
                     });
 
