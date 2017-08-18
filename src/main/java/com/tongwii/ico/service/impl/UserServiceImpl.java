@@ -1,5 +1,6 @@
 package com.tongwii.ico.service.impl;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import com.tongwii.ico.core.AbstractService;
 import com.tongwii.ico.dao.UserMapper;
 import com.tongwii.ico.model.*;
@@ -103,6 +104,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         DesEncoder desEncoder = new DesEncoder();
         bitCoinWallet.setTokenPrivateKey(desEncoder.encrypt(bitCoinKey.getPrivateKeyAsHex()));
         bitCoinWallet.setDes("比特币钱包");
+        // TODO 用枚举重写
+        bitCoinWallet.setType(1);
+        bitCoinWallet.setState(1);
         userWalletService.save(bitCoinWallet);
 
         // 以太坊钱包
@@ -115,6 +119,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         // 使用des加密密钥
         ethWallet.setTokenPrivateKey(desEncoder.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
         ethWallet.setDes("以太坊钱包");
+        // TODO 用枚举重写
+        ethWallet.setType(1);
+        ethWallet.setState(1);
         userWalletService.save(ethWallet);
     }
 

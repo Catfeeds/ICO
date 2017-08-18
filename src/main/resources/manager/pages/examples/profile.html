@@ -33,6 +33,11 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .sweet-alert h2 {
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -153,14 +158,14 @@
                                         <label class="col-sm-2 control-label">项目名称</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" id="name" name="name"
-                                                   placeholder="项目名称请务必包含产品的关键词（项目名称不超过25个字）">
+                                                   placeholder="项目名称请务必包含产品的关键词">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">项目中文名称</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" id="nameCn" name="chinesename"
-                                                   placeholder="项目名称请务必包含产品的关键词（项目中文名称不超过25个字）">
+                                                   placeholder="项目名称请务必包含产品的关键词">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -279,6 +284,30 @@
         var des = $("#des").val();
         var thirdEndorsement = $("#thirdEndorsement option:selected").val();
         var state =  $("#state option:selected").val();
+        if (enName.length <= 0) {
+            sweetAlert("项目名称不能为空!");
+            return;
+        }
+        if (cnName.length <= 0) {
+            sweetAlert("项目中文名称不能为空!");
+            return;
+        }
+        if (startTime.length <= 0) {
+            sweetAlert("开始时间不能为空!");
+            return;
+        }
+        if (endTime.length <= 0) {
+            sweetAlert("结束时间不能为空!");
+            return;
+        }
+        if (partPersonNumber.length <= 0) {
+            sweetAlert("参与人数不能为空!");
+            return;
+        }
+        if (des.length <= 0) {
+            sweetAlert("项目描述不能为空!");
+            return;
+        }
 
         var projectJson = {name:enName,nameCn:cnName,startTime:startTime,endTime:endTime,partPersonNumber:partPersonNumber,des:des,thirdEndorsement:thirdEndorsement,state:state};
         $.ajax({
