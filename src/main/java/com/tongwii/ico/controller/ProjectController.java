@@ -308,15 +308,4 @@ public class ProjectController {
 
        return Result.successResult(pageInfo);
     }
-
-    // test
-    @GetMapping("/test")
-    public Result test(){
-        try{
-            List<Project> projectList = projectService.test();
-            return Result.successResult("查询成功!").add("projectList", projectList);
-        }catch (Exception e){
-            return Result.errorResult("查询失败!");
-        }
-    }
 }

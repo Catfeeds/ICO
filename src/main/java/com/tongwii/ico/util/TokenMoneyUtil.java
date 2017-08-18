@@ -109,8 +109,11 @@ public class TokenMoneyUtil {
      */
     public boolean testETHAddr(String text) {
         try {
-            if (Utils.unifiedNumericToBigInteger(text).compareTo(BigInteger.ZERO) > 0 )
-            return true;
+            if (Utils.unifiedNumericToBigInteger(text).compareTo(BigInteger.ZERO) > 0 ) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             return false;
         }

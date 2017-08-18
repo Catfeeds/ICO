@@ -167,6 +167,9 @@ public class TransactionServiceImpl implements TransactionsService {
             //Sign it
             tx.sign(sender);
 
+            // Validate it
+            tx.verify();
+
             //Submit it
             ethereum.submitTransaction(tx);
 
