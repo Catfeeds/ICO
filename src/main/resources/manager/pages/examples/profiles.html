@@ -718,6 +718,7 @@
                 contentType: "application/json; charset=utf-8",
                 success : function(result) {
                     if (result.code == 200) {
+                        var state = 1;
                         outputTokenMoneyDetailId =  result.data.id;
                         //项目的字段
                         var prjname = $("#prjname").val();
@@ -727,7 +728,7 @@
                         var prjcontent = $("#prjcontent").val();
                         var id = $("#userId").val();
                         var prjId;
-                        var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId};
+                        var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
                         $.ajax({
                             url: "/project/add",
                             type: 'POST',
