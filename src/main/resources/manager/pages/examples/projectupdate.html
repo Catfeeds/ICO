@@ -204,9 +204,14 @@
                                             <input type="text" class="form-control" id="partPersonNumber" name="partPersonNumber" value="" placeholder="人数">
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">项目简介</label>
+                                        <div class="col-sm-8">
+                                            <textarea id="des" name="content" placeholder="项目简介" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">项目详情</label>
                                         <div class="col-sm-8">
                                             <textarea id="editor" name="content" placeholder="项目详情" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                         </div>
@@ -278,8 +283,8 @@
                     var enName = result.data.name;//英文
                     var cnName = result.data.nameCn;//中文
                     var  des= result.data.des;//描述
-                     endTime = result.data.endTime;
-                     startTime = result.data.startTime;
+                    endTime = result.data.endTime;
+                    startTime = result.data.startTime;
                     var thirdEndorsement = result.data.thirdEndorsement;
                     var state = result.data.state;
                     var partPersonNumber = result.data.partPersonNumber;
