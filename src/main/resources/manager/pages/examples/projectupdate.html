@@ -339,8 +339,12 @@
             sweetAlert("结束时间不能为空!");
             return;
         }
+        var isPartPersonNumber = /^\d+$/;
         if (partPersonNumber.length <= 0) {
             sweetAlert("参与人数不能为空!");
+            return;
+        } else if (!isPartPersonNumber.test(partPersonNumber)) {
+            sweetAlert("参与人数只能输入正整数!");
             return;
         }
         if (des.length <= 0) {
