@@ -1,16 +1,27 @@
 package com.conpany.project;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.service.TransactionsService;
 import com.tongwii.ico.util.MessageUtil;
 import com.tongwii.ico.util.TokenMoneyUtil;
 import com.tongwii.ico.util.ValidateUtil;
+import org.apache.tomcat.util.buf.HexUtils;
+import org.ethereum.core.Account;
+import org.ethereum.core.Denomination;
+import org.fusesource.leveldbjni.JniDBFactory;
+import org.iq80.leveldb.DB;
+import org.iq80.leveldb.Options;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 
 /**
  * 工具测试类
@@ -27,6 +38,8 @@ public class UtilTest extends Tester {
     private TokenMoneyUtil tokenMoneyUtil;
     @Autowired
     private TransactionsService transactionsService;
+    @Value("${storage.wallet.location}")
+    private String walletPath;
 
     @Test
     public void validateUtilTest() {
@@ -61,11 +74,41 @@ public class UtilTest extends Tester {
     @Test
     public void getBalanceFromAddress() {
         String address = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4";
-        System.out.printf("friendlyString ----> %s",  transactionsService.getBitCoinAddressBalance(address));
+        System.out.println(transactionsService.getBitCoinAddressBalance(address));
 
         String ethAddress = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A";
         System.out.println(transactionsService.getEthAddressBalance(ethAddress));
     }
 
 
+    @Test
+    public void bigIntegerTest() {
+        JSONObject object = new JSONObject();
+        object.put("test", "9907928010672141195");
+        BigInteger value = object.getBigInteger("test");
+        Double flo = value.doubleValue()/(Denomination.ETHER.value().doubleValue());
+        String test = Float.toString(value.divide(Denomination.ETHER.value()).floatValue()) +  " ETHER";
+        System.out.println(test + "  " + flo + "  " + Denomination.ETHER.value());
+    }
+
+
+    @Test
+    public void sendCoin() {
+        System.out.println(transactionsService.sendBitCoin("32a305c705166c45ddef526a5576ddf5a7ae66e0d62c68f7f9e3a92fedfea6761e089246ea93fda2a6c44844074aff0ef0471cce1c328540e7191ac28fecd46558aa971672d82253", "19VGZMbirTFSifZ8TJj44fvskhp7TmeWhj", "0.01"));
+    }
+
+    @Test
+    public void sendETH() {
+        Account account = new Account();
+        account.init();
+        String from = HexUtils.toHexString(account.getEcKey().getAddress());
+        System.out.println(transactionsService.sendETHCoin("554010e4567428d39c2c124507915eeda1fa91f31584bc0568ccba8f3495c9e754019c233b9d29a0e3aa1f74cbbbd98ac237af8cf39d73dbad10fe5c898c1a7358aa971672d82253", from, "0.01"));
+    }
+
+
+    @Test
+    public void dbTest() throws IOException {
+        DB db = JniDBFactory.factory.open(new File("./db"), new Options());
+        System.out.println("Opened: "+db);
+    }
 }

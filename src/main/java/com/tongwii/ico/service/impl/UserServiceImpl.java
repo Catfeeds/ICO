@@ -13,6 +13,7 @@ import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
+import org.ethereum.jsonrpc.TypeConverter;
 import org.spongycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -115,7 +116,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         ethWallet.setTokenMoneyId(ethMoney.getId());
         ethWallet.setUserId(user.getId());
         org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
-        ethWallet.setTokenMoneyUrl("0x"+Hex.toHexString(ethKey.getAddress()));
+        ethWallet.setTokenMoneyUrl(TypeConverter.toJsonHex(ethKey.getAddress()));
         // 使用des加密密钥
         ethWallet.setTokenPrivateKey(desEncoder.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
         ethWallet.setDes("以太坊钱包");

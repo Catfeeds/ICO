@@ -5,7 +5,7 @@ import java.security.Key;
 import java.security.Security;
 
 /**
- * 加密工具
+ * Des加密工具
  *
  * @author Zeral
  * @date 2017-08-08

@@ -2,16 +2,20 @@ package com.tongwii.ico.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.wallet.Wallet;
+import org.ethereum.util.Utils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -73,5 +77,42 @@ public class TokenMoneyUtil {
         // and here is the whole wallet
         logger.info("Complete content of the wallet: {}", wallet);
         return wallet;
+    }
+
+
+    /**
+     * 测试比特币地址是否有效
+     * @param text
+     * @return
+     */
+    public boolean testBitCoinAddr(String text) {
+        try {
+            final NetworkParameters netParams;
+            if(env.equals(CurrentConfigEnum.DEV)) {
+                netParams = TestNet3Params.get();
+            } else {
+                netParams = MainNetParams.get();
+            }
+
+            Address.fromBase58(netParams, text);
+            return true;
+        } catch (AddressFormatException e) {
+            return false;
+        }
+    }
+
+
+    /**
+     * 测试以太坊地址是否有效
+     * @param text
+     * @return
+     */
+    public boolean testETHAddr(String text) {
+        try {
+            if (Utils.unifiedNumericToBigInteger(text).compareTo(BigInteger.ZERO) > 0 )
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
