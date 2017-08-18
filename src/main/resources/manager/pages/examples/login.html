@@ -95,11 +95,11 @@
           var userName = $("#userName").val();
           var password = $("#password").val();
           if (userName.length <= 0) {
-              sweetAlert("登录名不能为空!");
+              app.myAlert("登录名", "登录名不能为空！", "error");
               return;
           }
           if (password.length <= 0) {
-              sweetAlert("密码不能为空!");
+              app.myAlert("密码", "密码不能为空！", "error");
               return;
           }
           var userjson = {emailAccount: userName, password: password};
@@ -117,11 +117,11 @@
                       location.href = "user.html";
                   }
                   else {
-                      sweetAlert("登录失败!");
+                      app.myAlert("", "登录失败！", "warning");
                   }
               },
               error: function (xhr, type, errerThrown) {
-                  sweetAlert("网络异常,请稍候再试!");
+                  app.myAlert("", "网络异常,请稍候再试!", "error");
               }
           });
       });

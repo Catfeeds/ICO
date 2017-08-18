@@ -526,11 +526,11 @@
                     console.log(result.data);
                 }
                 else {
-                    sweetAlert("操作失败!");
+                    app.myAlert("", "操作失败！", "warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("网络异常,请稍候再试!");
+                app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
 
@@ -558,12 +558,12 @@
                     });
                 }
                 else {
-                    sweetAlert("删除失败");
+                    app.myAlert("", "删除失败！", "warning");
                     console.log("删除用户信息失败");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("修改失败,请稍候再试!");
+                app.myAlert("", "修改失败,请稍候再试！", "warning");
             }
         });
     }
@@ -587,12 +587,12 @@
                     });
                 }
                 else {
-                    sweetAlert("启用失败");
+                    app.myAlert("", "启用失败！", "warning");
                     console.log("启用用户失败");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("修改失败,请稍候再试!");
+                app.myAlert("", "修改失败,请稍候再试！", "warning");
             }
         });
     }

@@ -268,7 +268,7 @@
                 }
             },
             error: function (returndata) {
-                sweetAlert("网络异常，请稍后再试!");
+                app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
         var title = $("#title").val();
@@ -277,19 +277,19 @@
         var content = editor.html();
         var type = 1;
         if (title.trim().length <= 0) {
-            sweetAlert("标题内容不可为空!");
+            app.myAlert("标题内容", "标题内容不能为空！", "error");
             return;
         }
         if (descript.trim().length <= 0) {
-            sweetAlert("新闻描述不可为空!");
+            app.myAlert("新闻描述", "新闻描述不能为空！", "error");
             return;
         }
         if (content.trim().length <= 0) {
-            sweetAlert("新闻内容不可为空!");
+            app.myAlert("新闻内容", "新闻内容不能为空！", "error");
             return;
         }
         if(pictureUrl.trim().length <= 0){
-             sweetAlert("请上传至少一张图片!");
+            app.myAlert("", "请上传至少一张图片！", "error");
              return;
          }
         var newsJson = {
@@ -310,15 +310,15 @@
             headers:app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert(result.message);
+                    app.myAlert("", result.message, "success");
                     return;
                 } else {
-                    sweetAlert(result.message);
+                    app.myAlert("", result.message, "warning");
                     return;
                 }
             },
             error: function (data, status, e) {
-                sweetAlert("网络异常,请稍后再试!");
+                app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
     }
@@ -327,7 +327,7 @@
         var content = $("#notifyContent").val();
         var type = 2;
         if (content.trim().length <= 0) {
-            sweetAlert("公告内容不可为空!");
+            app.myAlert("公告内容", "公告内容不能为空！", "error");
             return;
         }
         var notifyJson = {content: content, createDate: createTime, type: type};
@@ -341,15 +341,15 @@
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert(result.message);
+                    app.myAlert("", result.message, "success");
 //                    return;
                 } else {
-                    sweetAlert(result.message);
+                    app.myAlert("", result.message, "warning");
 //                    return;
                 }
             },
             error: function (data, status, e) {
-                sweetAlert("网络异常,请稍后重试!");
+                app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
     }

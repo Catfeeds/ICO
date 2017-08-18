@@ -439,38 +439,38 @@
             }
             var isEmailAccount = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
             if (emailAccount.length <= 0) {
-                sweetAlert("邮箱不能为空!");
+                app.myAlert("邮箱账号", "邮箱账号不能为空！", "error");
                 return;
             } else if (!isEmailAccount.test(emailAccount)) {
-                sweetAlert("请输入正确的邮箱地址!");
+                app.myAlert("邮箱账号", "邮箱账号格式不正确！", "error");
                 return;
             }
             if (nickName.length <= 0) {
-                sweetAlert("用户昵称不能为空!");
+                app.myAlert("用户昵称", "用户昵称不能为空！", "error");
                 return;
             }
             if (realName.length <= 0) {
-                sweetAlert("真实姓名不能为空!");
+                app.myAlert("真实姓名", "真实姓名不能为空！", "error");
                 return;
             }
             var isPhone = /^1[3|4|5|8][0-9]\d{4,8}$/;
             if (phone.length <= 0) {
-                sweetAlert("手机号码不能为空!");
+                app.myAlert("手机号码", "手机号码不能为空！", "error");
                 return;
             } else if (!isPhone.test(phone)) {
-                sweetAlert("请输入正确的手机号码!");
+                app.myAlert("手机号码", "手机号码格式不正确！", "error");
                 return;
             }
             var isIdCard = /(^\d{15}$)|(^\d{17}(\d|X)$)/;
             if (idCard.length < 0) {
-                sweetAlert("身份证号码不能为空!");
+                app.myAlert("身份证号码", "身份证号码不能为空！", "error");
                 return;
             } else if (!isIdCard.test(idCard)) {
-                sweetAlert("请输入正确的身份证号码!");
+                app.myAlert("身份证号码", "身份证号码格式不正确！", "error");
                 return;
             }
             if (des.length <= 0) {
-                sweetAlert("描述不能为空!");
+                app.myAlert("描述", "描述不能为空！", "error");
                 return;
             }
             var userJson = {
@@ -491,16 +491,16 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
                     if (result.code == 200) {
-                        sweetAlert("增加用户成功!");
+                        app.myAlert("", "增加用户成功！", "success");
                         location.href = "user.html";
                     }
                     else {
-                        sweetAlert("新增失败，用户信息已存在！");
+                        app.myAlert("", "新增失败，用户信息已存在！", "warning");
                         console.log("新增失败，用户信息已存在！");
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    sweetAlert("网络异常,请稍候再试!");
+                    app.myAlert("", "网络异常,请稍候再试!", "error");
                 }
             });
         });
