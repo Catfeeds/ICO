@@ -161,12 +161,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-sm-2 control-label">身份证号</label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="idCard" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label  class="col-sm-2 control-label">用户描述</label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control" id="des" placeholder="">
@@ -449,11 +443,11 @@
             }
         });
         $("#updateUser").click(function () {
+
             var emailAccount = $("#emailAccount").val();
             var nickName = $("#nickName").val();
             var realName = $("#realName").val();
             var phone = $("#phone").val();
-            var idCard = $("#idCard").val();
             var des = $("#des").val();
             var statue = $("#select_id option:selected").val();
             if (statue == 1) {
@@ -461,29 +455,6 @@
             } else {
                 enabled = false;
             }
-            //          if (emailAccount.length <= 0) {
-//              sweetAlert("邮箱不能为空!");
-//              return;
-//          }
-//          if (nickName.length <= 0  {
-//              sweetAlert("昵称不能为空!");
-//              return;
-//          }
-//          if (realName.length <= 0) {
-//              sweetAlert("真实姓名不能为空!");
-//              return;
-            //      }
-//          if (phone.length <= 0) {
-//              sweetAlert("手机号码不能为空!");
-//              return;
-//          }
-//          if (des.length <= 0 || againPassword.length <= 0) {
-//              sweetAlert("描述不能为空!");
-//              return;
-//          }
-//          if (idCard.length <8 || registPassword.length >30) {
-//              sweetAlert("身份证号码不能为空!");
-//              return;
 
             var userJson = {
                 id: userId,
@@ -491,7 +462,6 @@
                 nickName: nickName,
                 realName: realName,
                 phone: phone,
-                idCard: idCard,
                 des: des,
                 enabled: enabled
             };

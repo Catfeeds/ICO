@@ -82,7 +82,7 @@ public class UserController {
     @ResponseBody
     public Result update(@RequestBody User user) {
         //设置身份证信息的唯一性更改
-        if(user.getIdCard() != null || !user.getIdCard().isEmpty()){
+        if(user.getIdCard() != null && !user.getIdCard().isEmpty()){
             //校验身份证是否在数据库中存在
             if(userService.findByIdCard(user.getIdCard()) != null){
                 return Result.failResult("身份证信息已存在!");
