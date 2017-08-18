@@ -4,23 +4,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.service.TransactionsService;
+import com.tongwii.ico.util.EthConverter;
 import com.tongwii.ico.util.MessageUtil;
 import com.tongwii.ico.util.TokenMoneyUtil;
 import com.tongwii.ico.util.ValidateUtil;
 import org.apache.tomcat.util.buf.HexUtils;
 import org.ethereum.core.Account;
 import org.ethereum.core.Denomination;
-import org.fusesource.leveldbjni.JniDBFactory;
-import org.iq80.leveldb.DB;
-import org.iq80.leveldb.Options;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
@@ -107,8 +104,7 @@ public class UtilTest extends Tester {
 
 
     @Test
-    public void dbTest() throws IOException {
-        DB db = JniDBFactory.factory.open(new File("./db"), new Options());
-        System.out.println("Opened: "+db);
+    public void unitTest() {
+        BigDecimal test = EthConverter.toWei("0.01", EthConverter.Unit.ETHER);
     }
 }

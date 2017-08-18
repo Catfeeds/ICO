@@ -8,10 +8,10 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.tongwii.ico.exception.ServiceException;
 import com.tongwii.ico.service.TransactionsService;
 import com.tongwii.ico.util.DesEncoder;
+import com.tongwii.ico.util.EthConverter;
 import com.tongwii.ico.util.RestTemplateUtil;
 import org.apache.tomcat.util.buf.HexUtils;
 import org.bitcoinj.core.*;
-import org.bitcoinj.crypto.KeyCrypterException;
 import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.wallet.Wallet;
@@ -20,7 +20,6 @@ import org.ethereum.facade.Ethereum;
 import org.ethereum.facade.EthereumFactory;
 import org.ethereum.jsonrpc.TypeConverter;
 import org.ethereum.util.ByteUtil;
-import org.ethereum.util.blockchain.EtherUtil;
 import org.spongycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -139,8 +138,7 @@ public class TransactionServiceImpl implements TransactionsService {
                 System.out.println("Sent coins onwards! Transaction hash is " + sendResult.tx.getHashAsString());
             }, MoreExecutors.directExecutor());
             return sendResult.tx.getHashAsString();
-        } catch (KeyCrypterException | InsufficientMoneyException e) {
-            // We don't use encrypted wallets in this example - can never happen.
+        } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }
     }
@@ -160,7 +158,7 @@ public class TransactionServiceImpl implements TransactionsService {
                     ByteUtil.longToBytesNoLeadZeroes(ethereum.getGasPrice()),
                     ByteUtil.longToBytesNoLeadZeroes(200000),
                     TypeConverter.StringHexToByteArray(toAddress),
-                    ByteUtil.bigIntegerToBytes(EtherUtil.convert(Long.parseLong(amount), EtherUtil.Unit.ETHER)),
+                    ByteUtil.bigIntegerToBytes(EthConverter.toWei(amount, EthConverter.Unit.ETHER).toBigInteger()),
                     new byte[0],
                     ethereum.getChainIdForNextBlock()) ;
 
