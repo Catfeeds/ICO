@@ -29,13 +29,13 @@ public class UserWallet {
     @Column(name = "user_id")
     private Integer userId;
 
-    private Byte state;
+    private Integer state;
 
     /**
      * - 存入钱包
      * - 转出钱包
      */
-    private Byte type;
+    private Integer type;
 
     private String des;
 
@@ -105,14 +105,14 @@ public class UserWallet {
     /**
      * @return state
      */
-    public Byte getState() {
+    public Integer getState() {
         return state;
     }
 
     /**
      * @param state
      */
-    public void setState(Byte state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
@@ -123,7 +123,7 @@ public class UserWallet {
      * @return type - - 存入钱包
             - 转出钱包
      */
-    public Byte getType() {
+    public Integer getType() {
         return type;
     }
 
@@ -134,7 +134,7 @@ public class UserWallet {
      * @param type - 存入钱包
             - 转出钱包
      */
-    public void setType(Byte type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
