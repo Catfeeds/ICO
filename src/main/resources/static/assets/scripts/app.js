@@ -109,7 +109,7 @@
             title: title,
             text: text,
             type: type,
-            confirmButtonColor: "#fe6500",
+            confirmButtonColor: "#fe6500"
         },function () {
             window.location.reload();
         });
