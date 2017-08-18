@@ -209,7 +209,7 @@ public class ProjectController {
      */
     @GetMapping("/findProjectsAndSort")
     public Result findProjectsAndSort(){
-        List<Project> projectList = projectService.findAll();
+        List<Project> projectList = projectService.findOfficalProject();
 
         List<Project> ICOList = new ArrayList<>(); // ICO中的数据列表
         List<Project> willICOList = new ArrayList<>(); // 即将进行ICO中的数据列表

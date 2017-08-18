@@ -59,11 +59,9 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
             if(walletName.equals(TokenMoneyEnum.ETH.name())){
                 // 获取以太币钱包余额
                 balance = transactionService.getEthAddressBalance(userWallets.get(i).getTokenMoneyUrl());
-                balance = balance.substring(0,balance.length()-3);
             }else{
                 // 获取比特币钱包余额
                 balance = transactionService.getBitCoinAddressBalance(userWallets.get(i).getTokenMoneyUrl());
-                balance = balance.substring(0,balance.length()-3);
             }
             wallet.put("tokenMoneyId",userWallets.get(i).getTokenMoneyId());
 //            wallet.put("tokenMoneyURL",userWallets.get(i).getTokenMoneyUrl());
