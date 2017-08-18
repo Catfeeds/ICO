@@ -26,4 +26,5 @@ public interface UserWalletService extends Service<UserWallet> {
      * @return
      */
     List<UserWallet> findWalletByUser(Integer userId, Integer type);
+
 }
