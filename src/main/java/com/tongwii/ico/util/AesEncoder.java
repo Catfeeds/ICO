@@ -1,7 +1,6 @@
 package com.tongwii.ico.util;
 
 import org.apache.commons.codec.binary.Base64;
-import org.spongycastle.jcajce.provider.symmetric.AES;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -39,10 +38,8 @@ public class AesEncoder {
 
 
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

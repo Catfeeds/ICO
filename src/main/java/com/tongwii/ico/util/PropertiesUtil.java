@@ -25,7 +25,6 @@ public class PropertiesUtil {
 	 * 构造
 	 */
 	public PropertiesUtil() {
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * 得到配置对象
