@@ -78,4 +78,40 @@
             return  unescape(r[2]); 
         return null;
     }
+    
+    owner.sendSMS = function(phone){
+        var phoneJson = {"phone": phone};
+        // 此处调用发送手机验证码的接口获取手机验证码
+        $.ajax({
+            url: "/user/validatePhone",
+            type: 'POST',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(phoneJson),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    app.setUserInfo(result.data.userInfo);
+                }
+                else {
+                    sweetAlert(result.message);
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                sweetAlert("网络异常,请稍候再试!");
+            }
+        });
+    }
+
+    owner.myAlert = function(title, text, type){
+        sweetAlert({
+            title: title,
+            text: text,
+            type: type,
+            confirmButtonColor: "#fe6500",
+        },function () {
+            window.location.reload();
+        });
+    };
 }(window.app = {}));
