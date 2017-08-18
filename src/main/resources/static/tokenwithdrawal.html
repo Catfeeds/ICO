@@ -419,11 +419,11 @@
                     });
                     console.log(result.data);
                 }else{
-                    sweetAlert(result.message);
+                    app.myAlert("",result.message,"warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                alert('网络异常,请稍候再试');
+                app.myAlert("",'网络异常,请稍候再试',"");
             }
         });
 
