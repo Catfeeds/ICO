@@ -227,60 +227,48 @@
                                                             aria-hidden="true"></button>
                                                     <h4 class="modal-title" id="formModalLabel">新增数字代币提现地址</h4>
                                                 </div>
-                                                <form id="demo-form" action="?p=withdrawaddr&do=addaddress"
-                                                      class="form-horizontal mb-lg" method="post">
+                                                <form id="demo-form" class="form-horizontal mb-lg">
                                                     <div class="modal-body">
                                                         <div class="form-group mt-lg">
                                                             <label class="col-sm-2 control-label">地址说明</label>
                                                             <div class="col-sm-10">
-                                                                <input type="text" name="a_name" value=""
-                                                                       class="form-control" placeholder="请输入对该地址的简称"
-                                                                       required/>
+                                                                <input type="text" id="a_name"
+                                                                       class="form-control" placeholder="请输入对该地址的简称"/>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">地址类型</label>
                                                             <div class="col-sm-10">
-                                                                <select class="form-control" name="a_coin"
-                                                                        id="cionType">
+                                                                <select class="form-control" id="cionType">
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">地址</label>
                                                             <div class="col-sm-10">
-                                                                <input type="text" name="a_address" value=""
-                                                                       class="form-control" placeholder="请输入数字代币的地址"
-                                                                       required/>
+                                                                <input type="text" id="a_address"
+                                                                       class="form-control" placeholder="请输入数字代币的地址"/>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">验证码</label>
                                                             <div class="col-sm-3">
-                                                                <input type="text" name="verifycode" value=""
+                                                                <input type="text" id="verifycode"
                                                                        class="form-control" style="width:140px;"
-                                                                       required
-                                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
-                                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"
                                                                        maxlength="6"/>
                                                             </div>
                                                             <div class="col-sm-7">
-                                                                <input type="button" id="sendsms" name="sendsms"
+                                                                <input type="button" id="sendsms"
                                                                        class="cs-bgcolor btn"
                                                                        style="color: #ffffff; font-weight: bold;"
                                                                        value="发送手机验证码"/>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default"
-                                                                data-dismiss="modal">
-                                                            取消
-                                                        </button>
-                                                        <input type="button" class="cs-bgcolor btn"
-                                                               style="color: #ffffff; font-weight: bold;" value="递交信息"/>
+                                                        <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="取消" id="cancle"/>
+                                                        <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="递交信息" id="commitInfo"/>
                                                     </div>
                                                 </form>
                                             </div>
@@ -419,16 +407,66 @@
                                 + "</option>"
                         );
                     });
-                    console.log(result.data);
                 } else {
-                    sweetAlert(result.message);
+                    app.myAlert("",result.message,"warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                alert('网络异常,请稍候再试');
+                app.myAlert("","网络异常,请稍候再试","error");
             }
         });
     });
+
+    // 发送验证码button绑定事件
+    $("#sendsms").click(function () {
+        if(app.getUserInfo().phone){
+            app.sendSMS(app.getUserInfo().phone);
+        }else{
+            app.myAlert("","您未绑定或验证手机!","warning");
+            return;
+        }
+    });
+
+    // 递交信息button绑定事件
+    $("#commitInfo").click(function () {
+        // 取值
+        var addressDes = $("#a_name").val();
+        var address = $("#a_address").val();
+        var verifyCode = $("#verifycode").val();
+        var moneyType = $('option').attr("value");
+        if(verifyCode != app.getUserInfo().verifyCode){
+            myAlert("","验证码错误!","error");
+            return;
+        }
+        var walletJson = {des:addressDes,tokenMoneyUrl:address,tokenMoneyId:moneyType};
+        $.ajax({
+            url: "/user/wallet/addUserWallet",
+            type: 'POST',
+            timeout: 10000,//超时时间设置为10秒；
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(walletJson),
+            dataType: "json",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    app.myAlert("",result.message,"success");
+                }
+                else {
+                    app.myAlert("",result.message,"warning");
+                    return;
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("","网络异常,请稍候再试!","error");
+                return;
+            }
+        });
+    });
+    // 取消button绑定事件
+    $("#cancle").click(function(){
+        window.location.reload();
+    });
+
     $("#sign_out").click(function () {
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});

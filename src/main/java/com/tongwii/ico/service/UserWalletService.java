@@ -22,7 +22,9 @@ public interface UserWalletService extends Service<UserWallet> {
     /**
      * 根据用户id查询用户钱包信息
      * @param userId
+     * @param type
      * @return
      */
-    List<UserWallet> findWalletByUser(Integer userId);
+    List<UserWallet> findWalletByUser(Integer userId, Integer type);
+
 }

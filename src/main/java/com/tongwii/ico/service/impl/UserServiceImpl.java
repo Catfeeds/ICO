@@ -1,6 +1,5 @@
 package com.tongwii.ico.service.impl;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import com.tongwii.ico.core.AbstractService;
 import com.tongwii.ico.dao.UserMapper;
 import com.tongwii.ico.model.*;
@@ -13,6 +12,7 @@ import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
+import org.ethereum.jsonrpc.TypeConverter;
 import org.spongycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +24,8 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+
+import static com.tongwii.ico.model.UserWallet.WalletType.IN_PUT;
 
 
 /**
@@ -104,8 +106,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         DesEncoder desEncoder = new DesEncoder();
         bitCoinWallet.setTokenPrivateKey(desEncoder.encrypt(bitCoinKey.getPrivateKeyAsHex()));
         bitCoinWallet.setDes("比特币钱包");
-        // TODO 用枚举重写
-        bitCoinWallet.setType(1);
+        bitCoinWallet.setType(IN_PUT.getValue());
         bitCoinWallet.setState(1);
         userWalletService.save(bitCoinWallet);
 
@@ -115,12 +116,11 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         ethWallet.setTokenMoneyId(ethMoney.getId());
         ethWallet.setUserId(user.getId());
         org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
-        ethWallet.setTokenMoneyUrl("0x"+Hex.toHexString(ethKey.getAddress()));
+        ethWallet.setTokenMoneyUrl(TypeConverter.toJsonHex(ethKey.getAddress()));
         // 使用des加密密钥
         ethWallet.setTokenPrivateKey(desEncoder.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
         ethWallet.setDes("以太坊钱包");
-        // TODO 用枚举重写
-        ethWallet.setType(1);
+        ethWallet.setType(IN_PUT.getValue());
         ethWallet.setState(1);
         userWalletService.save(ethWallet);
     }

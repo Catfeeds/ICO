@@ -712,7 +712,7 @@
             $.ajax({
                 url : "/token/detail", //后台接口
                 type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
+//                timeout: 10000,//超时时间设置为10秒；
                 data: JSON.stringify(jsmoneyJson),
                 dataType: 'json',//服务器返回json格式数据
                 contentType: "application/json; charset=utf-8",
@@ -732,7 +732,7 @@
                         $.ajax({
                             url: "/project/add",
                             type: 'POST',
-                            timeout: 10000,//超时时间设置为10秒；
+//                            timeout: 10000,//超时时间设置为10秒；
                             data: JSON.stringify(prjjson),
                             dataType: 'json',//服务器返回json格式数据
                             contentType: "application/json; charset=utf-8",
@@ -750,13 +750,36 @@
                                     $.ajax({
                                         url : "/token/detail", //后台接口
                                         type: 'POST',
-                                        timeout: 10000,//超时时间设置为10秒；
+//                                        timeout: 10000,//超时时间设置为10秒；
                                         data: JSON.stringify(moneyJson),
                                         dataType: 'json',//服务器返回json格式数据
                                         contentType: "application/json; charset=utf-8",
                                         success : function(result) {
                                             if (result.code == 200) {
-                                                location.href = "../tables/data.html";
+                                                var updateJson = {id: outputTokenMoneyDetailId, inputTokenMoneyProjectId:prjId}
+                                                $.ajax({
+                                                    url : "/token/detail", //后台接口
+                                                    type: 'PUT',
+//                                                    timeout: 10000,//超时时间设置为10秒；
+                                                    data: JSON.stringify(updateJson),
+                                                    dataType: 'json',//服务器返回json格式数据
+                                                    contentType: "application/json; charset=utf-8",
+                                                    success : function(result) {
+                                                        if (result.code == 200) {
+
+                                                            location.href = "../tables/data.html";
+                                                        } else {
+                                                            sweetAlert("导入失败2！");
+                                                        }
+                                                    },
+                                                    error : function(data, status, e)
+                                                    {
+                                                        sweetAlert("导入失败，网络异常或表单数据错误3！");
+                                                    }
+                                                });
+
+
+//                                                location.href = "../tables/data.html";
                                             } else {
                                                 app.myAlert("", "导入失败2！", "warning");
                                             }

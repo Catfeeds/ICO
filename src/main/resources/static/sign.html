@@ -341,11 +341,11 @@
             var signName = $("#sign_name").val();
             var signPassword = $("#sign_password").val();
             if (signName.length <= 0) {
-                sweetAlert("登录名不能为空!");
+                app.myAlert(" ","用户名不能为空","warning");
                 return;
             }
             if (signPassword.length <= 0) {
-                sweetAlert("密码不能为空!");
+                app.myAlert(" ","密码不能为空","warning");
                 return;
             }
             var json = {emailAccount: signName, password: signPassword};
@@ -363,11 +363,11 @@
                         location.href = "contect.html";
                     }
                     else {
-                        sweetAlert("登录失败!");
+                        app.myAlert("","登录失败!","error");
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    sweetAlert("网络异常,请稍候再试!");
+                    app.myAlert("","网络异常,请稍候再试!","error");
                 }
             });
 
@@ -377,19 +377,19 @@
             var registPassword = $("#regist_password").val().toString();
             var againPassword = $("#again_password").val().toString();
             if (email.length <= 0) {
-                sweetAlert("用户名不能为空!");
+                app.myAlert("","电子邮箱不能为空!","warning");
                 return;
             }
             if (registPassword.length <= 0 || againPassword.length <= 0) {
-                sweetAlert("密码不能为空!");
+                app.myAlert("","密码不能为空!","warning");
                 return;
             }
             if (registPassword.length <8 || registPassword.length >30) {
-                sweetAlert("密码需为8位以上,30位以下!");
+                app.myAlert("","密码需为8位以上,30位以下!","warning");
                 return;
             }
             if (registPassword != againPassword) {
-                sweetAlert("两次输入的密码不一致!");
+                app.myAlert("","两次输入的密码不一致!","warning");
                 return;
             }
             var registJson = {emailAccount: email, password: registPassword};
@@ -402,7 +402,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
                     if (result.code == 200) {
-                        sweetAlert("注册成功，请登录!");
+                        app.myAlert("","注册成功，请登录!","success");
                         location.href = "sign.html";
                         $("#sign_name").text(result.data.userInfo.emailAccount);
                     }
@@ -413,7 +413,7 @@
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    sweetAlert("网络异常,请稍候再试!");
+                    app.myAlert("","网络异常,请稍候再试!","error");
                     return;
                 }
             });
