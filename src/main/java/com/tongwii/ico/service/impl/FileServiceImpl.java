@@ -1,10 +1,9 @@
 package com.tongwii.ico.service.impl;
 
-import com.tongwii.ico.configurer.StorageProperties;
 import com.tongwii.ico.exception.StorageException;
 import com.tongwii.ico.exception.StorageFileNotFoundException;
 import com.tongwii.ico.service.FileService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -31,9 +30,9 @@ public class FileServiceImpl implements FileService {
 
     private final Path rootLocation;
 
-    @Autowired
-    public FileServiceImpl(StorageProperties properties) {
-        this.rootLocation = Paths.get(properties.getLocation());
+    public FileServiceImpl(@Value("${storage.location}") String location) {
+        this.rootLocation = Paths.get(location);
+        init();
     }
 
     @Override

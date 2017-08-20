@@ -111,9 +111,7 @@ public class TransactionServiceImpl implements TransactionsService {
     @Override
     public String sendBitCoin(String fromAddress, String recipient, String amountToSend) {
         NetworkParameters params = MainNetParams.get();
-        // Parse the address given as the first parameter.
-        Address forwardingAddress = Address.fromBase58(params, recipient);
-        // Start up a basic app using a class that automates some boilerplate.
+
         WalletAppKit kit = new WalletAppKit(params, new File(walletPath), "ICO_TT");
 
         // Download the block chain and wait until it's done.
@@ -123,23 +121,25 @@ public class TransactionServiceImpl implements TransactionsService {
         DesEncoder desEncoder = new DesEncoder();
         kit.wallet().importKey(ECKey.fromPrivate(HexUtils.fromHexString(desEncoder.decrypt(fromAddress))));
 
+        Coin value = Coin.parseCoin(amountToSend);
+
+        Address to = Address.fromBase58(params, recipient);
+
         try {
-            Coin value = Coin.parseCoin(amountToSend);
-            System.out.println("Forwarding " + value.toFriendlyString());
-            // Now send the coins back! Send with a small fee attached to ensure rapid confirmation.
-            final Wallet.SendResult sendResult = kit.wallet().sendCoins(kit.peerGroup(), forwardingAddress, value);
-            checkNotNull(sendResult);  // We should never try to send more coins than we have!
-            System.out.println("Sending ...");
-            // Register a callback that is invoked when the transaction has propagated across the network.
-            // This shows a second style of registering ListenableFuture callbacks, it works when you don't
-            // need access to the object the future returns.
-            sendResult.broadcastComplete.addListener(() -> {
+            Wallet.SendResult result = kit.wallet().sendCoins(kit.peerGroup(), to, value);
+            checkNotNull(result);  // We should never try to send more coins than we have!
+            System.out.println("coins sent. transaction hash: " + result.tx.getHashAsString());
+            // you can use a block explorer like https://www.biteasy.com/ to inspect the transaction with the printed transaction hash.
+            result.broadcastComplete.addListener(() -> {
                 // The wallet has changed now, it'll get auto saved shortly or when the app shuts down.
-                System.out.println("Sent coins onwards! Transaction hash is " + sendResult.tx.getHashAsString());
+                System.out.println("Sent coins onwards! Transaction hash is " + result.tx.getHashAsString());
             }, MoreExecutors.directExecutor());
-            return sendResult.tx.getHashAsString();
-        } catch (Exception e) {
-            throw new ServiceException(e.getMessage());
+
+            return result.tx.getHashAsString();
+        } catch (InsufficientMoneyException e) {
+            System.out.println("Not enough coins in your wallet. Missing " + e.missing.getValue() + " satoshis are missing (including fees)");
+            System.out.println("Send money to: " + kit.wallet().currentReceiveAddress().toString());
+            throw new ServiceException("钱包地址余额不足，缺少" + e.missing.getValue() + "satoshis 比特币（包含fees）");
         }
     }
 

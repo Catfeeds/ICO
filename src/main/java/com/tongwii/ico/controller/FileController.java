@@ -6,6 +6,7 @@ import com.tongwii.ico.core.Result;
 import com.tongwii.ico.exception.StorageFileNotFoundException;
 import com.tongwii.ico.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,6 @@ public class FileController {
      * 上传文件
      */
     @PostMapping()
-    @ResponseBody
     public Result handleFileUpload(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
         fileService.store(file);
         Path path = fileService.load(file.getOriginalFilename());
@@ -54,7 +54,6 @@ public class FileController {
      * 上传文件多个文件
      */
     @PostMapping("/files")
-    @ResponseBody
     public Result handleFilesUpload(@RequestParam("files") MultipartFile [] files, HttpServletResponse response) {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < files.length; i++) {
@@ -73,18 +72,16 @@ public class FileController {
      * 获取文件
      */
     @GetMapping("/{filename:.+}")
-    @ResponseBody
     public void getFile(@PathVariable String filename, HttpServletResponse response) throws IOException {
 
-        org.springframework.core.io.Resource file = fileService.loadAsResource(filename);
+        Resource file = fileService.loadAsResource(filename);
 
         File files = file.getFile();
         String mimeType= URLConnection.guessContentTypeFromName(files.getName());
         response.setContentType(mimeType);
         response.setHeader("Content-Disposition", String.format("inline; filename=\"" + files.getName() +"\""));
         response.setContentLength((int)files.length());
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(files));
 
-        FileCopyUtils.copy(inputStream, response.getOutputStream());
+        FileCopyUtils.copy(file.getInputStream(), response.getOutputStream());
     }
 }
