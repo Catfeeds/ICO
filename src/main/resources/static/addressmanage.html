@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>我的信息-ICO.TT</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -23,9 +24,8 @@
     <link rel="stylesheet" href="assets/css/component.css" media="screen">
     <link rel="stylesheet" href="assets/css/skin-corporate-hosting.css">
     <link rel="stylesheet" href="assets/css/custom.css">
-
+    <link rel="stylesheet" href="assets/css/sweet-alert.css">
     <!-- Css (necessary Css) -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-theme.css" rel="stylesheet">
     <link href="assets/css/language-selector-remove-able-css.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
@@ -204,12 +204,7 @@
                                 <header class="panel-heading">
                                     <h2 class="panel-title">数字代币提现地址列表</h2>
                                 </header>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
-                                        <div class="col-md-6 col-xs-11">没有数字代币提现地址</div>
-                                    </div>
-                                </div>
+
                                 <div class="panel-body">
                                     <div class="form-group">
                                         <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
@@ -286,14 +281,10 @@
                                         <th>地址说明</th>
                                         <th>地址类型</th>
                                         <th>地址</th>
+                                        <th>操作</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
+                                    <tbody id="addressList">
                                     </tbody>
                                 </table>
                             </div>
@@ -379,6 +370,7 @@
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
@@ -415,6 +407,32 @@
                 app.myAlert("","网络异常,请稍候再试","error");
             }
         });
+
+        // 获取addressList中的数据
+        $.ajax({
+            url: "/user/wallet/findPaymentWallet",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    $.each(result.data.paymentWallet, function (i, item) {
+                        $("#addressList").append(
+                                "<tr><th>" + item.addressDesc+"</th><th>"+item.addressType+"</th><th>"+item.addressUrl+"</th><th>" +
+                                "<a onclick='dodel("+item.id+")' class='glyphicon glyphicon-trash'></a></th></tr>"
+                        );
+                    });
+                } else {
+                    $("#addressList").append(
+                            "<tr><th>无</th><th>无</th><th>无</th><th>无</th></tr>"
+                    );
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("","网络异常,请稍候再试","error");
+            }
+        });
+
     });
 
     // 发送验证码button绑定事件

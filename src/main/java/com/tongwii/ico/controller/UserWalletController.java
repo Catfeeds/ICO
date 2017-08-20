@@ -1,5 +1,7 @@
 package com.tongwii.ico.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.TokenMoney;
 import com.tongwii.ico.model.UserWallet;
@@ -133,6 +135,28 @@ public class UserWalletController {
         }else{
             return Result.errorResult("钱包地址是非法的!");
         }
+    }
+
+    @GetMapping("/findPaymentWallet")
+    public Result findPaymentWallet(){
+        Integer userId = ContextUtils.getUserId();
+        List<UserWallet> userWallets = userWalletService.findWalletByUser(userId, 2);
+        if(CollectionUtils.isEmpty(userWallets)){
+            return Result.errorResult("用户未创建提现地址!");
+        }else{
+            JSONArray paymentWalletList = new JSONArray();
+            for(int i=0;i<userWallets.size();i++){
+                String addressType = tokenMoneyService.findById(userWallets.get(i).getTokenMoneyId()).getNameEnShort();
+                JSONObject paymentWallet = new JSONObject();
+                paymentWallet.put("addressid", userWallets.get(i).getId());
+                paymentWallet.put("addressDesc", userWallets.get(i).getDes());
+                paymentWallet.put("addressUrl", userWallets.get(i).getTokenMoneyUrl());
+                paymentWallet.put("addressType", addressType);
+                paymentWalletList.add(paymentWallet);
+            }
+            return Result.successResult().add("paymentWallet",paymentWalletList);
+        }
+
     }
 
     @GetMapping("/test")
