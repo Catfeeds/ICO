@@ -386,7 +386,6 @@
         });
     }
     function dodel(id) {
-        var aa = app.createAuthorizationTokenHeader();
         var projectJson = {id:id,state:-1};
         $.ajax({
             url: "/project",

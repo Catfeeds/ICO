@@ -194,9 +194,9 @@
                                         <input type="hidden" value="2" name="investtype" id="investtype2">
                                         <div class="form-group">
                                             <div class="col-sm-12" style="padding-left:80px;">我将投资
-                                                <input type="text" value="" name="number2" style="width:60px;" id="number2"
+                                                <input type="text" style="width:60px;" id="inputmoney"
                                                        onkeyup="value=value.replace(/[^\d.]/g,'')">
-                                                <select style="width:80px;" name="moneytype2" id="moneytype2">
+                                                <select style="width:80px;" id="moneytype2">
                                                 </select>
                                                 到正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
                                                 <input type="hidden" name="project2" id="project2" value="Indorse"></div>
@@ -208,13 +208,13 @@
                                                        data-target="#formModal" value="递交委托单"/>
                                             </div>
                                         </div>
-                                        <script>
+                                      <!--  <script>
                                             function showdiag(){
                                                 MoneyNumber.innerHTML=number2.value;
                                                 Showmoneytype.innerHTML=moneytype2.options[moneytype2.selectedIndex].text;
                                                 Showproject.innerHTML=project2.value;
                                             }
-                                        </script>
+                                        </script>-->
                                         <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -222,10 +222,11 @@
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                         <h4 class="modal-title" id="formModalLabel">再次确认投资ICO信息</h4>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        <p>我确认在ICO.TT使用 <span id="MoneyNumber" style="font-size:18px;font-weight:bold;color:#FF8000;">0.0ETH</span> 用于投资项目 <span id="Showproject" style="font-size:18px;font-weight:bold;color:#FF8000;"></span> 吗？</p>
-
-                                                        <p><input type="checkbox" name="agreement3" value="3" required="">我确认已经阅读并理解该项目的原理、愿景、目标和实现手段，同意将按照该项目的公开认购条件来购买相关数字代币或参与数字代币众筹。我也已经充分了解该项目的所有风险，并且愿意承担所有风险。我本人清楚明白ICO.TT仅仅是作为我所委托的代理人来代表我操作购买该项目的数字代币或参与众筹，而不是项目发起人或代币出售方本身，ICOAGE除操作前述代理行为外不承担任何其他义务，也不会对相关数字代币本身或该项目的任何缺陷或因此导致的任何损失而负责。</p>
+                                                    <div class="modal-body" style="height:50px;">
+                                                        <p>我确认在ICO.TT使用 <span id="MoneyNumber" style="font-size:18px;font-weight:bold;color:#FF8000;"></span>
+                                                            <span id="Showmoneytype" style="font-size:18px;font-weight:bold;color:#FF8000;"></span>
+                                                            用于投资项目 <span id="Showproject" style="font-size:18px;font-weight:bold;color:#FF8000;"></span> 吗？</p>
+                                                        <p><input type="checkbox" name="agreement3" value="3" required="">我确认已经阅读并理解该项目的原理、愿景、目标和实现手段，同意将按照该项目的公开认购条件来购买相关数字代币或参与数字代币众筹。我也已经充分了解该项目的所有风险，并且愿意承担所有风险。我本人清楚明白ICO.TT仅仅是作为我所委托的代理人来代表我操作购买该项目的数字代币或参与众筹，而不是项目发起人或代币出售方本身，ICO.TT除操作前述代理行为外不承担任何其他义务，也不会对相关数字代币本身或该项目的任何缺陷或因此导致的任何损失而负责。</p>
 
                                                     </div>
                                                     <div class="modal-footer">
@@ -347,6 +348,12 @@
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            $("#personInfo").css('display', 'none');
+        } else {
+            $("#personInfo").css('display', 'block');
+            $("#userName").text(app.getUserInfo().nickName);
+        }
         var pid = app.getQueryString("pid");
         var projectName = decodeURI(app.getQueryString("name"));
         var userWallet = app.getUserInfo().userWallets;
@@ -383,8 +390,7 @@
                         });
                     }
                 }else{
-                    sweetAlert(result.message);
-//                    location.href = "404.html";
+                    app.myAlert("",result.message,"warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
@@ -392,32 +398,29 @@
                 return;
             }
         });
-
-        if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display', 'none');
-        } else {
-            $("#personInfo").css('display', 'block');
-            $("#userName").text(app.getUserInfo().nickName);
-        }
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            prevText: "<em class='icon-arrow-left9'></em>",
-            nextText: "<em class='icon-arrow-right9'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
-            }
-        });
-        $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
-        $("#signOut").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
         $("#projectName").text(projectName);
+
+        $("#commit").click(function () {
+            if($("#inputmoney").val()){
+                $("#MoneyNumber").text($("#inputmoney").val().toString());
+            }else{
+                $("#MoneyNumber").text(0.00);
+//            app.myAlert("","请输入投入资金!","warning");
+            }
+            $("#Showproject").text(projectName);
+            $("#Showmoneytype").text($('option').attr("value"));
+        });
+    });
+
+    $("#sign_out").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
+    });
+    $("#signOut").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
     });
 </script>
 </body>

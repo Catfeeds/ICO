@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>我的信息-ICO.TT</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../manager/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -44,6 +45,11 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+<style>
+    th{
+        text-align:center;
+    }
+</style>
 <body>
 <div class="wrapper">
 
@@ -420,7 +426,7 @@
                     $.each(result.data.paymentWallet, function (i, item) {
                         $("#addressList").append(
                                 "<tr><th>" + item.addressDesc+"</th><th>"+item.addressType+"</th><th>"+item.addressUrl+"</th><th>" +
-                                "<a onclick='dodel("+item.id+")' class='glyphicon glyphicon-trash'></a></th></tr>"
+                                "<a onclick='dodel("+item.addressid+")' class='glyphicon glyphicon-trash' style='color: #fe6500'></a></th></tr>"
                         );
                     });
                 } else {
@@ -485,6 +491,30 @@
     $("#cancle").click(function(){
         window.location.reload();
     });
+
+    function dodel(id) {
+        // 更改用户钱包状态
+        var updateWallet={id:id,state:-1}
+        $.ajax({
+            url: "/user/wallet",
+            type: 'PUT',
+            headers: app.createAuthorizationTokenHeader(),
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(updateWallet),
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    app.myAlert("", "删除成功!", "success");
+                }
+                else {
+                    app.myAlert("", "删除失败!", "warning");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("", "网络异常,请稍候再试!", "error");
+            }
+        });
+    }
 
     $("#sign_out").click(function () {
         $("#personInfo").css('display', 'none');
