@@ -36,4 +36,10 @@ public class ProjectWalletServiceImpl extends AbstractService<ProjectWallet> imp
             return null;
         }
     }
+
+    @Override
+    public ProjectWallet findWalletByCionId(Integer cionId, Integer projectId) {
+        ProjectWallet projectWallet = projectWalletMapper.selectProjectWalletByCiodId(cionId, projectId);
+        return projectWallet;
+    }
 }

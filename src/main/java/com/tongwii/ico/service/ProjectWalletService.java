@@ -15,4 +15,12 @@ public interface ProjectWalletService extends Service<ProjectWallet> {
      * @return
      */
     List<ProjectWallet> findWalletByProjectId(Integer projectId);
+
+    /**
+     * 查询项目钱包
+     * @param cionId
+     * @param projectId
+     * @return
+     */
+    ProjectWallet findWalletByCionId(Integer cionId, Integer projectId);
 }

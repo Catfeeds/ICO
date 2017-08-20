@@ -92,7 +92,8 @@
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
                                     <ul class="dropdown">
-                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a></li>
+                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a>
+                                        </li>
                                     </ul>
                                     <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
@@ -147,7 +148,7 @@
                                     <a href="addressmanage.html"> 提现地址管理</a>
                                 </li>
                                 <!--<li>-->
-                                    <!--<a href="rmbpush.html"> 人民币提现</a>-->
+                                <!--<a href="rmbpush.html"> 人民币提现</a>-->
                                 <!--</li>-->
                                 <li class="active">
                                     <a href="securitycenter.html"> 安全中心</a>
@@ -159,7 +160,7 @@
                                             <a href="revise.html"> 修改登录密码</a>
                                         </li>
                                         <!--<li>-->
-                                            <!--<a href="index.html"> 修改交易密码</a>-->
+                                        <!--<a href="index.html"> 修改交易密码</a>-->
                                         <!--</li>-->
                                         <li>
                                             <a href="addphone.html"> 添加手机号码</a>
@@ -186,10 +187,13 @@
                                 <h2 class="panel-title">填写数字代币ICO信息</h2>
                             </header>
                             <div class="row">
-                                <form name="" action="https://www.icoage.com/?p=invest&amp;do=invest" class="form-horizontal mb-lg" method="post">
+                                <form name="" action="https://www.icoage.com/?p=invest&amp;do=invest"
+                                      class="form-horizontal mb-lg" method="post">
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            <label class="col-md-10" style="padding-left:40px;">单用户以太币最低投资金额为 <span style="font-size:18px;font-weight:bold;color:#FF8000;">.01</span> ETH</label><label class="col-md-10" style="padding-left:40px;"><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></label>
+                                            <label class="col-md-10" style="padding-left:40px;">单用户以太币最低投资金额为 <span
+                                                    style="font-size:18px;font-weight:bold;color:#FF8000;">.01</span>
+                                                ETH</label><label class="col-md-10" style="padding-left:40px;"><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></label>
                                         </div>
                                         <input type="hidden" value="2" name="investtype" id="investtype2">
                                         <div class="form-group">
@@ -198,8 +202,10 @@
                                                        onkeyup="value=value.replace(/[^\d.]/g,'')">
                                                 <select style="width:80px;" id="moneytype2">
                                                 </select>
-                                                到正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;" id="projectName"></span>
-                                                <input type="hidden" name="project2" id="project2" value="Indorse"></div>
+                                                到正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;"
+                                                               id="projectName"></span>
+                                                <input type="hidden" name="project2" id="project2" value="Indorse">
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12" style="padding-left:80px;">
@@ -208,33 +214,44 @@
                                                        data-target="#formModal" value="递交委托单"/>
                                             </div>
                                         </div>
-                                      <!--  <script>
-                                            function showdiag(){
-                                                MoneyNumber.innerHTML=number2.value;
-                                                Showmoneytype.innerHTML=moneytype2.options[moneytype2.selectedIndex].text;
-                                                Showproject.innerHTML=project2.value;
-                                            }
-                                        </script>-->
-                                        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+                                        <!--  <script>
+                                              function showdiag(){
+                                                  MoneyNumber.innerHTML=number2.value;
+                                                  Showmoneytype.innerHTML=moneytype2.options[moneytype2.selectedIndex].text;
+                                                  Showproject.innerHTML=project2.value;
+                                              }
+                                          </script>-->
+                                        <div class="modal fade" id="formModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="formModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-hidden="true">×
+                                                        </button>
                                                         <h4 class="modal-title" id="formModalLabel">再次确认投资ICO信息</h4>
                                                     </div>
                                                     <div class="modal-body" style="height:50px;">
-                                                        <p>我确认在ICO.TT使用 <span id="MoneyNumber" style="font-size:18px;font-weight:bold;color:#FF8000;"></span>
-                                                            <span id="Showmoneytype" style="font-size:18px;font-weight:bold;color:#FF8000;"></span>
-                                                            用于投资项目 <span id="Showproject" style="font-size:18px;font-weight:bold;color:#FF8000;"></span> 吗？</p>
-                                                        <p><input type="checkbox" name="agreement3" value="3" required="">我确认已经阅读并理解该项目的原理、愿景、目标和实现手段，同意将按照该项目的公开认购条件来购买相关数字代币或参与数字代币众筹。我也已经充分了解该项目的所有风险，并且愿意承担所有风险。我本人清楚明白ICO.TT仅仅是作为我所委托的代理人来代表我操作购买该项目的数字代币或参与众筹，而不是项目发起人或代币出售方本身，ICO.TT除操作前述代理行为外不承担任何其他义务，也不会对相关数字代币本身或该项目的任何缺陷或因此导致的任何损失而负责。</p>
+                                                        <p>我确认在ICO.TT使用 <span id="MoneyNumber"
+                                                                              style="font-size:18px;font-weight:bold;color:#FF8000;"></span>
+                                                            <span id="Showmoneytype"
+                                                                  style="font-size:18px;font-weight:bold;color:#FF8000;"></span>
+                                                            用于投资项目 <span id="Showproject"
+                                                                         style="font-size:18px;font-weight:bold;color:#FF8000;"></span>
+                                                            吗？</p>
+                                                        <p><input type="checkbox" name="agreement3" value="3"
+                                                                  required="">我确认已经阅读并理解该项目的原理、愿景、目标和实现手段，同意将按照该项目的公开认购条件来购买相关数字代币或参与数字代币众筹。我也已经充分了解该项目的所有风险，并且愿意承担所有风险。我本人清楚明白ICO.TT仅仅是作为我所委托的代理人来代表我操作购买该项目的数字代币或参与众筹，而不是项目发起人或代币出售方本身，ICO.TT除操作前述代理行为外不承担任何其他义务，也不会对相关数字代币本身或该项目的任何缺陷或因此导致的任何损失而负责。
+                                                        </p>
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <input type="button" class="cs-bgcolor btn" id="cancle"
-                                                               data-dismiss="modal" style="color: #ffffff; font-weight: bold;"
+                                                        <input type="button" class="cs-bgcolor btn"
+                                                               data-dismiss="modal"
+                                                               style="color: #ffffff; font-weight: bold;"
                                                                value="取消"/>
-                                                        <input type="button" class="cs-bgcolor btn" id="ok"
-                                                               data-dismiss="modal" style="color: #ffffff; font-weight: bold;"
+                                                        <input type="button" class="cs-bgcolor btn" id="makesure"
+                                                               data-dismiss="modal"
+                                                               style="color: #ffffff; font-weight: bold;"
                                                                value="确定"/>
                                                     </div>
                                                 </div>
@@ -247,7 +264,7 @@
                         <header class="panel-heading">
                             <h2 class="panel-title">ICO项目信息</h2>
                         </header>
-                        <div class="col-md-12" >
+                        <div class="col-md-12">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -259,7 +276,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
                                 </tbody>
                             </table>
                         </div>
@@ -269,9 +285,9 @@
         </div>
 
 
-<!--// Main Content //-->
+        <!--// Main Content //-->
 
-<!--// Footer Widget //-->
+        <!--// Footer Widget //-->
         <footer id="footer-sec" style="text-align:center">
             <div class="container">
                 <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
@@ -308,32 +324,32 @@
             </div>
         </footer>
 
-<!--// CopyRight //-->
-<div id="copyright">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="footer_icon"><a href="#"><img src="assets/images/footer-logo.png" alt=""></a></div>
-                <div class="fnav-area">
-                    <br>
-                    <p>© 0000</p>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="social-media">
-                    <ul>
-                        <li><a href="#"><i class="icon-facebook7"></i></a></li>
-                        <li><a href="#"><i class="icon-twitter6"></i></a></li>
-                        <li><a href="#"><i class="icon-googleplus7"></i></a></li>
-                        <li><a href="#"><i class="icon-instagram4"></i></a></li>
-                        <li><a href="#"><i class="icon-youtube-play"></i></a></li>
-                        <li><a href="#"><i class="icon-skype"></i></a></li>
-                    </ul>
+        <!--// CopyRight //-->
+        <div id="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="footer_icon"><a href="#"><img src="assets/images/footer-logo.png" alt=""></a></div>
+                        <div class="fnav-area">
+                            <br>
+                            <p>© 0000</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="social-media">
+                            <ul>
+                                <li><a href="#"><i class="icon-facebook7"></i></a></li>
+                                <li><a href="#"><i class="icon-twitter6"></i></a></li>
+                                <li><a href="#"><i class="icon-googleplus7"></i></a></li>
+                                <li><a href="#"><i class="icon-instagram4"></i></a></li>
+                                <li><a href="#"><i class="icon-youtube-play"></i></a></li>
+                                <li><a href="#"><i class="icon-skype"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
     </main>
 </div>
 <!-- jQuery (necessary JavaScript) -->
@@ -360,12 +376,12 @@
         //添加用户钱包信息
         $.each(userWallet, function (i, item) {
             $("#numMoney").append(
-                    "<span class='strong1'>"+ item.tokenMoneyEnName + ":"+"<span class='strong1' style='color: #fe6500'>"+item.walletBalance+"</span></span> | "
+                    "<span class='strong1'>" + item.tokenMoneyEnName + ":" + "<span class='strong1' style='color: #fe6500'>" + item.walletBalance + "</span></span> | "
             );
         });
         //添加用户投资货币分类（该项目接收货币类型）
         $.ajax({
-            url: "/project/"+pid,
+            url: "/project/" + pid,
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             contentType: "application/json; charset=utf-8",
@@ -377,38 +393,42 @@
                     var inputTokenDetails = result.data.inputTokenDetails;
                     //接收货币
                     $.each(inputTokenDetails, function (i, item) {
-                        if(jshb==""){
+                        if (jshb == "") {
                             jshb = item.tokenMoney.nameEnShort;
-                        }else{
-                            jshb =","+ item.tokenMoney.nameEnShort;
+                        } else {
+                            jshb = "," + item.tokenMoney.nameEnShort;
                         }
                     });
-                    if(jshb!=""){
-                        var types =jshb.split(",");
+                    if (jshb != "") {
+                        var types = jshb.split(",");
                         $.each(types, function (i, item) {
-                            $("#moneytype2").append("<option value='"+item+"'>"+item+"</option>");
+                            $("#moneytype2").append("<option value='" + item + "'>" + item + "</option>");
                         });
                     }
-                }else{
-                    app.myAlert("",result.message,"warning");
+                } else {
+                    app.myAlert("", result.message, "warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试","error");
+                app.myAlert("", "网络异常,请稍候再试", "error");
                 return;
             }
         });
         $("#projectName").text(projectName);
 
         $("#commit").click(function () {
-            if($("#inputmoney").val()){
+            if ($("#inputmoney").val()) {
                 $("#MoneyNumber").text($("#inputmoney").val().toString());
-            }else{
+            } else {
                 $("#MoneyNumber").text(0.00);
-//            app.myAlert("","请输入投入资金!","warning");
             }
             $("#Showproject").text(projectName);
             $("#Showmoneytype").text($('option').attr("value"));
+        });
+
+        $("#makesure").click(function () {
+            var projectId = pid;
+            var cionType = $('option').attr("value");
         });
     });
 

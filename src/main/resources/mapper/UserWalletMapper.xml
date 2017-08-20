@@ -17,5 +17,7 @@
   <select id="selectOfficalUserWallet" resultMap="BaseResultMap" parameterType="com.tongwii.ico.model.UserWallet" >
     select * from user_wallet u where u.type=#{type} and u.user_id = #{userId} and u.state != -1;
   </select>
-
+  <select id="selectWalletByCoinId" resultMap="BaseResultMap" parameterType="com.tongwii.ico.model.UserWallet" >
+    select * from user_wallet u where u.token_money_id=#{tokenMoneyId} and u.user_id = #{userId} and u.state != -1;
+  </select>
 </mapper>

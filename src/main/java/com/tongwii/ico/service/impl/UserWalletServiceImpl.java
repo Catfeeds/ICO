@@ -86,4 +86,10 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
         }
         return userWallets;
     }
+
+    @Override
+    public UserWallet findWalletByCionId(Integer tokenMoneyId, Integer userId) {
+        UserWallet userWallet = userWalletMapper.selectWalletByCoinId(tokenMoneyId, userId);
+        return userWallet;
+    }
 }
