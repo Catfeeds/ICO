@@ -43,4 +43,17 @@ public class ProjectUserRelationServiceImpl extends AbstractService<ProjectUserR
         }
         return projectList;
     }
+
+    @Override
+    public boolean userIsLockedProject(Integer userId, Integer projectId) {
+        ProjectUserRelation projectUserRelation = new ProjectUserRelation();
+        projectUserRelation.setProjectId(projectId);
+        projectUserRelation.setUserId(userId);
+        List<ProjectUserRelation> projectUserRelations = projectUserRelationMapper.select(projectUserRelation);
+        if(CollectionUtils.isEmpty(projectUserRelations)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -427,8 +427,28 @@
         });
 
         $("#makesure").click(function () {
-            var projectId = pid;
             var cionType = $('option').attr("value");
+            var json = {cionType:cionType,projectId:pid};
+            $.ajax({
+                url: "/token/money/transaction",
+                type: 'POST',
+                timeout: 10000,//超时时间设置为10秒；
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                dataType: "json",
+                headers: app.createAuthorizationTokenHeader(),
+                success: function (result) {
+                    if (result.code == 200) {
+                        app.myAlert("", result.message, "success");
+                    } else {
+                        app.myAlert("", result.message, "warning");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    app.myAlert("", "网络异常,请稍候再试", "error");
+                    return;
+                }
+            });
         });
     });
 

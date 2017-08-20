@@ -11,5 +11,5 @@ public interface UserWalletMapper extends Mapper<UserWallet> {
 
     List<UserWallet> selectOfficalUserWallet(UserWallet userWallet);
 
-    UserWallet selectWalletByCoinId(Integer tokenMoneyId, Integer userId);
+    UserWallet selectWalletByCoinId(UserWallet userWallet);
 }

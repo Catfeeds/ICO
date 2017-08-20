@@ -16,4 +16,12 @@ public interface ProjectUserRelationService extends Service<ProjectUserRelation>
      * @return
      */
     List<Project> findByUserId(Integer userId);
+
+    /**
+     * 判断用户是否锁定该项目
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    boolean userIsLockedProject(Integer userId,Integer projectId);
 }

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProjectWalletMapper extends Mapper<ProjectWallet> {
 
-    ProjectWallet selectProjectWalletByCiodId(Integer tokenMoneyId, Integer projectId);
+    ProjectWallet selectProjectWalletByCiodId(ProjectWallet projectWallet);
 
 }
