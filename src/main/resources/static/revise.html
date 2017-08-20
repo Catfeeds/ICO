@@ -286,6 +286,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="footer_icon"><a href="#"><img src="assets/images/footer-logo.png" alt=""></a></div>
                 <div class="fnav-area">
+                    <br>
                     <p>© 0000</p>
                 </div>
             </div>
@@ -338,15 +339,15 @@
         var newPassword = $("#newPassword").val();
         var newPassword2 = $("#newPassword2").val();
         if(oldPassword.length <= 0){
-            sweetAlert("旧密码不可为空!");
+            app.myAlert("","旧密码不可为空!","warning");
             return;
         }
         if(newPassword.length <= 8 || newPassword2.length >30){
-            sweetAlert("密码长度不可小于8位或大于30位!");
+            app.myAlert("","密码长度不可小于8位或大于30位!","warning");
             return;
         }
         if(newPassword2.length < 8 || newPassword2.length >30){
-            sweetAlert("密码长度不可小于8位或大于30位!");
+            app.myAlert("","密码长度不可小于8位或大于30位!","warning");
             return;
         }
         var phoneJson = {"phone":app.getUserInfo().phone};
@@ -362,14 +363,14 @@
             success: function (result) {
                 if (result.code == 200) {
                     app.setUserInfo(result.data.userInfo);
-                    sweetAlert(result.message);
+                    app.myAlert("",result.message,"warning");
                 }
                 else {
-                    sweetAlert(result.message);
+                    app.myAlert("",result.message,"warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("网络异常,请稍候再试!");
+                app.myAlert("","网络异常,请稍候再试!","error");
             }
         });
     });
@@ -381,23 +382,23 @@
         var newPassword2 = $("#newPassword2").val();
         var verifycode = $("#verifycode").val();
         if(oldPassword.length <= 0){
-            sweetAlert("旧密码不可为空!");
+            app.myAlert("","旧密码不可为空!","warning");
             return;
         }
         if(newPassword.length <= 8 || newPassword2.length >30){
-            sweetAlert("密码长度不可小于8位或大于30位!");
+            app.myAlert("","密码长度不可小于8位或大于30位!","warning");
             return;
         }
         if(newPassword2.length < 8 || newPassword2.length >30){
-            sweetAlert("密码长度不可小于8位或大于30位!");
+            app.myAlert("","密码长度不可小于8位或大于30位!","warning");
             return;
         }
         if(newPassword != newPassword2){
-            sweetAlert("两次输入的新密码不一样!");
+            app.myAlert("","两次输入的新密码不一样!","warning");
             return;
         }
         if(verifycode.length <= 0){
-            sweetAlert("验证码信息不可为空");
+            app.myAlert("","验证码信息不可为空","warning");
             return;
         }
         var date1 = app.getUserInfo().expireDate;
@@ -408,7 +409,7 @@
             return;
         }*/
         if(verifycode != app.getUserInfo().verifyCode){
-            sweetAlert("验证码信息错误，请重新输入!");
+            app.myAlert("","验证码信息错误，请重新输入!","error");
             return;
         }else {
             var updatePassword = {oldPassword:oldPassword,newPassword:newPassword,verifycode:verifycode};
@@ -423,16 +424,16 @@
                 success: function (result) {
                     if (result.code == 200) {
                         app.setUserInfo(result.data.userInfo);
-                        sweetAlert(result.message);
+                        app.myAlert("",result.message,"warning");
                         return;
                     }
                     else {
-                        sweetAlert(result.message);
+                        app.myAlert("",result.message,"warning");
                         return;
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    sweetAlert("网络异常,请稍候再试!");
+                    app.myAlert("","网络异常,请稍候再试!","error");
                     return;
                 }
             });

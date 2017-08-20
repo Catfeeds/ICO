@@ -262,6 +262,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="footer_icon"><a href="#"><img src="assets/images/footer-logo.png" alt=""></a></div>
                 <div class="fnav-area">
+                    <br>
                     <p>© 0000</p>
                 </div>
             </div>
@@ -313,13 +314,13 @@
     $("#sendsms").click(function () {
         var phoneNum = $("#mobile").val();
         if (phoneNum.trim().length != 11) {
-            sweetAlert("请填写正确的手机号码!");
+            app.myAlert(" ","请填写正确的手机号码!","warning");
             return;
         }
         // 此处判断该用户信息中是否有同样的手机号
         if (app.getUserInfo().phone != null) {
             if (app.getUserInfo().phone == phoneNum) {
-                sweetAlert("此手机号码已经验证过!");
+                app.myAlert(" ","此手机号码已经验证过!","warning");
                 return;
             }
         }
@@ -338,11 +339,11 @@
                     app.setUserInfo(result.data.userInfo);
                 }
                 else {
-                    sweetAlert(result.message);
+                    app.myAlert("",result.message,"warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("网络异常,请稍候再试!");
+                app.myAlert(" ","网络异常,请稍候再试!","error");
             }
         });
     });
@@ -351,18 +352,18 @@
         var phoneNum = $("#mobile").val();
         var verifycode = $("#verifycode").val();
         if (phoneNum.length != 11) {
-            sweetAlert("请填写正确的手机号码!");
+            app.myAlert(" ","请填写正确的手机号码!","warning");
             return;
         }
         if (verifycode.length <= 0) {
-            sweetAlert("验证码不能为空!");
+            app.myAlert(" ","验证码不能为空!","warning");
             return;
         }
         if (verifycode != app.getUserInfo().verifyCode) {
-            sweetAlert("验证码信息错误，请重新输入!");
+            app.myAlert("","验证码信息错误，请重新输入!","error");
             return;
         } else if (app.getUserInfo().expireDate < new Date()) {
-            sweetAlert("验证码已过期，请重新发送！");
+            app.myAlert("","验证码已过期，请重新发送！","warning");
             return;
         } else {
             var verifycodeJson = {"validatePhone": true};
@@ -378,15 +379,15 @@
                 success: function (result) {
                     if (result.code == 200) {
                         app.setUserInfo(result.data.userInfo);
-                        sweetAlert("手机验证成功!");
+                        app.myAlert("","手机验证成功!","success");
                     }
                     else {
-                        sweetAlert(result.message);
+                        app.myAlert("",result.message,"warning");
                         return;
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    sweetAlert("网络异常,请稍候再试!");
+                    app.myAlert("","网络异常,请稍候再试!","error");
                     return;
                 }
             });

@@ -8,6 +8,7 @@ import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.*;
 import com.tongwii.ico.service.*;
 import com.tongwii.ico.util.CurrentConfigEnum;
+import com.tongwii.ico.util.DesEncoder;
 import com.tongwii.ico.util.TokenMoneyEnum;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
@@ -51,10 +52,14 @@ public class ProjectController {
     private String env;//当前激活的配置文件
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Result add(@RequestBody Project project) {
         projectService.save(project);
         // 生成项目钱包，保存钱包信息
+
         // 比特币钱包
+        // 使用des加密密钥
+        DesEncoder desEncoder = new DesEncoder();
         TokenMoney bitCoin = tokenMoneyService.findByENShortName(TokenMoneyEnum.BTC.name());
         ProjectWallet bitCoinWallet = new ProjectWallet();
         bitCoinWallet.setTokenMoneyId(bitCoin.getId());
@@ -71,7 +76,8 @@ public class ProjectController {
         Address addressFromKey = bitCoinKey.toAddress(netParams);
 
         bitCoinWallet.setWalletAddress(addressFromKey.toBase58());
-        bitCoinWallet.setWalletPrivateKey(bitCoinKey.getPrivateKeyAsHex());
+        bitCoinWallet.setWalletPrivateKey(desEncoder.encrypt(bitCoinKey.getPrivateKeyAsHex()));
+        bitCoinWallet.setDes("比特币钱包");
         projectWalletService.save(bitCoinWallet);
 
         // 以太坊钱包
@@ -81,7 +87,8 @@ public class ProjectController {
         ethWallet.setProjectId(project.getId());
         org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
         bitCoinWallet.setWalletAddress(Hex.toHexString(ethKey.getAddress()));
-        bitCoinWallet.setWalletPrivateKey(Hex.toHexString(ethKey.getPrivKeyBytes()));
+        bitCoinWallet.setWalletPrivateKey(desEncoder.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
+        ethWallet.setDes("以太坊钱包");
         projectWalletService.save(ethWallet);
 
         return Result.successResult(project);
@@ -307,16 +314,5 @@ public class ProjectController {
        PageInfo pageInfo = new PageInfo(projectList);
 
        return Result.successResult(pageInfo);
-    }
-
-    // test
-    @GetMapping("/test")
-    public Result test(){
-        try{
-            List<Project> projectList = projectService.test();
-            return Result.successResult("查询成功!").add("projectList", projectList);
-        }catch (Exception e){
-            return Result.errorResult("查询失败!");
-        }
     }
 }

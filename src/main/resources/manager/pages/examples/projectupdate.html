@@ -324,31 +324,30 @@
         var state =  $("#state option:selected").val();
         var content = editor.html();
         if (enName.length <= 0) {
-            sweetAlert("项目名称不能为空!");
+            app.myAlert("项目名称", "项目名称不能为空！", "error");
             return;
         }
         if (cnName.length <= 0) {
-            sweetAlert("项目中文名称不能为空!");
+            app.myAlert("项目中文名称", "项目中文名称不能为空！", "error");
             return;
         }
         if (startTime.length <= 0) {
-            sweetAlert("开始时间不能为空!");
+            app.myAlert("开始时间", "开始时间不能为空！", "error");
             return;
         }
         if (endTime.length <= 0) {
-            sweetAlert("结束时间不能为空!");
+            app.myAlert("结束时间", "结束时间不能为空！", "error");
             return;
         }
-        var isPartPersonNumber = /^\d+$/;
         if (partPersonNumber.length <= 0) {
-            sweetAlert("参与人数不能为空!");
+            app.myAlert("参与人数", "参与人数不能为空！", "error");
             return;
         } else if (!isPartPersonNumber.test(partPersonNumber)) {
-            sweetAlert("参与人数只能输入正整数!");
+            app.myAlert("参与人数", "参与人数只能输入正整数！", "error");
             return;
         }
         if (des.length <= 0) {
-            sweetAlert("项目描述不能为空!");
+            app.myAlert("项目描述", "项目描述不能为空！", "error");
             return;
         }
 
@@ -370,11 +369,11 @@
 
                 }
                 else {
-                    sweetAlert("项目修改失败!");
+                    app.myAlert("", "项目修改失败！", "warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("网络异常,请稍候再试!");
+                app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
     }
@@ -410,9 +409,9 @@
         document.getElementById('startTime').onclick = function(){
             start.elem = this;
             laydate(start);
-        }
+        };
         document.getElementById('endTime').onclick = function(){
-            end.elem = this
+            end.elem = this;
             laydate(end);
         }
 

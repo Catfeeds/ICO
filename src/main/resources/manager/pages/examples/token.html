@@ -512,11 +512,11 @@
                     console.log(result.data);
                 }
                 else {
-                    sweetAlert("操作失败!");
+                    app.myAlert("", "操作失败!", "warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("网络异常,请稍候再试!");
+                app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
 
@@ -531,15 +531,15 @@
             success: function (result) {
                 if (result.code == 200) {
                     $("#moneyData").find("#"+id).remove();
-                    sweetAlert("删除成功!");
+                    app.myAlert("", "删除成功！", "success");
                     console.log(result.data);
                 }
                 else {
-                    sweetAlert("删除失败!");
+                    app.myAlert("", "删除失败!", "warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("网络异常,请稍候再试!");
+                app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
     }

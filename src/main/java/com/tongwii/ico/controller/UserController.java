@@ -1,10 +1,8 @@
 package com.tongwii.ico.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.exception.StorageFileNotFoundException;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.service.FileService;
@@ -15,21 +13,12 @@ import com.tongwii.ico.util.MessageUtil;
 import com.tongwii.ico.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.URLConnection;
-import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -262,55 +251,6 @@ public class UserController {
     public Result userInfo() {
         User user = userService.findById(ContextUtils.getUserId());
         return Result.successResult(user);
-    }
-
-    /**
-     * 上传头像
-     */
-    @PostMapping("/avator")
-    @ResponseBody
-    public Result handleFileUpload(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
-        fileService.store(file);
-        Path path = fileService.load(file.getOriginalFilename());
-        JSONObject object = new JSONObject();
-        String url = MvcUriComponentsBuilder.fromMethodName(UserController.class,
-                "avatorFile", path.getFileName().toString(), response).build().toString();
-        object.put("path", url);
-
-        Integer userId = ContextUtils.getUserId();
-        userService.userUploadAvator(userId, url);
-        return Result.successResult(object);
-    }
-
-    @ExceptionHandler(StorageFileNotFoundException.class)
-    public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {
-        return ResponseEntity.notFound().build();
-    }
-
-    /**
-     * 获取头像文件
-     */
-    @GetMapping("/avator/{filename:.+}")
-    @ResponseBody
-    public void avatorFile(@PathVariable String filename, HttpServletResponse response) throws IOException {
-
-        Resource file = fileService.loadAsResource(filename);
-
-        File files = file.getFile();
-        String mimeType= URLConnection.guessContentTypeFromName(files.getName());
-        response.setContentType(mimeType);
-        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + files.getName() +"\""));
-        response.setContentLength((int)files.length());
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(files));
-
-        FileCopyUtils.copy(inputStream, response.getOutputStream());
-    }
-
-    @GetMapping("/")
-    public String welcome(Map<String, Object> model) {
-        model.put("time", new Date());
-        model.put("message", "test");
-        return "welcome";
     }
 
 }

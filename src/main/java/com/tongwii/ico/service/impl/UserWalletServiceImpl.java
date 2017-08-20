@@ -80,7 +80,7 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
         UserWallet userWallet = new UserWallet();
         userWallet.setUserId(userId);
         userWallet.setType(type);
-        List<UserWallet> userWallets = userWalletMapper.select(userWallet);
+        List<UserWallet> userWallets = userWalletMapper.selectOfficalUserWallet(userWallet);
         if(CollectionUtils.isEmpty(userWallets)){
             return null;
         }

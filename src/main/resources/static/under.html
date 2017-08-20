@@ -167,6 +167,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="footer_icon"><a href="#"><img src="assets/images/footer-logo.png" alt=""></a></div>
                 <div class="fnav-area">
+                    <br>
                     <p>© 0000</p>
                 </div>
             </div>
@@ -257,12 +258,12 @@
                         location.href = "willICO.html?id=" + id;
                     });
                 }else{
-                    sweetAlert(result.message);
+                    app.myAlert("",result.message,"warning");
                     return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-                sweetAlert("网络连接异常，请稍后再试!");
+                app.myAlert("","网络连接异常，请稍后再试!","error");
                 return;
             }
         });

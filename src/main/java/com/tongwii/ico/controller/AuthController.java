@@ -2,7 +2,6 @@ package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.User;
-import com.tongwii.ico.model.UserWallet;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.security.JwtUser;
 import com.tongwii.ico.service.UserService;
@@ -46,6 +45,10 @@ public class AuthController {
 
     /**
      * 创建身份验证token
+     *
+     * @param user
+     * @return
+     * @throws AuthenticationException
      */
     @PostMapping("/login")
     public Result createAuthenticationToken (@RequestBody User user) throws AuthenticationException {
@@ -71,6 +74,9 @@ public class AuthController {
 
     /**
      * 刷新并认证token
+     *
+     * @param request
+     * @return
      */
     @PutMapping("/refresh")
     public Result refreshAndGetAuthenticationToken ( HttpServletRequest request ) {

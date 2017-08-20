@@ -167,4 +167,19 @@ public class UserWallet {
     public void setTokenMoney(TokenMoney tokenMoney) {
         this.tokenMoney = tokenMoney;
     }
+
+    public enum WalletType {
+        IN_PUT(1),
+        OUT_PUT(2);
+
+        public Integer value;
+
+        WalletType(Integer value) {
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+    }
 }

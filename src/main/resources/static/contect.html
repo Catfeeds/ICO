@@ -332,6 +332,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="footer_icon"><a href="#"><img src="assets/images/footer-logo.png" alt=""></a></div>
                 <div class="fnav-area">
+                    <br>
                     <p>© 0000</p>
                 </div>
             </div>
@@ -395,11 +396,11 @@
             var realName = $("#truename").val();
             var isValidate = null;
             if(cardNO.length <= 0){
-                sweetAlert("身份证信息不可为空!");
+                app.myAlert(" ","身份证信息不可为空!","warning");
                 return;
             }
             if(realName.length <= 0){
-                sweetAlert("姓名信息不可为空!");
+                app.myAlert("","姓名信息不可为空!","warning");
                 return;
             }
             var json = {cardno:cardNO,name:realName};
@@ -413,16 +414,16 @@
                 success: function (result) {
                     if (result.code == 200) {
                         isValidate = true;
-                        sweetAlert("身份证验证成功!");
+                        app.myAlert("","身份证验证成功!","success");
                         return;
                     }
                     else {
-                        sweetAlert("身份证验证失败!");
+                        app.myAlert(" ","身份证验证失败!","error");
                         return;
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    sweetAlert("网络异常,请稍候再试!");
+                    sweetAlert(" ","网络异常,请稍候再试!","error");
                 }
             });
             if(isValidate == null){
@@ -446,12 +447,12 @@
                             $("#identityCardlable").css('display', 'block');
                         }
                         else {
-                            sweetAlert(result.message);
+                            app.myAlert(" ",result.message,"warning");
                             return;
                         }
                     },
                     error: function (xhr, type, errerThrown) {
-                        sweetAlert("网络异常,请重新验证!");
+                        sweetAlert("","网络异常,请重新验证!","error");
                         return;
                     }
                 });
@@ -475,12 +476,12 @@
         var iscardAccount=/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
         if(cardAccount.length <= 0)
         {
-            sweetAlert("身份证号码不为空！");
+            app.myAlert("","身份证号码不为空！","warning");
             return;
         }
         else if (!iscardAccount.test(cardAccount))
         {
-            sweetAlert("请输入正确的身份证号码！");
+            app.myAlert("","请输入正确的身份证号码！","warning");
             return;
         }
     }
