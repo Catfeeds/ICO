@@ -234,6 +234,12 @@
                                            </div>
                                        </div>
                                        <div class="form-group">
+                                           <label class="col-sm-2 control-label">上传图片</label>
+                                           <div class="col-sm-10">
+                                               <input name="file"  type="file">
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
                                            <label class="col-sm-2 control-label">项目简介</label>
                                            <div class="col-sm-10">
                                                <input type="text" class="form-control" id="prjproduce" placeholder="请您对该项目做一个简单的介绍....">
@@ -245,11 +251,6 @@
                                                <textarea class="form-control" id="prjcontent" placeholder=""></textarea>
                                            </div>
                                        </div>
-                                       <!--<div class="form-group">-->
-                                           <!--<div class="col-sm-offset-2 col-sm-10">-->
-                                               <!--<button type="button" id="prjadd" class="btn btn-danger">保存</button>-->
-                                           <!--</div>-->
-                                       <!--</div>-->
                                    </form>
                                </div>
                            </div>
@@ -590,7 +591,6 @@
     var startTime;
     layui.use('laydate', function(){
         var laydate = layui.laydate;
-
         var start = {
             format: 'YYYY-MM-DD hh:mm:ss',
             istime: true, //是否开启时间选择<br/>
@@ -649,6 +649,7 @@
             }
         });
 
+        //保存用户信息
         $("#bcUserInfo").click(function() {
             var userName = $("#userName").val();
             var userCard = $("#userCard").val();
@@ -701,7 +702,31 @@
             });
         });
 
+        //保存项目
         $("#bcPro").click(function () {
+            var id = app.getQueryString("id");
+            var formData = new FormData($("#addprjs")[0]);
+            var pictureUrl = null;
+            //上传图片
+            $.ajax({
+                url: '/file',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if(result.code == 200){
+                        pictureUrl = result.data.path;
+                    }else{
+                        pictureUrl = null;
+                    }
+                },
+                error: function (returndata) {
+                    sweetAlert("网络异常，请稍后再试!");
+                }
+            });
             //发行代币字段
             var moneyTypeId = $("#fabuMoney option:selected").val();
             var fbnumber = $("#fbnumber").val();
@@ -740,6 +765,25 @@
                                 if (result.code == 200) {
                                     sweetAlert("项目添加成功！");
                                     prjId = result.data.id;
+                                    //保存图片
+                                    var projectFileJson = {projectId:prjId,fileType:"image",fileUrl:pictureUrl};
+                                    $.ajax({
+                                        url: '/project/file',
+                                        type: 'POST',
+                                        headers: app.createAuthorizationTokenHeader(),
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify(projectFileJson),
+                                        dataType: "json",
+                                        success: function (result) {
+                                            if(result.code == 200){
+                                            }else{
+                                                pictureUrl = null;
+                                            }
+                                        },
+                                        error: function (returndata) {
+                                            sweetAlert("上传图片失败！");
+                                        }
+                                    });
                                     //接受代币的字段
                                     var moneyTypeId1 = $("#jieshouMoney option:selected").val();
                                     var minnumber = $("#minnumber").val();
