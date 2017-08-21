@@ -38,8 +38,24 @@
     <script src="../../layui/layui.js"></script>
     <![endif]-->
     <style>
-        .sweet-alert h2 {
-            font-size: 18px;
+         .note-editor.note-frame .note-editing-area .note-editable {
+             padding: 10px;
+             overflow: auto;
+             color: #000;
+             background-color: #fff;
+             height: 500px;
+             width: 100px;
+         }
+        .modal-content {
+            -webkit-box-shadow: 0 2px 3px rgba(0,0,0,0.125);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.125);
+            padding: 8px;
+        }
+        .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 0px;
         }
     </style>
 </head>
@@ -248,7 +264,9 @@
                                        <div class="form-group">
                                            <label class="col-sm-2 control-label">项目详情</label>
                                            <div class="col-sm-10">
-                                               <textarea class="form-control" id="prjcontent" placeholder=""></textarea>
+                                               <div class="col-sm-8">
+                                                   <div id="editor" class="summernote" ></div>
+                                               </div>
                                            </div>
                                        </div>
                                    </form>
@@ -576,6 +594,8 @@
 <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src="../../plugins/summernote/lang/summernote-zh-CN.js"></script>
+<script src="../../plugins/summernote/summernote.js"></script>
 <!-- FastClick -->
 <script src="../../plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
@@ -583,7 +603,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>;
 <!-- Bootstrap WYSIHTML5 -->
-<script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<link rel="stylesheet" href="../../plugins/summernote/summernote.css">
 <script src="../../scripts/sweet-alert.js"></script>
 <script src="../../scripts/app.js"></script>
 <script>
@@ -625,6 +645,12 @@
 
     });
     jQuery(window).load(function () {
+        $('.summernote').summernote({
+            placeholder:'项目描述'
+        });
+
+        $('#editor').summernote();
+
         //添加可投资项目数据
         $.ajax({
             url: "/token/money/findAll",
@@ -750,10 +776,10 @@
                         var prjopentime = $("#startTime").val();
                         var prjclosetime = $("#endTime").val();
                         var prjproduce = $("#prjproduce").val();
-                        var prjcontent = $("#prjcontent").val();
+                        var prjcontent =$('.summernote').summernote('code');
                         var id = $("#userId").val();
                         var prjId;
-                        var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjproduce, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
+                        var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
                         $.ajax({
                             url: "/project/add",
                             type: 'POST',
