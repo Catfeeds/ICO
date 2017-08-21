@@ -323,7 +323,7 @@
                             if(jshb==""){
                                 jshb = item.tokenMoney.name;
                             }else{
-                                jshb =","+ item.tokenMoney.name;
+                                jshb =jshb+","+ item.tokenMoney.name;
                             }
                         });
                         //项目钱包
@@ -332,7 +332,7 @@
                             if(walletAddress==""){
                                 walletAddress = item.des;
                             }else{
-                                walletAddress =","+ item.des;
+                                walletAddress =walletAddress+","+ item.des;
                             }
                         });
                         //项目状态
