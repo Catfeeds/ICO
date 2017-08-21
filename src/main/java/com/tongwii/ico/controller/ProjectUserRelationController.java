@@ -54,12 +54,11 @@ public class ProjectUserRelationController {
 
     @GetMapping("/getUserProject/{userId}")
     public Result getUserProject(@RequestParam(required = true,defaultValue = "0") Integer page,
-                                 @RequestParam(required = true,defaultValue = "4") Integer size,
+                                 @RequestParam(required = true,defaultValue = "1") Integer size,
                                  @PathVariable Integer userId) {
-
-        List<ProjectUserRelation> projectUserRelations = projectUserRelationService.findByUserId(userId);
         PageHelper.startPage(page, size);
         List<Project> projectList = new ArrayList<>();
+        List<ProjectUserRelation> projectUserRelations = projectUserRelationService.findByUserId(userId);
         for (int i=0; i<projectUserRelations.size(); i++){
             Project project = projectService.findById(projectUserRelations.get(i).getProjectId());
             Integer projectId = project.getId();
@@ -68,8 +67,8 @@ public class ProjectUserRelationController {
             project.setPictureUrl(pictureUrl);
             projectList.add(project);
         }
-        PageInfo pageInfo = new PageInfo(projectList);
-        return Result.successResult(pageInfo);
+        PageInfo pageInfo = new PageInfo(projectUserRelations);
+        return Result.successResult().add("lockedProjectList",projectList).add("pageInfo",pageInfo);
     }
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
