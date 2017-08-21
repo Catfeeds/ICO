@@ -226,6 +226,7 @@
                 if(result.code == 200){
                     var willICOList = result.data.willICO;
                     $.each(willICOList, function (i, item) {
+                        var pictureUrl = item.pictureUrl;
                         var date = null;
                         if (item.startTime == null || item.endTime == null) {
                             date = "尚未明确";
@@ -237,7 +238,7 @@
                                 + "<div class='directory-section'>"
                                 + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
                                 + "<span class='thumb-info-wrapper'>"
-                                + "<a><img src='assets/extra-images/img.jpg'"
+                                + "<a><img src='"+pictureUrl+"'"
                                 + "class='img-responsive'>"
                                 + "<span class='thumb-info-title'>"
                                 + "<span class='thumb-info-inner'>" + item.name + "</span>"

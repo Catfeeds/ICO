@@ -228,6 +228,7 @@
                 if(result.code == 200){
                     var ICOList = result.data.ICO;
                     $.each(ICOList, function (i, item) {
+                        var pictureUrl = item.pictureUrl;
                         var date = new Date();
                         var y = date.getFullYear();
                         var m = date.getMonth();
@@ -242,7 +243,7 @@
                                 + "<div class='directory-section'>"
                                 + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
                                 + "<span class='thumb-info-wrapper'>"
-                                + "<a><img src='assets/extra-images/listing-grid-2.jpg' class='img-responsive'>"
+                                + "<a><img src='"+pictureUrl+"' class='img-responsive'>"
                                 + "<span class='thumb-info-title'>"
                                 + "<span class='thumb-info-inner'>" + item.name + "</span>"
                                 + "<span class='thumb-info-type' style='color: black'>" + item.startTime + " —— " + item.endTime + "</span>"
