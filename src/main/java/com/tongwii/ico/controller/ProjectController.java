@@ -92,8 +92,8 @@ public class ProjectController {
         ethWallet.setTokenMoneyId(ethMoney.getId());
         ethWallet.setProjectId(project.getId());
         org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
-        bitCoinWallet.setWalletAddress(Hex.toHexString(ethKey.getAddress()));
-        bitCoinWallet.setWalletPrivateKey(desEncoder.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
+        ethWallet.setWalletAddress(Hex.toHexString(ethKey.getAddress()));
+        ethWallet.setWalletPrivateKey(desEncoder.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
         ethWallet.setDes("以太坊钱包");
         projectWalletService.save(ethWallet);
 
