@@ -340,7 +340,7 @@ public class ProjectController {
             // 获取项目图片
             String pictureUrl = projectFileService.findProjectFileByType(projectList.get(i).getId(),"image").getFileUrl();
             projectList.get(i).setPictureUrl(pictureUrl);
-            projectList.get(i).setPictureUrl(pictureUrl);
+            projects.add(projectList.get(i));
         }
         PageInfo pageInfo = new PageInfo(projects);
         return Result.successResult(pageInfo);
