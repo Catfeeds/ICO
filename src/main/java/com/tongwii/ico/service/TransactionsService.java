@@ -29,7 +29,7 @@ public interface TransactionsService {
     JSONArray getBitCoinAddressTransaction(String address);
 
     /**
-     * 通过以太坊地址分页查询交易列表信息
+     * 通过以太坊地址查询交易列表信息
      * 默认逆序排序
      *
      * 返回结果示例：
@@ -62,11 +62,9 @@ public interface TransactionsService {
      * </pre>
      *
      * @param address   以太坊Hash地址
-     * @param page      页数
-     * @param offset    分页大小
      * @return
      */
-    JSONArray getETHAddressTransaction(String address, String page, String offset);
+    JSONArray getETHAddressTransaction(String address);
 
 
     /**
