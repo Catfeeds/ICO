@@ -16,6 +16,7 @@ import org.bitcoinj.core.*;
 import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.utils.BriefLogFormatter;
 import org.bitcoinj.wallet.Wallet;
 import org.ethereum.core.Denomination;
 import org.ethereum.facade.Ethereum;
@@ -129,22 +130,28 @@ public class TransactionServiceImpl implements TransactionsService {
 
     @Override
     public String sendBitCoin(String fromAddress, String recipient, String amountToSend) {
-        final NetworkParameters netParams;
+        BriefLogFormatter.init();
 
+        final NetworkParameters netParams;
+        final WalletAppKit kit;
         if(env.equals(CurrentConfigEnum.dev.toString())) {
             netParams = TestNet3Params.get();
+            kit = new WalletAppKit(netParams, new File(walletPath), "ICO_TT_Test");
         } else {
             netParams = MainNetParams.get();
+            kit = new WalletAppKit(netParams, new File(walletPath), "ICO_TT");
         }
 
-        WalletAppKit kit = new WalletAppKit(netParams, new File(walletPath), "ICO_TT");
 
         // Download the block chain and wait until it's done.
         kit.startAsync();
         kit.awaitRunning();
 
         DesEncoder desEncoder = new DesEncoder();
+
         kit.wallet().importKey(ECKey.fromPrivate(HexUtils.fromHexString(desEncoder.decrypt(fromAddress))));
+
+        kit.wallet().allowSpendingUnconfirmedTransactions();
 
         Coin value = Coin.parseCoin(amountToSend);
 

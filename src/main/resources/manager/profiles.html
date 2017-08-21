@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Editors</title>
+    <title>User Profile</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -17,14 +17,19 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
     <link rel="stylesheet" href="css/sweet-alert.css">
+
+    <link rel="stylesheet" href="plugins/summernote/summernote.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+     <!--时间控件-->
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="layui/css/modules/laydate/laydate.css">
+    <link rel="stylesheet" href="layui/css/modules/layer/default/layer.css">
+    <script src="layui/layui.js"></script>
     <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -34,9 +39,9 @@
         <!-- Logo -->
         <a class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>A</b>LT</span>
+            <span class="logo-mini"><b>ICO</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Admin</b>LTE</span>
+            <span class="logo-lg"><b>ICO</b>.TT</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -94,7 +99,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="index.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+                        <li><a href="/manager/index.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
                     </ul>
                 </li>
                 <li class="treeview active">
@@ -103,30 +108,29 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
-                        <li><a href="data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
-                        <li><a href="project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
-                        <li><a href="token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
+                        <li><a href="/manager/profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
+                        <li><a href="/manager/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
+                        <li><a href="/manager/project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
+                        <li><a href="/manager/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
                     </ul>
                 </li>
-
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-edit"></i> <span>编辑器</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/newseditor.html"><i class="fa fa-circle-o"></i>新闻/公告编辑</a></li>
+                        <li><a href="/manager/newseditor.html"><i class="fa fa-circle-o"></i>新闻/公告编辑</a></li>
                     </ul>
                 </li>
             </ul>
         </section>
+        <!-- /.sidebar -->
     </aside>
 
-
-
-
+    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
                 开启众筹旅程！
@@ -137,7 +141,8 @@
             </ol>
         </section>
 
-        <section class="content">
+        <!-- Main content -->
+        <section class="content" id="people">
             <div class="row">
                 <div class="col-md-10">
                     <div class="nav-tabs-custom">
@@ -394,11 +399,11 @@
 
     });
     jQuery(window).load(function () {
-        $('.summernote').summernote({
-            placeholder:'项目描述'
+        $('#editor').summernote({
+            placeholder:'项目描述',
+            lang: 'zh-CN', // default: 'en-US'
+            height: 200   //set editable area's height
         });
-
-        $('#editor').summernote();
 
         //添加可投资项目数据
         $.ajax({
@@ -457,7 +462,7 @@
                     if (result.code == 200) {
                         if(result.data == null) {
                             app.myAlert("", "发起人不存在，请注册！", "warning");
-                            location.href = "register.html";
+                            location.href = "/manager/register.html";
                         } else {
                             var userId = result.data.id;
                             $("#ceshi").append(
@@ -588,7 +593,7 @@
                                                     success : function(result) {
                                                         if (result.code == 200) {
 
-                                                            location.href = "../tables/data.html";
+                                                            location.href = "/manager/data.html";
                                                         } else {
                                                             sweetAlert("导入失败2！");
                                                         }

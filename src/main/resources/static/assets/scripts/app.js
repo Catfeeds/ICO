@@ -113,8 +113,6 @@
         },function () {
             if(jumphtml){
                 location.href=jumphtml;
-            }else{
-                window.location.reload();
             }
         });
     };
