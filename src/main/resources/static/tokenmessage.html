@@ -238,8 +238,7 @@
                                                             用于投资项目 <span id="Showproject"
                                                                          style="font-size:18px;font-weight:bold;color:#FF8000;"></span>
                                                             吗？</p>
-                                                        <p><input type="checkbox" name="agreement3" value="3"
-                                                                  required="">我确认已经阅读并理解该项目的原理、愿景、目标和实现手段，同意将按照该项目的公开认购条件来购买相关数字代币或参与数字代币众筹。我也已经充分了解该项目的所有风险，并且愿意承担所有风险。我本人清楚明白ICO.TT仅仅是作为我所委托的代理人来代表我操作购买该项目的数字代币或参与众筹，而不是项目发起人或代币出售方本身，ICO.TT除操作前述代理行为外不承担任何其他义务，也不会对相关数字代币本身或该项目的任何缺陷或因此导致的任何损失而负责。
+                                                        <p><input type="checkbox" id="checked" value="3" required>我确认已经阅读并理解该项目的原理、愿景、目标和实现手段，同意将按照该项目的公开认购条件来购买相关数字代币或参与数字代币众筹。我也已经充分了解该项目的所有风险，并且愿意承担所有风险。我本人清楚明白ICO.TT仅仅是作为我所委托的代理人来代表我操作购买该项目的数字代币或参与众筹，而不是项目发起人或代币出售方本身，ICO.TT除操作前述代理行为外不承担任何其他义务，也不会对相关数字代币本身或该项目的任何缺陷或因此导致的任何损失而负责。
                                                         </p>
 
                                                     </div>
@@ -372,8 +371,16 @@
         var pid = app.getQueryString("pid");
         var projectName = decodeURI(app.getQueryString("name"));
         var userWallet = app.getUserInfo().userWallets;
+        var BTCBalance = null;
+        var ETHBalance = null;
         //添加用户钱包信息
         $.each(userWallet, function (i, item) {
+            if(item.tokenMoneyEnName == "ETH"){
+                ETHBalance = item.walletBalance;
+            }
+            if(item.tokenMoneyEnName == "BTC"){
+                BTCBalance = item.walletBalance.substring(0,item.walletBalance.length-3);
+            }
             $("#numMoney").append(
                     "<span class='strong1'>" + item.tokenMoneyEnName + ":" + "<span class='strong1' style='color: #fe6500'>" + item.walletBalance + "</span></span> | "
             );
@@ -430,6 +437,23 @@
             var investmentMoney = $("#inputmoney").val().toString();
 
             if($("#inputmoney").val()){
+                if(cionType == "ETH"){
+                    if($("#inputmoney").val().toString() > ETHBalance){
+                        app.myAlert("","您的余额不足!","warning","tokeninvestment.html");
+                        return;
+                    }
+                }
+                if(cionType == "BTC"){
+                    if($("#inputmoney").val().toString() > BTCBalance){
+                        app.myAlert("","您的余额不足!","warning","tokeninvestment.html");
+                        return;
+                    }
+                }
+                if( !$("input[type='checkbox']").is(':checked')){
+                    app.myAlert("","请选择必填项!","warning");
+                    return;
+                }
+
                 var json = {cionType:cionType,projectId:pid,investmentMoney:investmentMoney};
                 $.ajax({
                     url: "/token/money/transaction",
@@ -442,8 +466,10 @@
                     success: function (result) {
                         if (result.code == 200) {
                             app.myAlert("", result.message, "success","tokeninvestment.html");
+                            return;
                         } else {
                             app.myAlert("", result.message, "warning","tokeninvestment.html");
+                            return;
                         }
                     },
                     error: function (xhr, type, errerThrown) {

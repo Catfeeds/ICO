@@ -9,6 +9,7 @@ import com.tongwii.ico.model.*;
 import com.tongwii.ico.service.*;
 import com.tongwii.ico.util.CurrentConfigEnum;
 import com.tongwii.ico.util.DesEncoder;
+import com.tongwii.ico.util.EthConverter;
 import com.tongwii.ico.util.TokenMoneyEnum;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
@@ -24,10 +25,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
 * Created by Zeral on 2017-08-02.
@@ -271,7 +269,7 @@ public class ProjectController {
 
 
     /***
-     * 根据钱包地址获取交易记录
+     *根据BTC钱包地址获取交易记录
      * @return
      */
     @GetMapping("/getBitCoinAddressTransaction")
@@ -284,6 +282,23 @@ public class ProjectController {
             jsonObj.put("inputs_value",inputsvalue);
             data.add(jsonObj);
             System.out.println(jsonObj);
+        }
+        return Result.successResult(data);
+    }
+    /***
+     * 根据ETC钱包地址获取交易记录
+     * @return
+     */
+    @GetMapping("/getETHAddressTransaction")
+    public Result getETHAddressTransaction(@RequestParam(required = true,defaultValue = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A") String  address,@RequestParam(defaultValue = "1") String  page, @RequestParam(defaultValue = "1") String size){
+        JSONArray coin = transactionsService.getETHAddressTransaction(address);
+        JSONArray data = new JSONArray();
+        for (Iterator iterator = coin.iterator(); iterator.hasNext();) {
+            JSONObject object = (JSONObject) iterator.next();
+            String inputsvalue  = EthConverter.fromWei(object.getBigDecimal("value"), EthConverter.Unit.ETHER) + EthConverter.Unit.ETHER.toString().toUpperCase();
+            object.put("value",inputsvalue);
+            data.add(object);
+            System.out.println(object);
         }
         return Result.successResult(data);
     }
