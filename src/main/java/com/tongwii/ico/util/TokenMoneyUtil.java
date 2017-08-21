@@ -48,7 +48,7 @@ public class TokenMoneyUtil {
 
         final File walletFile;
 
-        if(env.equals(CurrentConfigEnum.DEV)) {
+        if(env.equals(CurrentConfigEnum.dev.toString())) {
             netParams = TestNet3Params.get();
         } else {
             netParams = MainNetParams.get();
@@ -88,7 +88,7 @@ public class TokenMoneyUtil {
     public boolean testBitCoinAddr(String text) {
         try {
             final NetworkParameters netParams;
-            if(env.equals(CurrentConfigEnum.DEV)) {
+            if(env.equals(CurrentConfigEnum.dev.toString())) {
                 netParams = TestNet3Params.get();
             } else {
                 netParams = MainNetParams.get();

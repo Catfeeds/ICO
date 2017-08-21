@@ -28,6 +28,17 @@ public interface TransactionsService {
      */
     JSONArray getBitCoinAddressTransaction(String address);
 
+    /**
+     * 通过以太坊地址分页查询交易列表信息
+     * 默认逆序排序
+     *
+     * @param address   以太坊Hash地址
+     * @param page      页数
+     * @param offset    分页大小
+     * @return
+     */
+    JSONArray getETHAddressTransaction(String address, String page, String offset);
+
 
     /**
      * 根据比特币请求钱包地址查询单笔交易详细信息

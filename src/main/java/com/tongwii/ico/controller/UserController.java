@@ -252,7 +252,7 @@ public class UserController {
         User user = userService.findById(userId);
         user.setValidateEmail(true);
         userService.update(user);
-        return "/sign";
+        return "/index.html";
     }
 
     /**
