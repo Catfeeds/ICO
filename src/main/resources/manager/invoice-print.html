@@ -7,18 +7,16 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="../../css/sweet-alert.css">
-
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,11 +24,6 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style>
-        .sweet-alert h2 {
-            font-size: 18px;
-        }
-    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -58,12 +51,12 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs">老吴</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
-                                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                             </li>
                             <li class="user-footer">
                                 <div class="pull-right">
@@ -83,7 +76,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>老吴</p>
@@ -99,7 +92,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/user.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+                        <li><a href="index.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
                     </ul>
                 </li>
                 <li class="treeview active">
@@ -108,10 +101,10 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
-                        <li><a href="../tables/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
-                        <li><a href="../examples/404.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
-                        <li><a href="../examples/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
+                        <li><a href="profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
+                        <li><a href="data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
+                        <li><a href="project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
+                        <li><a href="token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
                     </ul>
                 </li>
                 <li class="treeview active">
@@ -120,7 +113,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/newseditor.html"><i class="fa fa-circle-o"></i>新闻/公告编辑</a></li>
+                        <li><a href="newseditor.html"><i class="fa fa-circle-o"></i>新闻/公告编辑</a></li>
                     </ul>
                 </li>
             </ul>
@@ -130,7 +123,7 @@
 
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>编辑代币信息</h1>
+            <h1>编辑钱包信息</h1>
         </section>
         <!-- Main content -->
         <section class="content">
@@ -141,44 +134,32 @@
                             <div class="active tab-pane" id="set">
                                 <form class="form-horizontal">
                                     <div class="form-group">
-                                        <label  class="col-sm-2 control-label">代币民称</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="name" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label  class="col-sm-2 control-label">代币英文简称</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="nameEnShort" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label  class="col-sm-2 control-label">代币介绍</label>
+                                        <label class="col-sm-2 control-label">项目名称</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="des" placeholder="">
+                                            <input type="text" class="form-control" id="email" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-sm-2 control-label">代币官方链接</label>
+                                        <label class="col-sm-2 control-label">项目中文名称</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="officialUrl" placeholder="">
+                                            <input type="text" class="form-control" id="username" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-sm-2 control-label">Twitter链接</label>
+                                        <label class="col-sm-2 control-label">钱包地址</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="twitterUrl" placeholder="">
+                                            <input type="text" class="form-control" id="realname" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-sm-2 control-label">github链接</label>
+                                        <label class="col-sm-2 control-label">钱包描述</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="githubUrl" placeholder="">
+                                            <input type="text" class="form-control" id="" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="button" id="updateMoney" class="btn btn-danger">保存</button>
+                                            <button type="submit" class="btn btn-danger">保存</button>
                                             <button  type="button" class="btn btn-danger" style="margin-left: 25px" onclick="history.back()">返回</button>
                                         </div>
                                     </div>
@@ -397,111 +378,32 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
-<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- DataTables -->
 <!--<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>-->
-<script src="../../plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
-<script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
-<script src="../../plugins/fastclick/fastclick.js"></script>
+<script src="plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<script src="../../scripts/app.js"></script>
-<script src="../../scripts/sweet-alert.js"></script>
+<script src="dist/js/demo.js"></script>
 <!-- page script -->
 <script>
-
-    jQuery(window).load(function () {
-        var moneyId = app.getQueryString("id")
-        $.ajax({
-            url: "/token/money/"+moneyId,
-            type: 'GET',
-            success: function (result) {
-                if (result.code == 200) {
-                    var name = $("#name").val(result.data.name);
-                    var nameEnShort = $("#nameEnShort").val(result.data.nameEnShort);
-                    var officialUrl= $("#officialUrl").val(result.data.officialUrl);
-                    var des = $("#des").val(result.data.des);
-                    var githubUrl = $("#githubUrl").val(result.data.githubUrl);
-                    var twitterUrl = $("#twitterUrl").val(result.data.twitterUrl);
-                    console.log(result.data);
-                }
-                else {
-                    app.myAlert("", "查询失败!", "warning");
-                }
-            },
-            error: function (xhr, type, errerThrown) {
-                app.myAlert("", "网络异常,请稍候再试!", "error");
-            }
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
         });
-        $("#updateMoney").click(function () {
-            var name = $("#name").val();
-            var nameEnShort = $("#nameEnShort").val();
-            var officialUrl= $("#officialUrl").val();
-            var des = $("#des").val();
-            var githubUrl = $("#githubUrl").val();
-            var twitterUrl = $("#twitterUrl").val();
-            if (name.length <= 0) {
-                app.myAlert("代币名称", "代币名称不能为空！", "error");
-                return;
-            }
-            if (nameEnShort.length <= 0) {
-                app.myAlert("代币英文名称", "代币英文名称不能为空！", "error");
-                return;
-            }
-            if (des.length <= 0) {
-                app.myAlert("代币介绍", "代币介绍不能为空！", "error");
-                return;
-            }
-            if (officialUrl.length <= 0) {
-                app.myAlert("代币官方链接", "代币官方链接不能为空！", "error");
-                return;
-            }
-            if (twitterUrl.length <= 0) {
-                app.myAlert("Twitter链接", "Twitter链接不能为空！", "error");
-                return;
-            }
-            if (githubUrl.length <= 0) {
-                app.myAlert("Github链接", "Github链接不能为空！", "error");
-                return;
-            }
-
-            var moneyJson = {
-                id:moneyId,
-                name: name,
-                nameEnShort: nameEnShort,
-                officialUrl: officialUrl,
-                githubUrl: githubUrl,
-                des: des,
-                twitterUrl: twitterUrl
-            };
-            $.ajax({
-                url: "/token/money",
-                type: 'PUT',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(moneyJson),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    if (result.code == 200) {
-                        app.myAlert("", "信息修改成功！", "success");
-                        location.href = "token.html";
-                    }
-                    else {
-                        app.myAlert("", "修改失败！", "warning");
-                        console.log("修改失败！");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert("", "网络异常,请稍候再试!", "error");
-                }
-            });
-        });
-
     });
 </script>
 </body>
