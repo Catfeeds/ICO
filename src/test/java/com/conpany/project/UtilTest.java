@@ -106,6 +106,7 @@ public class UtilTest extends Tester {
         // Download the block chain and wait until it's done.
         kit.startAsync();
         kit.awaitRunning();
+
         Address address = Address.fromBase58(netParams, addr);
         Wallet wallet = new Wallet(netParams);
         wallet.addWatchedAddress(address, 0);
