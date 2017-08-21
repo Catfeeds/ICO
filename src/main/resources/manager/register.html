@@ -26,13 +26,13 @@
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="register-logo">
-    <a href="../../index2.html"><b>管理员注册</b></a>
+    <a href="/manager/register.html"><b>管理员注册</b></a>
   </div>
 
   <div class="register-box-body">
     <p class="login-box-msg">注册新用户</p>
 
-    <form action="unindex.html" method="post">
+    <form method="post">
       <div class="form-group has-feedback">
         <input type="text" class="form-control" id="userName" placeholder="用户名">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -91,7 +91,7 @@
               success: function (result) {
                   if (result.code == 200) {
                       app.myAlert("", "注册成功，请登录！", "success");
-                      location.href = "profiles.html";
+                      location.href = "/manager/profiles.html";
 
                   }
                   else {

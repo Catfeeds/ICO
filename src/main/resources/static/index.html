@@ -585,12 +585,18 @@
                         var endTime = new Date(parseInt(array[0]), parseInt(array[1]) - 1, parseInt(array[2]));
                         var nowTime = new Date(parseInt(y), parseInt(m), parseInt(d));
                         var day = (Number(endTime) - Number(nowTime)) / (1000 * 60 * 60 * 24);
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
                         $("#ICOList").append(
                             "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
                             + "<div class='directory-section'>"
                             + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
                             + "<span class='thumb-info-wrapper'>"
-                            + "<a><img src='assets/extra-images/listing-grid-2.jpg' class='img-responsive'>"
+                            + "<a><img src='"+pictureUrl+"' class='img-responsive'>"
                             + "<span class='thumb-info-title'>"
                             + "<span class='thumb-info-inner'>" + item.name + "</span>"
                             + "<span class='thumb-info-type' style='color: black'>" + item.startTime + " —— " + item.endTime + "</span>"
@@ -612,12 +618,18 @@
                             + "</div></div></div></li>");
                     });
                     $.each(willICOList, function (i, item) {
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
                         $("#willICOList").append(
                             "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
                             + "<div class='directory-section'>"
                             + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
                             + "<span class='thumb-info-wrapper'>"
-                            + "<a><img src='assets/extra-images/img.jpg'"
+                            + "<a><img src='"+pictureUrl+"'"
                             + "class='img-responsive'>"
                             + "<span class='thumb-info-title'>"
                             + "<span class='thumb-info-inner'>" + item.name + "</span>"
@@ -635,12 +647,18 @@
 
                     });
                     $.each(finishICOList, function (i, item) {
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
                         $("#finishICOList").append(
                             "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
                             + "<div class='directory-section'>"
                             + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
                             + "<span class='thumb-info-wrapper'>"
-                            + "<a><img src='assets/extra-images/img.jpg'"
+                            + "<a><img src='"+pictureUrl+"'"
                             + "class='img-responsive'>"
                             + "<span class='thumb-info-title'>"
                             + "<span class='thumb-info-inner'>" + item.name + "</span>"

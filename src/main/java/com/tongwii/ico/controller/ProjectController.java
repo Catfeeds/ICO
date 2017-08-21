@@ -231,8 +231,13 @@ public class ProjectController {
             Project p = projectList.get(i);
             Integer projectId = p.getId();
             // 获取项目图片
-            String pictureUrl = projectFileService.findProjectFileByType(projectId,"image").getFileUrl();
-            p.setPictureUrl(pictureUrl);
+            try {
+                String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
+                p.setPictureUrl(pictureUrl);
+            }catch (Exception e){
+                p.setPictureUrl("");
+            }
+
             if(p.getThirdEndorsement() != null && p.getOutputTokenMoneyDetailId()!=null){
                 // 判断时间，设定state的值
                 //获取系统当前时间，获取项目的开始时间以及结束时间
@@ -294,8 +299,12 @@ public class ProjectController {
        for(int i=0; i<projectList.size(); i++){
            Integer projectId = projectList.get(i).getId();
            // 获取项目图片
-           String pictureUrl = projectFileService.findProjectFileByType(projectId,"image").getFileUrl();
-           projectList.get(i).setPictureUrl(pictureUrl);
+           try {
+               String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
+               projectList.get(i).setPictureUrl(pictureUrl);
+           }catch (Exception e){
+               projectList.get(i).setPictureUrl("");
+           }
            // 根据项目ID查询项目钱包
            List<ProjectWallet> projectWallets = projectWalletService.findWalletByProjectId(projectId);
            projectList.get(i).setProjectWallets(projectWallets);
@@ -335,14 +344,17 @@ public class ProjectController {
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);
         List<Project> projectList = projectService.findProjectByState(ICO);
-        List<Project> projects = new ArrayList<>();
         for(int i=0;i<projectList.size();i++){
             // 获取项目图片
-            String pictureUrl = projectFileService.findProjectFileByType(projectList.get(i).getId(),"image").getFileUrl();
-            projectList.get(i).setPictureUrl(pictureUrl);
-            projectList.get(i).setPictureUrl(pictureUrl);
+            try {
+                String pictureUrl = projectFileService.findProjectFileByType(projectList.get(i).getId()).getFileUrl();
+                projectList.get(i).setPictureUrl(pictureUrl);
+            }catch (Exception e){
+                projectList.get(i).setPictureUrl("");
+            }
+
         }
-        PageInfo pageInfo = new PageInfo(projects);
+        PageInfo pageInfo = new PageInfo(projectList);
         return Result.successResult(pageInfo);
     }
 }

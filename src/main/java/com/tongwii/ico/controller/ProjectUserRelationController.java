@@ -3,12 +3,16 @@ package com.tongwii.ico.controller;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.Project;
 import com.tongwii.ico.model.ProjectUserRelation;
+import com.tongwii.ico.service.ProjectService;
 import com.tongwii.ico.service.ProjectUserRelationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tongwii.ico.service.impl.projectFileServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +23,10 @@ import java.util.List;
 public class ProjectUserRelationController {
     @Resource
     private ProjectUserRelationService projectUserRelationService;
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private projectFileServiceImpl projectFileService;
 
     @PostMapping
     public Result add(@RequestBody ProjectUserRelation projectUserRelation) {
@@ -46,12 +54,27 @@ public class ProjectUserRelationController {
 
     @GetMapping("/getUserProject/{userId}")
     public Result getUserProject(@RequestParam(required = true,defaultValue = "0") Integer page,
-                                 @RequestParam(required = true,defaultValue = "4") Integer size,
+                                 @RequestParam(required = true,defaultValue = "1") Integer size,
                                  @PathVariable Integer userId) {
         PageHelper.startPage(page, size);
-        List<Project> userProjects = projectUserRelationService.findByUserId(userId);
-        PageInfo pageInfo = new PageInfo(userProjects);
-        return Result.successResult(pageInfo);
+        List<Project> projectList = new ArrayList<>();
+        List<ProjectUserRelation> projectUserRelations = projectUserRelationService.findByUserId(userId);
+        for (int i=0; i<projectUserRelations.size(); i++){
+            Project project = projectService.findById(projectUserRelations.get(i).getProjectId());
+            Integer projectId = project.getId();
+            // 获取项目图片
+            try {
+                String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
+                project.setPictureUrl(pictureUrl);
+            }catch (Exception e){
+                project.setPictureUrl("");
+            }
+            String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
+            project.setPictureUrl(pictureUrl);
+            projectList.add(project);
+        }
+        PageInfo pageInfo = new PageInfo(projectUserRelations);
+        return Result.successResult().add("lockedProjectList",projectList).add("pageInfo",pageInfo);
     }
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {

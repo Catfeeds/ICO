@@ -30,7 +30,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>管理员登录</b></a>
+    <a href="/manager/login.html"><b>管理员登录</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -114,7 +114,7 @@
                   if (result.code == 200) {
                       app.setUserInfo(result.data.userInfo);
                       app.setToken(result.data.token);
-                      location.href = "index.html";
+                      location.href = "/manager/index.html";
                   }
                   else {
                       app.myAlert("", "登录失败！", "warning");

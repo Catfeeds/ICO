@@ -210,15 +210,6 @@
             $("#userName").text(app.getUserInfo().nickName);
         }
 
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            controlNav: false,
-            prevText: "<em class='icon-arrow-left10'></em>",
-            nextText: "<em class='icon-arrow-right10'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
-            }
-        });
         // 通过ajax请求从数据库中获取数据
         $.ajax({
             url: "/project/findProjectsAndSort",
@@ -228,6 +219,12 @@
                 if(result.code == 200){
                     var ICOList = result.data.ICO;
                     $.each(ICOList, function (i, item) {
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
                         var date = new Date();
                         var y = date.getFullYear();
                         var m = date.getMonth();
@@ -242,7 +239,7 @@
                                 + "<div class='directory-section'>"
                                 + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
                                 + "<span class='thumb-info-wrapper'>"
-                                + "<a><img src='assets/extra-images/listing-grid-2.jpg' class='img-responsive'>"
+                                + "<a><img src='"+pictureUrl+"' class='img-responsive'>"
                                 + "<span class='thumb-info-title'>"
                                 + "<span class='thumb-info-inner'>" + item.name + "</span>"
                                 + "<span class='thumb-info-type' style='color: black'>" + item.startTime + " —— " + item.endTime + "</span>"
