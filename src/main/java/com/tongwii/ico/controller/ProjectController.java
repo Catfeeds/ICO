@@ -51,6 +51,10 @@ public class ProjectController {
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
 
+    private final static Integer ICO = 0;
+    private final static Integer WILLICO = 1;
+    private final static Integer FINISHICO = 2;
+
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Result add(@RequestBody Project project) {
@@ -67,7 +71,7 @@ public class ProjectController {
         ECKey bitCoinKey = new ECKey();
         final NetworkParameters netParams;
 
-        if(env.equals(CurrentConfigEnum.DEV)) {
+        if(env.equals(CurrentConfigEnum.dev.toString())) {
             netParams = TestNet3Params.get();
         } else {
             netParams = MainNetParams.get();
@@ -314,5 +318,15 @@ public class ProjectController {
        PageInfo pageInfo = new PageInfo(projectList);
 
        return Result.successResult(pageInfo);
+    }
+
+    // 获取可以锁定的项目
+    @GetMapping("/findLockProject")
+    public Result findLockProject(@RequestParam(required = true,defaultValue = "0") Integer page,
+                                      @RequestParam(required = true,defaultValue = "1") Integer size){
+        PageHelper.startPage(page, size);
+        List<Project> projectList = projectService.findProjectByState(ICO);
+        PageInfo pageInfo = new PageInfo(projectList);
+        return Result.successResult(pageInfo);
     }
 }

@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.tongwii.ico.exception.ServiceException;
 import com.tongwii.ico.service.TransactionsService;
+import com.tongwii.ico.util.CurrentConfigEnum;
 import com.tongwii.ico.util.DesEncoder;
 import com.tongwii.ico.util.EthConverter;
 import com.tongwii.ico.util.RestTemplateUtil;
@@ -14,6 +15,7 @@ import org.apache.tomcat.util.buf.HexUtils;
 import org.bitcoinj.core.*;
 import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.params.MainNetParams;
+import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.wallet.Wallet;
 import org.ethereum.core.Denomination;
 import org.ethereum.facade.Ethereum;
@@ -50,6 +52,9 @@ public class TransactionServiceImpl implements TransactionsService {
     @Value("${storage.wallet.location}")
     private String walletPath;
 
+    @Value("${spring.profiles.active}")
+    private String env;//当前激活的配置文件
+
     @Override
     public String getBitCoinAddressBalance(String address) {
 
@@ -84,6 +89,20 @@ public class TransactionServiceImpl implements TransactionsService {
     }
 
     @Override
+    public JSONArray getETHAddressTransaction(String address, String page, String offset) {
+        Map<String, String> params = Maps.newHashMap();
+        params.put("address", address);
+        params.put("page", page);
+        params.put("offset", offset);
+        String response = RestTemplateUtil.restTemplate(ETH_HOST+"/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&page={page}&offset={offset}&sort=desc&apikey="+ethApiKey, null, String.class, params, HttpMethod.GET);
+        JSONObject result = JSON.parseObject(response);
+        if(result.getIntValue("status") == 1) {
+            return result.getJSONArray("result");
+        }
+        return null;
+    }
+
+    @Override
     public JSONObject getBitCoinTransaction(String address) {
         Map<String, String> params = Maps.newHashMap();
         params.put("address", address);
@@ -110,9 +129,15 @@ public class TransactionServiceImpl implements TransactionsService {
 
     @Override
     public String sendBitCoin(String fromAddress, String recipient, String amountToSend) {
-        NetworkParameters params = MainNetParams.get();
+        final NetworkParameters netParams;
 
-        WalletAppKit kit = new WalletAppKit(params, new File(walletPath), "ICO_TT");
+        if(env.equals(CurrentConfigEnum.dev.toString())) {
+            netParams = TestNet3Params.get();
+        } else {
+            netParams = MainNetParams.get();
+        }
+
+        WalletAppKit kit = new WalletAppKit(netParams, new File(walletPath), "ICO_TT");
 
         // Download the block chain and wait until it's done.
         kit.startAsync();
@@ -123,7 +148,7 @@ public class TransactionServiceImpl implements TransactionsService {
 
         Coin value = Coin.parseCoin(amountToSend);
 
-        Address to = Address.fromBase58(params, recipient);
+        Address to = Address.fromBase58(netParams, recipient);
 
         try {
             Wallet.SendResult result = kit.wallet().sendCoins(kit.peerGroup(), to, value);

@@ -28,6 +28,46 @@ public interface TransactionsService {
      */
     JSONArray getBitCoinAddressTransaction(String address);
 
+    /**
+     * 通过以太坊地址分页查询交易列表信息
+     * 默认逆序排序
+     *
+     * 返回结果示例：
+     * <pre>
+     *  {
+         "status": "1",
+         "message": "OK",
+         "result": [
+             {
+             "blockNumber": "4184123",
+             "blockHash": "0x0e33d8347f7e39089d7b89dc5a1130980f401c97789f7dc37a9eb47c02166a52",
+             "timeStamp": "1503283015",
+             "hash": "0x03b152859bd97f0e23f11a70185e0f9fc1cd2faf362428996a6417abca7bdcb6",
+             "nonce": "6067",
+             "transactionIndex": "95",
+             "from": "0x38570825d2c35db1b5fc603b1215dcfe1607bfb4",
+             "to": "0xc50580b6bd9d917855fb822f90c40981f6540c0b",
+             "value": "5481900000000000000",
+             "gas": "21001",
+             "gasPrice": "8000000000",
+             "input": "0x",
+             "contractAddress": "",
+             "cumulativeGasUsed": "3032452",
+             "gasUsed": "21000",
+             "confirmations": "24",
+             "isError": "0"
+             }
+                ]
+          }
+     * </pre>
+     *
+     * @param address   以太坊Hash地址
+     * @param page      页数
+     * @param offset    分页大小
+     * @return
+     */
+    JSONArray getETHAddressTransaction(String address, String page, String offset);
+
 
     /**
      * 根据比特币请求钱包地址查询单笔交易详细信息

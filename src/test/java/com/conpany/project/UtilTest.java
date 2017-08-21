@@ -1,5 +1,6 @@
 package com.conpany.project;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
@@ -11,6 +12,7 @@ import com.tongwii.ico.util.ValidateUtil;
 import org.apache.tomcat.util.buf.HexUtils;
 import org.ethereum.core.Account;
 import org.ethereum.core.Denomination;
+import org.ethereum.net.eth.handler.Eth;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Iterator;
 
 /**
  * 工具测试类
@@ -106,5 +109,15 @@ public class UtilTest extends Tester {
     @Test
     public void unitTest() {
         BigDecimal test = EthConverter.toWei("0.01", EthConverter.Unit.ETHER);
+    }
+
+    @Test
+    public void getEthTransactionList() {
+        JSONArray jsonArray = transactionsService.getETHAddressTransaction("0xC50580B6Bd9D917855fB822F90C40981F6540c0b", "1", "10");
+        for (Iterator iterator = jsonArray.iterator(); iterator.hasNext();) {
+            JSONObject object = (JSONObject) iterator.next();
+            System.out.println(EthConverter.fromWei(object.getBigDecimal("value"), EthConverter.Unit.ETHER) + EthConverter.Unit.ETHER.toString().toUpperCase());
+        }
+        System.out.println(jsonArray.toJSONString());
     }
 }

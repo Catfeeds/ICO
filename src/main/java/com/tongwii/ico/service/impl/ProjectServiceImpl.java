@@ -57,6 +57,17 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     }
 
     @Override
+    public List<Project> findProjectByState(Integer state) {
+        Project project = new Project();
+        project.setState(state);
+        List<Project> projectList = projectMapper.select(project);
+        if(CollectionUtils.isEmpty(projectList)){
+            return null;
+        }
+        return projectList;
+    }
+
+    @Override
     public List<Project> test() {
         List<Project> projectList = projectMapper.selectOfficalProject();
         if(CollectionUtils.isEmpty(projectList)){

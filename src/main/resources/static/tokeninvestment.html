@@ -163,7 +163,7 @@
                                             <a href="revise.html"> 修改登录密码</a>
                                         </li>
                                         <!--<li>-->
-                                            <!--<a href="index.html"> 修改交易密码</a>-->
+                                            <!--<a href="unindex.html"> 修改交易密码</a>-->
                                         <!--</li>-->
                                         <li>
                                             <a href="addphone.html"> 添加手机号码</a>
@@ -410,11 +410,12 @@
                             + "                        style='font-size:20px;color:#FF8000;font-weight:bold;'>" + item.name + "</span><BR>" + item.startTime + "——" + item.endTime
                             + "                </div>"
                         );
+
+
                     });
                     $("#investedIcoProject").append("</div>");
                     //添加已投资项目
 
-                    console.log(ICOList);
                 },
                 error: function (xhr, type, errerThrown) {
                     app.myAlert("",'网络异常,请稍候再试',"");

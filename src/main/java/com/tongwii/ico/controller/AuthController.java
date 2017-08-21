@@ -1,6 +1,7 @@
 package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
+import com.tongwii.ico.exception.StorageFileNotFoundException;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.security.JwtUser;
@@ -9,6 +10,7 @@ import com.tongwii.ico.service.UserWalletService;
 import com.tongwii.ico.util.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,24 +55,28 @@ public class AuthController {
      */
     @PostMapping("/login")
     public Result createAuthenticationToken (@RequestBody User user) throws AuthenticationException {
-        // 执行安全
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getEmailAccount(),
-                        user.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication( authentication );
-        final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
-        final String token = jwtTokenUtil.generateToken( userDetails);
-        // 通过email查询数据库中的唯一记录
-        User userInfo = userService.findByUsername(user.getEmailAccount());
-        // 通过用户Id查询用户钱包
-        List<Object> userWallets = userWalletService.findWalletByUserId(userInfo.getId());
-        // 给用户信息中添加用户钱包信息
-        userInfo.setUserWallets(userWallets);
-        // 返回
-        return Result.successResult().add( "token", token ).add("userInfo", userInfo);
+        try {
+            // 执行安全
+            final Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getEmailAccount(),
+                            user.getPassword()
+                    )
+            );
+            SecurityContextHolder.getContext().setAuthentication( authentication );
+            final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
+            final String token = jwtTokenUtil.generateToken( userDetails);
+            // 通过email查询数据库中的唯一记录
+            User userInfo = userService.findByUsername(user.getEmailAccount());
+            // 通过用户Id查询用户钱包
+            List<Object> userWallets = userWalletService.findWalletByUserId(userInfo.getId());
+            // 给用户信息中添加用户钱包信息
+            userInfo.setUserWallets(userWallets);
+            // 返回
+            return Result.successResult().add( "token", token ).add("userInfo", userInfo);
+        } catch (AuthenticationException e) {
+            return Result.failResult(e.getMessage());
+        }
     }
 
     /**

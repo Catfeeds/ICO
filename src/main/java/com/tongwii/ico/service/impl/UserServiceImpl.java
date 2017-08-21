@@ -93,7 +93,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         ECKey bitCoinKey = new ECKey();
         final NetworkParameters netParams;
 
-        if(env.equals(CurrentConfigEnum.DEV)) {
+        if(env.equals(CurrentConfigEnum.dev.toString())) {
             netParams = TestNet3Params.get();
         } else {
             netParams = MainNetParams.get();

@@ -34,5 +34,12 @@ public interface ProjectService extends Service<Project> {
      */
     List<Project> findOfficalProject();
 
+    /**
+     * 根据项目状态查询项目
+     * @param state
+     * @return
+     */
+    List<Project> findProjectByState(Integer state);
+
     List<Project> test();
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,8 +40,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuthentication ( AuthenticationManagerBuilder authenticationManagerBuilder ) throws Exception {
         authenticationManagerBuilder
-                .userDetailsService( this.userDetailsService )
-                .passwordEncoder( passwordEncoder() );
+                .authenticationProvider(daoAuthenticationProvider());
+    }
+
+    @Bean
+    public AuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider impl = new DaoAuthenticationProvider();
+        impl.setUserDetailsService(this.userDetailsService);
+        impl.setHideUserNotFoundExceptions(false);
+        impl.setPasswordEncoder(passwordEncoder());
+        return impl ;
     }
 
     @Bean
@@ -56,7 +66,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure ( HttpSecurity httpSecurity ) throws Exception {
         // 开发者模式，放行所有
         // token将拿不到用户信息
-        if (env.equals(CurrentConfigEnum.DEV)) {
+        if (env.equals(CurrentConfigEnum.dev.toString())) {
             httpSecurity
                     // jwt不需要csrf
                     .csrf().disable()

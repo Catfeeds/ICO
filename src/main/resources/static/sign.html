@@ -363,7 +363,7 @@
                         location.href = "contect.html";
                     }
                     else {
-                        app.myAlert("","登录失败!","error");
+                        app.myAlert("","登录失败!"+result.message,"error");
                     }
                 },
                 error: function (xhr, type, errerThrown) {

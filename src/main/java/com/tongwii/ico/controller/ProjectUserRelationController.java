@@ -45,9 +45,11 @@ public class ProjectUserRelationController {
     }
 
     @GetMapping("/getUserProject/{userId}")
-    public Result getUserProject(@PathVariable Integer userId) {
-        List<Project> userRoleRelations = projectUserRelationService.findByUserId(userId);
-        return Result.successResult(userRoleRelations);
+    public Result getUserProject(@RequestParam(required = true,defaultValue = "0") Integer page,
+                                 @RequestParam(required = true,defaultValue = "4") Integer size,
+                                 @PathVariable Integer userId) {
+        List<Project> userProjects = projectUserRelationService.findByUserId(userId);
+        return Result.successResult(userProjects);
     }
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {

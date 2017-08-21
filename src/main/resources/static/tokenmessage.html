@@ -92,8 +92,7 @@
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
                                     <ul class="dropdown">
-                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a>
-                                        </li>
+                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a></li>
                                     </ul>
                                     <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
@@ -148,7 +147,7 @@
                                     <a href="addressmanage.html"> 提现地址管理</a>
                                 </li>
                                 <!--<li>-->
-                                <!--<a href="rmbpush.html"> 人民币提现</a>-->
+                                    <!--<a href="rmbpush.html"> 人民币提现</a>-->
                                 <!--</li>-->
                                 <li class="active">
                                     <a href="securitycenter.html"> 安全中心</a>
@@ -160,7 +159,7 @@
                                             <a href="revise.html"> 修改登录密码</a>
                                         </li>
                                         <!--<li>-->
-                                        <!--<a href="index.html"> 修改交易密码</a>-->
+                                            <!--<a href="index.html"> 修改交易密码</a>-->
                                         <!--</li>-->
                                         <li>
                                             <a href="addphone.html"> 添加手机号码</a>
@@ -406,11 +405,11 @@
                         });
                     }
                 } else {
-                    app.myAlert("", result.message, "warning");
+                    app.myAlert("", result.message, "warning","tokeninvestment.html");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("", "网络异常,请稍候再试", "error");
+                app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
                 return;
             }
         });
@@ -428,27 +427,32 @@
 
         $("#makesure").click(function () {
             var cionType = $('option').attr("value");
-            var json = {cionType:cionType,projectId:pid};
-            $.ajax({
-                url: "/token/money/transaction",
-                type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(json),
-                dataType: "json",
-                headers: app.createAuthorizationTokenHeader(),
-                success: function (result) {
-                    if (result.code == 200) {
-                        app.myAlert("", result.message, "success");
-                    } else {
-                        app.myAlert("", result.message, "warning");
+            if($("#inputmoney").val()){
+                var json = {cionType:cionType,projectId:pid};
+                $.ajax({
+                    url: "/token/money/transaction",
+                    type: 'POST',
+                    timeout: 10000,//超时时间设置为10秒；
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    dataType: "json",
+                    headers: app.createAuthorizationTokenHeader(),
+                    success: function (result) {
+                        if (result.code == 200) {
+                            app.myAlert("", result.message, "success","tokeninvestment.html");
+                        } else {
+                            app.myAlert("", result.message, "warning","tokeninvestment.html");
+                        }
+                    },
+                    error: function (xhr, type, errerThrown) {
+                        app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
+                        return;
                     }
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert("", "网络异常,请稍候再试", "error");
-                    return;
-                }
-            });
+                });
+            }else{
+                app.myAlert("", "投资数目不可为0!", "warning");
+            }
+
         });
     });
 

@@ -7,9 +7,9 @@ package com.tongwii.ico.util;
  * @date 2017-08-11
  */
 public enum CurrentConfigEnum {
-    DEV,                 //开发环境，提供全部日志输出，忽略token验证
-    PRO,                  //产品环境
-    TEST;                       //测试环境
+    dev,                 //开发环境，提供全部日志输出，忽略token验证
+    pro,                  //产品环境
+    test;                       //测试环境
 
     CurrentConfigEnum() {}
 

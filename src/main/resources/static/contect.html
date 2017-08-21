@@ -159,7 +159,7 @@
                                             <a href="revise.html"> 修改登录密码</a>
                                         </li>
                                         <!--<li>-->
-                                            <!--<a href="index.html"> 修改交易密码</a>-->
+                                            <!--<a href="unindex.html"> 修改交易密码</a>-->
                                         <!--</li>-->
                                         <li>
                                             <a href="addphone.html"> 添加手机号码</a>
@@ -439,6 +439,7 @@
                     success: function (result) {
                         if (result.code == 200) {
                             app.setUserInfo(result.data.userInfo);
+                            app.setToken(result.data.token);
                             location.href = "contect.html";
                             $("#truename").css('display', 'none');
                             $("#identitycard").css('display', 'none');

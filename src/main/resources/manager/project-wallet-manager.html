@@ -3,37 +3,28 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Blank Page</title>
+    <title>AdminLTE 2 | Data Tables</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="css/sweet-alert.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="../../css/sweet-alert.css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style>
-        .sweet-alert h2 {
-            font-size: 18px;
-        }
-    </style>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-<!-- Site wrapper -->
 <div class="wrapper">
 
     <header class="main-header">
@@ -59,12 +50,12 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs">老吴</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
-                                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                             </li>
                             <li class="user-footer">
                                 <div class="pull-right">
@@ -84,7 +75,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>老吴</p>
@@ -100,7 +91,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/user.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+                        <li><a href="index.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
                     </ul>
                 </li>
                 <li class="treeview active">
@@ -110,9 +101,9 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="../examples/profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
-                        <li><a href="../tables/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
-                        <li><a href="../examples/404.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
-                        <li><a href="../examples/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
+                        <li><a href="data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
+                        <li><a href="../examples/project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
+                        <li><a href="token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
                     </ul>
                 </li>
                 <li class="treeview active">
@@ -129,72 +120,55 @@
         <!-- /.sidebar -->
     </aside>
 
+    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>增加代币信息</h1>
+            <h1>
+                项目钱包信息
+            </h1>
         </section>
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                <!-- /.col -->
-                <div class="col-md-9">
-                    <div class="nav-tabs-custom">
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="set">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">代币名称</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="name" placeholder="请输入代币名称">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">代币英文简称</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="nameEnShort"
-                                                   placeholder="请输入代币英文简称">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">代币介绍</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="des"
-                                                   placeholder="用简短的语言概括介绍该代币">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">代币官方链接</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="officalInfo" placeholder="输入链接">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Twitter链接</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="twitterUrl" placeholder="输入链接">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Github链接</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="githubUrl" placeholder="输入链接">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="button" class="btn btn-danger" id="addMoney">保存</button>
-                                            <button  type="button" class="btn btn-danger" style="margin-left: 25px" onclick="javacsript:history.back()">返回</button>
-                                        </div>
-                                    </div>
-                                </form>
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">项目钱包信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>项目名称</th>
+                                    <th>项目中文名称</th>
+                                    <th>钱包地址</th>
+                                    <th>钱包描述</th>
+                                    <th>代币种类</th>
+                                    <th>交易记录</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="data">
+                                </tbody>
+                            </table>
+                            <div class="pull-right">
+                                <ul id="pagination" class="pagination">
+                                </ul>
                             </div>
                         </div>
+                        <!-- /.box-body -->
                     </div>
+                    <!-- /.box -->
                 </div>
+                <!-- /.col -->
             </div>
+            <!-- /.row -->
         </section>
+        <!-- /.content -->
     </div>
-
+    <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.3.8
@@ -202,12 +176,12 @@
         <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
         reserved.
     </footer>
+
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
             <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-
             <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
         </ul>
         <!-- Tab panes -->
@@ -244,6 +218,7 @@
 
                             <div class="menu-info">
                                 <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
                                 <p>nora@example.com</p>
                             </div>
                         </a>
@@ -254,6 +229,7 @@
 
                             <div class="menu-info">
                                 <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
                                 <p>Execution time 5 seconds</p>
                             </div>
                         </a>
@@ -398,86 +374,171 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
-<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
-<script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
-<script src="../../plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/app.min.js"></script>
+<script src="plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<script src="../../scripts/sweet-alert.js"></script>
-<script src="../../scripts/app.js"></script>
+<script src="dist/js/demo.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/sweet-alert.js"></script>
+<!-- page script -->
 <script>
-
     jQuery(window).load(function () {
-        $("#addMoney").click(function () {
-            var name = $("#name").val();
-            var nameEnShort = $("#nameEnShort").val();
-            var des = $("#des").val();
-            var officalInfo = $("#officalInfo").val();
-            var twitterUrl = $("#twitterUrl").val();
-            var githubUrl = $("#githubUrl").val();
-            if (name.length <= 0) {
-                app.myAlert("代币名称", "代币名称不能为空！", "error");
-                return;
-            }
-            if (nameEnShort.length <= 0) {
-                app.myAlert("代币英文名称", "代币英文名称不能为空！", "error");
-                return;
-            }
-            if (des.length <= 0) {
-                app.myAlert("代币介绍", "代币介绍不能为空！", "error");
-                return;
-            }
-            if (officalInfo.length <= 0) {
-                app.myAlert("代币官方链接", "代币官方链接不能为空！", "error");
-                return;
-            }
-            if (twitterUrl.length <= 0) {
-                app.myAlert("Twitter链接", "Twitter链接不能为空！", "error");
-                return;
-            }
-            if (githubUrl.length <= 0) {
-                app.myAlert("Github链接", "Github链接不能为空！", "error");
-                return;
-            }
-
-            var moneyJson = {
-                name: name,
-                nameEnShort: nameEnShort,
-                officalInfo: officalInfo,
-                githubUrl: githubUrl,
-                des: des,
-                twitterUrl: twitterUrl
-            };
-            $.ajax({
-                url: "/token/money",
-                type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(moneyJson),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    if (result.code == 200) {
-                        location.href = "token.html";
-                        app.myAlert("", "信息保存成功！", "success");
-                    }
-                    else {
-                        app.myAlert("", "保存失败！", "warning");
-                        console.log("保存失败！");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert("", "修改失败,请稍候再试！", "warning");
-                }
-            });
-        });
+        pageProject(1);
 
     });
+    function pageProject(page) {
+        var page = page;
+        var size = "5";
+        $.ajax({
+            url: "/project/findAllProject",
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            data: {page: page, size: size},
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    var lastPage = result.data.pages;
+                    $('#pagination li').remove();
+                    if(page>1){
+                        var minpage = page-1;
+                        $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>&laquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
+                    }
+                    if(lastPage>10){
+                        if(page<10){
+                            for(var i = 1;i<=10;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }
+                            }
+                            if(page<lastPage){
+                                var nextpage = page+1;
+                                $("#pagination").append("<li><a onclick='pageProject("+11+")'>...</a></li>");
+                            }
+                        }else {
+                            var i  = page - 4;
+                            var j  = (page+4)>lastPage?lastPage:(page+4);
+                            if(i>1){
+                                var minpage = page-1;
+                                $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>...</a></li>");
+                            }
+                            for(i;i<=j;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                                }
+                            }
+                            if(j<lastPage){
+                                if((j+1)<lastPage){
+                                    $("#pagination").append("<li><a onclick='pageProject("+(j+1)+")'>...</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageProject("+lastPage+")'>...</a></li>");
+                                }
+
+                            }
+                        }
+
+                    }else{
+                        for(var i = 1;i<=lastPage;i++){
+                            if(i==page){
+                                $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                            }else{
+                                $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                            }
+                        }
+                    }
+
+                    if(page<lastPage){
+                        var nextpage = page+1;
+                        $("#pagination").append("<li><a onclick='pageProject("+nextpage+")'>&raquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
+                    }
+                    var projectList = result.data.list;
+                    $("#data").html("");
+                    $.each(projectList, function (i, item) {
+                        var projectWallets = item.projectWallets;
+                        var inputTokenDetails = item.inputTokenDetails;
+                        if(projectWallets.length==0||inputTokenDetails.length==0){
+                            $("#data").append(
+                                "        <tr id='" + item.id + "'>"
+                                + "        <td>" + item.name + "</td>"
+                                + "         <td>" + item.nameCn + "</td>"
+                                + "         <td>暂无钱包地址</td>"
+                                + "         <td>无</td>"
+                                + "         <td>无</td>"
+                                + "         <td>无</td>"
+                                + "        <td>"
+                                + "         </td>"
+                                + "       </tr>"
+                            );
+                        }
+                        $.each(projectWallets, function (j, wallet) {
+                            $.each(inputTokenDetails, function (k, token) {
+                                           $("#data").append(
+                                                "        <tr id='" + item.id + "'>"
+                                                + "        <td>" + item.name + "</td>"
+                                                + "         <td>" + item.nameCn + "</td>"
+                                                + "         <td>" + wallet.walletAddress + "</td>"
+                                                + "         <td>" + wallet.des + "</td>"
+                                                + "         <td>" + token.tokenMoney.name + "</td>"
+                                               + "         <td>" + ""+ wallet.walletAddress+"<a href='user-wallet-transaction-records.html?address=&coinType='>交易记录</a>"+token.tokenMoney.nameEnShort+"" + "</td>"
+                                                + "        <td>"
+                                                + "           <a href='pace.html?id="+ wallet.id +"' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                                                + "           <a href='javascript:dodel(" + wallet.id + ")' title='刪除' class='glyphicon glyphicon-trash'></a>"
+                                                + "         </td>"
+                                                + "       </tr>"
+                                            );
+                            });
+                        });
+                    });
+
+                    console.log(result.data);
+                }
+                else {
+                    app.myAlert("", "操作失败！", "warning");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("", "网络异常,请稍候再试!", "error");
+            }
+        });
+
+    }
+    function dodel(id) {
+        $.ajax({
+            url: "/project/wallet/"+id,
+            type: 'DELETE',
+            headers: app.createAuthorizationTokenHeader(),
+            timeout: 10000,//超时时间设置为10秒；
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    sweetAlert({title:"",text:"删除成功！",confirmButtonColor: "#d9534f"}, function() {
+                        window.location="../../pages/examples/project-wallet-manager.html";});
+                }
+                else {
+                    app.myAlert("", "删除失败！", "warning");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("", "网络异常,请稍候再试!", "error");
+            }
+        });
+    }
 </script>
 </body>
 </html>
