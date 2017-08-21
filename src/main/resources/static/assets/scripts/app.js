@@ -113,9 +113,15 @@
         },function () {
             if(jumphtml){
                 location.href=jumphtml;
-            }else{
-                window.location.reload();
             }
+        });
+    };
+    owner.myAlertWithoutFunction = function(title, text, type, jumphtml){
+        sweetAlert({
+            title: title,
+            text: text,
+            type: type,
+            confirmButtonColor: "#fe6500"
         });
     };
 }(window.app = {}));

@@ -265,12 +265,12 @@
                         location.href = "startICO.html?id=" + id;
                     });
                 }else{
-                    app.myAlert("",result.message,"warning");
+                    app.myAlertWithoutFunction("",result.message,"warning");
                     return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络连接异常，请稍后再试!","error");
+                app.myAlert("","网络连接异常，请稍后再试!","error","404.html");
                 return;
             }
         });

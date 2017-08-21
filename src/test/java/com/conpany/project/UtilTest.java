@@ -5,11 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.service.TransactionsService;
-import com.tongwii.ico.util.EthConverter;
-import com.tongwii.ico.util.MessageUtil;
-import com.tongwii.ico.util.TokenMoneyUtil;
-import com.tongwii.ico.util.ValidateUtil;
+import com.tongwii.ico.util.*;
 import org.apache.tomcat.util.buf.HexUtils;
+import org.bitcoinj.core.*;
+import org.bitcoinj.kits.WalletAppKit;
+import org.bitcoinj.params.MainNetParams;
+import org.bitcoinj.params.TestNet3Params;
 import org.ethereum.core.Account;
 import org.ethereum.core.Denomination;
 import org.ethereum.net.eth.handler.Eth;
@@ -18,6 +19,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -40,6 +42,9 @@ public class UtilTest extends Tester {
     private TransactionsService transactionsService;
     @Value("${storage.wallet.location}")
     private String walletPath;
+
+    @Value("${spring.profiles.active}")
+    private String env;//当前激活的配置文件
 
     @Test
     public void validateUtilTest() {
@@ -73,11 +78,29 @@ public class UtilTest extends Tester {
 
     @Test
     public void getBalanceFromAddress() {
-        String address = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4";
+        String address = "mxVGGj8S4ddYdP1ix6XbYYdVz9Li5oif44";
+        final NetworkParameters netParams;
+
+        if(env.equals(CurrentConfigEnum.dev.toString())) {
+            netParams = TestNet3Params.get();
+        } else {
+            netParams = MainNetParams.get();
+        }
+
+        WalletAppKit kit = new WalletAppKit(netParams, new File(walletPath), "ICO_TT");
+
+        // Download the block chain and wait until it's done.
+        kit.startAsync();
+        kit.awaitRunning();
+
+        byte[] pubkey = Utils.parseAsHexOrBase58(address);
+        kit.wallet().importKey(ECKey.fromPublicOnly(pubkey));
+
+        System.out.println(kit.wallet().getBalance());
         System.out.println(transactionsService.getBitCoinAddressBalance(address));
 
-        String ethAddress = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A";
-        System.out.println(transactionsService.getEthAddressBalance(ethAddress));
+       /* String ethAddress = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A";
+        System.out.println(transactionsService.getEthAddressBalance(ethAddress));*/
     }
 
 
@@ -94,7 +117,7 @@ public class UtilTest extends Tester {
 
     @Test
     public void sendCoin() {
-        System.out.println(transactionsService.sendBitCoin("32a305c705166c45ddef526a5576ddf5a7ae66e0d62c68f7f9e3a92fedfea6761e089246ea93fda2a6c44844074aff0ef0471cce1c328540e7191ac28fecd46558aa971672d82253", "19VGZMbirTFSifZ8TJj44fvskhp7TmeWhj", "0.01"));
+        System.out.println(transactionsService.sendBitCoin("752dc4b3ae81f6fc8d19257ec02143925d0fa0ea66242cc2720d3cc50b76d2d84ea69ae4191fb03c8bea320268afc1d3150fe840cbeca172a506914bed96d40558aa971672d82253", "mpp9m4D38zX8ukuZyQLeX5diC68BL1d1xu", "0.01"));
     }
 
     @Test
