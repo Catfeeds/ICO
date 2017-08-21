@@ -367,7 +367,7 @@
 
     function pageOldProject(page,userId) {
         var page = page;
-        var size = "1";
+        var size = "3";
         $.ajax({
             url: "/project/user/relation/getUserProject/" + userId,
             type: 'GET',
@@ -404,7 +404,7 @@
     }
     function pageLockProject(page) {
         var page = page;
-        var size = "1";
+        var size = "3";
         //添加可投资项目数据
         $.ajax({
             url: "/project/findLockProject",
