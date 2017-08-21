@@ -79,7 +79,7 @@ public class TransactionServiceImpl implements TransactionsService {
 
         Map<String, String> params = Maps.newHashMap();
         params.put("address", address);
-        String response = RestTemplateUtil.restTemplate(ETH_HOST+"/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&page={page}&offset={offset}&sort=desc&apikey="+ethApiKey, null, String.class, params, HttpMethod.GET);
+        String response = RestTemplateUtil.restTemplate(BITCOIN_HOST+"/address/{address}/tx", null, String.class, params, HttpMethod.GET);
         JSONObject result = JSON.parseObject(response);
         if(result.getIntValue("err_no") == 0) {
             JSONObject data = result.getJSONObject("data");
@@ -94,7 +94,7 @@ public class TransactionServiceImpl implements TransactionsService {
         params.put("address", address);
         params.put("page", page);
         params.put("offset", offset);
-        String response = RestTemplateUtil.restTemplate(BITCOIN_HOST+"/address/{address}/tx", null, String.class, params, HttpMethod.GET);
+        String response = RestTemplateUtil.restTemplate(ETH_HOST+"/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&page={page}&offset={offset}&sort=desc&apikey="+ethApiKey, null, String.class, params, HttpMethod.GET);
         JSONObject result = JSON.parseObject(response);
         if(result.getIntValue("status") == 1) {
             return result.getJSONArray("result");
