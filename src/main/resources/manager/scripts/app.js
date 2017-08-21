@@ -110,8 +110,7 @@
             text: text,
             type: type,
             confirmButtonColor: "#d9534f"
-        },function () {
-            window.location.reload();
         });
+        //,function () {window.location.reload();}
     };
 }(window.app = {}));
