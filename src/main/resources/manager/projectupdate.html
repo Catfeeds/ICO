@@ -114,7 +114,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/user.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+                        <li><a href="/manager/index.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
                     </ul>
                 </li>
                 <li class="treeview active">
@@ -123,10 +123,10 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
-                        <li><a href="../tables/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
-                        <li><a href="../examples/404.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
-                        <li><a href="../examples/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
+                        <li><a href="/manager/profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
+                        <li><a href="/manager/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
+                        <li><a href="/manager/project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
+                        <li><a href="/manager/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
                     </ul>
                 </li>
                 <li class="treeview active">
@@ -135,7 +135,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../examples/newseditor.html"><i class="fa fa-circle-o"></i>新闻/公告编辑</a></li>
+                        <li><a href="/manager/newseditor.html"><i class="fa fa-circle-o"></i>新闻/公告编辑</a></li>
                     </ul>
                 </li>
             </ul>
@@ -322,7 +322,7 @@
                     $("#state").find("option[value = '"+state+"']").attr("selected","selected");
                     $('#editor').summernote('code',content);
                 }else{
-                    location.href = "404.html";
+                    location.href = "/manager/404.html";
                 }
             },
             error: function (xhr, type, errerThrown) {
@@ -332,7 +332,7 @@
         $("#sign_out").click(function () {
             $("#personInfo").css('display', 'none');
             app.setUserInfo({});
-            location.href = "index.html";
+            location.href = "/manager/index.html";
         });
 
     });
@@ -428,7 +428,7 @@
             success: function (result) {
                 if (result.code == 200) {
                     sweetAlert({title:"",text:"项目修改成功！",confirmButtonColor: "#d9534f"}, function() {
-                        window.location="../../pages/tables/data.html";
+                        window.location="data.html";
                     });
 
                     return;
