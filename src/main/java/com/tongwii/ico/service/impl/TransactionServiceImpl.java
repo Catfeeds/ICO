@@ -90,12 +90,10 @@ public class TransactionServiceImpl implements TransactionsService {
     }
 
     @Override
-    public JSONArray getETHAddressTransaction(String address, String page, String offset) {
+    public JSONArray getETHAddressTransaction(String address) {
         Map<String, String> params = Maps.newHashMap();
         params.put("address", address);
-        params.put("page", page);
-        params.put("offset", offset);
-        String response = RestTemplateUtil.restTemplate(ETH_HOST+"/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&page={page}&offset={offset}&sort=desc&apikey="+ethApiKey, null, String.class, params, HttpMethod.GET);
+        String response = RestTemplateUtil.restTemplate(ETH_HOST+"/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&sort=desc&apikey="+ethApiKey, null, String.class, params, HttpMethod.GET);
         JSONObject result = JSON.parseObject(response);
         if(result.getIntValue("status") == 1) {
             return result.getJSONArray("result");
@@ -122,8 +120,7 @@ public class TransactionServiceImpl implements TransactionsService {
         String response = RestTemplateUtil.restTemplate(ETH_HOST+"/api?module=account&action=balance&address={address}&tag=latest&apikey="+ethApiKey, null, String.class, params, HttpMethod.GET);
         JSONObject result = JSON.parseObject(response);
         if(result.getIntValue("status") == 1) {
-            Double flo = result.getBigInteger("result").doubleValue()/Denomination.ETHER.value().doubleValue();
-            return flo.toString();
+            return EthConverter.fromWei(result.getBigDecimal("result"), EthConverter.Unit.ETHER) + EthConverter.Unit.ETHER.toString().toUpperCase();
         }
         return null;
     }
@@ -150,6 +147,8 @@ public class TransactionServiceImpl implements TransactionsService {
         DesEncoder desEncoder = new DesEncoder();
 
         kit.wallet().importKey(ECKey.fromPrivate(HexUtils.fromHexString(desEncoder.decrypt(fromAddress))));
+
+        System.out.println(kit.wallet().getWatchingKey().serializePubB58(netParams));
 
         kit.wallet().allowSpendingUnconfirmedTransactions();
 

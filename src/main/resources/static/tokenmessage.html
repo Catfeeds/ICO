@@ -372,8 +372,16 @@
         var pid = app.getQueryString("pid");
         var projectName = decodeURI(app.getQueryString("name"));
         var userWallet = app.getUserInfo().userWallets;
+        var BTCBalance = null;
+        var ETHBalance = null;
         //添加用户钱包信息
         $.each(userWallet, function (i, item) {
+            if(item.tokenMoneyEnName == "ETH"){
+                ETHBalance = item.walletBalance;
+            }
+            if(item.tokenMoneyEnName == "BTC"){
+                BTCBalance = item.walletBalance.substring(0,item.walletBalance.length-3);
+            }
             $("#numMoney").append(
                     "<span class='strong1'>" + item.tokenMoneyEnName + ":" + "<span class='strong1' style='color: #fe6500'>" + item.walletBalance + "</span></span> | "
             );
@@ -430,6 +438,18 @@
             var investmentMoney = $("#inputmoney").val().toString();
 
             if($("#inputmoney").val()){
+                if(cionType == "ETH"){
+                    if($("#inputmoney").val().toString() > ETHBalance){
+                        app.myAlert("","您的余额不足!","warning","tokeninvestment.html");
+                        return;
+                    }
+                }
+                if(cionType == "BTC"){
+                    if($("#inputmoney").val().toString() > BTCBalance){
+                        app.myAlert("","您的余额不足!","warning","tokeninvestment.html");
+                        return;
+                    }
+                }
                 var json = {cionType:cionType,projectId:pid,investmentMoney:investmentMoney};
                 $.ajax({
                     url: "/token/money/transaction",
@@ -442,8 +462,10 @@
                     success: function (result) {
                         if (result.code == 200) {
                             app.myAlert("", result.message, "success","tokeninvestment.html");
+                            return;
                         } else {
                             app.myAlert("", result.message, "warning","tokeninvestment.html");
+                            return;
                         }
                     },
                     error: function (xhr, type, errerThrown) {
