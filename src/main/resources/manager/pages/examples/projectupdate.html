@@ -146,7 +146,7 @@
                         <div class="tab-content">
 
                             <div class="active tab-pane" id="set">
-                                <form class="form-horizontal">
+                                <form class="form-horizontal" id="myform">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">项目名称</label>
                                         <div class="col-sm-8">
@@ -202,6 +202,12 @@
                                         <label class="col-sm-2 control-label">参与人数</label>
                                         <div class="col-sm-2">
                                             <input type="text" class="form-control" id="partPersonNumber" name="partPersonNumber" value="" placeholder="人数">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">上传图片</label>
+                                        <div class="col-sm-2">
+                                            <input name="file"  type="file">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -339,6 +345,7 @@
             app.myAlert("结束时间", "结束时间不能为空！", "error");
             return;
         }
+        var isPartPersonNumber = /^\d+$/;
         if (partPersonNumber.length <= 0) {
             app.myAlert("参与人数", "参与人数不能为空！", "error");
             return;
@@ -350,7 +357,46 @@
             app.myAlert("项目描述", "项目描述不能为空！", "error");
             return;
         }
-
+        var formData = new FormData($("#myform")[0]);
+        var pictureUrl = null;
+        $.ajax({
+            url: '/file',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if(result.code == 200){
+                    pictureUrl = result.data.path;
+                }else{
+                    pictureUrl = null;
+                }
+            },
+            error: function (returndata) {
+                app.myAlert("", "网络异常,请稍候再试!", "error");
+            }
+        });
+        //保存图片
+        var projectFileJson = {projectId:id,fileType:"image",fileUrl:pictureUrl};
+        $.ajax({
+            url: '/project/file',
+            type: 'POST',
+            headers: app.createAuthorizationTokenHeader(),
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(projectFileJson),
+            dataType: "json",
+            success: function (result) {
+                if(result.code == 200){
+                }else{
+                    pictureUrl = null;
+                }
+            },
+            error: function (returndata) {
+                sweetAlert("上传图片失败！");
+            }
+        });
         var projectJson = {id:id,name:enName,nameCn:cnName,startTime:startTime,endTime:endTime,partPersonNumber:partPersonNumber,des:des,thirdEndorsement:thirdEndorsement,state:state, content:content};
         $.ajax({
             url: "/project",
