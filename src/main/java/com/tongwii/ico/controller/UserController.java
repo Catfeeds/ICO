@@ -13,6 +13,11 @@ import com.tongwii.ico.util.MessageUtil;
 import com.tongwii.ico.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -39,6 +44,8 @@ public class UserController {
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private MessageUtil messageUtil;
+    @Autowired
+    private AuthenticationManager authenticationManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Value( "${jwt.header}" )
@@ -83,7 +90,8 @@ public class UserController {
         userService.update(user);
         User u = userService.findById(user.getId());
         u.setUserWallets(userWalletService.findWalletByUserId(u.getId()));
-        return Result.successResult().add("userInfo",u);
+        String token = makeToken(u);
+        return Result.successResult().add("userInfo",u).add("token", token);
     }
 
     @GetMapping("/{id}")
@@ -167,7 +175,8 @@ public class UserController {
                 userService.update(user);
                 user = userService.findById(userId);
                 user.setUserWallets(userWalletService.findWalletByUserId(user.getId()));
-                return Result.successResult("密码修改成功!").add("userInfo",user);
+                String token = makeToken(user);
+                return Result.successResult("密码修改成功!").add("userInfo",user).add("token", token);
             }
             else{
                 return Result.errorResult("验证码错误!");
@@ -216,7 +225,8 @@ public class UserController {
         } catch (Exception e) {
             return Result.errorResult("发送验证码失败");
         }
-        return Result.successResult("验证码发送成功!").add("userInfo",user);
+        String token = makeToken(user);
+        return Result.successResult("验证码发送成功!").add("userInfo",user).add("token", token);
     }
 
     /**
@@ -228,7 +238,8 @@ public class UserController {
         User oldUser = userService.findById(ContextUtils.getUserId());
         oldUser.setValidatePhone(true);
         userService.update(oldUser);
-        return Result.successResult("验证成功").add("userInfo",oldUser);
+        String token = makeToken(oldUser);
+        return Result.successResult("验证成功").add("userInfo",oldUser).add("token", token);
     }
 
 
@@ -254,4 +265,16 @@ public class UserController {
         return Result.successResult(user);
     }
 
+    public String makeToken(User user){
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        user.getEmailAccount(),
+                        user.getPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication( authentication );
+        final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
+        final String token = jwtTokenUtil.generateToken( userDetails);
+        return token;
+    }
 }

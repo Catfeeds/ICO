@@ -98,6 +98,6 @@ public class MessageController {
         message.setState(1);
         message.setCreateUser(user);
         messageService.save(message);
-        return Result.successResult();
+        return Result.successResult("消息添加成功!");
     }
 }

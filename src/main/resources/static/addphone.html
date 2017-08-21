@@ -301,14 +301,6 @@
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
         }
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            prevText: "<em class='icon-arrow-left9'></em>",
-            nextText: "<em class='icon-arrow-right9'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
-            }
-        });
     });
     //给发送验证码按钮绑定监听事件
     $("#sendsms").click(function () {
@@ -379,6 +371,7 @@
                 success: function (result) {
                     if (result.code == 200) {
                         app.setUserInfo(result.data.userInfo);
+                        app.setToken(result.data.token);
                         app.myAlert("","手机验证成功!","success");
                     }
                     else {

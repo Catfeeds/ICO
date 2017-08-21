@@ -406,11 +406,11 @@
                         });
                     }
                 } else {
-                    app.myAlert("", result.message, "warning");
+                    app.myAlert("", result.message, "warning","tokeninvestment.html");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("", "网络异常,请稍候再试", "error");
+                app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
                 return;
             }
         });
@@ -428,27 +428,32 @@
 
         $("#makesure").click(function () {
             var cionType = $('option').attr("value");
-            var json = {cionType:cionType,projectId:pid};
-            $.ajax({
-                url: "/token/money/transaction",
-                type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(json),
-                dataType: "json",
-                headers: app.createAuthorizationTokenHeader(),
-                success: function (result) {
-                    if (result.code == 200) {
-                        app.myAlert("", result.message, "success");
-                    } else {
-                        app.myAlert("", result.message, "warning");
+            if($("#inputmoney").val()){
+                var json = {cionType:cionType,projectId:pid};
+                $.ajax({
+                    url: "/token/money/transaction",
+                    type: 'POST',
+                    timeout: 10000,//超时时间设置为10秒；
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    dataType: "json",
+                    headers: app.createAuthorizationTokenHeader(),
+                    success: function (result) {
+                        if (result.code == 200) {
+                            app.myAlert("", result.message, "success","tokeninvestment.html");
+                        } else {
+                            app.myAlert("", result.message, "warning","tokeninvestment.html");
+                        }
+                    },
+                    error: function (xhr, type, errerThrown) {
+                        app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
+                        return;
                     }
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert("", "网络异常,请稍候再试", "error");
-                    return;
-                }
-            });
+                });
+            }else{
+                app.myAlert("", "投资数目不可为0!", "warning");
+            }
+
         });
     });
 
