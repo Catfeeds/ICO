@@ -56,6 +56,9 @@ public class Project {
     @Transient
     private User createUser;
 
+    @Transient
+    private String pictureUrl;
+
     /**
      * 接受代币
      */
@@ -207,6 +210,21 @@ public class Project {
     public void setCreateUserId(Integer createUserId) {
         this.createUserId = createUserId;
     }
+
+    /**
+     * @return pictureUrl
+     */
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    /**
+     * @param pictureUrl
+     */
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
 
     /**
      * @return state

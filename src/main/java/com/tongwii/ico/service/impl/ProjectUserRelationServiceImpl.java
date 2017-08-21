@@ -26,6 +26,8 @@ public class ProjectUserRelationServiceImpl extends AbstractService<ProjectUserR
     private ProjectUserRelationMapper projectUserRelationMapper;
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private projectFileServiceImpl projectFileService;
 
     @Override
     public List<Project> findByUserId(Integer userId) {
@@ -39,6 +41,10 @@ public class ProjectUserRelationServiceImpl extends AbstractService<ProjectUserR
         List<Project> projectList = new ArrayList<>();
         for (int i=0; i<projectUserRelations.size(); i++){
             Project project = projectService.findById(projectUserRelations.get(i).getProjectId());
+            Integer projectId = project.getId();
+            // 获取项目图片
+            String pictureUrl = projectFileService.findProjectFileByType(projectId,"image").getFileUrl();
+            projectList.get(i).setPictureUrl(pictureUrl);
             projectList.add(project);
         }
         return projectList;

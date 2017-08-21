@@ -48,8 +48,10 @@ public class ProjectUserRelationController {
     public Result getUserProject(@RequestParam(required = true,defaultValue = "0") Integer page,
                                  @RequestParam(required = true,defaultValue = "4") Integer size,
                                  @PathVariable Integer userId) {
+        PageHelper.startPage(page, size);
         List<Project> userProjects = projectUserRelationService.findByUserId(userId);
-        return Result.successResult(userProjects);
+        PageInfo pageInfo = new PageInfo(userProjects);
+        return Result.successResult(pageInfo);
     }
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {

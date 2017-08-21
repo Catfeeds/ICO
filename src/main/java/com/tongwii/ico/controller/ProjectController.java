@@ -47,6 +47,8 @@ public class ProjectController {
     private ProjectWalletService projectWalletService;
     @Autowired
     private TransactionsService transactionsService;
+    @Autowired
+    private projectFileService projectFileService;
 
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
@@ -227,6 +229,10 @@ public class ProjectController {
         List<Project> finishICOList = new ArrayList<>(); // 结束ICO的数据列表
         for (int i =0; i<projectList.size();i++){
             Project p = projectList.get(i);
+            Integer projectId = p.getId();
+            // 获取项目图片
+            String pictureUrl = projectFileService.findProjectFileByType(projectId,"image").getFileUrl();
+            p.setPictureUrl(pictureUrl);
             if(p.getThirdEndorsement() != null && p.getOutputTokenMoneyDetailId()!=null){
                 // 判断时间，设定state的值
                 //获取系统当前时间，获取项目的开始时间以及结束时间
@@ -287,6 +293,9 @@ public class ProjectController {
        List<Project> projectList = projectService.findOfficalProject();
        for(int i=0; i<projectList.size(); i++){
            Integer projectId = projectList.get(i).getId();
+           // 获取项目图片
+           String pictureUrl = projectFileService.findProjectFileByType(projectId,"image").getFileUrl();
+           projectList.get(i).setPictureUrl(pictureUrl);
            // 根据项目ID查询项目钱包
            List<ProjectWallet> projectWallets = projectWalletService.findWalletByProjectId(projectId);
            projectList.get(i).setProjectWallets(projectWallets);
@@ -326,7 +335,14 @@ public class ProjectController {
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);
         List<Project> projectList = projectService.findProjectByState(ICO);
-        PageInfo pageInfo = new PageInfo(projectList);
+        List<Project> projects = new ArrayList<>();
+        for(int i=0;i<projectList.size();i++){
+            // 获取项目图片
+            String pictureUrl = projectFileService.findProjectFileByType(projectList.get(i).getId(),"image").getFileUrl();
+            projectList.get(i).setPictureUrl(pictureUrl);
+            projectList.get(i).setPictureUrl(pictureUrl);
+        }
+        PageInfo pageInfo = new PageInfo(projects);
         return Result.successResult(pageInfo);
     }
 }

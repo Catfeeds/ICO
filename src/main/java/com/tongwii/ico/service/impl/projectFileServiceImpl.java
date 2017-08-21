@@ -18,4 +18,12 @@ public class projectFileServiceImpl extends AbstractService<projectFile> impleme
     @Autowired
     private projectFileMapper fileMapper;
 
+    @Override
+    public projectFile findProjectFileByType(Integer projectId, String type) {
+        projectFile p = new projectFile();
+        p.setProjectId(projectId);
+        p.setFileType(type);
+        projectFile projectFile = fileMapper.select(p).get(0);
+        return projectFile;
+    }
 }
