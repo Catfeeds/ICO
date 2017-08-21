@@ -494,7 +494,7 @@
                             //获取交易时间
                             var createTime = item.timeStamp;
                             if (createTime != undefined) {
-                                createTime = datetimeFormat_2(createTime);
+                                createTime = getLocalTime(createTime);
                             }
                             $("#tableData").append(
                                 "       <tr >"
@@ -619,7 +619,7 @@
                             //获取交易时间
                             var createTime = item.created_at;
                             if(createTime!=undefined){
-                                createTime =   datetimeFormat_2(createTime);
+                                createTime =   getLocalTime(createTime);
                             }
                             $("#tableData").append(
                                 "       <tr >"
@@ -648,6 +648,9 @@
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});
         location.href = "/manager/login.html";
+    }
+    function getLocalTime(nS) {
+        return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
     }
     function datetimeFormat_2(longTypeDate){
         var datetimeType = "";
