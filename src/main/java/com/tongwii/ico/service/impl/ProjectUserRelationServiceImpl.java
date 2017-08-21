@@ -44,7 +44,7 @@ public class ProjectUserRelationServiceImpl extends AbstractService<ProjectUserR
             Integer projectId = project.getId();
             // 获取项目图片
             String pictureUrl = projectFileService.findProjectFileByType(projectId,"image").getFileUrl();
-            projectList.get(i).setPictureUrl(pictureUrl);
+            project.setPictureUrl(pictureUrl);
             projectList.add(project);
         }
         return projectList;
