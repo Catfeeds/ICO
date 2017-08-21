@@ -409,83 +409,83 @@
         var page = page;
         var size = "10";
         var coinType = coinType;
-        var address = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A";
+        var address = address;
         $.ajax({
             url: "/project/getETHAddressTransaction",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
-            data: {address: address,page:page,size:size},
+            data: {address: address},
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
-//                    var jyjlList = result.data;
-//                    var startRow = (page*size)-size;
-//                    var toalPage = Math.ceil((jyjlList.length)/size);
-//                    var endRow1 = parseInt(startRow)+parseInt(size);
-//                    var endRow = endRow1>jyjlList.length?jyjlList.length:endRow1
-//                    //分页
-//                    $('#pagination li').remove();
-//                    if(page>1){
-//                        var minpage = page-1;
-//                        $("#pagination").append("<li><a onclick='pageETH(\""+minpage+"\",\""+coinType+"\",\""+address+"\")'>&laquo;</a></li>");
-//                    }else{
-//                        $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
-//                    }
-//                    if(toalPage>10){
-//                        if(page<10){
-//                            for(var i = 1;i<=10;i++){
-//                                if(i==page){
-//                                    $("#pagination").append("<li class='active'><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
-//                                }else{
-//                                    $("#pagination").append("<li><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
-//                                }
-//                            }
-//                            if(page<toalPage){
-//                                var nextpage = page+1;
-//                                $("#pagination").append("<li><a onclick='pageETH(\""+11+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
-//                            }
-//                        }else {
-//                            var i  = page - 4;
-//                            var j  = (page+4)>toalPage?toalPage:(page+4);
-//                            if(i>1){
-//                                var minpage = page-1;
-//                                $("#pagination").append("<li><a onclick='pageETH(\""+minpage+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
-//                            }
-//                            for(i;i<=j;i++){
-//                                if(i==page){
-//                                    $("#pagination").append("<li class='active'><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
-//                                }else{
-//                                    $("#pagination").append("<li><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
-//                                }
-//                                if(j<toalPage){
-//                                    if((j+1)<toalPage){
-//                                        $("#pagination").append("<li><a onclick='pageETH(\""+(j+1)+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
-//                                    }else{
-//                                        $("#pagination").append("<li><a onclick='pageETH(\""+toalPage+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
-//                                    }
-//                                }
-//                            }
-//                        }}else{
-//                        for(var i = 1;i<=toalPage;i++){
-//                            if(i==page){
-//                                $("#pagination").append("<li class='active'><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
-//                            }else{
-//                                $("#pagination").append("<li><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
-//                            }
-//                        }
-//                    }
-//
-//                    if(page<toalPage){
-//                        var nextpage = parseInt(page)+1;
-//                        $("#pagination").append("<li><a onclick='pageETH(\""+nextpage+"\",\""+coinType+"\",\""+address+"\")'>&raquo;</a></li>");
-//                    }else{
-//                        $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
-//                    }
                     var jyjlList = result.data;
+                    var startRow = (page*size)-size;
+                    var toalPage = Math.ceil((jyjlList.length)/size);
+                    var endRow1 = parseInt(startRow)+parseInt(size);
+                    var endRow = endRow1>jyjlList.length?jyjlList.length:endRow1
+                    //分页
+                    $('#pagination li').remove();
+                    if(page>1){
+                        var minpage = page-1;
+                        $("#pagination").append("<li><a onclick='pageETH(\""+minpage+"\",\""+coinType+"\",\""+address+"\")'>&laquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
+                    }
+                    if(toalPage>10){
+                        if(page<10){
+                            for(var i = 1;i<=10;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                                }
+                            }
+                            if(page<toalPage){
+                                var nextpage = page+1;
+                                $("#pagination").append("<li><a onclick='pageETH(\""+11+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
+                            }
+                        }else {
+                            var i  = page - 4;
+                            var j  = (page+4)>toalPage?toalPage:(page+4);
+                            if(i>1){
+                                var minpage = page-1;
+                                $("#pagination").append("<li><a onclick='pageETH(\""+minpage+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
+                            }
+                            for(i;i<=j;i++){
+                                if(i==page){
+                                    $("#pagination").append("<li class='active'><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                                }else{
+                                    $("#pagination").append("<li><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                                }
+                                if(j<toalPage){
+                                    if((j+1)<toalPage){
+                                        $("#pagination").append("<li><a onclick='pageETH(\""+(j+1)+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
+                                    }else{
+                                        $("#pagination").append("<li><a onclick='pageETH(\""+toalPage+"\",\""+coinType+"\",\""+address+"\")'>...</a></li>");
+                                    }
+                                }
+                            }
+                        }}else{
+                        for(var i = 1;i<=toalPage;i++){
+                            if(i==page){
+                                $("#pagination").append("<li class='active'><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                            }else{
+                                $("#pagination").append("<li><a onclick='pageETH(\""+i+"\",\""+coinType+"\",\""+address+"\")'>"+i+"</a></li>");
+                            }
+                        }
+                    }
+
+                    if(page<toalPage){
+                        var nextpage = parseInt(page)+1;
+                        $("#pagination").append("<li><a onclick='pageETH(\""+nextpage+"\",\""+coinType+"\",\""+address+"\")'>&raquo;</a></li>");
+                    }else{
+                        $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
+                    }
+
                     $("#tableData").html("");
                     //显示数据
                     $.each(jyjlList, function (i, item) {
-
+                        if(i>=startRow&&i<endRow) {
                             //交易金额
                             var inputs_value = item.value;
                             //币种
@@ -493,18 +493,18 @@
                             var inputs = item.inputs;
                             //获取交易时间
                             var createTime = item.timeStamp;
-                            if(createTime!=undefined){
-                                createTime =   datetimeFormat_2(createTime);
+                            if (createTime != undefined) {
+                                createTime = datetimeFormat_2(createTime);
                             }
                             $("#tableData").append(
                                 "       <tr >"
-                                +"         <td>" + addresses + "</td>"
-                                +"         <td>" + inputs_value + "</td>"
-                                +"         <td>" + coinType + "</td>"
-                                +"         <td>" +createTime+ "</td>"
-                                +"       </tr>"
+                                + "         <td>" + addresses + "</td>"
+                                + "         <td>" + inputs_value + "</td>"
+                                + "         <td>" + coinType + "</td>"
+                                + "         <td>" + createTime + "</td>"
+                                + "       </tr>"
                             );
-
+                        }
 
                     });
                     console.log(result.data);

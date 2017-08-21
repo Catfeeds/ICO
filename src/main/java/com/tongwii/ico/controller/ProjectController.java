@@ -290,8 +290,8 @@ public class ProjectController {
      * @return
      */
     @GetMapping("/getETHAddressTransaction")
-    public Result getETHAddressTransaction(@RequestParam(required = true,defaultValue = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A") String  address,@RequestParam(defaultValue = "1") String  page, @RequestParam(defaultValue = "1") String size){
-        JSONArray coin = transactionsService.getETHAddressTransaction(address,page,size);
+    public Result getETHAddressTransaction(@RequestParam(required = true,defaultValue = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A") String  address){
+        JSONArray coin = transactionsService.getETHAddressTransaction(address);
         JSONArray data = new JSONArray();
         for (Iterator iterator = coin.iterator(); iterator.hasNext();) {
             JSONObject object = (JSONObject) iterator.next();
