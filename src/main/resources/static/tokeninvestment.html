@@ -375,8 +375,8 @@
             dataType: "json",
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
-                var lastPage = result.data.pages;
-                var ICOList = result.data.list;
+                var lastPage = result.data.pageInfo.pages;
+                var ICOList = result.data.lockedProjectList;
                 $("#investedIcoProject").html("");
                 $("#investedIcoProject").append(
                     "<div class='form-group'>"
