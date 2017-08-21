@@ -11,9 +11,8 @@ public interface projectFileService extends Service<projectFile> {
     /**
      * 根据项目id与文件类型查询数据
      * @param projectId
-     * @param type
      * @return
      */
-    projectFile findProjectFileByType(Integer projectId, String type);
+    projectFile findProjectFileByType(Integer projectId);
 
 }

@@ -222,7 +222,12 @@
                 if(result.code == 200){
                     var finishICOList = result.data.finishICO;
                     $.each(finishICOList, function (i, item) {
-                        var pictureUrl = item.pictureUrl;
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
                         $("#finishICOList").append(
                                 "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
                                 + "<div class='directory-section'>"

@@ -63,7 +63,13 @@ public class ProjectUserRelationController {
             Project project = projectService.findById(projectUserRelations.get(i).getProjectId());
             Integer projectId = project.getId();
             // 获取项目图片
-            String pictureUrl = projectFileService.findProjectFileByType(projectId,"image").getFileUrl();
+            try {
+                String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
+                project.setPictureUrl(pictureUrl);
+            }catch (Exception e){
+                project.setPictureUrl("");
+            }
+            String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
             project.setPictureUrl(pictureUrl);
             projectList.add(project);
         }

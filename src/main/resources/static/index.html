@@ -585,7 +585,12 @@
                         var endTime = new Date(parseInt(array[0]), parseInt(array[1]) - 1, parseInt(array[2]));
                         var nowTime = new Date(parseInt(y), parseInt(m), parseInt(d));
                         var day = (Number(endTime) - Number(nowTime)) / (1000 * 60 * 60 * 24);
-                        var pictureUrl = item.pictureUrl;
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
                         $("#ICOList").append(
                             "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
                             + "<div class='directory-section'>"
@@ -613,7 +618,12 @@
                             + "</div></div></div></li>");
                     });
                     $.each(willICOList, function (i, item) {
-                        var pictureUrl = item.pictureUrl;
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
                         $("#willICOList").append(
                             "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
                             + "<div class='directory-section'>"
@@ -637,7 +647,12 @@
 
                     });
                     $.each(finishICOList, function (i, item) {
-                        var pictureUrl = item.pictureUrl;
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
                         $("#finishICOList").append(
                             "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
                             + "<div class='directory-section'>"

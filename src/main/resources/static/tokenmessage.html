@@ -427,8 +427,10 @@
 
         $("#makesure").click(function () {
             var cionType = $('option').attr("value");
+            var investmentMoney = $("#inputmoney").val().toString();
+
             if($("#inputmoney").val()){
-                var json = {cionType:cionType,projectId:pid};
+                var json = {cionType:cionType,projectId:pid,investmentMoney:investmentMoney};
                 $.ajax({
                     url: "/token/money/transaction",
                     type: 'POST',
