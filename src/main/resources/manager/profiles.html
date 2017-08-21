@@ -87,7 +87,6 @@
                 </div>
                 <div class="pull-left info">
                     <p>老吴</p>
-
                     <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
@@ -148,10 +147,10 @@
                 <div class="col-md-10">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li  class="active"><a href="#timeline" data-toggle="tab">填写发起人信息</a></li>
-                            <li><a href="#newproject" data-toggle="tab">发起新项目</a></li>
-                            <li><a href="#activity" data-toggle="tab">项目接收代币</a></li>
-                            <li><a href="#time" data-toggle="tab">项目发行代币</a></li>
+                            <li class="active"><a id="1" href="#timeline" data-toggle="tab">填写发起人信息</a></li>
+                            <li><a id="2" href="#newproject" data-toggle="tab">发起新项目</a></li>
+                            <li><a id="3" href="#activity" data-toggle="tab">项目接收代币</a></li>
+                            <li><a id="4" href="#time" data-toggle="tab">项目发行代币</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="active tab-pane" id="timeline">
@@ -178,7 +177,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <button type="button" class="btn btn-danger" id="bcUserInfo">保存</button>
-                                                <button type="button" class="btn btn-danger" id="nextone">下一页</button>
+                                                <button type="button" class="btn btn-danger" id="nextone" onclick="nextOne(2)" style="display: none">下一页</button>
                                             </div>
                                         </div>
                                     </form>
@@ -236,8 +235,8 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
-                                                <button type="button" class="btn btn-danger" id="prepage">上一页</button>
-                                                <button type="button" class="btn btn-danger" id="nexttwo">下一页</button>
+                                                <button type="button" class="btn btn-danger" id="prepage" onclick="nextOne(1)">上一页</button>
+                                                <button type="button" class="btn btn-danger" id="nexttwo" onclick="nextOne(3)">下一页</button>
                                             </div>
                                         </div>
                                 </form>
@@ -285,16 +284,12 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="button" class="btn btn-danger" id="prepageone">上一页</button>
-                                            <button type="button" class="btn btn-danger" id="nextthries">下一页</button>
+                                            <button type="button" class="btn btn-danger" id="prepageone" onclick="nextOne(2)">上一页</button>
+                                            <button type="button" class="btn btn-danger" id="nextthries" onclick="nextOne(4)">下一页</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-
-
-
-
                             <div class="tab-pane" id="time">
                                 <form class="form-horizontal">
                                     <div class="form-group">
@@ -326,8 +321,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
+                                            <input type="button" class="btn btn-danger" id="prepagetwo" value="上一页" onclick="nextOne(3)"/>
                                             <input type="button" class="btn btn-danger" id="bcPro" value="保存"/>
-                                            <input type="button" class="btn btn-danger" id="prepagetwo" value="上一页"/>
                                         </div>
                                     </div>
                                 </form>
@@ -349,8 +344,8 @@
 <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="plugins/summernote/lang/summernote-zh-CN.js"></script>
 <script src="plugins/summernote/summernote.js"></script>
+
 <!-- FastClick -->
 <script src="plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
@@ -364,6 +359,7 @@
 <script>
     var endTime;
     var startTime;
+    var userId;
     layui.use('laydate', function(){
         var laydate = layui.laydate;
         var start = {
@@ -435,6 +431,7 @@
             var userName = $("#userName").val();
             var userCard = $("#userCard").val();
             var userPhone = $("#userPhone").val();
+
             if (userName.length <= 0) {
                 app.myAlert("姓名", "姓名不能为空！", "error");
                 return;
@@ -465,12 +462,15 @@
                             app.myAlert("", "发起人不存在，请注册！", "warning");
                             location.href = "/manager/register.html";
                         } else {
-                            var userId = result.data.id;
+                             userId = result.data.id;
                             $("#ceshi").append(
                                 "<input value='" + userId + "' id='userId' type='hidden'/>"
                             );
-                            $("#people").css("display","none");
-                            $("#ceshi").css("display","inline");
+                            $("#userName").attr("readonly","readonly");
+                            $("#userCard").attr("readonly","readonly");
+                            $("#userPhone").attr("readonly","readonly");
+                            $("#bcUserInfo").css("display","none");
+                            $("#nextone").css("display","inline");
                         }
                     }
                     else {
@@ -532,7 +532,7 @@
                         var prjclosetime = $("#endTime").val();
                         var prjproduce = $("#prjproduce").val();
                         var prjcontent =$('.summernote').summernote('code');
-                        var id = $("#userId").val();
+                        var id = userId;
                         var prjId;
                         var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
                         $.ajax({
@@ -640,6 +640,9 @@
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});
         location.href = "/manager/login.html";
+    }
+    function nextOne(id) {
+        $("#"+id).click();
     }
 </script>
 
