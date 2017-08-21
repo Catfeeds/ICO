@@ -104,14 +104,18 @@
         });
     }
 
-    owner.myAlert = function(title, text, type){
+    owner.myAlert = function(title, text, type, jumphtml){
         sweetAlert({
             title: title,
             text: text,
             type: type,
             confirmButtonColor: "#fe6500"
         },function () {
-            window.location.reload();
+            if(jumphtml){
+                location.href=jumphtml;
+            }else{
+                window.location.reload();
+            }
         });
     };
 }(window.app = {}));

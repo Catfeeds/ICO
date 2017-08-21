@@ -139,6 +139,7 @@ public class UserController {
         } catch (Exception e) {
             return Result.errorResult("注册失败");
         }
+
         return Result.successResult("注册成功");
     }
 

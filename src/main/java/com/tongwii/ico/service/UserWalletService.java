@@ -27,4 +27,11 @@ public interface UserWalletService extends Service<UserWallet> {
      */
     List<UserWallet> findWalletByUser(Integer userId, Integer type);
 
+    /**
+     * 根据币种ID与用户Id查询用户钱包信息
+     * @param tokenMoneyId
+     * @param userId
+     * @return
+     */
+    UserWallet findWalletByCionId(Integer tokenMoneyId, Integer userId);
 }

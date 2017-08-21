@@ -12,4 +12,7 @@
     <result column="token_money_id" jdbcType="INTEGER" property="tokenMoneyId" />
     <result column="des" jdbcType="LONGVARCHAR" property="des" />
   </resultMap>
+  <select id="selectProjectWalletByCiodId" resultMap="BaseResultMap" parameterType="com.tongwii.ico.model.ProjectWallet" >
+    select * from project_wallet p where p.token_money_id=#{tokenMoneyId} and p.project_id = #{projectId};
+  </select>
 </mapper>

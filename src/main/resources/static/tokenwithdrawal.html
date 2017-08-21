@@ -45,6 +45,11 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+<style>
+    th{
+        text-align:center;
+    }
+</style>
 <body>
 <div class="wrapper">
     <!-- Header -->
@@ -205,12 +210,6 @@
                                 <div class="panel-body">
                                     <div class="form-group">
                                         <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
-                                        <div class="col-md-6 col-xs-11">没有数字代币提现地址</div>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <div class="col-md-3 col-xs-11" style="text-align:right;"></div>
                                         <div class="col-md-6 col-xs-11"><span id="downlist" name="downlist"></span>
                                             <input type="button" class="cs-bgcolor btn" id="btn"
                                                    data-toggle="modal" style="color: #ffffff; font-weight: bold;"
@@ -289,11 +288,6 @@
                                     </tr>
                                     </thead>
                                     <tbody id="addresslist">
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -412,6 +406,30 @@
                     });
                 }else{
                     app.myAlert("",result.message, "warning");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("","网络异常,请稍候再试","error");
+            }
+        });
+
+        // 获取addressList中的数据
+        $.ajax({
+            url: "/user/wallet/findPaymentWallet",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    $.each(result.data.paymentWallet, function (i, item) {
+                        $("#addresslist").append(
+                                "<tr><th>" + item.addressDesc+"</th><th>"+item.addressType+"</th><th>"+item.addressUrl+"</th></tr>"
+                        );
+                    });
+                } else {
+                    $("#addresslist").append(
+                            "<tr><th>无</th><th>无</th><th>无</th></tr>"
+                    );
                 }
             },
             error: function (xhr, type, errerThrown) {

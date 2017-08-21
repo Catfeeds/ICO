@@ -10,4 +10,6 @@ import java.util.List;
 public interface UserWalletMapper extends Mapper<UserWallet> {
 
     List<UserWallet> selectOfficalUserWallet(UserWallet userWallet);
+
+    UserWallet selectWalletByCoinId(UserWallet userWallet);
 }
