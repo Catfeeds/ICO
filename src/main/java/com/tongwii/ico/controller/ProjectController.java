@@ -335,14 +335,12 @@ public class ProjectController {
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);
         List<Project> projectList = projectService.findProjectByState(ICO);
-        List<Project> projects = new ArrayList<>();
         for(int i=0;i<projectList.size();i++){
             // 获取项目图片
             String pictureUrl = projectFileService.findProjectFileByType(projectList.get(i).getId(),"image").getFileUrl();
             projectList.get(i).setPictureUrl(pictureUrl);
-            projects.add(projectList.get(i));
         }
-        PageInfo pageInfo = new PageInfo(projects);
+        PageInfo pageInfo = new PageInfo(projectList);
         return Result.successResult(pageInfo);
     }
 }

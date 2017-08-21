@@ -163,7 +163,7 @@
                                             <a href="revise.html"> 修改登录密码</a>
                                         </li>
                                         <!--<li>-->
-                                            <!--<a href="unindex.html"> 修改交易密码</a>-->
+                                        <!--<a href="index.html"> 修改交易密码</a>-->
                                         <!--</li>-->
                                         <li>
                                             <a href="addphone.html"> 添加手机号码</a>
@@ -223,24 +223,20 @@
                                     </div>
                                 </div>
                                 <div class="panel-body" id="IcoProject"></div>
+                                <div class="pull-right">
+                                    <ul id="pagination" class="pagination">
+                                    </ul>
+                                </div>
                                 <div class="form-group">
                                     <div class='col-md-12' style="padding-top:40px;padding-bottom:20px;font-size:16px;">
                                         已锁定的投资项目
                                     </div>
                                 </div>
                                 <div class="panel-body" id="investedIcoProject"></div>
-                                <header class="panel-heading">
-                                    <h2 class="panel-title">投资项目记录</h2>
-                                </header>
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th>时间</th>
-                                        <th>投资描述</th>
-                                        <th>目标项目</th>
-                                        <th>状态</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </table>
+                                <div class="pull-right">
+                                    <ul id="pagination1" class="pagination">
+                                    </ul>
+                                </div>
                             </div>
                             <hr>
                         </div>
@@ -355,17 +351,70 @@
         //添加用户钱包信息
         $.each(userWallet, function (i, item) {
             $("#numMoney").append(
-                    "<span class='strong1'>"+ item.tokenMoneyEnName + ":"+"<span class='strong1' style='color: #fe6500'>"+item.walletBalance+"</span></span> | "
+                "<span class='strong1'>"+ item.tokenMoneyEnName + ":"+"<span class='strong1' style='color: #fe6500'>"+item.walletBalance+"</span></span> | "
             );
         });
-
         //添加可投资项目数据
+        pageLockProject(1);
+
+        if (userId != undefined) {
+            //添加已投资项目数据
+            pageOldProject(1,userId);
+        }
+
+
+    });
+
+    function pageOldProject(page,userId) {
+        var page = page;
+        var size = "1";
         $.ajax({
-            url: "/project/findProjectsAndSort",
+            url: "/project/user/relation/getUserProject/" + userId,
             type: 'GET',
+            data: {page:page,size:size},
+            dataType: "json",
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
-                var ICOList = result.data.ICO;
+                var lastPage = result.data.pages;
+                var ICOList = result.data.list;
+                $("#investedIcoProject").html("");
+                $("#investedIcoProject").append(
+                    "<div class='form-group'>"
+                );
+                $.each(ICOList, function (i, item) {
+                    $("#investedIcoProject").append(
+                        "                <div class='col-md-3 'style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a href='tokenmessage.html?pid=" + item.id + "&name=" + item.name
+                        + "'><span class='thumb-info thumb-info-hide-wrapper-bg'"
+                        + "                                                     style='width:200px;'><span"
+                        + "                        class='thumb-info-wrapper'><img src='assets/extra-images/img.jpg'"
+                        + "                                                        class='img-responsive'></span></span></a><span"
+                        + "                        style='font-size:20px;color:#FF8000;font-weight:bold;'>" + item.name + "</span><BR>" + item.startTime + "——" + item.endTime
+                        + "                </div>"
+                    );
+                });
+                $("#investedIcoProject").append("</div>");
+                //添加已投资项目
+                fenye("pagination1","pageOldProject",page,lastPage);
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("",'网络异常,请稍候再试',"");
+            }
+        });
+    }
+    function pageLockProject(page) {
+        var page = page;
+        var size = "1";
+        //添加可投资项目数据
+        $.ajax({
+            url: "/project/findLockProject",
+            type: 'GET',
+            data: {page:page,size:size},
+            dataType: "json",
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (result) {
+                var lastPage = result.data.pages;
+                var ICOList = result.data.list;
+                $("#IcoProject").html("");
                 $("#IcoProject").append(
                     "<div class='form-group'>"
                 );
@@ -381,7 +430,7 @@
                     );
                 });
                 $("#IcoProject").append("</div>");
-                //添加已投资项目
+                fenye("pagination","pageLockProject",page,lastPage);
 
                 console.log(ICOList);
             },
@@ -389,43 +438,69 @@
                 app.myAlert("",'网络异常,请稍候再试',"error");
             }
         });
-        if (userId != undefined) {
-            //添加已投资项目数据
-            $.ajax({
-                url: "/project/user/relation/getUserProject/" + userId,
-                type: 'GET',
-                timeout: 10000,//超时时间设置为10秒；
-                success: function (result) {
-                    var ICOList = result.data;
-                    $("#investedIcoProject").append(
-                        "<div class='form-group'>"
-                    );
-                    $.each(ICOList, function (i, item) {
-                        $("#investedIcoProject").append(
-                            "                <div class='col-md-3 'style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a href='tokenmessage.html?pid=" + item.id + "&name=" + item.name
-                            + "'><span class='thumb-info thumb-info-hide-wrapper-bg'"
-                            + "                                                     style='width:200px;'><span"
-                            + "                        class='thumb-info-wrapper'><img src='assets/extra-images/img.jpg'"
-                            + "                                                        class='img-responsive'></span></span></a><span"
-                            + "                        style='font-size:20px;color:#FF8000;font-weight:bold;'>" + item.name + "</span><BR>" + item.startTime + "——" + item.endTime
-                            + "                </div>"
-                        );
-
-
-                    });
-                    $("#investedIcoProject").append("</div>");
-                    //添加已投资项目
-
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert("",'网络异常,请稍候再试',"");
+    }
+    function  fenye(id,name,page,lastPage) {
+        $('#'+id +' li').remove();
+        if(page>1){
+            var minpage = page-1;
+            $("#"+id).append("<li><a onclick='"+name+"("+minpage+")'>&laquo;</a></li>");
+        }else{
+            $("#"+id).append("<li class='disabled'><a >&laquo;</a></li>");
+        }
+        if(lastPage>10){
+            if(page<10){
+                for(var i = 1;i<=10;i++){
+                    if(i==page){
+                        $("#"+id).append("<li class='active'><a onclick='"+name+"("+i+")'>"+i+"</a></li>");
+                    }else{
+                        $("#"+id).append("<li><a onclick='"+name+"("+i+")'>"+i+"</a></li>");
+                    }
                 }
-            });
+                if(page<lastPage){
+                    var nextpage = page+1;
+                    $("#"+id).append("<li><a onclick='"+name+"("+11+")'>...</a></li>");
+                }
+            }else {
+                var i  = page - 4;
+                var j  = (page+4)>lastPage?lastPage:(page+4);
+                if(i>1){
+                    var minpage = page-1;
+                    $("#"+id).append("<li><a onclick='"+name+"("+minpage+")'>...</a></li>");
+                }
+                for(i;i<=j;i++){
+                    if(i==page){
+                        $("#"+id).append("<li class='active'><a onclick='"+name+"("+i+")'>"+i+"</a></li>");
+                    }else{
+                        $("#"+id).append("<li><a onclick='"+name+"("+i+")'>"+i+"</a></li>");
+                    }
+                }
+                if(j<lastPage){
+                    if((j+1)<lastPage){
+                        $("#"+id).append("<li><a onclick='"+name+"("+(j+1)+")'>...</a></li>");
+                    }else{
+                        $("#"+id).append("<li><a onclick='"+name+"("+lastPage+")'>...</a></li>");
+                    }
 
+                }
+            }
+
+        }else{
+            for(var i = 1;i<=lastPage;i++){
+                if(i==page){
+                    $("#"+id).append("<li class='active'><a onclick='"+name+"("+i+")'>"+i+"</a></li>");
+                }else{
+                    $("#"+id).append("<li><a onclick='"+name+"("+i+")'>"+i+"</a></li>");
+                }
+            }
         }
 
-
-    });
+        if(page<lastPage){
+            var nextpage = page+1;
+            $("#"+id).append("<li><a onclick='"+name+"("+nextpage+")'>&raquo;</a></li>");
+        }else{
+            $("#"+id).append("<li class='disabled'><a>&raquo;</a></li>");
+        }
+    }
 </script>
 </body>
 </html>
