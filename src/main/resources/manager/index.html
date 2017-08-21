@@ -1,62 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
-  <!-- Morris chart -->
-  <link rel="stylesheet" href="plugins/morris/morris.css">
-  <!-- jvectormap -->
-  <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-  <!-- Date Picker -->
-  <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
-  <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Dashboard</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="plugins/morris/morris.css">
+    <link rel="stylesheet" href="css/sweet-alert.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="../../index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">导航栏</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="../../index2.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>A</b>LT</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Admin</b>LTE</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">导航栏</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
@@ -115,7 +116,8 @@
                     <ul class="treeview-menu">
                         <li><a href="/manager/profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
                         <li><a href="/manager/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
-                        <li><a href="/manager/project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
+                        <li><a href="/manager/project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a>
+                        </li>
                         <li><a href="/manager/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
                     </ul>
                 </li>
@@ -171,7 +173,7 @@
                                 </tbody>
                             </table>
                             <!--<div class="btn-group">-->
-                                <!--<a href="blank.html" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>增加</a>-->
+                            <!--<a href="blank.html" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>增加</a>-->
                             <!--</div>-->
                             <div class="pull-right">
                                 <ul id="pagination" class="pagination">
@@ -441,93 +443,93 @@
                 if (result.code == 200) {
                     var lastPage = result.data.pages;
                     $('#pagination li').remove();
-                    if(page>1){
-                        var minpage = page-1;
-                        $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>&laquo;</a></li>");
-                    }else{
+                    if (page > 1) {
+                        var minpage = page - 1;
+                        $("#pagination").append("<li><a onclick='pageProject(" + minpage + ")'>&laquo;</a></li>");
+                    } else {
                         $("#pagination").append("<li class='disabled'><a >&laquo;</a></li>");
                     }
-                    if(lastPage>10){
-                        if(page<10){
-                            for(var i = 1;i<=10;i++){
-                                if(i==page){
-                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
-                                }else{
-                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                    if (lastPage > 10) {
+                        if (page < 10) {
+                            for (var i = 1; i <= 10; i++) {
+                                if (i == page) {
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject(" + i + ")'>" + i + "</a></li>");
+                                } else {
+                                    $("#pagination").append("<li><a onclick='pageProject(" + i + ")'>" + i + "</a></li>");
                                 }
                             }
-                            if(page<lastPage){
-                                var nextpage = page+1;
-                                $("#pagination").append("<li><a onclick='pageProject("+11+")'>...</a></li>");
+                            if (page < lastPage) {
+                                var nextpage = page + 1;
+                                $("#pagination").append("<li><a onclick='pageProject(" + 11 + ")'>...</a></li>");
                             }
-                        }else {
-                            var i  = page - 4;
-                            var j  = (page+4)>lastPage?lastPage:(page+4);
-                            if(i>1){
-                                var minpage = page-1;
-                                $("#pagination").append("<li><a onclick='pageProject("+minpage+")'>...</a></li>");
+                        } else {
+                            var i = page - 4;
+                            var j = (page + 4) > lastPage ? lastPage : (page + 4);
+                            if (i > 1) {
+                                var minpage = page - 1;
+                                $("#pagination").append("<li><a onclick='pageProject(" + minpage + ")'>...</a></li>");
                             }
-                            for(i;i<=j;i++){
-                                if(i==page){
-                                    $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
-                                }else{
-                                    $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                            for (i; i <= j; i++) {
+                                if (i == page) {
+                                    $("#pagination").append("<li class='active'><a onclick='pageProject(" + i + ")'>" + i + "</a></li>");
+                                } else {
+                                    $("#pagination").append("<li><a onclick='pageProject(" + i + ")'>" + i + "</a></li>");
                                 }
                             }
-                            if(j<lastPage){
-                                if((j+1)<lastPage){
-                                    $("#pagination").append("<li><a onclick='pageProject("+(j+1)+")'>...</a></li>");
-                                }else{
-                                    $("#pagination").append("<li><a onclick='pageProject("+lastPage+")'>...</a></li>");
+                            if (j < lastPage) {
+                                if ((j + 1) < lastPage) {
+                                    $("#pagination").append("<li><a onclick='pageProject(" + (j + 1) + ")'>...</a></li>");
+                                } else {
+                                    $("#pagination").append("<li><a onclick='pageProject(" + lastPage + ")'>...</a></li>");
                                 }
 
                             }
                         }
 
-                    }else{
-                        for(var i = 1;i<=lastPage;i++){
-                            if(i==page){
-                                $("#pagination").append("<li class='active'><a onclick='pageProject("+i+")'>"+i+"</a></li>");
-                            }else{
-                                $("#pagination").append("<li><a onclick='pageProject("+i+")'>"+i+"</a></li>");
+                    } else {
+                        for (var i = 1; i <= lastPage; i++) {
+                            if (i == page) {
+                                $("#pagination").append("<li class='active'><a onclick='pageProject(" + i + ")'>" + i + "</a></li>");
+                            } else {
+                                $("#pagination").append("<li><a onclick='pageProject(" + i + ")'>" + i + "</a></li>");
                             }
                         }
                     }
 
-                    if(page<lastPage){
-                        var nextpage = page+1;
-                        $("#pagination").append("<li><a onclick='pageProject("+nextpage+")'>&raquo;</a></li>");
-                    }else{
+                    if (page < lastPage) {
+                        var nextpage = page + 1;
+                        $("#pagination").append("<li><a onclick='pageProject(" + nextpage + ")'>&raquo;</a></li>");
+                    } else {
                         $("#pagination").append("<li class='disabled'><a>&raquo;</a></li>");
                     }
                     var userList = result.data.list;
                     $("#tableData").html("");
                     $.each(userList, function (i, item) {
                         $("#tableData").append(
-                            "       <tr id='" + item.id + "'>"
-                            + "         <td>" + item.emailAccount + "</td>"
-                            + "         <td>" + item.nickName + "</td>"
-                            + "         <td>" + item.realName + "</td>"
-                            + "         <td>" + item.phone + "</td>"
-                            + "         <td>" + item.idCard + "</td>"
-                            + "         <td>" + item.des + "</td>"
-                            + "       </tr>"
+                                "       <tr id='" + item.id + "'>"
+                                + "         <td>" + item.emailAccount + "</td>"
+                                + "         <td>" + item.nickName + "</td>"
+                                + "         <td>" + item.realName + "</td>"
+                                + "         <td>" + item.phone + "</td>"
+                                + "         <td>" + item.idCard + "</td>"
+                                + "         <td>" + item.des + "</td>"
+                                + "       </tr>"
                         );
                         if (item.enabled == true) {
                             $("#" + item.id).append(
-                                "<td>可用</td>"
-                            +"        <td>"
-                            + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
-                            + "           <a href='javascript:dodel(" + item.id + ")' title='禁用' class='glyphicon  glyphicon-ban-circle'></a>"
-                            + "         </td>"
+                                    "<td>可用</td>"
+                                    + "        <td>"
+                                    + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                                    + "           <a href='javascript:dodel(" + item.id + ")' title='禁用' class='glyphicon  glyphicon-ban-circle'></a>"
+                                    + "         </td>"
                             );
                         } else {
                             $("#" + item.id).append(
-                                "<td>不可用</td>"
-                                +"        <td>"
-                                + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
-                                + "           <a href='javascript:doope(" + item.id + ")' title='启用' class='glyphicon glyphicon-ok-circle'></a>"
-                                + "         </td>"
+                                    "<td>不可用</td>"
+                                    + "        <td>"
+                                    + "           <a href='javascript:touser(" + item.id + ")' title='编辑' class='glyphicon glyphicon-edit'></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                                    + "           <a href='javascript:doope(" + item.id + ")' title='启用' class='glyphicon glyphicon-ok-circle'></a>"
+                                    + "         </td>"
                             );
                         }
 
@@ -563,8 +565,8 @@
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert({title:"",text:"用户已禁用！",confirmButtonColor: "#d9534f"}, function() {
-                        window.location="index.html";
+                    sweetAlert({title: "", text: "用户已禁用！", confirmButtonColor: "#d9534f"}, function () {
+                        window.location = "index.html";
                     });
                 }
                 else {
@@ -592,8 +594,8 @@
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
-                    sweetAlert({title:"",text:"用户已启用！",confirmButtonColor: "#d9534f"}, function() {
-                        window.location="index.html";
+                    sweetAlert({title: "", text: "用户已启用！", confirmButtonColor: "#d9534f"}, function () {
+                        window.location = "index.html";
                     });
                 }
                 else {
