@@ -6,6 +6,7 @@ import com.tongwii.ico.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.util.ContextUtils;
+import com.tongwii.ico.util.TokenMoneyEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,8 @@ public class TokenMoneyController {
     private UserWalletService userWalletService;
     @Autowired
     private ProjectUserWalletRelationService projectUserWalletRelationService;
+    @Autowired
+    private TransactionsService transactionsService;
 
     @PostMapping
     public Result add(@RequestBody TokenMoney tokenMoney) {
@@ -81,14 +84,13 @@ public class TokenMoneyController {
             Integer userId = ContextUtils.getUserId();
             String cionType = projectInvestmentInfo.get("cionType");
             String project = projectInvestmentInfo.get("projectId");
+            String investmentMoney = projectInvestmentInfo.get("investmentMoney");
+
             Integer projectId = Integer.valueOf(project);
             // 给project_user表中增加记录
             // 先判断该用户是否锁定了该项目
             if(projectUserRelationService.userIsLockedProject(userId,projectId)){
-                ProjectUserRelation projectUserRelation = new ProjectUserRelation();
-                projectUserRelation.setUserId(userId);
-                projectUserRelation.setProjectId(projectId);
-                projectUserRelationService.save(projectUserRelation);
+
                 // 获取币种的id
                 Integer cionId = tokenMoneyService.findByENShortName(cionType).getId();
                 // 根据币种id与projectId查询projectWalletURL
@@ -98,11 +100,21 @@ public class TokenMoneyController {
                 UserWallet userWallet = userWalletService.findWalletByCionId(cionId, userId);
                 Integer userWalletId = userWallet.getId();
                 // TODO 此处估计要对用户与项目钱包各自进行增值与减值操作
+                // 获取用户钱包余额
+                if(cionType.equals(TokenMoneyEnum.ETH.name())){
+
+                }
+//                transactionsService.
                 // 给user_project_wallet表中添加数据
                 ProjectUserWalletRelation projectUserWalletRelation = new ProjectUserWalletRelation();
                 projectUserWalletRelation.setProjectWallet(projectWalletId);
                 projectUserWalletRelation.setUserWallet(userWalletId);
                 projectUserWalletRelationService.save(projectUserWalletRelation);
+
+                ProjectUserRelation projectUserRelation = new ProjectUserRelation();
+                projectUserRelation.setUserId(userId);
+                projectUserRelation.setProjectId(projectId);
+                projectUserRelationService.save(projectUserRelation);
                 return Result.successResult("锁定项目成功!");
             }else{
                 return Result.errorResult("该项目已锁定!");
