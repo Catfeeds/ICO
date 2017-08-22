@@ -204,11 +204,11 @@
                     $("#title").text(message.title);
                     $("#content").html(message.content);
                 } else {
-                    location.href = "404.html";
+                    return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert(" ","网络连接异常，请稍后再试!","error");
+                return;
             }
         });
     });
