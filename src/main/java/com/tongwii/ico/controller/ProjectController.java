@@ -203,7 +203,7 @@ public class ProjectController {
             User createUser = userService.findById(project.getCreateUserId());
             project.setCreateUser(createUser);
         }
-        return Result.successResult(project).add("projectFile",projectFile);
+        return Result.successResult().add("projectFile",projectFile).add("projectInfo",project);
     }
 
     @GetMapping
