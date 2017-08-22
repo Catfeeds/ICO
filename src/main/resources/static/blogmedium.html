@@ -417,12 +417,10 @@
                 }
                 else {
                     $("#news").css("display", "none");
-                    app.myAlert("",result.message,"warning");
                     return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert(" ","网络异常,请稍候再试","error");
                 return;
             }
         });

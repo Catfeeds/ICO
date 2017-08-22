@@ -15,4 +15,12 @@ public interface TokenDetailService extends Service<TokenDetail> {
      * @return
      */
     List<TokenDetail> findByProjectId(Integer projectId);
+
+    /**
+     * 根据项目id与代币详情类型查询数据
+     * @param projectId
+     * @param type
+     * @return
+     */
+    List<TokenDetail> findByProjectIdAndType(Integer projectId, Integer type);
 }

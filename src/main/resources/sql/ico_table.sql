@@ -4,7 +4,7 @@
 /*==============================================================*/
 
 
-drop table if exists Role;
+drop table if exists role;
 
 drop table if exists file;
 
@@ -33,7 +33,7 @@ drop table if exists user_wallet;
 /*==============================================================*/
 /* Table: Role                                                  */
 /*==============================================================*/
-create table Role
+create table role
 (
   id                   int(11) unsigned not null auto_increment,
   role_name            varchar(32),
@@ -42,7 +42,7 @@ create table Role
   primary key (id)
 );
 
-alter table Role comment '角色';
+alter table role comment '角色';
 
 /*==============================================================*/
 /* Table: file                                                  */
@@ -173,6 +173,7 @@ create table token_detail
   token_money_whitePaper_cn_url varchar(255),
   token_money_whitePaper_en_url varchar(255),
   input_token_money_project_id int(11) unsigned,
+  type tinyint(2) DEFAULT '1' COMMENT '代币详情类型（目标代币详情，发行代币详情）',
   primary key (id)
 );
 
@@ -292,7 +293,7 @@ alter table token_detail add constraint fk_token_money_detail_2_token_money_toke
 references token_money (id) on delete restrict on update restrict;
 
 alter table user_role_relation add constraint fk_user_role_2_role_role_id foreign key (role_id)
-references Role (id) on delete restrict on update restrict;
+references role (id) on delete restrict on update restrict;
 
 alter table user_role_relation add constraint fk_user_role_2_user_user_id foreign key (user_id)
 references user (id) on delete restrict on update restrict;
