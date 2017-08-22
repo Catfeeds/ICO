@@ -33,6 +33,12 @@
     <link rel="stylesheet" href="layui/css/modules/layer/default/layer.css">
     <script src="layui/layui.js"></script>
     <style>
+        .conImage{
+            filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image); /* 该对象只用来在IE下获得图片的原始尺寸，无其它用途 */
+            height: 1px;
+            visibility:hidden;
+            overflow: hidden;
+        }
         .note-editor.note-frame .note-editing-area .note-editable {
             padding: 10px;
             overflow: auto;
@@ -222,7 +228,9 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">上传图片</label>
                                         <div class="col-sm-2">
-                                            <input name="file"  type="file" accept="image/png,image/gif,image/jpeg">
+                                            <input name="file"  type="file" id="content" accept="image/png,image/gif,image/jpeg" onChange="handleConFiles(this.files);">
+                                            <!--<input  type="file" name="upload0" class="content" id="content" onChange="handleConFiles(this.files);">-->
+                                            <img class="conImage" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -282,6 +290,51 @@
 <script src="dist/js/demo.js"></script>
 
 <script>
+    var width,height;
+    function handleConFiles(files){
+        if((navigator.userAgent.indexOf("MSIE 8.0")>0 )||(navigator.userAgent.indexOf("MSIE 9.0")>0)){
+            var objPreviewSizeFake = $(".conImage").get(0);//jquery对象转化为DOM对象
+            var fileupload = document.getElementById("head");
+            var $fileupload = $(fileupload);
+            $fileupload.select();
+            $fileupload.blur();
+            path = document.selection.createRange().text;
+
+            if (/"\w\W"/.test(path)) {
+                path = path.slice(1,-1);
+            }
+
+            objPreviewSizeFake.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = path;
+            width=objPreviewSizeFake.offsetWidth;
+            height=objPreviewSizeFake.offsetHeight;
+            if(width < 270 || height < 203){
+                fill = false;
+                app.myAlert("上传图片", "上传图片的尺寸应为270*203及以上", "error");
+            }
+
+            document.selection.empty();
+        }else{
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                var ret = [];
+                reader.onload = function(theFile) {
+                    var image = new Image();
+                    image.onload = function() {
+                        width=this.width;
+                        height=this.height;
+                        if(width < 270 || height < 203){
+                            fill = false;
+                            app.myAlert("上传图片", "上传图片的尺寸应为270*203及以上", "error");
+                        }
+                    };
+                    image.src = theFile.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+    }
     var endTime;
     var startTime;
     var data = new FormData();
