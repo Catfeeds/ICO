@@ -617,7 +617,8 @@
             var znbook1  = $("#znbook1").val();
             var enbook1 = $("#enbook1").val();
             var outputTokenMoneyDetailId;
-            var jsmoneyJson = {targetNumber: fbnumber,tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook1, tokenMoneyWhitepaperEnUrl: enbook1};
+            var type2 = 2;
+            var jsmoneyJson = {targetNumber: fbnumber,tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook1, tokenMoneyWhitepaperEnUrl: enbook1, type:type2};
             $.ajax({
                 url : "/token/detail", //后台接口
                 type: 'POST',
@@ -676,7 +677,8 @@
                                     var maxnumber = $("#maxnumber").val();
                                     var znbook  = $("#znbook").val();
                                     var enbook = $("#enbook").val();
-                                    var moneyJson = {minTargetNumber: minnumber, targetNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId1, tokenMoneyWhitepaperCnUrl:znbook, tokenMoneyWhitepaperEnUrl: enbook};
+                                    var type1 = 1;
+                                    var moneyJson = {minTargetNumber: minnumber, targetNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId1, tokenMoneyWhitepaperCnUrl:znbook, tokenMoneyWhitepaperEnUrl: enbook, type:type1};
                                     $.ajax({
                                         url : "/token/detail", //后台接口
                                         type: 'POST',
