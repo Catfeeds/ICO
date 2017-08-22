@@ -7,7 +7,6 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.exception.ServiceException;
-import netscape.security.ForbiddenTargetException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.web.servlet.ErrorPage;
@@ -74,7 +73,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                     result = Result.unavailable("接口 [" + request.getRequestURI() + "] 不存在");
                 } else if (e instanceof ServletException) {
                     result = Result.failResult(e.getMessage());
-                } else if (e instanceof AuthenticationException || e instanceof ForbiddenTargetException || e instanceof AccessDeniedException) {
+                } else if (e instanceof AuthenticationException || e instanceof AccessDeniedException) {
                     result = Result.unauthorized("未经授权:身份验证令牌丢失或无效。");
                 } else if (e instanceof SQLException || e instanceof DataAccessException) {
                     result = Result.errorResult( "服务器内部错误");
