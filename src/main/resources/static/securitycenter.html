@@ -316,14 +316,7 @@
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
         }
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            prevText: "<em class='icon-arrow-left9'></em>",
-            nextText: "<em class='icon-arrow-right9'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
-            }
-        });
+
         $("#sign_out").click(function () {
             $("#personInfo").css('display', 'none');
             app.setUserInfo({});

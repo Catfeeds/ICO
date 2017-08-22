@@ -54,6 +54,7 @@ public class ProjectController {
     private final static Integer ICO = 0;
     private final static Integer WILLICO = 1;
     private final static Integer FINISHICO = 2;
+    private final static Integer INPUTCION = 1;
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -177,18 +178,14 @@ public class ProjectController {
     public Result detail(@PathVariable Integer id) {
         Project project = projectService.findById(id);
         projectFile projectFile = projectFileService.findProjectFileByProjectId(id);
-        // 首先需要通过项目id查询token_details表数据
-        List<TokenDetail> tokenDetails = tokenDetailService.findByProjectId(id);
-        List<TokenDetail> inputTokenDetails = new ArrayList<>();
+        // 首先需要通过项目id查询token_details表目标代币数据
+        List<TokenDetail> tokenDetails = tokenDetailService.findByProjectIdAndType(id,INPUTCION);
         if(!CollectionUtils.isEmpty(tokenDetails)){
             for(int i=0; i<tokenDetails.size(); i++){
-                // 目标代币
-                if(!tokenDetails.get(i).getTokenMoneyId().equals(project.getOutputTokenMoneyDetailId())){
-                    TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(i).getTokenMoneyId());
-                    tokenDetails.get(i).setTokenMoney(inputMoney);
-                    inputTokenDetails.add(tokenDetails.get(i));
-                    project.setInputTokenDetails(inputTokenDetails);
-                }
+                // 获取目标代币的代币详细信息
+                TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(i).getTokenMoneyId());
+                tokenDetails.get(i).setTokenMoney(inputMoney);
+                project.setInputTokenDetails(tokenDetails);
             }
         }
 
@@ -330,24 +327,20 @@ public class ProjectController {
            projectList.get(i).setCreateUser(createUser);
 
            // 根据项目ID查寻目标代币信息
-           List<TokenDetail> tokenDetails  = tokenDetailService.findByProjectId(projectId);
-           List<TokenDetail> inputTokenDetails = new ArrayList<>();
+           List<TokenDetail> tokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, INPUTCION);
            if(!CollectionUtils.isEmpty(tokenDetails)){
                for(int j=0; j<tokenDetails.size();j++){
-                   // 目标代币
-                   if(!tokenDetails.get(j).getTokenMoneyId().equals(projectList.get(i).getOutputTokenMoneyDetailId())){
-                       TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(j).getTokenMoneyId());
-                       tokenDetails.get(j).setTokenMoney(inputMoney);
-                       inputTokenDetails.add(tokenDetails.get(j));
-                   }else {
-                       // 根据发行代币ID查寻发行代币信息
-                       TokenMoney outputMoney = tokenMoneyService.findById(projectList.get(i).getOutputTokenMoneyDetailId());
-                       tokenDetails.get(j).setTokenMoney(outputMoney);
-                       projectList.get(i).setOutPutTokenDetail(tokenDetails.get(j));
+                   // 获取目标代币的代币详细信息
+                   TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(j).getTokenMoneyId());
+                   tokenDetails.get(j).setTokenMoney(inputMoney);
                    }
+               projectList.get(i).setInputTokenDetails(tokenDetails);
                }
-               projectList.get(i).setInputTokenDetails(inputTokenDetails);
-           }
+           // 根据发行代币ID查寻发行代币信息
+           TokenDetail outPutTokenDetail = tokenDetailService.findById(projectList.get(i).getOutputTokenMoneyDetailId());
+           TokenMoney outputMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
+           outPutTokenDetail.setTokenMoney(outputMoney);
+           projectList.get(i).setOutPutTokenDetail(outPutTokenDetail);
        }
        PageInfo pageInfo = new PageInfo(projectList);
 

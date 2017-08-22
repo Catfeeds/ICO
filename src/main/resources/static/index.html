@@ -23,7 +23,6 @@
         <link href="assets/css/themetypo.css" rel="stylesheet">
         <link href="assets/css/widget.css" rel="stylesheet">
         <link href="assets/css/theme-elements_0529.css" rel="stylesheet">
-        <link href="assets/css/sweet-alert.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -550,8 +549,6 @@
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script src="assets/scripts/app.js"></script>
-<script src="assets/scripts/sweet-alert.js"></script>
-<script src="assets/scripts/sweet-alert.min.js"></script>
 <script src="assets/scripts/tokenmoney.js"></script>
 <script>
     jQuery(window).load(function () {
@@ -696,12 +693,10 @@
                         location.href = "finishICO.html?id=" + id;
                     });
                 } else {
-                    app.myAlertWithoutFunction("",result.message,"warning");
                     return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常，请稍后再试!","error", "404.html");
                 return;
             }
         });

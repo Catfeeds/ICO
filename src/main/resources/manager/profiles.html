@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>User Profile</title>
+    <title>ICO.TT</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -40,8 +40,6 @@
             overflow: hidden;
         }
     </style>
-
-    <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -208,7 +206,7 @@
                                             <div class="col-sm-2">
                                                 <div class="layui-inline">
                                                     <div class="layui-input-inline">
-                                                        <input class="layui-input" placeholder="项目开始时间" id="startTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                                        <input class="layui-input" placeholder="项目开始时间" readonly="readonly" id="startTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                     </div>
                                                 </div>
                                             </div>
@@ -218,7 +216,7 @@
                                             <div class="col-sm-2">
                                                 <div class="layui-inline">
                                                     <div class="layui-input-inline">
-                                                        <input class="layui-input" placeholder="项目结束时间" id="endTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                                        <input class="layui-input" placeholder="项目结束时间" readonly="readonly" id="endTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                     </div>
                                                 </div>
                                             </div>
@@ -239,14 +237,14 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">项目详情</label>
                                             <div class="col-sm-10">
-                                                <div id="editor" class="summernote" ></div>
+                                                <div id="editor" class="summernote"></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <button type="button" class="btn btn-danger" id="prepage" onclick="nextOne(1)" style="margin-left: -10px">上一页</button>
                                                 <button type="button" class="btn btn-danger" id="baocun2" style="margin-left: 23px">保存</button>
-                                                <button type="button" class="btn btn-danger" id="nexttwo" onclick="nextOne(3)" style="display:none;margin-left: 165px">下一页</button>
+                                                <button type="button" class="btn btn-danger" id="nexttwo" onclick="nextOne(3)" style="display:none;margin-left: 10px">下一页</button>
                                             </div>
                                         </div>
                                 </form>
@@ -295,7 +293,7 @@
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <button type="button" class="btn btn-danger" id="prepageone" onclick="nextOne(2)" style="margin-left: -10px">上一页</button>
                                             <button type="button" class="btn btn-danger" id="baocun3" style="margin-left: 23px">保存</button>
-                                            <button type="button" class="btn btn-danger" id="nextthries" onclick="nextOne(4)" style="display:none;margin-left: 165px">下一页</button>
+                                            <button type="button" class="btn btn-danger" id="nextthries" onclick="nextOne(4)" style="display:none;margin-left: 10px">下一页</button>
                                         </div>
                                     </div>
                                 </form>
@@ -619,7 +617,8 @@
             var znbook1  = $("#znbook1").val();
             var enbook1 = $("#enbook1").val();
             var outputTokenMoneyDetailId;
-            var jsmoneyJson = {targetNumber: fbnumber,tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook1, tokenMoneyWhitepaperEnUrl: enbook1};
+            var type2 = 2;
+            var jsmoneyJson = {targetNumber: fbnumber,tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook1, tokenMoneyWhitepaperEnUrl: enbook1, type:type2};
             $.ajax({
                 url : "/token/detail", //后台接口
                 type: 'POST',
@@ -678,7 +677,8 @@
                                     var maxnumber = $("#maxnumber").val();
                                     var znbook  = $("#znbook").val();
                                     var enbook = $("#enbook").val();
-                                    var moneyJson = {minTargetNumber: minnumber, targetNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId1, tokenMoneyWhitepaperCnUrl:znbook, tokenMoneyWhitepaperEnUrl: enbook};
+                                    var type1 = 1;
+                                    var moneyJson = {minTargetNumber: minnumber, targetNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId1, tokenMoneyWhitepaperCnUrl:znbook, tokenMoneyWhitepaperEnUrl: enbook, type:type1};
                                     $.ajax({
                                         url : "/token/detail", //后台接口
                                         type: 'POST',

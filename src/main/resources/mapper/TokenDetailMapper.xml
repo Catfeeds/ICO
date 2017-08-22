@@ -14,5 +14,6 @@
     <result column="token_money_whitePaper_cn_url" jdbcType="VARCHAR" property="tokenMoneyWhitepaperCnUrl" />
     <result column="token_money_whitePaper_en_url" jdbcType="VARCHAR" property="tokenMoneyWhitepaperEnUrl" />
     <result column="input_token_money_project_id" jdbcType="INTEGER" property="inputTokenMoneyProjectId" />
+    <result column="type" jdbcType="TINYINT" property="type" />
   </resultMap>
 </mapper>

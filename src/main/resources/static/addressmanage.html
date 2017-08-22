@@ -407,7 +407,7 @@
                         );
                     });
                 } else {
-                    app.myAlert("",result.message,"warning");
+                    app.myAlertWithoutFunction("",result.message,"warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
@@ -447,7 +447,7 @@
         if(app.getUserInfo().phone){
             app.sendSMS(app.getUserInfo().phone);
         }else{
-            app.myAlert("","您未绑定或验证手机!","warning");
+            app.myAlertWithoutFunction("","您未绑定或验证手机!","warning");
             return;
         }
     });
@@ -460,7 +460,7 @@
         var verifyCode = $("#verifycode").val();
         var moneyType = $('option').attr("value");
         if(verifyCode != app.getUserInfo().verifyCode){
-            myAlert("","验证码错误!","error");
+            app.myAlertWithoutFunction("","验证码错误!","error");
             return;
         }
         var walletJson = {des:addressDes,tokenMoneyUrl:address,tokenMoneyId:moneyType};
@@ -477,7 +477,7 @@
                     app.myAlert("",result.message,"success");
                 }
                 else {
-                    app.myAlert("",result.message,"warning");
+                    app.myAlertWithoutFunction("",result.message,"warning");
                     return;
                 }
             },
@@ -507,7 +507,7 @@
                     app.myAlert("", "删除成功!", "success");
                 }
                 else {
-                    app.myAlert("", "删除失败!", "warning");
+                    app.myAlertWithoutFunction("", "删除失败!", "warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
