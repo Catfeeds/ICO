@@ -32,6 +32,9 @@ public class TokenDetail {
     @Column(name = "input_token_money_project_id")
     private Integer inputTokenMoneyProjectId;
 
+    @Column(name = "type")
+    private Integer type;
+
     @Transient
     private TokenMoney tokenMoney;
 
@@ -131,6 +134,20 @@ public class TokenDetail {
      */
     public void setTokenMoneyWhitepaperCnUrl(String tokenMoneyWhitepaperCnUrl) {
         this.tokenMoneyWhitepaperCnUrl = tokenMoneyWhitepaperCnUrl;
+    }
+
+    /**
+     * @return type
+     */
+    public Integer getType() {
+        return type;
+    }
+
+    /**
+     * @param type
+     */
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     /**

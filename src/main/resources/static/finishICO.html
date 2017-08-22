@@ -21,7 +21,6 @@
     <link href="assets/css/jplayer.blue.monday.min.css" rel="stylesheet">
     <link href="assets/css/themetypo.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
-    <link href="assets/css/sweet-alert.css" rel="stylesheet">
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon"/>
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -341,8 +340,6 @@
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/app.js"></script>
-<script src="assets/scripts/sweet-alert.js"></script>
-<script src="assets/scripts/sweet-alert.min.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/jquery.jplayer.min.js"></script>
 <script src="assets/scripts/functions.js"></script>
@@ -448,11 +445,10 @@
                     $('#cnWhitepaper').attr('href',tokenMoneyWhitepaperCnUrl);
                     $('#enWhitepaper').attr('href',tokenMoneyWhitepaperEnUrl);
                 }else{
-                    location.href = "404.html";
+                    return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试","error");
                 return;
             }
         });

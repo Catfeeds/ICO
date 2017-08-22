@@ -32,4 +32,16 @@ public class TokenDetailServiceImpl extends AbstractService<TokenDetail> impleme
         }
         return tokenDetails;
     }
+
+    @Override
+    public List<TokenDetail> findByProjectIdAndType(Integer projectId, Integer type) {
+        TokenDetail tokenDetail = new TokenDetail();
+        tokenDetail.setInputTokenMoneyProjectId(projectId);
+        tokenDetail.setType(type);
+        List<TokenDetail> tokenDetails = tokenDetailMapper.select(tokenDetail);
+        if(CollectionUtils.isEmpty(tokenDetails)){
+            return null;
+        }
+        return tokenDetails;
+    }
 }
