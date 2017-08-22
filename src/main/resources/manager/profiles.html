@@ -148,9 +148,9 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li  class="active"> <a id="1" href="#timeline" data-toggle="tab">填写发起人信息</a></li>
-                            <li><a id="2" href="#newproject" data-toggle="tab">发起新项目</a></li>
-                            <li><a id="3" href="#activity" data-toggle="tab">项目接收代币</a></li>
-                            <li><a id="4" href="#time" data-toggle="tab">项目发行代币</a></li>
+                            <li><a id="2" href="#newproject" data-toggle="tab" class="disabled">发起新项目</a></li>
+                            <li><a id="3" href="#activity" data-toggle="tab" class="disabled">项目接收代币</a></li>
+                            <li><a id="4" href="#time" data-toggle="tab" class="disabled">项目发行代币</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="active tab-pane" id="timeline">
@@ -236,7 +236,8 @@
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <button type="button" class="btn btn-danger" id="prepage" onclick="nextOne(1)">上一页</button>
-                                                <button type="button" class="btn btn-danger" id="nexttwo" onclick="nextOne(3)">下一页</button>
+                                                <button type="button" class="btn btn-danger" id="baocun2" >保存</button>
+                                                <button type="button" class="btn btn-danger" id="nexttwo" onclick="nextOne(3)" style="display: none">下一页</button>
                                             </div>
                                         </div>
                                 </form>
@@ -284,7 +285,8 @@
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <button type="button" class="btn btn-danger" id="prepageone" onclick="nextOne(2)">上一页</button>
-                                            <button type="button" class="btn btn-danger" id="nextthries" onclick="nextOne(4)">下一页</button>
+                                            <button type="button" class="btn btn-danger" id="baocun3" >保存</button>
+                                            <button type="button" class="btn btn-danger" id="nextthries" onclick="nextOne(4)" style="display: none">下一页</button>
                                         </div>
                                     </div>
                                 </form>
@@ -320,16 +322,12 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
+                                            <input type="button" class="btn btn-danger" id="prepagetwo" onclick="nextOne(3)" value="上一页"/>
                                             <input type="button" class="btn btn-danger" id="bcPro" value="保存"/>
-                                            <input type="button" class="btn btn-danger" id="prepagetwo" value="上一页"/>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-
-
-<!--</div>-->
-
                         </div>
                     </div>
                 </div>
@@ -394,6 +392,12 @@
 
     });
     jQuery(window).load(function () {
+        $(".nav-tabs a[data-toggle=tab]").on("click", function(e) {
+            if ($(this).hasClass("disabled")) {
+                e.preventDefault();
+                return false;
+            }
+        });
         $('#editor').summernote({
             placeholder:'项目描述',
             lang: 'zh-CN', // default: 'en-US'
@@ -460,14 +464,13 @@
                             location.href = "/manager/register.html";
                         } else {
                              userId = result.data.id;
-                            $("#ceshi").append(
-                                "<input value='" + userId + "' id='userId' type='hidden'/>"
-                            );
                             $("#userName").attr("readonly","readonly");
                             $("#userCard").attr("readonly","readonly");
                             $("#userPhone").attr("readonly","readonly");
                             $("#bcUserInfo").css("display","none");
                             $("#nextone").css("display","inline");
+                            $("#2").removeClass("disabled");
+                            nextOne(2);
                         }
                     }
                     else {
@@ -479,7 +482,58 @@
                 }
             });
         });
-
+        $("#baocun2").click(function () {
+            var prjname = $("#prjname").val();
+            var prjopentime = $("#startTime").val();
+            var prjclosetime = $("#endTime").val();
+            var prjproduce = $("#prjproduce").val();
+            if(prjname !== null && prjname !== undefined && prjname !== '') {
+                if(prjopentime !== null && prjopentime !== undefined && prjopentime !== '') {
+                    if(prjclosetime !== null && prjclosetime !== undefined && prjclosetime !== '') {
+                        if(prjproduce !== null && prjproduce !== undefined && prjproduce !== '') {
+                            $("#nexttwo").css("display","inline");
+                            $("#baocun2").css("display","none");
+                            $("#3").removeClass("disabled");
+                            nextOne(3);
+                        }else {
+                            app.myAlert("请填写项目简介！");
+                        }
+                    }else {
+                        app.myAlert("请填写项目结束时间！");
+                    }
+                }else {
+                    app.myAlert("请填写项目开始时间！");
+                }
+            } else {
+                app.myAlert("请填写项目名称！");
+            }
+        });
+        $("#baocun3").click(function () {
+            var minnumber = $("#minnumber").val();
+            var maxnumber = $("#maxnumber").val();
+            var znbook  = $("#znbook").val();
+            var enbook = $("#enbook").val();
+            if(minnumber !== null && minnumber !== undefined && minnumber !== '') {
+                if(maxnumber !== null && maxnumber !== undefined && maxnumber !== '') {
+                    if(znbook !== null && znbook !== undefined && znbook !== '') {
+                        if(enbook !== null && enbook !== undefined && enbook !== '') {
+                            $("#nextthries").css("display","inline");
+                            $("#baocun3").css("display","none");
+                            $("#4").removeClass("disabled");
+                            nextOne(4);
+                        }else {
+                            app.myAlert("请填写英文白皮书链接！");
+                        }
+                    }else {
+                        app.myAlert("请填中文白皮书链接！");
+                    }
+                }else {
+                    app.myAlert("请填最高发行目标！");
+                }
+            } else {
+                app.myAlert("请填最低发行目标！");
+            }
+        });
         //保存项目
         $("#bcPro").click(function () {
             var id = app.getQueryString("id");
@@ -641,6 +695,7 @@
     function nextOne(id) {
         $("#"+id).click();
     }
+
 </script>
 
 </body>
