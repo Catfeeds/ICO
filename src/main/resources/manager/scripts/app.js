@@ -104,6 +104,18 @@
         });
     }
 
+    owner.myAlertWithHtml = function(title, text, type, jumphtml){
+        sweetAlert({
+            title: title,
+            text: text,
+            type: type,
+            confirmButtonColor: "#d9534f"
+        },function () {
+            if(jumphtml){
+                location.href=jumphtml;
+            }
+        });
+    };
     owner.myAlert = function(title, text, type){
         sweetAlert({
             title: title,
@@ -111,7 +123,7 @@
             type: type,
             confirmButtonColor: "#d9534f"
         });
-        //,function () {window.location.reload();}
     };
+
 }(window.app = {}));
 
