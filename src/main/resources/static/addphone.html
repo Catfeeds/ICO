@@ -308,13 +308,13 @@
     $("#sendsms").click(function () {
         var phoneNum = $("#mobile").val();
         if (phoneNum.trim().length != 11) {
-            app.myAlert(" ","请填写正确的手机号码!","warning");
+            app.myAlertWithoutFunction(" ","请填写正确的手机号码!","warning");
             return;
         }
         // 此处判断该用户信息中是否有同样的手机号
         if (app.getUserInfo().phone != null) {
             if (app.getUserInfo().phone == phoneNum) {
-                app.myAlert(" ","此手机号码已经验证过!","warning");
+                app.myAlertWithoutFunction(" ","此手机号码已经验证过!","warning");
                 return;
             }
         }
@@ -346,18 +346,18 @@
         var phoneNum = $("#mobile").val();
         var verifycode = $("#verifycode").val();
         if (phoneNum.length != 11) {
-            app.myAlert(" ","请填写正确的手机号码!","warning");
+            app.myAlertWithoutFunction(" ","请填写正确的手机号码!","warning");
             return;
         }
         if (verifycode.length <= 0) {
-            app.myAlert(" ","验证码不能为空!","warning");
+            app.myAlertWithoutFunction(" ","验证码不能为空!","warning");
             return;
         }
         if (verifycode != app.getUserInfo().verifyCode) {
-            app.myAlert("","验证码信息错误，请重新输入!","error");
+            app.myAlertWithoutFunction("","验证码信息错误，请重新输入!","error");
             return;
         } else if (app.getUserInfo().expireDate < new Date()) {
-            app.myAlert("","验证码已过期，请重新发送！","warning");
+            app.myAlertWithoutFunction("","验证码已过期，请重新发送！","warning");
             return;
         } else {
             var verifycodeJson = {"validatePhone": true};
@@ -377,7 +377,7 @@
                         app.myAlert("","手机验证成功!","success");
                     }
                     else {
-                        app.myAlert("",result.message,"warning");
+                        app.myAlertWithoutFunction("",result.message,"warning");
                         return;
                     }
                 },
@@ -405,10 +405,11 @@
         var mobileAccount = $("#mobile").val();
         var ismobileAccount = /^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$/;
         if (mobileAccount.length <= 0) {
-            sweetAlert("号码不能为空!");
+            app.myAlert("","号码不能为空!","warning");
             return;
         } else if (ismobileAccount.test(mobileAccount)) {
-            sweetAlert("请输入正确的号码!");
+            app.myAlert("","请输入正确的号码!","warning");
+
             return;
         }
     }

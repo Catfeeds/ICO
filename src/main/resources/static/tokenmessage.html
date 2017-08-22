@@ -441,18 +441,18 @@
             if($("#inputmoney").val()){
                 if(cionType == "ETH"){
                     if($("#inputmoney").val().toString() > ETHBalance){
-                        app.myAlert("","您的余额不足!","warning","tokeninvestment.html");
+                        app.myAlertWithoutFunction("","您的余额不足!","warning");
                         return;
                     }
                 }
                 if(cionType == "BTC"){
                     if($("#inputmoney").val().toString() > BTCBalance){
-                        app.myAlert("","您的余额不足!","warning","tokeninvestment.html");
+                        app.myAlertWithoutFunction("","您的余额不足!","warning");
                         return;
                     }
                 }
                 if( !$("input[type='checkbox']").is(':checked')){
-                    app.myAlert("","请选择必填项!","warning");
+                    app.myAlertWithoutFunction("","请选择必填项!","warning");
                     return;
                 }
 
@@ -480,7 +480,7 @@
                     }
                 });
             }else{
-                app.myAlert("", "投资数目不可为0!", "warning");
+                app.myAlertWithoutFunction("", "投资数目不可为0!", "warning");
             }
 
         });
