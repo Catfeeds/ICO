@@ -64,12 +64,12 @@ public class ProjectUserRelationController {
             Integer projectId = project.getId();
             // 获取项目图片
             try {
-                String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
+                String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
                 project.setPictureUrl(pictureUrl);
             }catch (Exception e){
                 project.setPictureUrl("");
             }
-            String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
+            String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
             project.setPictureUrl(pictureUrl);
             projectList.add(project);
         }
