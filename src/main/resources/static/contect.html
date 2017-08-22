@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>contect</title>
+    <link href="assets/images/favicon.ico" rel="bookmark" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -403,7 +405,7 @@
                 app.myAlert("","姓名信息不可为空!","warning");
                 return;
             }
-            var json = {cardno:cardNO,name:realName};
+            /*var json = {cardno:cardNO,name:realName};
             $.ajax({
                 url: "http://idcard.market.alicloudapi.com/lianzhuo/idcard",
                 type: 'GET',
@@ -425,7 +427,7 @@
                 error: function (xhr, type, errerThrown) {
                     sweetAlert(" ","网络异常,请稍候再试!","error");
                 }
-            });
+            });*/
             if(isValidate == null){
                 var json = {idCard:cardNO,realName:realName,id:app.getUserInfo().id,isValidateUser:true};
                 $.ajax({
