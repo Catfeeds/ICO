@@ -460,8 +460,8 @@
                 success: function (result) {
                     if (result.code == 200) {
                         if(result.data == null) {
-                            app.myAlert("", "发起人不存在，请注册！", "warning");
-                            location.href = "/manager/register.html";
+                            // 此处的执行结果是提醒完毕后，点击确定按钮，就直接跳转到指定页面/manager/register.html
+                            app.myAlertWithHtml("", "发起人不存在，请注册！", "warning","/manager/register.html");
                         } else {
                              userId = result.data.id;
                             $("#userName").attr("readonly","readonly");
@@ -615,7 +615,7 @@
                                             }
                                         },
                                         error: function (returndata) {
-                                            sweetAlert("上传图片失败！");
+                                            app.myAlert("", "上传图片失败！", "warning");
                                         }
                                     });
                                     //接受代币的字段
@@ -647,19 +647,20 @@
 
                                                             location.href = "/manager/data.html";
                                                         } else {
-                                                            sweetAlert("导入失败2！");
+                                                            app.myAlert("", "导入失败！", "warning");
                                                         }
                                                     },
                                                     error : function(data, status, e)
                                                     {
-                                                        sweetAlert("导入失败，网络异常或表单数据错误3！");
+
+                                                        app.myAlert("", "导入失败，网络异常或表单数据错误！", "warning");
                                                     }
                                                 });
 
 
 //                                                location.href = "../tables/data.html";
                                             } else {
-                                                app.myAlert("", "导入失败2！", "warning");
+                                                app.myAlert("", "导入失败！", "warning");
                                             }
                                         },
                                         error : function(data, status, e)
@@ -673,16 +674,16 @@
                                 }
                             },
                             error: function (xhr, type, errerThrown) {
-                                app.myAlert("", "网络异常,请稍候再试2！", "error");
+                                app.myAlert("", "网络异常,请稍候再试！", "error");
                             }
                         });
                     } else {
-                        app.myAlert("", "导入失败1！", "warning");
+                        app.myAlert("", "导入失败！", "warning");
                     }
                 },
                 error : function(data, status, e)
                 {
-                    app.myAlert("", "导入失败，网络异常或表单数据错误1！", "warning");
+                    app.myAlert("", "导入失败，网络异常或表单数据错误！", "warning");
                 }
             });
         });
