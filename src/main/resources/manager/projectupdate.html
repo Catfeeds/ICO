@@ -173,6 +173,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">项目名称</label>
                                         <div class="col-sm-8">
+                                            <input type="hidden" id="projectFileId">
                                             <input type="text" class="form-control" id="name" name="name"
                                                    placeholder="项目名称请务必包含产品的关键词">
                                         </div>
@@ -357,16 +358,18 @@
             success: function (result) {
                 if (result.code == 200) {
                     //获取数据
-                    var content = result.data.content;
-                    var enName = result.data.name;//英文
-                    var cnName = result.data.nameCn;//中文
-                    var  des= result.data.des;//描述
-                    endTime = result.data.endTime;
-                    startTime = result.data.startTime;
-                    var thirdEndorsement = result.data.thirdEndorsement;
-                    var state = result.data.state;
-                    var partPersonNumber = result.data.partPersonNumber;
+                    var content = result.data.projectInfo.content;
+                    var enName = result.data.projectInfo.name;//英文
+                    var cnName = result.data.projectInfo.nameCn;//中文
+                    var  des= result.data.projectInfo.des;//描述
+                    endTime = result.data.projectInfo.endTime;
+                    startTime = result.data.projectInfo.startTime;
+                    var thirdEndorsement = result.data.projectInfo.thirdEndorsement;
+                    var state = result.data.projectInfo.state;
+                    var partPersonNumber = result.data.projectInfo.partPersonNumber;
+                    var projectFileId = result.data.projectFile.id;
                     $("#name").val(enName);
+                    $("#projectFileId").val(projectFileId);
                     $("#nameCn").val(cnName);
                     $("#des").val(des);
                     $("#startTime").val(startTime);
@@ -452,11 +455,13 @@
                 app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
+        var projectFileId =  $("#projectFileId").val();
+
         //保存图片
-        var projectFileJson = {projectId:id,fileType:"image",fileUrl:pictureUrl};
+        var projectFileJson = {id:projectFileId,projectId:id,fileType:"image",fileUrl:pictureUrl};
         $.ajax({
             url: '/project/file',
-            type: 'POST',
+            type: 'PUT',
             headers: app.createAuthorizationTokenHeader(),
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(projectFileJson),
