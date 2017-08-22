@@ -16,6 +16,9 @@ public class ProjectUserWalletRelation {
 
     @Column(name = "transaction_number")
     private String transactionNumber;
+
+    @Transient
+    private String walletType;
     /**
      * @return id
      */
@@ -57,6 +60,7 @@ public class ProjectUserWalletRelation {
     public void setProjectWallet(Integer projectWallet) {
         this.projectWallet = projectWallet;
     }
+
     /**
      * @return transactionNumber
      */
@@ -69,5 +73,19 @@ public class ProjectUserWalletRelation {
      */
     public void setTransactionNumber(String transactionNumber) {
         this.transactionNumber = transactionNumber;
+    }
+
+    /**
+     * @return walletType
+     */
+    public String getWalletType() {
+        return walletType;
+    }
+
+    /**
+     * @param walletType
+     */
+    public void setWalletType(String walletType) {
+        this.walletType = walletType;
     }
 }

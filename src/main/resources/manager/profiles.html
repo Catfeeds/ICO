@@ -30,6 +30,14 @@
     <link rel="stylesheet" href="layui/css/modules/laydate/laydate.css">
     <link rel="stylesheet" href="layui/css/modules/layer/default/layer.css">
     <script src="layui/layui.js"></script>
+    <style>
+        .conImage{
+            filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image); /* 该对象只用来在IE下获得图片的原始尺寸，无其它用途 */
+            height: 1px;
+            visibility:hidden;
+            overflow: hidden;
+        }
+    </style>
     <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -177,14 +185,13 @@
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <button type="button" class="btn btn-danger" id="bcUserInfo">保存</button>
-                                                <button type="button" class="btn btn-danger" id="nextone" onclick="nextOne(2)" style="display: none">下一页</button>
+                                                <button type="button" class="btn btn-danger" id="nextone" onclick="nextOne(2)" style="display: none;margin-left: 80px;margin-top: -34px">下一页</button>
                                             </div>
                                         </div>
                                     </form>
                             </div>
 
 
-                        <!--<div id="ceshi" style="display: none;">-->
                             <div class="tab-pane" id="newproject" >
                                     <form class="form-horizontal" id="addprjs">
                                         <div class="form-group">
@@ -216,7 +223,8 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">上传图片</label>
                                             <div class="col-sm-10">
-                                                <input name="file"  type="file">
+                                                <input name="file"  type="file" id="content" accept="image/png,image/gif,image/jpeg" onChange="handleConFiles(this.files);">
+                                                <img class="conImage" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -228,16 +236,14 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">项目详情</label>
                                             <div class="col-sm-10">
-                                                <div class="col-sm-8">
-                                                    <div id="editor" class="summernote" ></div>
-                                                </div>
+                                                <div id="editor" class="summernote" ></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
-                                                <button type="button" class="btn btn-danger" id="prepage" onclick="nextOne(1)">上一页</button>
-                                                <button type="button" class="btn btn-danger" id="baocun2" >保存</button>
-                                                <button type="button" class="btn btn-danger" id="nexttwo" onclick="nextOne(3)" style="display: none">下一页</button>
+                                                <button type="button" class="btn btn-danger" id="prepage" onclick="nextOne(1)" style="margin-left: -10px">上一页</button>
+                                                <button type="button" class="btn btn-danger" id="baocun2" style="margin-left: 23px">保存</button>
+                                                <button type="button" class="btn btn-danger" id="nexttwo" onclick="nextOne(3)" style="display: none;margin-left: 165px;margin-top: -34px">下一页</button>
                                             </div>
                                         </div>
                                 </form>
@@ -284,9 +290,9 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="button" class="btn btn-danger" id="prepageone" onclick="nextOne(2)">上一页</button>
-                                            <button type="button" class="btn btn-danger" id="baocun3" >保存</button>
-                                            <button type="button" class="btn btn-danger" id="nextthries" onclick="nextOne(4)" style="display: none">下一页</button>
+                                            <button type="button" class="btn btn-danger" id="prepageone" onclick="nextOne(2)" style="margin-left: -10px">上一页</button>
+                                            <button type="button" class="btn btn-danger" id="baocun3" style="margin-left: 23px">保存</button>
+                                            <button type="button" class="btn btn-danger" id="nextthries" onclick="nextOne(4)" style="display:none;margin-left: 165px;margin-top: -34px">下一页</button>
                                         </div>
                                     </div>
                                 </form>
@@ -322,8 +328,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <input type="button" class="btn btn-danger" id="prepagetwo" onclick="nextOne(3)" value="上一页"/>
-                                            <input type="button" class="btn btn-danger" id="bcPro" value="保存"/>
+                                            <input type="button" class="btn btn-danger" id="prepagetwo" onclick="nextOne(3)" value="上一页" style="margin-left: -10px"/>
+                                            <input type="button" class="btn btn-danger" id="bcPro" style="margin-left: 23px" value="保存"/>
                                         </div>
                                     </div>
                                 </form>
@@ -353,6 +359,51 @@
 <script src="scripts/sweet-alert.js"></script>
 <script src="scripts/app.js"></script>
 <script>
+    var width,height;
+    function handleConFiles(files){
+        if((navigator.userAgent.indexOf("MSIE 8.0")>0 )||(navigator.userAgent.indexOf("MSIE 9.0")>0)){
+            var objPreviewSizeFake = $(".conImage").get(0);//jquery对象转化为DOM对象
+            var fileupload = document.getElementById("head");
+            var $fileupload = $(fileupload);
+            $fileupload.select();
+            $fileupload.blur();
+            path = document.selection.createRange().text;
+
+            if (/"\w\W"/.test(path)) {
+                path = path.slice(1,-1);
+            }
+
+            objPreviewSizeFake.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = path;
+            width=objPreviewSizeFake.offsetWidth;
+            height=objPreviewSizeFake.offsetHeight;
+            if(width < 270 || height < 203){
+                fill = false;
+                app.myAlert("上传图片", "上传图片的尺寸应为270*203及以上", "error");
+            }
+
+            document.selection.empty();
+        }else{
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                var ret = [];
+                reader.onload = function(theFile) {
+                    var image = new Image();
+                    image.onload = function() {
+                        width=this.width;
+                        height=this.height;
+                        if(width < 270 || height < 203){
+                            fill = false;
+                            app.myAlert("上传图片", "上传图片的尺寸应为270*203及以上", "error");
+                        }
+                    };
+                    image.src = theFile.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+    }
     var endTime;
     var startTime;
     var userId;

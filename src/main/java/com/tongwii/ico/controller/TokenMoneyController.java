@@ -98,6 +98,8 @@ public class TokenMoneyController {
                 Integer projectWalletId = projectWallet.getId();
                 // 根据币种ID与用户ID查询userWalletUrl
                 UserWallet userWallet = userWalletService.findWalletByCionId(cionId, userId);
+                userWallet.setType(UserWallet.WalletType.OUT_PUT.getValue());
+                userWalletService.save(userWallet);
                 Integer userWalletId = userWallet.getId();
                 // TODO 此处估计要对用户与项目钱包各自进行增值与减值操作
                 // 给user_project_wallet表中添加数据
@@ -108,13 +110,11 @@ public class TokenMoneyController {
                 if(cionType.equals(TokenMoneyEnum.ETH.name())){
                     String ETHTransactionNumber = transactionsService.sendETHCoin(userWallet.getTokenPrivateKey(), projectWallet.getWalletAddress(),investmentMoney);
                     projectUserWalletRelation.setTransactionNumber(ETHTransactionNumber);
-//                    String userETHWalletBalance = transactionsService.getEthAddressBalance(userWallet.getTokenMoneyUrl());
 
                 }
                 if(cionType.equals(TokenMoneyEnum.BTC.name())){
                     String BTCTransactionNumber = transactionsService.sendETHCoin(userWallet.getTokenPrivateKey(), projectWallet.getWalletAddress(),investmentMoney);
                     projectUserWalletRelation.setTransactionNumber(BTCTransactionNumber);
-//                    String userBTCWalletBalance = transactionsService.getBitCoinAddressBalance(userWallet.getTokenMoneyUrl());
 
                 }
                 projectUserWalletRelationService.save(projectUserWalletRelation);
