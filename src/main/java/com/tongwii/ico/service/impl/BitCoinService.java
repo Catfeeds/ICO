@@ -1,19 +1,17 @@
 package com.tongwii.ico.service.impl;
 
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.MoreExecutors;
+import com.tongwii.ico.exception.ServiceException;
 import com.tongwii.ico.util.CurrentConfigEnum;
+import com.tongwii.ico.util.DesEncoder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bitcoinj.core.*;
+import org.bitcoinj.core.listeners.DownloadProgressTracker;
 import org.bitcoinj.kits.WalletAppKit;
-import org.bitcoinj.net.discovery.DnsDiscovery;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
-import org.bitcoinj.script.ScriptBuilder;
-import org.bitcoinj.store.BlockStoreException;
-import org.bitcoinj.store.MemoryBlockStore;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.UnreadableWalletException;
@@ -23,12 +21,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 比特币业务类
@@ -40,14 +38,14 @@ import java.util.Calendar;
 public class BitCoinService {
     private final static Logger logger = LogManager.getLogger();
 
-    private WalletAppKit walletAppKit;
+    private static WalletAppKit walletAppKit;
 
     @Value("${spring.profiles.active}")
     private String env;
     @Value("${storage.wallet.location}")
     private String walletPath;
 
-    private NetworkParameters netParams;
+    private static NetworkParameters netParams;
 
     @Value("${wallet.seedWords}")
     private String seedWords;
@@ -75,11 +73,21 @@ public class BitCoinService {
         logger.info("钱包当前接受地址: " + walletAppKit.wallet().currentReceiveAddress());
     }
 
+    /**
+     * PostConstruct修饰的方法会在服务器加载Servle的时候运行，并且只会被服务器执行一次
+     */
     @PostConstruct
     public void postConstruct() {
         if(env.equals(CurrentConfigEnum.dev.toString())) {
             netParams = TestNet3Params.get();
-            walletAppKit =  new WalletAppKit(netParams, new File(walletPath), "ICO_TT_Test");
+            walletAppKit =  new WalletAppKit(netParams, new File(walletPath), "ICO_TT_Test"){
+                @Override
+                protected void onSetupCompleted() {
+                    // Don't make the user wait for confirmations for now, as the intention is they're sending it
+                    // their own money!
+                    walletAppKit.wallet().allowSpendingUnconfirmedTransactions();
+                }
+            };
         } else {
             netParams = MainNetParams.get();
             walletAppKit =  new WalletAppKit(netParams, new File(walletPath), "ICO_TT");
@@ -97,9 +105,17 @@ public class BitCoinService {
             logger.info(seed.toHexString());
         }
 
+        walletAppKit.setDownloadListener(new DownloadProgressTracker() {
+            @Override
+            protected void progress(double pct, int blocksSoFar, Date date) {
+                logger.info("当前更新进度 : " + pct / 100.0);
+            }
+        }).setBlockingStartup(false);
+
+        // 同步区块链
         start();
 
-        walletAppKit.wallet().addCoinsReceivedEventListener((w, tx, prevBalance, newBalance) -> {
+        /*walletAppKit.wallet().addCoinsReceivedEventListener((w, tx, prevBalance, newBalance) -> {
             Coin value = tx.getValueSentToMe(w);
             System.out.println("接收到交易金额为" + value.toFriendlyString() + "的交易：" + tx);
             Futures.addCallback(tx.getConfidence().getDepthFuture(1), new FutureCallback<TransactionConfidence>() {
@@ -119,20 +135,60 @@ public class BitCoinService {
                     throw new RuntimeException(t);
                 }
             });
-        });
+        });*/
+    }
 
+    @PreDestroy
+    public void dostory(){
+        System.out.println("暂停同步区块链......");
+        stop();
     }
 
     /**
-     * 交易
+     * 比特币交易
+     * @param fromAddress
+     * @param toAddress
+     * @param amount
      * @return
      * @throws Exception
      */
-    public String sendTransaction() throws Exception {
+    public String sendTransaction(String fromAddress, String toAddress, String amount) {
         // 等待区块链同步
         waitUntilReady();
+        try {
+            Coin coin = Coin.parseCoin(amount);
+            Address destination = Address.fromBase58(netParams, toAddress);
+            SendRequest req;
 
-        final String message = "来自ICO.TT";
+            DesEncoder desEncoder = new DesEncoder();
+            ECKey nowKey = ECKey.fromPrivate(Utils.HEX.decode(desEncoder.decrypt(fromAddress)));
+            walletAppKit.wallet().importKey(nowKey);
+
+            walletAppKit.wallet().addWatchedAddress(nowKey.toAddress(netParams));
+
+            logger.info("钱包当前接受地址: " + walletAppKit.wallet().currentReceiveAddress());
+
+            if (coin.equals(walletAppKit.wallet().getBalance()))
+                req = SendRequest.emptyWallet(destination);
+            else
+                req = SendRequest.to(destination, coin);
+            Wallet.SendResult sendResult = walletAppKit.wallet().sendCoins(req);
+            // you can use a block explorer like https://www.biteasy.com/ to inspect the transaction with the printed transaction hash.
+            sendResult.broadcastComplete.addListener(() -> {
+                // TODO 交易成功操作
+                logger.info("交易成功，交易单号:" + sendResult.tx.toString() + " " +sendResult.tx.getHashAsString() );
+                // 移除当前交易的地址
+                walletAppKit.wallet().removeKey(nowKey);
+            }, MoreExecutors.directExecutor());
+
+            return sendResult.tx.getHashAsString();
+        } catch (InsufficientMoneyException e) {
+            throw new ServiceException("钱包地址余额不足，缺少" + e.missing.getValue() + "satoshis 比特币（包含fees）");
+        } catch (ECKey.KeyIsEncryptedException e) {
+            throw new ServiceException("钱包地址缺少密码");
+        }
+
+       /* final String message = "来自ICO.TT";
         final Wallet wallet = walletAppKit.wallet();
         byte[] hash = SHA_256.digest(message.getBytes());
         String prefix = "RSM";
@@ -162,23 +218,22 @@ public class BitCoinService {
         wallet.commitTx(transaction);
 
         // Return a reference to the caller
-        return transaction.getHashAsString();
+        return transaction.getHashAsString();*/
     }
 
 
     public String getBalance(String addr) {
-        Address address = Address.fromBase58(netParams, addr);
-        Wallet wallet = new Wallet(netParams);
-        wallet.addWatchedAddress(address, 0);
-        logger.info("钱包当前查看地址"+wallet.getWatchedAddresses());
+        // 等待同步完
         waitUntilReady();
-        Coin balance = wallet.getBalance();
+        Address address = Address.fromBase58(netParams, addr);
+        walletAppKit.wallet().addWatchedAddress(address, 0);
+        logger.info("钱包当前查看地址"+walletAppKit.wallet().getWatchedAddresses());
+        Coin balance = walletAppKit.wallet().getBalance();
         return balance.toFriendlyString();
     }
 
     public void start() {
         walletAppKit.setAutoSave(true);
-
         walletAppKit.startAsync();
 
     }

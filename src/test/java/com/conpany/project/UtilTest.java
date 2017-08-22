@@ -8,6 +8,7 @@ import com.tongwii.ico.service.TransactionsService;
 import com.tongwii.ico.service.impl.BitCoinService;
 import com.tongwii.ico.util.*;
 import org.apache.tomcat.util.buf.HexUtils;
+import org.bitcoinj.core.Utils;
 import org.ethereum.core.Account;
 import org.ethereum.core.Denomination;
 import org.junit.Assert;
@@ -164,7 +165,7 @@ public class UtilTest extends Tester {
     public void sendETH() {
         Account account = new Account();
         account.init();
-        String from = HexUtils.toHexString(account.getEcKey().getAddress());
+        String from = Utils.HEX.encode(account.getEcKey().getAddress());
         System.out.println(transactionsService.sendETHCoin("554010e4567428d39c2c124507915eeda1fa91f31584bc0568ccba8f3495c9e754019c233b9d29a0e3aa1f74cbbbd98ac237af8cf39d73dbad10fe5c898c1a7358aa971672d82253", from, "0.01"));
     }
 

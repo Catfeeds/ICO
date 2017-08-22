@@ -4,35 +4,25 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
-import com.google.common.util.concurrent.MoreExecutors;
 import com.tongwii.ico.exception.ServiceException;
 import com.tongwii.ico.service.TransactionsService;
-import com.tongwii.ico.util.CurrentConfigEnum;
 import com.tongwii.ico.util.DesEncoder;
 import com.tongwii.ico.util.EthConverter;
 import com.tongwii.ico.util.RestTemplateUtil;
-import org.apache.tomcat.util.buf.HexUtils;
 import org.bitcoinj.core.*;
-import org.bitcoinj.kits.WalletAppKit;
-import org.bitcoinj.params.MainNetParams;
-import org.bitcoinj.params.TestNet3Params;
-import org.bitcoinj.utils.BriefLogFormatter;
-import org.bitcoinj.wallet.Wallet;
-import org.ethereum.core.Denomination;
 import org.ethereum.facade.Ethereum;
 import org.ethereum.facade.EthereumFactory;
 import org.ethereum.jsonrpc.TypeConverter;
 import org.ethereum.util.ByteUtil;
-import org.spongycastle.util.encoders.Hex;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * ${DESCRIPTION}
@@ -55,6 +45,9 @@ public class TransactionServiceImpl implements TransactionsService {
 
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
+
+    @Autowired
+    private BitCoinService bitCoinService;
 
     @Override
     public String getBitCoinAddressBalance(String address) {
@@ -127,7 +120,8 @@ public class TransactionServiceImpl implements TransactionsService {
 
     @Override
     public String sendBitCoin(String fromAddress, String recipient, String amountToSend) {
-        BriefLogFormatter.init();
+        return bitCoinService.sendTransaction(fromAddress, recipient, amountToSend);
+       /* BriefLogFormatter.init();
 
         final NetworkParameters netParams;
         final WalletAppKit kit;
@@ -172,7 +166,9 @@ public class TransactionServiceImpl implements TransactionsService {
             System.out.println("Send money to: " + kit.wallet().currentReceiveAddress().toString());
             throw new ServiceException("钱包地址余额不足，缺少" + e.missing.getValue() + "satoshis 比特币（包含fees）");
         }
+        */
     }
+
 
     @Override
     public String sendETHCoin(String fromPrivateEncoderAddress, String toAddress, String amount) {
