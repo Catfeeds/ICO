@@ -7,6 +7,7 @@ import com.tongwii.ico.service.ProjectUserWalletRelationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.util.ContextUtils;
+import com.tongwii.ico.util.TokenMoneyEnum;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,13 +63,20 @@ public class ProjectUserWalletRelationController {
         if(!CollectionUtils.isEmpty(projectUserWalletRelationList)){
            for(int i=0; i<projectUserWalletRelationList.size(); i++){
                 try{
+                    String transactionNumber = projectUserWalletRelationList.get(i).getTransactionNumber();
                    //TODO 此处需要根据交易编号查询交易记录的详细信息
-                    projectUserWalletRelationList.get(i).getTransactionNumber();
+                    if(projectUserWalletRelationList.get(i).getWalletType().equals(TokenMoneyEnum.BTC.name())){
+                        //TODO 这里获取比特币交易信息详情
+
+                    }
+                    if(projectUserWalletRelationList.get(i).getWalletType().equals(TokenMoneyEnum.ETH.name())){
+                        //TODO 这里获取以太坊交易详情
+
+                    }
                 }catch (Exception e){
                     System.out.print("交易单号不存在或非法!");
                 }
             }
-
             return Result.successResult(projectUserWalletRelationList);
         }else{
             return Result.failResult("投资记录获取失败!");

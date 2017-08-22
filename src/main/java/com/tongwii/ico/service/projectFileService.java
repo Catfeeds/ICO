@@ -13,6 +13,6 @@ public interface projectFileService extends Service<projectFile> {
      * @param projectId
      * @return
      */
-    projectFile findProjectFileByType(Integer projectId);
+    projectFile findProjectFileByProjectId(Integer projectId);
 
 }

@@ -176,6 +176,7 @@ public class ProjectController {
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
         Project project = projectService.findById(id);
+        projectFile projectFile = projectFileService.findProjectFileByProjectId(id);
         // 首先需要通过项目id查询token_details表数据
         List<TokenDetail> tokenDetails = tokenDetailService.findByProjectId(id);
         List<TokenDetail> inputTokenDetails = new ArrayList<>();
@@ -202,7 +203,7 @@ public class ProjectController {
             User createUser = userService.findById(project.getCreateUserId());
             project.setCreateUser(createUser);
         }
-        return Result.successResult(project);
+        return Result.successResult(project).add("projectFile",projectFile);
     }
 
     @GetMapping
@@ -230,7 +231,7 @@ public class ProjectController {
             Integer projectId = p.getId();
             // 获取项目图片
             try {
-                String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
+                String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
                 p.setPictureUrl(pictureUrl);
             }catch (Exception e){
                 p.setPictureUrl("");
@@ -315,7 +316,7 @@ public class ProjectController {
            Integer projectId = projectList.get(i).getId();
            // 获取项目图片
            try {
-               String pictureUrl = projectFileService.findProjectFileByType(projectId).getFileUrl();
+               String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
                projectList.get(i).setPictureUrl(pictureUrl);
            }catch (Exception e){
                projectList.get(i).setPictureUrl("");
@@ -362,7 +363,7 @@ public class ProjectController {
         for(int i=0;i<projectList.size();i++){
             // 获取项目图片
             try {
-                String pictureUrl = projectFileService.findProjectFileByType(projectList.get(i).getId()).getFileUrl();
+                String pictureUrl = projectFileService.findProjectFileByProjectId(projectList.get(i).getId()).getFileUrl();
                 projectList.get(i).setPictureUrl(pictureUrl);
             }catch (Exception e){
                 projectList.get(i).setPictureUrl("");
