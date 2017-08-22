@@ -19,7 +19,7 @@ public class projectFileServiceImpl extends AbstractService<projectFile> impleme
     private projectFileMapper fileMapper;
 
     @Override
-    public projectFile findProjectFileByType(Integer projectId) {
+    public projectFile findProjectFileByProjectId(Integer projectId) {
         projectFile p = new projectFile();
         p.setProjectId(projectId);
         projectFile projectFile = fileMapper.selectOne(p);
