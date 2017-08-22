@@ -21,8 +21,6 @@ import java.util.List;
 public class MessageController {
     @Autowired
     private MessageService messageService;
-/*    @Autowired
-    private UserService userService;*/
 
     private static int NOTIFYMESSAGE = 2;
     private static int NEWSMESSAGE = 1;

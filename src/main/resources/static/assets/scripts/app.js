@@ -116,7 +116,7 @@
             }
         });
     };
-    owner.myAlertWithoutFunction = function(title, text, type, jumphtml){
+    owner.myAlertWithoutFunction = function(title, text, type){
         sweetAlert({
             title: title,
             text: text,

@@ -100,19 +100,23 @@ public class TokenMoneyController {
                 UserWallet userWallet = userWalletService.findWalletByCionId(cionId, userId);
                 Integer userWalletId = userWallet.getId();
                 // TODO 此处估计要对用户与项目钱包各自进行增值与减值操作
-                // 获取用户钱包余额
-               /* if(cionType.equals(TokenMoneyEnum.ETH.name())){
-                    String userETHWalletBalance = transactionsService.getEthAddressBalance(userWallet.getTokenMoneyUrl());
-
-                }
-                if(cionType.equals(TokenMoneyEnum.BTC.name())){
-                    String userBTCWalletBalance = transactionsService.getBitCoinAddressBalance(userWallet.getTokenMoneyUrl());
-
-                }*/
                 // 给user_project_wallet表中添加数据
                 ProjectUserWalletRelation projectUserWalletRelation = new ProjectUserWalletRelation();
                 projectUserWalletRelation.setProjectWallet(projectWalletId);
                 projectUserWalletRelation.setUserWallet(userWalletId);
+                // 用户钱包转账操作
+                if(cionType.equals(TokenMoneyEnum.ETH.name())){
+                    String ETHTransactionNumber = transactionsService.sendETHCoin(userWallet.getTokenPrivateKey(), projectWallet.getWalletAddress(),investmentMoney);
+                    projectUserWalletRelation.setTransactionNumber(ETHTransactionNumber);
+//                    String userETHWalletBalance = transactionsService.getEthAddressBalance(userWallet.getTokenMoneyUrl());
+
+                }
+                if(cionType.equals(TokenMoneyEnum.BTC.name())){
+                    String BTCTransactionNumber = transactionsService.sendETHCoin(userWallet.getTokenPrivateKey(), projectWallet.getWalletAddress(),investmentMoney);
+                    projectUserWalletRelation.setTransactionNumber(BTCTransactionNumber);
+//                    String userBTCWalletBalance = transactionsService.getBitCoinAddressBalance(userWallet.getTokenMoneyUrl());
+
+                }
                 projectUserWalletRelationService.save(projectUserWalletRelation);
 
                 ProjectUserRelation projectUserRelation = new ProjectUserRelation();

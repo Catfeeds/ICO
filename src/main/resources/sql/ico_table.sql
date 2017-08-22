@@ -137,6 +137,7 @@ create table project_user_wallet_relation
   id                   int(11) unsigned not null auto_increment,
   user_wallet          int(11) unsigned,
   project_wallet       int(11) unsigned,
+  transaction_number   varchar(255) DEFAULT NULL COMMENT '交易编号',
   primary key (id)
 );
 

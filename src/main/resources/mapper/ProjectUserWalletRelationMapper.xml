@@ -8,5 +8,6 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_wallet" jdbcType="INTEGER" property="userWallet" />
     <result column="project_wallet" jdbcType="INTEGER" property="projectWallet" />
+    <result column="transaction_number" jdbcType="INTEGER" property="transactionNumber" />
   </resultMap>
 </mapper>
