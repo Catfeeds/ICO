@@ -285,7 +285,7 @@
                     pictureUrl = null;
                 }
             },
-            error: function (returndata) {
+            error: function (data, status, e) {
                 app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
@@ -372,9 +372,7 @@
         });
     }
     function cancleNews() {
-        $("#title").text("");
-        $("#descript").text("");
-        $("#content").text("");
+        window.location.reload();
     }
     function cancleNotify() {
         $("#notifyContent").text("");
