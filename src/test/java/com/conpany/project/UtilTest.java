@@ -5,26 +5,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.service.TransactionsService;
+import com.tongwii.ico.service.impl.BitCoinService;
 import com.tongwii.ico.util.*;
-import javafx.application.Platform;
 import org.apache.tomcat.util.buf.HexUtils;
-import org.bitcoinj.core.*;
-import org.bitcoinj.kits.WalletAppKit;
-import org.bitcoinj.net.discovery.DnsDiscovery;
-import org.bitcoinj.params.MainNetParams;
-import org.bitcoinj.params.TestNet3Params;
-import org.bitcoinj.store.BlockStoreException;
-import org.bitcoinj.store.MemoryBlockStore;
-import org.bitcoinj.wallet.Wallet;
+import org.bitcoinj.core.Utils;
 import org.ethereum.core.Account;
 import org.ethereum.core.Denomination;
-import org.ethereum.net.eth.handler.Eth;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -50,6 +41,9 @@ public class UtilTest extends Tester {
 
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
+
+    @Autowired
+    private BitCoinService bitCoinjService;
 
     @Test
     public void validateUtilTest() {
@@ -94,18 +88,14 @@ public class UtilTest extends Tester {
     public void getBalanceFromBlockChain() {
         String addr = "mxVGGj8S4ddYdP1ix6XbYYdVz9Li5oif44";
 
-        final NetworkParameters netParams;
-        final WalletAppKit kit;
+        System.out.println(bitCoinjService.getBalance(addr));
+
+       /* final NetworkParameters netParams;
         if(env.equals(CurrentConfigEnum.dev.toString())) {
             netParams = TestNet3Params.get();
-            kit =  new WalletAppKit(netParams, new File(walletPath), "ICO_TT_Test");
         } else {
             netParams = MainNetParams.get();
-            kit =  new WalletAppKit(netParams, new File(walletPath), "ICO_TT");
         }
-        // Download the block chain and wait until it's done.
-        kit.startAsync();
-        kit.awaitRunning();
 
         Address address = Address.fromBase58(netParams, addr);
         Wallet wallet = new Wallet(netParams);
@@ -126,7 +116,7 @@ public class UtilTest extends Tester {
         } catch (BlockStoreException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
 
         /*
         String addr = "mxVGGj8S4ddYdP1ix6XbYYdVz9Li5oif44";
@@ -175,7 +165,7 @@ public class UtilTest extends Tester {
     public void sendETH() {
         Account account = new Account();
         account.init();
-        String from = HexUtils.toHexString(account.getEcKey().getAddress());
+        String from = Utils.HEX.encode(account.getEcKey().getAddress());
         System.out.println(transactionsService.sendETHCoin("554010e4567428d39c2c124507915eeda1fa91f31584bc0568ccba8f3495c9e754019c233b9d29a0e3aa1f74cbbbd98ac237af8cf39d73dbad10fe5c898c1a7358aa971672d82253", from, "0.01"));
     }
 
