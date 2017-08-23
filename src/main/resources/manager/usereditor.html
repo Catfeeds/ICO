@@ -422,6 +422,9 @@
 <!-- page script -->
 <script>
     jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
         var userId = app.getQueryString("id");
         $.ajax({
             url: "/user/"+userId,

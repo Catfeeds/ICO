@@ -262,6 +262,11 @@
 <script src="scripts/sweet-alert.js"></script>
 <script src="scripts/app.js"></script>
 <script>
+    jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
+    });
     $(function () {
         $('#editor').summernote({
             placeholder:'新闻详情',

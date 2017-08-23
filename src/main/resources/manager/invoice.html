@@ -415,69 +415,72 @@
 <script>
 
     jQuery(window).load(function () {
-        $("#addMoney").click(function () {
-            var name = $("#name").val();
-            var nameEnShort = $("#nameEnShort").val();
-            var des = $("#des").val();
-            var officialUrl = $("#officialUrl").val();
-            var twitterUrl = $("#twitterUrl").val();
-            var githubUrl = $("#githubUrl").val();
-            if (name.length <= 0) {
-                app.myAlert("代币名称", "代币名称不能为空！", "error");
-                return;
-            }
-            if (nameEnShort.length <= 0) {
-                app.myAlert("代币英文名称", "代币英文名称不能为空！", "error");
-                return;
-            }
-            if (des.length <= 0) {
-                app.myAlert("代币介绍", "代币介绍不能为空！", "error");
-                return;
-            }
-            if (officialUrl.length <= 0) {
-                app.myAlert("代币官方链接", "代币官方链接不能为空！", "error");
-                return;
-            }
-            if (twitterUrl.length <= 0) {
-                app.myAlert("Twitter链接", "Twitter链接不能为空！", "error");
-                return;
-            }
-            if (githubUrl.length <= 0) {
-                app.myAlert("Github链接", "Github链接不能为空！", "error");
-                return;
-            }
-
-            var moneyJson = {
-                name: name,
-                nameEnShort: nameEnShort,
-                officialUrl: officialUrl,
-                githubUrl: githubUrl,
-                des: des,
-                twitterUrl: twitterUrl
-            };
-            $.ajax({
-                url: "/token/money",
-                type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(moneyJson),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    if (result.code == 200) {
-                        location.href = "/manager/token.html";
-                        app.myAlert("", "信息保存成功！", "success");
-                    }
-                    else {
-                        app.myAlert("", "保存失败！", "warning");
-                        console.log("保存失败！");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert("", "修改失败,请稍候再试！", "warning");
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }else{
+            $("#addMoney").click(function () {
+                var name = $("#name").val();
+                var nameEnShort = $("#nameEnShort").val();
+                var des = $("#des").val();
+                var officialUrl = $("#officialUrl").val();
+                var twitterUrl = $("#twitterUrl").val();
+                var githubUrl = $("#githubUrl").val();
+                if (name.length <= 0) {
+                    app.myAlert("代币名称", "代币名称不能为空！", "error");
+                    return;
                 }
-            });
-        });
+                if (nameEnShort.length <= 0) {
+                    app.myAlert("代币英文名称", "代币英文名称不能为空！", "error");
+                    return;
+                }
+                if (des.length <= 0) {
+                    app.myAlert("代币介绍", "代币介绍不能为空！", "error");
+                    return;
+                }
+                if (officialUrl.length <= 0) {
+                    app.myAlert("代币官方链接", "代币官方链接不能为空！", "error");
+                    return;
+                }
+                if (twitterUrl.length <= 0) {
+                    app.myAlert("Twitter链接", "Twitter链接不能为空！", "error");
+                    return;
+                }
+                if (githubUrl.length <= 0) {
+                    app.myAlert("Github链接", "Github链接不能为空！", "error");
+                    return;
+                }
 
+                var moneyJson = {
+                    name: name,
+                    nameEnShort: nameEnShort,
+                    officialUrl: officialUrl,
+                    githubUrl: githubUrl,
+                    des: des,
+                    twitterUrl: twitterUrl
+                };
+                $.ajax({
+                    url: "/token/money",
+                    type: 'POST',
+                    timeout: 10000,//超时时间设置为10秒；
+                    data: JSON.stringify(moneyJson),
+                    dataType: 'json',//服务器返回json格式数据
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        if (result.code == 200) {
+                            location.href = "/manager/token.html";
+                            app.myAlert("", "信息保存成功！", "success");
+                        }
+                        else {
+                            app.myAlert("", "保存失败！", "warning");
+                            console.log("保存失败！");
+                        }
+                    },
+                    error: function (xhr, type, errerThrown) {
+                        app.myAlert("", "修改失败,请稍候再试！", "warning");
+                    }
+                });
+            });
+        }
     });
     function logout() {
         $("#personInfo").css('display', 'none');

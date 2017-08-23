@@ -427,7 +427,11 @@
         });
     });
     jQuery(window).load(function () {
-        pageProject(1);
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }else{
+            pageProject(1);
+        }
     });
     function pageProject(page) {
         var page = page;

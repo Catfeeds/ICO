@@ -221,11 +221,15 @@
 <script src="dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script src="scripts/app.js"></script>
 <!-- page script -->
 <script>
     jQuery(window).load(function () {
-        pageProject(1);
-
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }else{
+            pageProject(1);
+        }
     });
     function pageProject(page) {
         var page = page;

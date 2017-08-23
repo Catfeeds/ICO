@@ -106,7 +106,8 @@
                     <ul class="treeview-menu">
                         <li><a href="/manager/profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
                         <li><a href="/manager/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
-                        <li><a href="/manager/project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
+                        <li><a href="/manager/project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a>
+                        </li>
                         <li><a href="/manager/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
                     </ul>
                 </li>
@@ -420,87 +421,90 @@
 <script src="scripts/sweet-alert.js"></script>
 <script>
     jQuery(window).load(function () {
-        $("#addUser").click(function () {
-            var emailAccount = $("#emailAccount").val();
-            var nickName = $("#nickName").val();
-            var realName = $("#realName").val();
-            var phone = $("#phone").val();
-            var idCard = $("#idCard").val();
-            var des = $("#des").val();
-            var statue = $("#selected_id option:selected").val();
-            if (statue == 1) {
-                var enabled = true;
-            } else {
-                enabled = false;
-            }
-            var isEmailAccount = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
-            if (emailAccount.length <= 0) {
-                app.myAlert("邮箱账号", "邮箱账号不能为空！", "error");
-                return;
-            } else if (!isEmailAccount.test(emailAccount)) {
-                app.myAlert("邮箱账号", "邮箱账号格式不正确！", "error");
-                return;
-            }
-            if (nickName.length <= 0) {
-                app.myAlert("用户昵称", "用户昵称不能为空！", "error");
-                return;
-            }
-            if (realName.length <= 0) {
-                app.myAlert("真实姓名", "真实姓名不能为空！", "error");
-                return;
-            }
-            var isPhone = /^1[3|4|5|8][0-9]\d{4,8}$/;
-            if (phone.length <= 0) {
-                app.myAlert("手机号码", "手机号码不能为空！", "error");
-                return;
-            } else if (!isPhone.test(phone)) {
-                app.myAlert("手机号码", "手机号码格式不正确！", "error");
-                return;
-            }
-            var isIdCard = /(^\d{15}$)|(^\d{17}(\d|X)$)/;
-            if (idCard.length < 0) {
-                app.myAlert("身份证号码", "身份证号码不能为空！", "error");
-                return;
-            } else if (!isIdCard.test(idCard)) {
-                app.myAlert("身份证号码", "身份证号码格式不正确！", "error");
-                return;
-            }
-            if (des.length <= 0) {
-                app.myAlert("描述", "描述不能为空！", "error");
-                return;
-            }
-            var userJson = {
-                emailAccount: emailAccount,
-                nickName: nickName,
-                realName: realName,
-                phone: phone,
-                idCard: idCard,
-                des: des,
-                enabled: enabled
-            };
-            $.ajax({
-                url: "/user",
-                type: 'PUT',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(userJson),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    if (result.code == 200) {
-                        app.myAlert("", "增加用户成功！", "success");
-                        location.href = "/manager/index.html";
-                    }
-                    else {
-                        app.myAlert("", "新增失败，用户信息已存在！", "warning");
-                        console.log("新增失败，用户信息已存在！");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert("", "网络异常,请稍候再试!", "error");
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        } else {
+            $("#addUser").click(function () {
+                var emailAccount = $("#emailAccount").val();
+                var nickName = $("#nickName").val();
+                var realName = $("#realName").val();
+                var phone = $("#phone").val();
+                var idCard = $("#idCard").val();
+                var des = $("#des").val();
+                var statue = $("#selected_id option:selected").val();
+                if (statue == 1) {
+                    var enabled = true;
+                } else {
+                    enabled = false;
                 }
+                var isEmailAccount = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+                if (emailAccount.length <= 0) {
+                    app.myAlert("邮箱账号", "邮箱账号不能为空！", "error");
+                    return;
+                } else if (!isEmailAccount.test(emailAccount)) {
+                    app.myAlert("邮箱账号", "邮箱账号格式不正确！", "error");
+                    return;
+                }
+                if (nickName.length <= 0) {
+                    app.myAlert("用户昵称", "用户昵称不能为空！", "error");
+                    return;
+                }
+                if (realName.length <= 0) {
+                    app.myAlert("真实姓名", "真实姓名不能为空！", "error");
+                    return;
+                }
+                var isPhone = /^1[3|4|5|8][0-9]\d{4,8}$/;
+                if (phone.length <= 0) {
+                    app.myAlert("手机号码", "手机号码不能为空！", "error");
+                    return;
+                } else if (!isPhone.test(phone)) {
+                    app.myAlert("手机号码", "手机号码格式不正确！", "error");
+                    return;
+                }
+                var isIdCard = /(^\d{15}$)|(^\d{17}(\d|X)$)/;
+                if (idCard.length < 0) {
+                    app.myAlert("身份证号码", "身份证号码不能为空！", "error");
+                    return;
+                } else if (!isIdCard.test(idCard)) {
+                    app.myAlert("身份证号码", "身份证号码格式不正确！", "error");
+                    return;
+                }
+                if (des.length <= 0) {
+                    app.myAlert("描述", "描述不能为空！", "error");
+                    return;
+                }
+                var userJson = {
+                    emailAccount: emailAccount,
+                    nickName: nickName,
+                    realName: realName,
+                    phone: phone,
+                    idCard: idCard,
+                    des: des,
+                    enabled: enabled
+                };
+                $.ajax({
+                    url: "/user",
+                    type: 'PUT',
+                    timeout: 10000,//超时时间设置为10秒；
+                    data: JSON.stringify(userJson),
+                    dataType: 'json',//服务器返回json格式数据
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        if (result.code == 200) {
+                            app.myAlert("", "增加用户成功！", "success");
+                            location.href = "/manager/index.html";
+                        }
+                        else {
+                            app.myAlert("", "新增失败，用户信息已存在！", "warning");
+                            console.log("新增失败，用户信息已存在！");
+                        }
+                    },
+                    error: function (xhr, type, errerThrown) {
+                        app.myAlert("", "网络异常,请稍候再试!", "error");
+                    }
+                });
             });
-        });
-
+        }
 
     });
     function logout() {

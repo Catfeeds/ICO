@@ -276,9 +276,14 @@
 <script src="dist/js/demo.js"></script>
 <!-- summernote editor -->
 <script src="plugins/summernote/summernote.js"></script>
+<script src="scripts/app.js"></script>
 <script src="plugins/summernote/lang/summernote-zh-CN.js"></script>
 <script>
-
+    jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
+    });
     function saveProject() {
         var enName =   $("#name").val();
         var cnName =   $("#nameCn").val();
@@ -375,11 +380,14 @@
         }
 
     });
-    window.onload = function () {
+/*    window.onload = function () {
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
         $("#one").on("click", function () {
             window.location.hash = "404.html";
         });
-    }
+    }*/
     function logout() {
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});

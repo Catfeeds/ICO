@@ -290,8 +290,13 @@
 <script src="dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-
+<script src="scripts/app.js"></script>
 <script>
+    jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
+    });
     var width,height;
     function handleConFiles(files){
         if((navigator.userAgent.indexOf("MSIE 8.0")>0 )||(navigator.userAgent.indexOf("MSIE 9.0")>0)){

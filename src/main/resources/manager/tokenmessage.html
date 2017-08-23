@@ -419,6 +419,9 @@
 <script>
 
     jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
         var moneyId = app.getQueryString("id")
         $.ajax({
             url: "/token/money/"+moneyId,

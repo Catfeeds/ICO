@@ -444,6 +444,9 @@
 
     });
     jQuery(window).load(function () {
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
         $(".nav-tabs a[data-toggle=tab]").on("click", function(e) {
             if ($(this).hasClass("disabled")) {
                 e.preventDefault();
