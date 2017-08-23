@@ -284,7 +284,7 @@ public class ProjectController {
         return Result.successResult(data);
     }
     /***
-     * 根据ETC钱包地址获取交易记录
+     * 根据ETH钱包地址获取交易记录
      * @return
      */
     @GetMapping("/getETHAddressTransaction")

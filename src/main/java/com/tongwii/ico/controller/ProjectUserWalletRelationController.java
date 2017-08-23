@@ -1,13 +1,17 @@
 package com.tongwii.ico.controller;
 
 import com.alibaba.druid.support.logging.Log;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.ProjectUserWalletRelation;
 import com.tongwii.ico.service.ProjectUserWalletRelationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tongwii.ico.service.TransactionsService;
 import com.tongwii.ico.util.ContextUtils;
 import com.tongwii.ico.util.TokenMoneyEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +26,8 @@ import java.util.List;
 public class ProjectUserWalletRelationController {
     @Resource
     private ProjectUserWalletRelationService projectUserWalletRelationService;
+    @Autowired
+    private TransactionsService transactionsService;
 
     @PostMapping
     public Result add(@RequestBody ProjectUserWalletRelation projectUserWalletRelation) {
@@ -59,6 +65,7 @@ public class ProjectUserWalletRelationController {
         Integer userId = ContextUtils.getUserId();
         // 根据用户Id查询用户项目钱包的交易信息
         List<ProjectUserWalletRelation> projectUserWalletRelationList = projectUserWalletRelationService.findUserTransactionList(userId);
+        JSONArray BTCTransactionDetails = new JSONArray();
         if(!CollectionUtils.isEmpty(projectUserWalletRelationList)){
            for(int i=0; i<projectUserWalletRelationList.size(); i++){
                 try{
@@ -66,7 +73,8 @@ public class ProjectUserWalletRelationController {
                    //TODO 此处需要根据交易编号查询交易记录的详细信息
                     if(projectUserWalletRelationList.get(i).getWalletType().equals(TokenMoneyEnum.BTC.name())){
                         //TODO 这里获取比特币交易信息详情
-
+                        JSONObject jsonObject = transactionsService.getBitCoinTransactionDetail(transactionNumber);
+                        BTCTransactionDetails.add(jsonObject);
                     }
                     if(projectUserWalletRelationList.get(i).getWalletType().equals(TokenMoneyEnum.ETH.name())){
                         //TODO 这里获取以太坊交易详情
@@ -76,7 +84,7 @@ public class ProjectUserWalletRelationController {
                     System.out.println("交易单号不存在或非法!");
                 }
             }
-            return Result.successResult(projectUserWalletRelationList);
+            return Result.successResult(projectUserWalletRelationList).add("BTCTransactionDetails",BTCTransactionDetails);
         }else{
             return Result.successResult("此用户无项目投资记录!");
         }

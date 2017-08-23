@@ -94,6 +94,7 @@ public class MessageController {
     public Result insertMessage(@RequestBody Message message) {
         User user = ContextUtils.getUser();
         message.setState(1);
+        message.setCreateUserId(user.getId());
         message.setCreateUser(user);
         messageService.save(message);
         return Result.successResult("消息添加成功!");
