@@ -1,10 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/16 10:50:59                           */
+/* Created on:     2017/8/22 13:07:23                           */
 /*==============================================================*/
 
-
-drop table if exists role;
 
 drop table if exists file;
 
@@ -20,6 +18,8 @@ drop table if exists project_user_wallet_relation;
 
 drop table if exists project_wallet;
 
+drop table if exists role;
+
 drop table if exists token_detail;
 
 drop table if exists token_money;
@@ -29,20 +29,6 @@ drop table if exists user;
 drop table if exists user_role_relation;
 
 drop table if exists user_wallet;
-
-/*==============================================================*/
-/* Table: Role                                                  */
-/*==============================================================*/
-create table role
-(
-  id                   int(11) unsigned not null auto_increment,
-  role_name            varchar(32),
-  role_name_code       varchar(32),
-  description          varchar(32),
-  primary key (id)
-);
-
-alter table role comment '角色';
 
 /*==============================================================*/
 /* Table: file                                                  */
@@ -137,7 +123,6 @@ create table project_user_wallet_relation
   id                   int(11) unsigned not null auto_increment,
   user_wallet          int(11) unsigned,
   project_wallet       int(11) unsigned,
-  transaction_number   varchar(255) DEFAULT NULL COMMENT '交易编号',
   primary key (id)
 );
 
@@ -160,6 +145,20 @@ create table project_wallet
 alter table project_wallet comment '项目钱包';
 
 /*==============================================================*/
+/* Table: role                                                  */
+/*==============================================================*/
+create table role
+(
+  id                   int(11) unsigned not null auto_increment,
+  role_name            varchar(32),
+  role_name_code       varchar(32),
+  description          varchar(32),
+  primary key (id)
+);
+
+alter table role comment '角色';
+
+/*==============================================================*/
 /* Table: token_detail                                          */
 /*==============================================================*/
 create table token_detail
@@ -173,7 +172,6 @@ create table token_detail
   token_money_whitePaper_cn_url varchar(255),
   token_money_whitePaper_en_url varchar(255),
   input_token_money_project_id int(11) unsigned,
-  type tinyint(2) DEFAULT '1' COMMENT '代币详情类型（目标代币详情，发行代币详情）',
   primary key (id)
 );
 
@@ -265,7 +263,7 @@ references user (id) on delete restrict on update restrict;
 alter table project add constraint fk_project_2_user_create_user_id foreign key (create_user_id)
 references user (id) on delete restrict on update restrict;
 
-alter table project add constraint fk_project_2_token_money_detail_intput_token_money_detail_id foreign key (output_token_money_datail_id)
+alter table project add constraint fk_project_2_token_money_detail_intput_token_money_detail_id foreign key (output_token_money_detail_id)
 references token_detail (id) on delete restrict on update restrict;
 
 alter table project_user_relation add constraint fk_user_project_2_user_user_id foreign key (project_id)

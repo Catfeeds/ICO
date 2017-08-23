@@ -4,20 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
-import com.tongwii.ico.exception.ServiceException;
 import com.tongwii.ico.service.TransactionsService;
-import com.tongwii.ico.util.DesEncoder;
 import com.tongwii.ico.util.EthConverter;
 import com.tongwii.ico.util.RestTemplateUtil;
-import org.bitcoinj.core.*;
-import org.ethereum.facade.Ethereum;
-import org.ethereum.facade.EthereumFactory;
-import org.ethereum.jsonrpc.TypeConverter;
-import org.ethereum.util.ByteUtil;
+import org.bitcoinj.core.Coin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +41,9 @@ public class TransactionServiceImpl implements TransactionsService {
 
     @Autowired
     private BitCoinService bitCoinService;
+
+    @Autowired
+    private EthService ethService;
 
     @Override
     public String getBitCoinAddressBalance(String address) {
@@ -95,10 +91,10 @@ public class TransactionServiceImpl implements TransactionsService {
     }
 
     @Override
-    public JSONObject getBitCoinTransaction(String address) {
+    public JSONObject getBitCoinTransactionDetail(String transactionHash) {
         Map<String, String> params = Maps.newHashMap();
-        params.put("address", address);
-        String response = RestTemplateUtil.restTemplate(BITCOIN_HOST+"/tx/{address}", null, String.class, params, HttpMethod.GET);
+        params.put("tx_hash", transactionHash);
+        String response = RestTemplateUtil.restTemplate(BITCOIN_HOST+"/tx/{tx_hash}", null, String.class, params, HttpMethod.GET);
         JSONObject result = JSON.parseObject(response);
         if(result.getIntValue("err_no") == 0) {
             return result.getJSONObject("data");
@@ -121,87 +117,12 @@ public class TransactionServiceImpl implements TransactionsService {
     @Override
     public String sendBitCoin(String fromAddress, String recipient, String amountToSend) {
         return bitCoinService.sendTransaction(fromAddress, recipient, amountToSend);
-       /* BriefLogFormatter.init();
-
-        final NetworkParameters netParams;
-        final WalletAppKit kit;
-        if(env.equals(CurrentConfigEnum.dev.toString())) {
-            netParams = TestNet3Params.get();
-            kit = new WalletAppKit(netParams, new File(walletPath), "ICO_TT_Test");
-        } else {
-            netParams = MainNetParams.get();
-            kit = new WalletAppKit(netParams, new File(walletPath), "ICO_TT");
-        }
-
-
-        // Download the block chain and wait until it's done.
-        kit.startAsync();
-        kit.awaitRunning();
-
-        DesEncoder desEncoder = new DesEncoder();
-
-        kit.wallet().importKey(ECKey.fromPrivate(HexUtils.fromHexString(desEncoder.decrypt(fromAddress))));
-
-        System.out.println(kit.wallet().getWatchingKey().serializePubB58(netParams));
-
-        kit.wallet().allowSpendingUnconfirmedTransactions();
-
-        Coin value = Coin.parseCoin(amountToSend);
-
-        Address to = Address.fromBase58(netParams, recipient);
-
-        try {
-            Wallet.SendResult result = kit.wallet().sendCoins(kit.peerGroup(), to, value);
-            checkNotNull(result);  // We should never try to send more coins than we have!
-            System.out.println("coins sent. transaction hash: " + result.tx.getHashAsString());
-            // you can use a block explorer like https://www.biteasy.com/ to inspect the transaction with the printed transaction hash.
-            result.broadcastComplete.addListener(() -> {
-                // The wallet has changed now, it'll get auto saved shortly or when the app shuts down.
-                System.out.println("Sent coins onwards! Transaction hash is " + result.tx.getHashAsString());
-            }, MoreExecutors.directExecutor());
-
-            return result.tx.getHashAsString();
-        } catch (InsufficientMoneyException e) {
-            System.out.println("Not enough coins in your wallet. Missing " + e.missing.getValue() + " satoshis are missing (including fees)");
-            System.out.println("Send money to: " + kit.wallet().currentReceiveAddress().toString());
-            throw new ServiceException("钱包地址余额不足，缺少" + e.missing.getValue() + "satoshis 比特币（包含fees）");
-        }
-        */
     }
 
 
     @Override
     public String sendETHCoin(String fromPrivateEncoderAddress, String toAddress, String amount) {
-        try {
-            //Sync BlockChain
-            Ethereum ethereum = EthereumFactory.createEthereum() ;
-
-            DesEncoder desEncoder = new DesEncoder();
-            //Init Sender and Receipt Address
-            org.ethereum.crypto.ECKey sender =  org.ethereum.crypto.ECKey.fromPrivate(Hex.decode(desEncoder.decrypt(fromPrivateEncoderAddress))) ;
-            //Create tx to send ether
-            org.ethereum.core.Transaction tx = new org.ethereum.core.Transaction(
-                    ByteUtil.bigIntegerToBytes(ethereum.getRepository().getNonce(sender.getPubKey())),
-                    ByteUtil.longToBytesNoLeadZeroes(ethereum.getGasPrice()),
-                    ByteUtil.longToBytesNoLeadZeroes(200000),
-                    TypeConverter.StringHexToByteArray(toAddress),
-                    ByteUtil.bigIntegerToBytes(EthConverter.toWei(amount, EthConverter.Unit.ETHER).toBigInteger()),
-                    new byte[0],
-                    ethereum.getChainIdForNextBlock()) ;
-
-            //Sign it
-            tx.sign(sender);
-
-            // Validate it
-            tx.verify();
-
-            //Submit it
-            ethereum.submitTransaction(tx);
-
-            return TypeConverter.toJsonHex(tx.getHash());
-        } catch (Exception e) {
-            throw new ServiceException(e.getMessage());
-        }
+        return ethService.sendTransaction(fromPrivateEncoderAddress, toAddress, amount);
     }
 
 }

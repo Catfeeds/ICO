@@ -1,5 +1,7 @@
 package com.tongwii.ico.service.impl;
 
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.tongwii.ico.exception.ServiceException;
 import com.tongwii.ico.util.CurrentConfigEnum;
@@ -12,21 +14,19 @@ import org.bitcoinj.core.listeners.DownloadProgressTracker;
 import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
-import org.bitcoinj.wallet.DeterministicSeed;
-import org.bitcoinj.wallet.SendRequest;
-import org.bitcoinj.wallet.UnreadableWalletException;
-import org.bitcoinj.wallet.Wallet;
+import org.bitcoinj.wallet.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 比特币业务类
@@ -64,13 +64,30 @@ public class BitCoinService {
     }
 
 
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelay = 60000)
     public void run() {
         if (!isReady()) {
             return;
         }
 
-        logger.info("钱包当前接受地址: " + walletAppKit.wallet().currentReceiveAddress());
+        logger.info("比特币钱包当前接受地址: " + walletAppKit.wallet().currentReceiveAddress());
+        logger.info("比特币钱包当前查看地址: " + walletAppKit.wallet().getWatchedAddresses());
+        List<Address> watchedAddress = walletAppKit.wallet().getWatchedAddresses();
+        logger.info("比特币查看的地址列表---------------------------------");
+        for (Address address: watchedAddress) {
+            logger.info(address.toBase58());
+        }
+        logger.info("比特币导入的地址列表---------------------------------");
+        List<ECKey> importKeys = walletAppKit.wallet().getImportedKeys();
+        for (ECKey key : importKeys) {
+            logger.info(key.toAddress(netParams).toBase58());
+            walletAppKit.wallet().removeKey(key);
+        }
+        logger.info("比特币接受的地址列表---------------------------------");
+        List<Address> reveiveAddress = walletAppKit.wallet().getIssuedReceiveAddresses();
+        for (Address address : reveiveAddress) {
+            logger.info(address.toBase58());
+        }
     }
 
     /**
@@ -108,14 +125,18 @@ public class BitCoinService {
         walletAppKit.setDownloadListener(new DownloadProgressTracker() {
             @Override
             protected void progress(double pct, int blocksSoFar, Date date) {
-                logger.info("当前更新进度 : " + pct / 100.0);
+                logger.info(String.format(Locale.US, "区块下载进度 %d%% 剩余 %d 区块, 区块日期 %s", (int) pct, blocksSoFar,
+                        Utils.dateTimeFormat(date)));
             }
         }).setBlockingStartup(false);
 
         // 同步区块链
         start();
 
-        /*walletAppKit.wallet().addCoinsReceivedEventListener((w, tx, prevBalance, newBalance) -> {
+        // 等待同步完
+        waitUntilReady();
+
+        walletAppKit.wallet().addCoinsReceivedEventListener((w, tx, prevBalance, newBalance) -> {
             Coin value = tx.getValueSentToMe(w);
             System.out.println("接收到交易金额为" + value.toFriendlyString() + "的交易：" + tx);
             Futures.addCallback(tx.getConfidence().getDepthFuture(1), new FutureCallback<TransactionConfidence>() {
@@ -135,7 +156,7 @@ public class BitCoinService {
                     throw new RuntimeException(t);
                 }
             });
-        });*/
+        });
     }
 
     @PreDestroy
@@ -162,10 +183,8 @@ public class BitCoinService {
 
             DesEncoder desEncoder = new DesEncoder();
             ECKey nowKey = ECKey.fromPrivate(Utils.HEX.decode(desEncoder.decrypt(fromAddress)));
+
             walletAppKit.wallet().importKey(nowKey);
-
-            walletAppKit.wallet().addWatchedAddress(nowKey.toAddress(netParams));
-
             logger.info("钱包当前接受地址: " + walletAppKit.wallet().currentReceiveAddress());
 
             if (coin.equals(walletAppKit.wallet().getBalance()))
@@ -174,61 +193,50 @@ public class BitCoinService {
                 req = SendRequest.to(destination, coin);
             Wallet.SendResult sendResult = walletAppKit.wallet().sendCoins(req);
             // you can use a block explorer like https://www.biteasy.com/ to inspect the transaction with the printed transaction hash.
-            sendResult.broadcastComplete.addListener(() -> {
-                // TODO 交易成功操作
-                logger.info("交易成功，交易单号:" + sendResult.tx.toString() + " " +sendResult.tx.getHashAsString() );
-                // 移除当前交易的地址
-                walletAppKit.wallet().removeKey(nowKey);
-            }, MoreExecutors.directExecutor());
+            Futures.addCallback(sendResult.broadcastComplete, new FutureCallback<Transaction>() {
+                @Override
+                public void onSuccess(@Nullable Transaction result) {
+                    // TODO 交易成功操作
+                    logger.info("交易成功，交易单号Hash256:{}", result.getHashAsString());
+                    // 移除当前交易的地址
+                    walletAppKit.wallet().removeKey(nowKey);
+                }
 
-            return sendResult.tx.getHashAsString();
+                @Override
+                public void onFailure(Throwable t) {
+                    // TODO 交易失败操作
+                    logger.error("交易失败, 失败原因:" + t.getMessage());
+                    // 移除当前交易的地址
+                    walletAppKit.wallet().removeKey(nowKey);
+                }
+            });
+            sendResult.tx.getConfidence().addEventListener((tx, reason) -> {
+                if (reason == TransactionConfidence.Listener.ChangeReason.SEEN_PEERS) {
+                    int peers = sendResult.tx.getConfidence().numBroadcastPeers();
+                    logger.info(String.format("广播交易结果中 ... 已经被 %d 个矿工确认", peers));
+                }
+            });
+
+            return sendResult.broadcastComplete.get().getHashAsString();
         } catch (InsufficientMoneyException e) {
             throw new ServiceException("钱包地址余额不足，缺少" + e.missing.getValue() + "satoshis 比特币（包含fees）");
         } catch (ECKey.KeyIsEncryptedException e) {
             throw new ServiceException("钱包地址缺少密码");
+        } catch (InterruptedException e) {
+            throw new ServiceException("交易失败");
+        } catch (ExecutionException e) {
+            throw new ServiceException("交易失败");
         }
-
-       /* final String message = "来自ICO.TT";
-        final Wallet wallet = walletAppKit.wallet();
-        byte[] hash = SHA_256.digest(message.getBytes());
-        String prefix = "RSM";
-        byte[] prefixBytes = prefix.getBytes(StandardCharsets.US_ASCII);
-        if (MAX_PREFIX_LENGTH < prefix.length()) {
-            throw new IllegalArgumentException("OP_RETURN prefix is too long: " + prefix);
-        }
-
-        byte[] opReturnValue = new byte[80];
-        Arrays.fill(opReturnValue, NULL_BYTE);
-        System.arraycopy(prefixBytes, 0, opReturnValue, 0, prefixBytes.length);
-        System.arraycopy(hash, 0, opReturnValue, MAX_PREFIX_LENGTH, SHA256_LENGTH);
-
-        Transaction transaction = new Transaction(wallet.getParams());
-        transaction.addOutput(Coin.ZERO, ScriptBuilder.createOpReturnScript(hash));
-
-        SendRequest sendRequest = SendRequest.forTx(transaction);
-
-        try {
-            wallet.completeTx(sendRequest);
-        } catch (InsufficientMoneyException e) {
-            throw new Exception("No balance on bitcoin wallet.");
-        }
-
-        // Broadcast and commit transaction
-        walletAppKit.peerGroup().broadcastTransaction(transaction);
-        wallet.commitTx(transaction);
-
-        // Return a reference to the caller
-        return transaction.getHashAsString();*/
     }
 
 
     public String getBalance(String addr) {
-        // 等待同步完
-        waitUntilReady();
         Address address = Address.fromBase58(netParams, addr);
         walletAppKit.wallet().addWatchedAddress(address, 0);
         logger.info("钱包当前查看地址"+walletAppKit.wallet().getWatchedAddresses());
         Coin balance = walletAppKit.wallet().getBalance();
+        walletAppKit.wallet().removeWatchedAddress(address);
+        logger.info("{}地址是否被监控： {}", address, walletAppKit.wallet().isAddressWatched(address));
         return balance.toFriendlyString();
     }
 

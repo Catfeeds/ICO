@@ -89,59 +89,6 @@ public class UtilTest extends Tester {
         String addr = "mxVGGj8S4ddYdP1ix6XbYYdVz9Li5oif44";
 
         System.out.println(bitCoinjService.getBalance(addr));
-
-       /* final NetworkParameters netParams;
-        if(env.equals(CurrentConfigEnum.dev.toString())) {
-            netParams = TestNet3Params.get();
-        } else {
-            netParams = MainNetParams.get();
-        }
-
-        Address address = Address.fromBase58(netParams, addr);
-        Wallet wallet = new Wallet(netParams);
-        wallet.addWatchedAddress(address, 0);
-        System.out.println("wallet.getWatchedAddresses()"+wallet.getWatchedAddresses());
-        BlockChain chain;
-        try {
-            chain = new BlockChain(netParams, wallet,
-                    new MemoryBlockStore(netParams));
-
-            PeerGroup peerGroup = new PeerGroup(netParams, chain);
-            peerGroup.addPeerDiscovery(new DnsDiscovery(netParams));
-            peerGroup.addWallet(wallet);
-            peerGroup.start();
-            peerGroup.downloadBlockChain();
-            Coin balance = wallet.getBalance();
-            System.out.println("Wallet balance: " + balance.toFriendlyString());
-        } catch (BlockStoreException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }*/
-
-        /*
-        String addr = "mxVGGj8S4ddYdP1ix6XbYYdVz9Li5oif44";
-
-        final NetworkParameters netParams;
-        final WalletAppKit kit;
-        if(env.equals(CurrentConfigEnum.dev.toString())) {
-            netParams = TestNet3Params.get();
-            kit =  new WalletAppKit(netParams, new File(walletPath), "ICO_TT_Test");
-        } else {
-            netParams = MainNetParams.get();
-            kit =  new WalletAppKit(netParams, new File(walletPath), "ICO_TT");
-        }
-
-
-        // Download the block chain and wait until it's done.
-        kit.startAsync();
-        kit.awaitRunning();
-
-        Address address = Address.fromBase58(netParams, addr);
-        // If no creation time is specified, assume genesis (zero).
-        kit.wallet().addWatchedAddress(address);
-
-        System.out.println(kit.wallet().getBalance();
-        System.out.println(transactionsService.getBitCoinAddressBalance(addr));*/
     }
 
 
