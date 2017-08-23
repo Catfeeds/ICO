@@ -56,8 +56,7 @@ public class ProjectUserWalletRelationController {
     }
     @GetMapping("/getUserTransaction")
     public Result getUserTransaction(){
-//        Integer userId = ContextUtils.getUserId();
-        Integer userId = 3;
+        Integer userId = ContextUtils.getUserId();
         // 根据用户Id查询用户项目钱包的交易信息
         List<ProjectUserWalletRelation> projectUserWalletRelationList = projectUserWalletRelationService.findUserTransactionList(userId);
         if(!CollectionUtils.isEmpty(projectUserWalletRelationList)){
@@ -74,12 +73,12 @@ public class ProjectUserWalletRelationController {
 
                     }
                 }catch (Exception e){
-                    System.out.print("交易单号不存在或非法!");
+                    System.out.println("交易单号不存在或非法!");
                 }
             }
             return Result.successResult(projectUserWalletRelationList);
         }else{
-            return Result.failResult("投资记录获取失败!");
+            return Result.successResult("此用户无项目投资记录!");
         }
 
     }

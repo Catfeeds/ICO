@@ -46,6 +46,11 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        input .text{
+            colo;
+        }
+    </style>
 </head>
 <style>
     th{
@@ -204,10 +209,10 @@
                             </div>
                         </div>
                         <div id="officalInfo" style="display:none">
-                            <h2><strong>提现地址管理</strong></h2>
+                            <h2><strong>数字代币提现</strong></h2>
                             <div class="row">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">数字代币提现地址列表</h2>
+                                    <h2 class="panel-title">新建提现地址</h2>
                                 </header>
                                 <div class="panel-body">
                                     <div class="form-group">
@@ -279,7 +284,7 @@
 
                             <div class="row">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">新建提现地址记录</h2>
+                                    <h2 class="panel-title">数字代币提现地址列表</h2>
                                 </header>
                                 <table class="table table-striped" >
                                     <thead>
@@ -407,7 +412,7 @@
                         );
                     });
                 }else{
-                    app.myAlertWithoutFunction("",result.message, "warning");
+                    app.myAlert("",result.message, "warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
@@ -445,7 +450,7 @@
         if(app.getUserInfo().phone){
             app.sendSMS(app.getUserInfo().phone);
         }else{
-            app.myAlertWithoutFunction("","您未绑定或验证手机!","warning");
+            app.myAlert("","您未绑定或验证手机!","warning");
             return;
         }
     });
@@ -474,7 +479,7 @@
                     app.myAlert("",result.message,"success");
                 }
                 else {
-                    app.myAlertWithoutFunction("",result.message,"warning");
+                    app.myAlert("",result.message,"warning");
                     return;
                 }
             },

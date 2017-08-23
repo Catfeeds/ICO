@@ -101,7 +101,6 @@ public class TokenMoneyController {
                 userWallet.setType(UserWallet.WalletType.OUT_PUT.getValue());
                 userWalletService.save(userWallet);
                 Integer userWalletId = userWallet.getId();
-                // TODO 此处估计要对用户与项目钱包各自进行增值与减值操作
                 // 给user_project_wallet表中添加数据
                 ProjectUserWalletRelation projectUserWalletRelation = new ProjectUserWalletRelation();
                 projectUserWalletRelation.setProjectWallet(projectWalletId);

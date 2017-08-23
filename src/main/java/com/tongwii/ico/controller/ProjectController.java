@@ -55,7 +55,7 @@ public class ProjectController {
     private final static Integer WILLICO = 1;
     private final static Integer FINISHICO = 2;
     private final static Integer INPUTCION = 1;
-
+    private final static Integer ADMIN = 1;
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Result add(@RequestBody Project project) {
@@ -318,13 +318,19 @@ public class ProjectController {
            }catch (Exception e){
                projectList.get(i).setPictureUrl("");
            }
+
            // 根据项目ID查询项目钱包
            List<ProjectWallet> projectWallets = projectWalletService.findWalletByProjectId(projectId);
            projectList.get(i).setProjectWallets(projectWallets);
 
            // 根据createUserId查询用户信息
-           User createUser = userService.findById( projectList.get(i).getCreateUserId());
-           projectList.get(i).setCreateUser(createUser);
+           try{
+               User createUser = userService.findById( projectList.get(i).getCreateUserId());
+               projectList.get(i).setCreateUser(createUser);
+           }catch (Exception e){
+               projectList.get(i).setCreateUser(userService.findById(ADMIN));
+           }
+
 
            // 根据项目ID查寻目标代币信息
            List<TokenDetail> tokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, INPUTCION);
@@ -335,15 +341,18 @@ public class ProjectController {
                    tokenDetails.get(j).setTokenMoney(inputMoney);
                    }
                projectList.get(i).setInputTokenDetails(tokenDetails);
-               }
+           }
            // 根据发行代币ID查寻发行代币信息
-           TokenDetail outPutTokenDetail = tokenDetailService.findById(projectList.get(i).getOutputTokenMoneyDetailId());
-           TokenMoney outputMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
-           outPutTokenDetail.setTokenMoney(outputMoney);
-           projectList.get(i).setOutPutTokenDetail(outPutTokenDetail);
+           try{
+               TokenDetail outPutTokenDetail = tokenDetailService.findById(projectList.get(i).getOutputTokenMoneyDetailId());
+               TokenMoney outputMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
+               outPutTokenDetail.setTokenMoney(outputMoney);
+               projectList.get(i).setOutPutTokenDetail(outPutTokenDetail);
+           }catch (Exception e){
+               projectList.get(i).setOutPutTokenDetail(null);
+           }
        }
        PageInfo pageInfo = new PageInfo(projectList);
-
        return Result.successResult(pageInfo);
     }
 
