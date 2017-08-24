@@ -49,8 +49,8 @@
     <![endif]-->
 </head>
 <style>
-    th{
-        text-align:center;
+    th {
+        text-align: center;
     }
 </style>
 <body>
@@ -88,7 +88,8 @@
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
                                     <ul class="dropdown">
-                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a></li>
+                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a>
+                                        </li>
                                     </ul>
                                     <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
@@ -171,28 +172,18 @@
 
                     <div class="col-md-9">
                         <div class="col-md-12" id="warningInfo" style="display: block">
-                            <div class="featured-box featured-box-primary featured-box-text-left">
-                                <div class="box-content">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h2>提示信息 </h2>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <p>
-                                                    <strong>为了保障您的权益，请先填写您的真实姓名和身份证信息，为了确保您最终可以获得您的投资收益，请务必填写真实信息</strong>
-                                                </p>
-
-                                            </div>
-                                            <div class="col-md-12 row">
-                                                <input class="cs-bgcolor btn" type="button" value="返回"
-                                                       style="color: #ffffff; font-weight: bold;"
-                                                       onclick="javascript:window.location.href='contect.html';"/>
-                                            </div>
-                                        </div>
+                                <div class="row" style="text-align: center;margin-top: 10%;">
+                                    <div class="col-md-12">
+                                        <p>
+                                            <strong>为了保障您的权益，请先填写您的真实姓名和身份证信息，为了确保您最终可以获得您的投资收益，请务必填写真实信息</strong>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-12 row">
+                                        <input class="cs-bgcolor btn" type="button" value="返回"
+                                               style="color: #ffffff; font-weight: bold;"
+                                               onclick="javascript:window.location.href='contect.html';"/>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                         <div id="officalInfo" style="display: none">
                             <h2><strong>提现地址管理</strong></h2>
@@ -258,8 +249,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="取消" id="cancle"/>
-                                                        <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="递交信息" id="commitInfo"/>
+                                                        <input type="button" class="cs-bgcolor btn"
+                                                               style="color: #ffffff; font-weight: bold;" value="取消"
+                                                               id="cancle"/>
+                                                        <input type="button" class="cs-bgcolor btn"
+                                                               style="color: #ffffff; font-weight: bold;" value="递交信息"
+                                                               id="commitInfo"/>
                                                     </div>
                                                 </form>
                                             </div>
@@ -386,11 +381,11 @@
                         );
                     });
                 } else {
-                    app.myAlertWithoutFunction("",result.message,"warning");
+                    app.myAlertWithoutFunction("", result.message, "warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试","error");
+                app.myAlert("", "网络异常,请稍候再试", "error");
             }
         });
 
@@ -404,8 +399,8 @@
                 if (result.code == 200) {
                     $.each(result.data.paymentWallet, function (i, item) {
                         $("#addressList").append(
-                                "<tr><th>" + item.addressDesc+"</th><th>"+item.addressType+"</th><th>"+item.addressUrl+"</th><th>" +
-                                "<a onclick='dodel("+item.addressid+")' class='glyphicon glyphicon-trash' style='color: #fe6500'></a></th></tr>"
+                                "<tr><th>" + item.addressDesc + "</th><th>" + item.addressType + "</th><th>" + item.addressUrl + "</th><th>" +
+                                "<a onclick='dodel(" + item.addressid + ")' class='glyphicon glyphicon-trash' style='color: #fe6500'></a></th></tr>"
                         );
                     });
                 } else {
@@ -415,7 +410,7 @@
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试","error");
+                app.myAlert("", "网络异常,请稍候再试", "error");
             }
         });
 
@@ -423,10 +418,10 @@
 
     // 发送验证码button绑定事件
     $("#sendsms").click(function () {
-        if(app.getUserInfo().phone){
+        if (app.getUserInfo().phone) {
             app.sendSMS(app.getUserInfo().phone);
-        }else{
-            app.myAlertWithoutFunction("","您未绑定或验证手机!","warning");
+        } else {
+            app.myAlertWithoutFunction("", "您未绑定或验证手机!", "warning");
             return;
         }
     });
@@ -438,11 +433,11 @@
         var address = $("#a_address").val();
         var verifyCode = $("#verifycode").val();
         var moneyType = $('option').attr("value");
-        if(verifyCode != app.getUserInfo().verifyCode){
-            app.myAlertWithoutFunction("","验证码错误!","error");
+        if (verifyCode != app.getUserInfo().verifyCode) {
+            app.myAlertWithoutFunction("", "验证码错误!", "error");
             return;
         }
-        var walletJson = {des:addressDes,tokenMoneyUrl:address,tokenMoneyId:moneyType};
+        var walletJson = {des: addressDes, tokenMoneyUrl: address, tokenMoneyId: moneyType};
         $.ajax({
             url: "/user/wallet/addUserWallet",
             type: 'POST',
@@ -453,27 +448,27 @@
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
-                    app.myAlert("",result.message,"success");
+                    app.myAlert("", result.message, "success");
                 }
                 else {
-                    app.myAlertWithoutFunction("",result.message,"warning");
+                    app.myAlertWithoutFunction("", result.message, "warning");
                     return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试!","error");
+                app.myAlert("", "网络异常,请稍候再试!", "error");
                 return;
             }
         });
     });
     // 取消button绑定事件
-    $("#cancle").click(function(){
+    $("#cancle").click(function () {
         window.location.reload();
     });
 
     function dodel(id) {
         // 更改用户钱包状态
-        var updateWallet={id:id,state:-1}
+        var updateWallet = {id: id, state: -1}
         $.ajax({
             url: "/user/wallet",
             type: 'PUT',
