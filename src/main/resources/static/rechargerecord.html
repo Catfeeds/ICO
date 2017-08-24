@@ -171,11 +171,17 @@
                         </aside>
                     </div>
                     <div class="col-md-9">
-                        <h2><strong>投资记录</strong></h2>
-                        <div class="row" id="untransactionInfo" style="display: none; text-align: center">
-                            <h2 class="panel-title">无投资信息!</h2>
+                        <div class="col-md-12" id="untransactionInfo" style="display: block">
+                            <div class="row" style="text-align: center;margin-top: 10%;">
+                                <div class="col-md-12">
+                                    <p>
+                                        <strong>无投资信息!</strong>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div class="row" id="transactionInfo">
+                            <h2><strong>投资记录</strong></h2>
                             <!--<div class="col-md-6 col-xs-11" id="noIcotext" style="display: none">请您先登录!</div>-->
                             <header class="panel-heading">
                                 <h2 class="panel-title">投资记录信息</h2>
@@ -290,11 +296,17 @@
             headers:app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if(result.code == 200){
-                    $.each(result.data, function (i, item) {
-                        $("#transactionList").append(
-                                "<tr><th>" + item.sendAddress+"</th><th>"+item.getAddress+"</th><th>"+item.transactionNum+"</th><th>"+item.transactionState+"</th></tr>"
-                        );
-                    });
+                    if(result.data){
+                        $.each(result.data, function (i, item) {
+                            $("#transactionList").append(
+                                    "<tr><th>" + item.sendAddress+"</th><th>"+item.getAddress+"</th><th>"+item.transactionNum+"</th><th>"+item.transactionState+"</th></tr>"
+                            );
+                        });
+                    }else{
+                        $("#transactionInfo").css("display","none");
+                        $("#untransactionInfo").css("display","block");
+                    }
+
                 }else{
                     $("#transactionInfo").css("display","none");
                     $("#untransactionInfo").css("display","block");

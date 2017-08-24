@@ -168,7 +168,7 @@
                         <h2><strong>添加手机号码</strong></h2>
                         <div class="row">
                             <header class="panel-heading">
-                                <h2 class="panel-title">添加手机号码</h2>
+                                <h2 class="panel-title">修改手机号码</h2>
                             </header>
                             <div class="panel-body">
                                 <form class="form-horizontal form-bordered">
@@ -182,7 +182,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3  control-label">验证码</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <input type="text" id="verifycode" class="form-control" style="width:140px;" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="6"/>
                                         </div>
                                         <div class="col-md-2">
@@ -192,11 +192,11 @@
                                                    value="发送手机验证码"/>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label"></label>
-                                        <button data-toggle="modal" data-target="#formModal" id="commit"
-                                                class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" type="button">提交
-                                        </button>
+                                    <div class="form-group" style="text-align: center">
+                                        <!--<label class="col-md-3 control-label"></label>-->
+                                        <input data-toggle="modal" data-target="#formModal" id="commit"
+                                                class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" type="button" value="提交">
+                                        </input>
                                     </div>
                                 </form>
                             </div>
