@@ -90,8 +90,7 @@ public class UserController {
         userService.update(user);
         User u = userService.findById(user.getId());
         u.setUserWallets(userWalletService.findWalletByUserId(u.getId()));
-        String token = makeToken(u);
-        return Result.successResult().add("userInfo",u).add("token", token);
+        return Result.successResult().add("userInfo",u);
     }
 
     @GetMapping("/{id}")
@@ -154,7 +153,7 @@ public class UserController {
     /**
      * 修改用户密码
      */
-    @PutMapping("/updatePassword")
+    @PutMapping("/ ")
     @ResponseBody
     public Result updatePassword(@RequestBody Map<Object,String> passwordInfo) {
         Integer userId = ContextUtils.getUserId();
@@ -175,8 +174,7 @@ public class UserController {
                 userService.update(user);
                 user = userService.findById(userId);
                 user.setUserWallets(userWalletService.findWalletByUserId(user.getId()));
-                String token = makeToken(user);
-                return Result.successResult("密码修改成功!").add("userInfo",user).add("token", token);
+                return Result.successResult("密码修改成功!").add("userInfo",user);
             }
             else{
                 return Result.errorResult("验证码错误!");
@@ -225,8 +223,7 @@ public class UserController {
         } catch (Exception e) {
             return Result.errorResult("发送验证码失败");
         }
-        String token = makeToken(user);
-        return Result.successResult("验证码发送成功!").add("userInfo",user).add("token", token);
+        return Result.successResult("验证码发送成功!").add("userInfo",user);
     }
 
     /**
@@ -238,8 +235,7 @@ public class UserController {
         User oldUser = userService.findById(ContextUtils.getUserId());
         oldUser.setValidatePhone(true);
         userService.update(oldUser);
-        String token = makeToken(oldUser);
-        return Result.successResult("验证成功").add("userInfo",oldUser).add("token", token);
+        return Result.successResult("验证成功").add("userInfo",oldUser);
     }
 
 
@@ -265,16 +261,4 @@ public class UserController {
         return Result.successResult(user);
     }
 
-    public String makeToken(User user){
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getEmailAccount(),
-                        user.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication( authentication );
-        final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
-        final String token = jwtTokenUtil.generateToken( userDetails);
-        return token;
-    }
 }
