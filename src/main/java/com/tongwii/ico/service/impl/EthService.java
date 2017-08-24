@@ -26,7 +26,6 @@ import javax.annotation.PostConstruct;
  * @author Zeral
  * @date 2017-08-23
  */
-@Component
 public class EthService {
     private final static Logger logger = LogManager.getLogger();
 

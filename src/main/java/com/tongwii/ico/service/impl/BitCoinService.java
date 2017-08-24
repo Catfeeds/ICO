@@ -35,7 +35,6 @@ import java.util.concurrent.ExecutionException;
  * @author Zeral
  * @date 2017-08-22
  */
-@Component
 public class BitCoinService {
     private final static Logger logger = LogManager.getLogger();
 
