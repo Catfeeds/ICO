@@ -96,8 +96,8 @@ public class BitCoinService {
      */
     @PostConstruct
     public void postConstruct() {
-        // This line makes the log output more compact and easily read, especially when using the JDK log adapter.
-        BriefLogFormatter.init();
+        // 简化日志输出
+        BriefLogFormatter.initWithSilentBitcoinJ();
 
         if(env.equals(CurrentConfigEnum.dev.toString())) {
             netParams = TestNet3Params.get();
