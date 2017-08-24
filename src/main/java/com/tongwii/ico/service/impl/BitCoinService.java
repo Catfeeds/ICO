@@ -14,6 +14,7 @@ import org.bitcoinj.core.listeners.DownloadProgressTracker;
 import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.utils.BriefLogFormatter;
 import org.bitcoinj.wallet.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -95,6 +96,9 @@ public class BitCoinService {
      */
     @PostConstruct
     public void postConstruct() {
+        // This line makes the log output more compact and easily read, especially when using the JDK log adapter.
+        BriefLogFormatter.init();
+
         if(env.equals(CurrentConfigEnum.dev.toString())) {
             netParams = TestNet3Params.get();
             walletAppKit =  new WalletAppKit(netParams, new File(walletPath), "ICO_TT_Test"){
