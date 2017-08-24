@@ -333,26 +333,29 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
+                    if(!result.data){
+                        window.location.href = "404.html";
+                    }
                     //获取数据
-                    var content = result.data.content;
-                    var enName = result.data.name;//英文
-                    var cnName = result.data.nameCn;//中文
-                    var  des= result.data.des;//描述
-                    var endDate = result.data.endTime;
-                    var startDate = result.data.startTime;
+                    var content = result.data.projectInfo.content;
+                    var enName = result.data.projectInfo.name;//英文
+                    var cnName = result.data.projectInfo.nameCn;//中文
+                    var  des= result.data.projectInfo.des;//描述
+                    var endDate = result.data.projectInfo.endTime;
+                    var startDate = result.data.projectInfo.startTime;
                     var startTime =  new Date(startDate);
-                    var thirdEndorsement = result.data.thirdEndorsement;
+                    var thirdEndorsement = result.data.projectInfo.thirdEndorsement;
                     //接收货币数据
-                    var inputTokenDetails = result.data.inputTokenDetails;
+                    var inputTokenDetails = result.data.projectInfo.inputTokenDetails;
                     //发行货币数据
-                    var outNameEnShort = result.data.outPutTokenDetail.tokenMoney.nameEnShort;//简称
-                    var outCurrentNumber = result.data.outPutTokenDetail.currentNumber;//代币总量
-                    var outTargetNumber = result.data.outPutTokenDetail.targetNumber;//目标
-                    var tokenMoneyWhitepaperCnUrl = result.data.outPutTokenDetail.tokenMoneyWhitepaperCnUrl;//中文
-                    var tokenMoneyWhitepaperEnUrl = result.data.outPutTokenDetail.tokenMoneyWhitepaperEnUrl;//英文
-                    var officialUrl = result.data.outPutTokenDetail.tokenMoney.officialUrl;
-                    var twitterUrl = result.data.outPutTokenDetail.tokenMoney.twitterUrl;
-                    var githubUrl = result.data.outPutTokenDetail.tokenMoney.githubUrl;
+                    var outNameEnShort = result.data.projectInfo.outPutTokenDetail.tokenMoney.nameEnShort;//简称
+                    var outCurrentNumber = result.data.projectInfo.outPutTokenDetail.currentNumber;//代币总量
+                    var outTargetNumber = result.data.projectInfo.outPutTokenDetail.targetNumber;//目标
+                    var tokenMoneyWhitepaperCnUrl = result.data.projectInfo.outPutTokenDetail.tokenMoneyWhitepaperCnUrl;//中文
+                    var tokenMoneyWhitepaperEnUrl = result.data.projectInfo.outPutTokenDetail.tokenMoneyWhitepaperEnUrl;//英文
+                    var officialUrl = result.data.projectInfo.outPutTokenDetail.tokenMoney.officialUrl;
+                    var twitterUrl = result.data.projectInfo.outPutTokenDetail.tokenMoney.twitterUrl;
+                    var githubUrl = result.data.projectInfo.outPutTokenDetail.tokenMoney.githubUrl;
 
 
                     //替换相应数据

@@ -176,31 +176,35 @@ public class ProjectController {
      */
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
-        Project project = projectService.findById(id);
-        projectFile projectFile = projectFileService.findProjectFileByProjectId(id);
-        // 首先需要通过项目id查询token_details表目标代币数据
-        List<TokenDetail> tokenDetails = tokenDetailService.findByProjectIdAndType(id,INPUTCION);
-        if(!CollectionUtils.isEmpty(tokenDetails)){
-            for(int i=0; i<tokenDetails.size(); i++){
-                // 获取目标代币的代币详细信息
-                TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(i).getTokenMoneyId());
-                tokenDetails.get(i).setTokenMoney(inputMoney);
-                project.setInputTokenDetails(tokenDetails);
+        try{
+            Project project = projectService.findById(id);
+            projectFile projectFile = projectFileService.findProjectFileByProjectId(id);
+            // 首先需要通过项目id查询token_details表目标代币数据
+            List<TokenDetail> tokenDetails = tokenDetailService.findByProjectIdAndType(id,INPUTCION);
+            if(!CollectionUtils.isEmpty(tokenDetails)){
+                for(int i=0; i<tokenDetails.size(); i++){
+                    // 获取目标代币的代币详细信息
+                    TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(i).getTokenMoneyId());
+                    tokenDetails.get(i).setTokenMoney(inputMoney);
+                    project.setInputTokenDetails(tokenDetails);
+                }
             }
-        }
 
-        if(Objects.nonNull(project.getOutputTokenMoneyDetailId())) {
-            // 发行代币
-            TokenDetail outPutTokenDetail = tokenDetailService.findById(project.getOutputTokenMoneyDetailId());
-            TokenMoney tokenMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
-            outPutTokenDetail.setTokenMoney(tokenMoney);
-            project.setOutPutTokenDetail(outPutTokenDetail);
+            if(Objects.nonNull(project.getOutputTokenMoneyDetailId())) {
+                // 发行代币
+                TokenDetail outPutTokenDetail = tokenDetailService.findById(project.getOutputTokenMoneyDetailId());
+                TokenMoney tokenMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
+                outPutTokenDetail.setTokenMoney(tokenMoney);
+                project.setOutPutTokenDetail(outPutTokenDetail);
+            }
+            if(Objects.nonNull(project.getCreateUserId())) {
+                User createUser = userService.findById(project.getCreateUserId());
+                project.setCreateUser(createUser);
+            }
+            return Result.successResult().add("projectFile",projectFile).add("projectInfo",project);
+        }catch (Exception e){
+            return Result.successResult("详情信息为空!");
         }
-        if(Objects.nonNull(project.getCreateUserId())) {
-            User createUser = userService.findById(project.getCreateUserId());
-            project.setCreateUser(createUser);
-        }
-        return Result.successResult().add("projectFile",projectFile).add("projectInfo",project);
     }
 
     @GetMapping
