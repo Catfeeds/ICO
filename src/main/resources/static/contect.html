@@ -171,8 +171,7 @@
                                 <h2 class="panel-title"> 我的身份信息</h2>
                             </header>
                             <div class="panel-body">
-                                <form class="form-horizontal form-bordered" action="?p=mMain&do=updatemyinfo"
-                                      method="post">
+                                <form class="form-horizontal form-bordered">
                                     <div class="form-group">
                                         <label class="col-md-3 control-label"> 真实姓名</label>
                                         <div class="col-md-6">
@@ -197,7 +196,7 @@
                                         <label class="col-md-3 control-label"></label>
                                         <div class="col-md-6 col-xs-11">
                                             <button id="submitRealInfo" class="btn cs-bgcolor" style="color:#ffffff; font-weight: bold"
-                                                    type="submit">递交信息，递交后将不能修改
+                                                    type="button">递交信息，递交后将不能修改
                                             </button>
                                         </div>
                                     </div>
@@ -205,7 +204,7 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row">
+                        <!--<div class="row">
                             <header class="panel-heading">
                                 <h2 class="panel-title"> 我的账户信息 <a href="?p=Deposit" style='font-size:12px;'>刷新BTC/ETH充值</a></h2>
                             </header>
@@ -213,7 +212,7 @@
                                 <form class="form-horizontal form-bordered" method="post">
                                 </form>
                             </div>
-                        </div>
+                        </div>-->
                         <br>
                         <div class="row">
                             <header class="panel-heading">
@@ -246,7 +245,7 @@
                                     <label class="col-md-3 control-label"> 手机 </label>
                                     <div class="col-md-6">
                                         <div class="input-group">
-                                            <input type="button" class="cs-bgcolor btn" id="btn"
+                                            <input type="button" class="cs-bgcolor btn" id="phone_a"
                                                    data-toggle="modal" style="color: #ffffff; font-weight: bold;"
                                                    data-target="#formModal" value="添加手机号"/>
 
@@ -399,8 +398,8 @@
     jQuery(window).load(function () {
 //        window.setTimeout(window.location.href = "sign.html",5000);
         if (app.getUserInfo().emailAccount == null) {
-//            location.href = "sign.html";
-            $("#personInfo").css('display', 'none');
+            location.href = "sign.html";
+//            $("#personInfo").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
@@ -476,6 +475,7 @@
                         if (result.code == 200) {
                             app.setUserInfo(result.data.userInfo);
                             app.setToken(result.data.token);
+//                            app.myAlertWithoutFunction(" ",result.message,"success");
                             location.href = "contect.html";
                             $("#truename").css('display', 'none');
                             $("#identitycard").css('display', 'none');
@@ -484,16 +484,20 @@
                             $("#identityCardlable").css('display', 'block');
                         }
                         else {
-                            app.myAlert(" ",result.message,"warning");
+                            app.myAlertWithoutFunction(" ",result.message,"warning");
                             return;
                         }
                     },
                     error: function (xhr, type, errerThrown) {
-                        app.myAlert("","网络异常,请重新验证!","error");
+                        app.myAlertWithoutFunction("","网络异常,请重新验证!","error");
                         return;
                     }
                 });
             }
+        });
+        // 取消button绑定事件
+        $("#cancle").click(function(){
+            window.location.reload();
         });
         //给发送验证码按钮绑定监听事件
         $("#sendsms").click(function () {
