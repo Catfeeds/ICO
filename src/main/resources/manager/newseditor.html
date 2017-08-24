@@ -167,15 +167,15 @@
                                             <label class="col-sm-1 control-label">新闻标题</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control" id="title"
-                                                       placeholder="新闻标题">
+                                                      >
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">新闻描述</label>
                                             <div class="col-sm-11">
-                                                <textarea type="text" class="form-control"    id="descript"
-                                                          placeholder="简单的对这则新闻做一个概括">
+                                                <textarea type="text" class="form-control" id="descript"
+                                                          >
                                                 </textarea>
                                             </div>
                                         </div>
@@ -221,7 +221,7 @@
                                             <label class="col-sm-1 control-label">公告编辑</label>
                                             <div  class="col-sm-10">
                                                 <form>
-                                                <textarea class="textarea" placeholder="公告从这里发布......"
+                                                <textarea class="textarea"
                                                           id="notifyContent" style="width: 1200px; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                                 </form>
                                             </div>
@@ -273,7 +273,6 @@
     });
     $(function () {
         $('#editor').summernote({
-            placeholder:'新闻详情',
             lang: 'zh-CN', // default: 'en-US'
             height: 200   //set editable area's height
         });
@@ -371,6 +370,7 @@
             success: function (result) {
                 if (result.code == 200) {
                     app.myAlert("", result.message, "success");
+                    $("#notifyContent").val(null);
 //                    return;
                 } else {
                     app.myAlert("", result.message, "warning");
@@ -386,7 +386,7 @@
         window.location.reload();
     }
     function cancleNotify() {
-        $("#notifyContent").text("");
+        $("#notifyContent").val(null);
     }
     function logout() {
         $("#personInfo").css('display', 'none');
