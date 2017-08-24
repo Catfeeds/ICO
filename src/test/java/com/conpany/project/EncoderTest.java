@@ -1,5 +1,6 @@
 package com.conpany.project;
 
+import com.tongwii.ico.util.AesEncoder;
 import com.tongwii.ico.util.DesEncoder;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Utils;
@@ -34,6 +35,15 @@ public class EncoderTest extends Tester {
         System.out.println(passwordEncoder.isPasswordValid("$2a$10$i689y0x9zhtnFtmGmkOPRuLChsxsdBbHLN2/bpMicev/VPcdZAnrC", "admin", null));
     }
 
+    @Test
+    public void DesEncoderTest() {
+        String password = "qq.comZeral31";
+        DesEncoder desEncoder = new DesEncoder();
+        System.out.println(desEncoder.decrypt(desEncoder.encrypt(password)));
+
+        AesEncoder aesEncoder = new AesEncoder();
+        System.out.println(aesEncoder.decrypt(aesEncoder.encrypt(password)));
+    }
 
 
     @Test

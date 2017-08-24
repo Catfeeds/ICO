@@ -36,6 +36,11 @@
             font-size: 18px;
         }
     </style>
+    <script>
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
+    </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -394,9 +399,6 @@
 <!-- page script -->
 <script type="text/javascript">
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "login.html";
-        }
         var userName = app.getUserInfo().nickName;
         $("#name").append(userName);
         $("#name1").append(userName);

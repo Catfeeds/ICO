@@ -39,6 +39,11 @@
             font-size: 18px;
         }
     </style>
+    <script>
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
+    </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -276,13 +281,10 @@
 <script src="dist/js/demo.js"></script>
 <!-- summernote editor -->
 <script src="plugins/summernote/summernote.js"></script>
-<script src="scripts/app.js"></script>
 <script src="plugins/summernote/lang/summernote-zh-CN.js"></script>
 <script>
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "login.html";
-        }
+
         var userName = app.getUserInfo().nickName;
         $("#name1").append(userName);
         $("#name2").append(userName);

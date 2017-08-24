@@ -33,6 +33,12 @@
             font-size: 18px;
         }
     </style>
+    <script src="scripts/app.js"></script>
+    <script>
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
+    </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -413,15 +419,12 @@
 <script src="dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<script src="scripts/app.js"></script>
 <script src="scripts/sweet-alert.js"></script>
 <!-- page script -->
 <script>
 
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "login.html";
-        }
+
         var userName = app.getUserInfo().nickName;
         $("#name2").append(userName);
         $("#name1").append(userName);

@@ -67,7 +67,7 @@ ellipsis
 }
 .navigation > ul > li:hover > a { color: #fe6500; }
 .navigation > ul > li > .sub-dropdown{
-	background:#fff url(/static/assets/images/bg-dropdown.png) no-repeat 100% 100%;
+	/*background:#fff url(/static/assets/images/bg-dropdown.png) no-repeat 100% 100%;*/
 }
 .sub-dropdown {
 	position: absolute;
@@ -296,7 +296,7 @@ ellipsis
 	width:44px;
 	height:7px;
 	margin:0 0 0 -22px;
-	background:url(/static/assets/images/border.png) repeat-x;
+	/*background:url(/static/assets/images/border.png) repeat-x;*/
 }
 .main-heading .title{
 	font-weight:400;
@@ -594,7 +594,7 @@ ellipsis
     list-style: outside none none;
 	padding:0 0 0 50px;
 	box-sizing:border-box;
-	background:url(static/assets/images/bg-quotes.png) no-repeat 15px 5px;
+	/*background:url(static/assets/images/bg-quotes.png) no-repeat 15px 5px;*/
 }
 .testimonial.italic-style .question-mark p {
 	font-style:italic;
@@ -676,7 +676,8 @@ ellipsis
 #footer-sec {
 	float: left;
 	width: 100%;
-	background: #1a2123 url(/static/assets/images/footer-bg.png) no-repeat 50% 100%;
+	background-color: #1f2f2f;
+	/*background: #1a2123 url(/static/assets/images/footer-bg.png) no-repeat 50% 100%;*/
 	padding: 30px 0px 10px 0px;
 }
 #footer-sec .widget-section-title .title {
@@ -1841,7 +1842,7 @@ blockquote:before {
 	width: 100%;
 	min-height: 198px;
 	display: inline-block;
-	background:url(static/assets/extra-images/bg-counter.jpg) no-repeat 0 0 /cover;
+	/*background:url(static/assets/extra-images/bg-counter.jpg) no-repeat 0 0 /cover;*/
 }
 .cs-counter span {
 	color: #ffffff;
@@ -2606,7 +2607,7 @@ blockquote:before {
 	width: 25px;
 	height: 25px;
 	content: "";
-	background:url(static/assets/extra-images/plus-img3.png) no-repeat;
+	/*background:url(static/assets/extra-images/plus-img3.png) no-repeat;*/
 }
 .faq-area .panel-title a.collapsed:before {
 	position: absolute;
@@ -2615,7 +2616,7 @@ blockquote:before {
 	width: 25px;
 	height: 25px;
 	content: "";
-	background:url(static/assets/extra-images/plus-img2.png) no-repeat;
+	/*background:url(static/assets/extra-images/plus-img2.png) no-repeat;*/
 }
 .faq-area .panel-title a.collapsed{
 	color: #555;
@@ -3357,10 +3358,10 @@ blockquote:before {
 	height: 24px;
 	content: "";
 	font-family: "icomoon";
-	background:url(static/assets/extra-images/cancel-img1.png) no-repeat;
+	/*background:url(static/assets/extra-images/cancel-img1.png) no-repeat;*/
 }
 .freq-sec .panel-title a.collapsed:before {
-	background:url(static/assets/extra-images/plus-img2.png) no-repeat;
+	/*background:url(static/assets/extra-images/plus-img2.png) no-repeat;*/
 }
 .freq-sec .panel-title a i {
 	font-size: 20px;
@@ -3777,7 +3778,7 @@ blockquote:before {
 .bg-author {
 	min-height: 333px;
 	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.043) inset;
-	background:url(static/assets/extra-images/bg-user.png) no-repeat 0 0 /cover;
+	/*background:url(static/assets/extra-images/bg-user.png) no-repeat 0 0 /cover;*/
 }
 .author-info figure {
 	display: table-cell;

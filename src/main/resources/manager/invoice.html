@@ -32,6 +32,12 @@
             font-size: 18px;
         }
     </style>
+    <script src="scripts/app.js"></script>
+    <script>
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
+    </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -410,13 +416,10 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <script src="scripts/sweet-alert.js"></script>
-<script src="scripts/app.js"></script>
 <script>
 
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "login.html";
-        }else{
+
             var userName = app.getUserInfo().nickName;
             $("#name2").append(userName);
             $("#name1").append(userName);
@@ -482,7 +485,7 @@
                     }
                 });
             });
-        }
+
     });
     function logout() {
         $("#personInfo").css('display', 'none');

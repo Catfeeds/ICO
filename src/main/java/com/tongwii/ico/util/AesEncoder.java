@@ -16,11 +16,20 @@ import java.util.Arrays;
  * @date 2017-08-17
  */
 public class AesEncoder {
+    private static String strDefaultKey = "ico.TT_zeral.com#935375351";// 字符串默认键值
     private static SecretKeySpec secretKey ;
     private static byte[] key ;
 
     private static String decryptedString;
     private static String encryptedString;
+
+    public AesEncoder() {
+        this(strDefaultKey);
+    }
+
+    public AesEncoder(String myKey) {
+        setKey(myKey);
+    }
 
     public static void setKey(String myKey){
 
@@ -59,7 +68,8 @@ public class AesEncoder {
     public static void setEncryptedString(String encryptedString) {
         AesEncoder.encryptedString = encryptedString;
     }
-    public static String encrypt(String strToEncrypt)
+
+    public String encrypt(String strToEncrypt)
     {
         try
         {
@@ -78,7 +88,7 @@ public class AesEncoder {
         }
         return null;
     }
-    public static String decrypt(String strToDecrypt)
+    public String decrypt(String strToDecrypt)
     {
         try
         {
@@ -99,18 +109,19 @@ public class AesEncoder {
     {
         final String strToEncrypt = "My text to encrypt";
         final String strPssword = "encryptor key";
-        AesEncoder.setKey(strPssword);
 
-        AesEncoder.encrypt(strToEncrypt.trim());
+        AesEncoder aesEncoder = new AesEncoder();
+
+        aesEncoder.encrypt(strToEncrypt.trim());
 
         System.out.println("String to Encrypt: " + strToEncrypt);
-        System.out.println("Encrypted: " + AesEncoder.getEncryptedString());
+        System.out.println("Encrypted: " + aesEncoder.getEncryptedString());
 
-        final String strToDecrypt =  AesEncoder.getEncryptedString();
-        AesEncoder.decrypt(strToDecrypt.trim());
+        final String strToDecrypt =  aesEncoder.getEncryptedString();
+        aesEncoder.decrypt(strToDecrypt.trim());
 
         System.out.println("String To Decrypt : " + strToDecrypt);
-        System.out.println("Decrypted : " + AesEncoder.getDecryptedString());
+        System.out.println("Decrypted : " + aesEncoder.getDecryptedString());
 
     }
 }

@@ -122,24 +122,24 @@ public interface TransactionsService {
      */
     String getEthAddressBalance(String address);
 
-    /**
+   /* *//**
      * 比特币转账操作
      *
      * @param fromPrivateEncoderAddress the from private encoder address
      * @param toAddress                 需要转账的base85地址
      * @param amount                    需要转账的比特币，单位btc
      * @return string 转账成功的交易单号
-     */
+     *//*
     String sendBitCoin(String fromPrivateEncoderAddress, String toAddress, String amount);
 
-    /**
+    *//**
      * 以太坊转账操作
      *
      * @param fromPrivateEncoderAddress the from private encoder address
      * @param toAddress                 the to address
      * @param amount                    需要转账的以太坊，单位ETHER
      * @return string
-     */
+     *//*
     String sendETHCoin(String fromPrivateEncoderAddress, String toAddress, String amount);
-
+*/
 }

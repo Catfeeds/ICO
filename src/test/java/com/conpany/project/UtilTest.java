@@ -77,7 +77,7 @@ public class UtilTest extends Tester {
 
     @Test
     public void getBalanceFromAddress() {
-        String address = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4";
+            String address = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4";
         System.out.println(transactionsService.getBitCoinAddressBalance(address));
 
         String ethAddress = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A";
@@ -103,7 +103,7 @@ public class UtilTest extends Tester {
     }
 
 
-    @Test
+ /*   @Test
     public void sendCoin() {
         System.out.println(transactionsService.sendBitCoin("752dc4b3ae81f6fc8d19257ec02143925d0fa0ea66242cc2720d3cc50b76d2d84ea69ae4191fb03c8bea320268afc1d3150fe840cbeca172a506914bed96d40558aa971672d82253", "mpp9m4D38zX8ukuZyQLeX5diC68BL1d1xu", "0.01"));
     }
@@ -114,7 +114,7 @@ public class UtilTest extends Tester {
         account.init();
         String from = Utils.HEX.encode(account.getEcKey().getAddress());
         System.out.println(transactionsService.sendETHCoin("554010e4567428d39c2c124507915eeda1fa91f31584bc0568ccba8f3495c9e754019c233b9d29a0e3aa1f74cbbbd98ac237af8cf39d73dbad10fe5c898c1a7358aa971672d82253", from, "0.01"));
-    }
+    }*/
 
 
     @Test

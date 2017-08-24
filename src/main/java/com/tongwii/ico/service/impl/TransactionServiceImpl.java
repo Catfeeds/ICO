@@ -8,7 +8,6 @@ import com.tongwii.ico.service.TransactionsService;
 import com.tongwii.ico.util.EthConverter;
 import com.tongwii.ico.util.RestTemplateUtil;
 import org.bitcoinj.core.Coin;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -39,12 +38,6 @@ public class TransactionServiceImpl implements TransactionsService {
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
 
-    @Autowired
-    private BitCoinService bitCoinService;
-
-    @Autowired
-    private EthService ethService;
-
     @Override
     public String getBitCoinAddressBalance(String address) {
 
@@ -60,7 +53,7 @@ public class TransactionServiceImpl implements TransactionsService {
                 return Coin.valueOf(0).toFriendlyString();
             }
         }
-        return null;
+        return Coin.valueOf(0).toFriendlyString();
     }
 
 
@@ -111,10 +104,10 @@ public class TransactionServiceImpl implements TransactionsService {
         if(result.getIntValue("status") == 1) {
             return EthConverter.fromWei(result.getBigDecimal("result"), EthConverter.Unit.ETHER) + EthConverter.Unit.ETHER.toString().toUpperCase();
         }
-        return null;
+        return "0.0"+EthConverter.Unit.ETHER.toString().toUpperCase();
     }
 
-    @Override
+/*    @Override
     public String sendBitCoin(String fromAddress, String recipient, String amountToSend) {
         return bitCoinService.sendTransaction(fromAddress, recipient, amountToSend);
     }
@@ -123,6 +116,6 @@ public class TransactionServiceImpl implements TransactionsService {
     @Override
     public String sendETHCoin(String fromPrivateEncoderAddress, String toAddress, String amount) {
         return ethService.sendTransaction(fromPrivateEncoderAddress, toAddress, amount);
-    }
+    }*/
 
 }

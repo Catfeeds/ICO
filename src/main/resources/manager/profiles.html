@@ -40,6 +40,12 @@
             overflow: hidden;
         }
     </style>
+    <script src="scripts/app.js"></script>
+    <script>
+        if (app.getUserInfo().emailAccount == null) {
+            location.href = "login.html";
+        }
+    </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -358,7 +364,6 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>;
 <script src="scripts/sweet-alert.js"></script>
-<script src="scripts/app.js"></script>
 <script>
     var width,height;
     function handleConFiles(files){
@@ -444,9 +449,7 @@
 
     });
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "login.html";
-        }
+
         var userName = app.getUserInfo().nickName;
         $("#name").append(userName);
         $("#name1").append(userName);

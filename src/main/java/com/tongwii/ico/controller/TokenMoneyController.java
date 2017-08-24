@@ -107,13 +107,13 @@ public class TokenMoneyController {
                 projectUserWalletRelation.setUserWallet(userWalletId);
                 // 用户钱包转账操作
                 if(cionType.equals(TokenMoneyEnum.ETH.name())){
-                    String ETHTransactionNumber = transactionsService.sendETHCoin(userWallet.getTokenPrivateKey(), projectWallet.getWalletAddress(),investmentMoney);
-                    projectUserWalletRelation.setTransactionNumber(ETHTransactionNumber);
+                    /*String ETHTransactionNumber = transactionsService.sendETHCoin(userWallet.getTokenPrivateKey(), projectWallet.getWalletAddress(),investmentMoney);
+                    projectUserWalletRelation.setTransactionNumber(ETHTransactionNumber);*/
 
                 }
                 if(cionType.equals(TokenMoneyEnum.BTC.name())){
-                    String BTCTransactionNumber = transactionsService.sendETHCoin(userWallet.getTokenPrivateKey(), projectWallet.getWalletAddress(),investmentMoney);
-                    projectUserWalletRelation.setTransactionNumber(BTCTransactionNumber);
+                    /*String BTCTransactionNumber = transactionsService.sendETHCoin(userWallet.getTokenPrivateKey(), projectWallet.getWalletAddress(),investmentMoney);
+                    projectUserWalletRelation.setTransactionNumber(BTCTransactionNumber);*/
 
                 }
                 projectUserWalletRelationService.save(projectUserWalletRelation);
