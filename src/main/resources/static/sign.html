@@ -91,10 +91,10 @@
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs" role="tablist">
                                             <li role="presentation" class="active"><a href="#home" aria-controls="home"
-                                                                                      role="tab"
+                                                                                      role="tab" id="logina"
                                                                                       data-toggle="tab">登录</a></li>
                                             <li role="presentation"><a href="#profile" aria-controls="profile"
-                                                                       role="tab" data-toggle="tab">注册</a></li>
+                                                                       role="tab" data-toggle="tab" id="regista">注册</a></li>
                                         </ul>
 
                                         <!-- Tab panes -->
@@ -107,12 +107,12 @@
                                                                 <ul class="row">
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
                                                                         <label>用户名</label>
-                                                                        <input type="text" placeholder=""
+                                                                        <input type="text" placeholder=""  onkeydown="keylogin()"
                                                                                id="sign_name">
                                                                     </li>
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
                                                                         <label>密码</label>
-                                                                        <input type="password" placeholder=""
+                                                                        <input type="password" placeholder="" onkeydown="keylogin()"
                                                                                id="sign_password">
                                                                     </li>
                                                                     <li class="col-lg-12">
@@ -181,16 +181,16 @@
                                                                 <ul class="row">
                                                                     <li class="col-lg-12">
                                                                         <label>电子邮箱</label>
-                                                                        <input type="email" placeholder="" id="email">
+                                                                        <input type="email" placeholder="" id="email" onkeydown="keylogin()">
                                                                     </li>
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
                                                                         <label>密码</label>
-                                                                        <input type="password" placeholder=""
+                                                                        <input type="password" placeholder="" onkeydown="keylogin()"
                                                                                id="regist_password">
                                                                     </li>
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
                                                                         <label>确认密码</label>
-                                                                        <input type="password" placeholder=""
+                                                                        <input type="password" placeholder="" onkeydown="keylogin()"
                                                                                id="again_password">
                                                                     </li>
                                                                     <li class="col-lg-12">
@@ -318,90 +318,120 @@
 <script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script>
+    var flag = 1;
     jQuery(window).load(function () {
         $("#login").click(function () {
-            var signName = $("#sign_name").val();
-            var signPassword = $("#sign_password").val();
-            if (signName.length <= 0) {
-                app.myAlert(" ","用户名不能为空","warning");
-                return;
-            }
-            if (signPassword.length <= 0) {
-                app.myAlert(" ","密码不能为空","warning");
-                return;
-            }
-            var json = {emailAccount: signName, password: signPassword};
-            $.ajax({
-                url: "/auth/login",
-                type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(json),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    if (result.code == 200) {
-                        app.setUserInfo(result.data.userInfo);
-                        app.setToken(result.data.token);
-                        location.href = "contect.html";
-                    }
-                    else {
-                        app.myAlert("","登录失败!"+result.message,"error");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert("","网络异常,请稍候再试!","error");
-                }
-            });
-
+            login();
+        });
+        $("#logina").click(function(){
+            flag=1;
+        });
+        $("#regista").click(function(){
+            flag=2;
         });
         $("#regist").click(function () {
-            var email = $("#email").val().toString();
-            var registPassword = $("#regist_password").val().toString();
-            var againPassword = $("#again_password").val().toString();
-            if (email.length <= 0) {
-                app.myAlert("","电子邮箱不能为空!","warning");
-                return;
-            }
-            if (registPassword.length <= 0 || againPassword.length <= 0) {
-                app.myAlert("","密码不能为空!","warning");
-                return;
-            }
-            if (registPassword.length <8 || registPassword.length >30) {
-                app.myAlert("","密码需为8位以上,30位以下!","warning");
-                return;
-            }
-            if (registPassword != againPassword) {
-                app.myAlert("","两次输入的密码不一致!","warning");
-                return;
-            }
-            var registJson = {emailAccount: email, password: registPassword};
-            $.ajax({
-                url: "/user/register",
-                type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(registJson),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    if (result.code == 200) {
-                        app.myAlert("","注册成功，请登录!","success");
-                        location.href = "sign.html";
-                        $("#sign_name").text(result.data.userInfo.emailAccount);
-                    }
-                    else {
-                        sweetAlert(result.message);
-                        return;
-                        console.log("注册失败!");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert("","网络异常,请稍候再试!","error");
-                    return;
-                }
-            });
+            regist();
         });
 
     });
+    function regist() {
+        var email = $("#email").val().toString();
+        var registPassword = $("#regist_password").val().toString();
+        var againPassword = $("#again_password").val().toString();
+        if (email.length <= 0) {
+            app.myAlert("","电子邮箱不能为空!","warning");
+            return;
+        }
+        if (registPassword.length <= 0 || againPassword.length <= 0) {
+            app.myAlert("","密码不能为空!","warning");
+            return;
+        }
+        if (registPassword.length <8 || registPassword.length >30) {
+            app.myAlert("","密码需为8位以上,30位以下!","warning");
+            return;
+        }
+        if (registPassword != againPassword) {
+            app.myAlert("","两次输入的密码不一致!","warning");
+            return;
+        }
+        var registJson = {emailAccount: email, password: registPassword};
+        $.ajax({
+            url: "/user/register",
+            type: 'POST',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(registJson),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                if (result.code == 200) {
+                    app.myAlert("","注册成功，请登录!","success");
+                    location.href = "sign.html";
+                    $("#sign_name").text(result.data.userInfo.emailAccount);
+                }
+                else {
+                    sweetAlert(result.message);
+                    return;
+                    console.log("注册失败!");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("","网络异常,请稍候再试!","error");
+                return;
+            }
+        });
+    }
+
+    function login(){
+        var signName = $("#sign_name").val();
+        var signPassword = $("#sign_password").val();
+        if (signName.length <= 0) {
+            app.myAlert(" ","用户名不能为空","warning");
+            return false;
+        }
+        if (signPassword.length <= 0) {
+            app.myAlert(" ","密码不能为空","warning");
+            return false;
+        }
+        var json = {emailAccount: signName, password: signPassword};
+        $.ajax({
+            url: "/auth/login",
+            type: 'POST',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(json),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                if (result.code == 200) {
+                    app.setUserInfo(result.data.userInfo);
+                    app.setToken(result.data.token);
+                    location.href = "contect.html";
+                }
+                else {
+                    app.myAlert("","登录失败!"+result.message,"error");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("","网络异常,请稍候再试!","error");
+            }
+        });
+    }
+
+    function keylogin() {
+        if (event.keyCode == 13)
+        {
+            if(flag ==1){
+                setTimeout(function(){
+                    login();
+                },0);
+
+            }else{
+                setTimeout(function(){
+                    regist();
+                },0);
+            }
+
+        }
+    }
 </script>
 
 </body>
