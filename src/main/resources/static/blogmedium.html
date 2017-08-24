@@ -92,7 +92,7 @@
         <div class="container">
             <div class="main-head">
                 <div class="left-side">
-                    <div class="logo"><a href="index.html"><img src="assets/images/logo.png" alt=""></a></div>
+                    <div class="logo"><a href="index.html"><img src="assets/images/logo.png"></a></div>
                     <nav class="navigation" style="font-family: 微软雅黑;">
                         <ul>
                             <li><a href="index.html">首页</a></li>
@@ -161,7 +161,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="section-fullwidth col-lg-12">
-                            <div class="cs-content-holder">
+                            <div class="row" id="noNews" style="display: none;text-align: center"><h2>暂无新闻消息</h2></div>
+                            <div class="cs-content-holder" id="haveNews">
                                 <div class="row" id="notify">
                                     <div class="widget widget-recent-blog">
                                         <div class="widget-section-title">
@@ -322,11 +323,14 @@
                         });
                     }
                 } else {
-                    $("#notify").css("display", "none");
+                    $("#haveNews").css("display", "none");
+                    $("#noNews").css("display", "block");
+//                    $("#notify").css("display", "none");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                $("#notify").css("display", "none");
+                $("#haveNews").css("display", "none");
+                $("#noNews").css("display", "block");
             }
         });
         pageNews(1);
