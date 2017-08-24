@@ -104,7 +104,7 @@ public class MessageUtil {
 
         //设置参数
         Map<String, String> hashMap = new LinkedHashMap<>();
-        hashMap.put("ParamString", "{'node':'"+ code +"'}");
+        hashMap.put("ParamString", "{'msg':'"+ code +"'}");
         hashMap.put("RecNum", phone);
         hashMap.put("SignName", signName);
         hashMap.put("TemplateCode", templateCode);
