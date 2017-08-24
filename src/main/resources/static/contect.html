@@ -164,7 +164,7 @@
                                             <!--<a href="index.html"> 修改交易密码</a>-->
                                         <!--</li>-->
                                         <li>
-                                            <a href="addphone.html"> 添加手机号码</a>
+                                            <a href="addphone.html"> 修改手机号码</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -256,12 +256,66 @@
                                     <label class="col-md-3 control-label"> 手机 </label>
                                     <div class="col-md-6">
                                         <div class="input-group">
-                                            <button class="btn cs-bgcolor" id="phone_a"><a href='addphone.html'
+                                            <input type="button" class="cs-bgcolor btn" id="btn"
+                                                   data-toggle="modal" style="color: #ffffff; font-weight: bold;"
+                                                   data-target="#formModal" value="添加手机号"/>
+
+                                            <!--<button class="btn cs-bgcolor"
+                                                    id="phone_a" data-toggle="modal"><a href='addphone.html'
                                                                             style="color:#ffffff; font-weight: bold">添加手机号</a>
-                                            </button>
+                                            </button>-->
                                             <label class="control-label" id="phonelable" style="display: none">
                                             </label>
                                         </div>
+
+
+
+                                        <div class="modal fade" id="formModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="formModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-hidden="true"></button>
+                                                        <h4 class="modal-title" id="formModalLabel">添加手机</h4>
+                                                    </div>
+                                                    <form id="demo-form" class="form-horizontal mb-lg">
+                                                        <div class="modal-body">
+                                                            <div class="form-group mt-lg">
+                                                                <label class="col-sm-2 control-label">手机号码</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" id="mobile" onblur="aaa()"
+                                                                           class="form-control" placeholder="请输入您的手机号码"/>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-sm-2 control-label">验证码</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" id="verifycode"
+                                                                           class="form-control" style="width:140px;"
+                                                                           maxlength="6"/>
+                                                                </div>
+                                                                <div class="col-sm-7">
+                                                                    <input type="button" id="sendsms"
+                                                                           class="cs-bgcolor btn"
+                                                                           style="color: #ffffff; font-weight: bold;"
+                                                                           value="发送手机验证码"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="取消" id="cancle"/>
+                                                            <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="确定" id="commit"/>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -353,9 +407,10 @@
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
+//        window.setTimeout(window.location.href = "sign.html",5000);
         if (app.getUserInfo().emailAccount == null) {
-            location.href = "sign.html";
-//            $("#personInfo").css('display', 'none');
+//            location.href = "sign.html";
+            $("#personInfo").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
@@ -450,6 +505,90 @@
                 });
             }
         });
+        //给发送验证码按钮绑定监听事件
+        $("#sendsms").click(function () {
+            var phoneNum = $("#mobile").val();
+            // 此处判断该用户信息中是否有同样的手机号
+            if (app.getUserInfo().phone != null) {
+                if (app.getUserInfo().phone == phoneNum) {
+                    app.myAlertWithoutFunction(" ","此手机号码已经验证过!","warning");
+                    return;
+                }
+            }
+            var phoneJson = {"phone": phoneNum};
+            // 此处调用发送手机验证码的接口获取手机验证码
+            $.ajax({
+                url: "/user/validatePhone",
+                type: 'POST',
+                timeout: 10000,//超时时间设置为10秒；
+                data: JSON.stringify(phoneJson),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: app.createAuthorizationTokenHeader(),
+                success: function (result) {
+                    if (result.code == 200) {
+                        app.setUserInfo(result.data.userInfo);
+                    }
+                    else {
+                        app.myAlert("",result.message,"warning");
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    app.myAlert(" ","网络异常,请稍候再试!","error");
+                }
+            });
+        });
+        //提交按钮触发事件
+        $("#commit").click(function () {
+            var phoneNum = $("#mobile").val();
+            var verifycode = $("#verifycode").val();
+            if (phoneNum.length != 11) {
+                app.myAlertWithoutFunction(" ","请填写正确的手机号码!","warning");
+                return;
+            }
+            if (verifycode.length <= 0) {
+                app.myAlertWithoutFunction(" ","验证码不能为空!","warning");
+                return;
+            }
+            if (verifycode != app.getUserInfo().verifyCode) {
+                app.myAlertWithoutFunction("","验证码信息错误，请重新输入!","error");
+                return;
+            } else if (app.getUserInfo().expireDate < new Date()) {
+                app.myAlertWithoutFunction("","验证码已过期，请重新发送！","warning");
+                return;
+            } else {
+                var verifycodeJson = {"validatePhone": true};
+                // 此处调用发送手机验证码的接口获取手机验证码
+                $.ajax({
+                    url: "/user/phoneValidated",
+                    type: 'POST',
+                    timeout: 10000,//超时时间设置为10秒；
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(verifycodeJson),
+                    dataType: "json",
+                    headers: app.createAuthorizationTokenHeader(),
+                    success: function (result) {
+                        if (result.code == 200) {
+                            app.setUserInfo(result.data.userInfo);
+                            app.setToken(result.data.token);
+                            app.myAlert("","手机验证成功!","success");
+                        }
+                        else {
+                            app.myAlertWithoutFunction("",result.message,"warning");
+                            return;
+                        }
+                    },
+                    error: function (xhr, type, errerThrown) {
+                        app.myAlert("","网络异常,请稍候再试!","error");
+                        return;
+                    }
+                });
+            }
+        });
+
+
+
+
         $("#sign_out").click(function () {
             $("#personInfo").css('display', 'none');
             app.setUserInfo({});
@@ -474,6 +613,19 @@
         else if (!iscardAccount.test(cardAccount))
         {
             app.myAlert("","请输入正确的身份证号码！","warning");
+            return;
+        }
+    }
+
+    function aaa() {
+        var mobileAccount = $("#mobile").val();
+        var ismobileAccount = /^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$/;
+        if (mobileAccount.length <= 0) {
+            app.myAlert("","号码不能为空!","warning");
+            return;
+        } else if (ismobileAccount.test(mobileAccount)) {
+            app.myAlert("","请输入正确的号码!","warning");
+
             return;
         }
     }

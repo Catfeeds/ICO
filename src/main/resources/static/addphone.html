@@ -164,7 +164,7 @@
                                             <!--<a href="index.html"> 修改交易密码</a>-->
                                         <!--</li>-->
                                         <li>
-                                            <a href="addphone.html"> 添加手机号码</a>
+                                            <a href="addphone.html"> 修改手机号码</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -286,8 +286,8 @@
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
-            location.href = "sign.html";
-//            $("#personInfo").css('display', 'none');
+//            location.href = "sign.html";
+            $("#personInfo").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
@@ -296,10 +296,6 @@
     //给发送验证码按钮绑定监听事件
     $("#sendsms").click(function () {
         var phoneNum = $("#mobile").val();
-        if (phoneNum.trim().length != 11) {
-            app.myAlertWithoutFunction(" ","请填写正确的手机号码!","warning");
-            return;
-        }
         // 此处判断该用户信息中是否有同样的手机号
         if (app.getUserInfo().phone != null) {
             if (app.getUserInfo().phone == phoneNum) {
