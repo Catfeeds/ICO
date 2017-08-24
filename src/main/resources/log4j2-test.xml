@@ -76,7 +76,7 @@ sys:user.home
 
         <!-- 定义除单个类外所有日志记录级别 -->
         <Root level="debug" includeLocation="true">
-            <AppenderRef ref="STDOUT" level="error"/>
+            <AppenderRef ref="STDOUT" level="info"/>
             <AppenderRef ref="FILE" level="debug"/>
         </Root>
     </Loggers>

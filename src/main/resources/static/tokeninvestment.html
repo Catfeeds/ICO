@@ -79,16 +79,6 @@
 
                 </div>
                 <div class="right-side">
-                    <div class="cs-search-block">
-                        <form>
-                            <input type="text" id="s" name="s" value="搜索项目"
-                                   onfocus="if(this.value =='搜索项目') { this.value = ''; }"
-                                   onblur="if(this.value == '') { this.value ='搜索项目'; }" class="form-control">
-                            <label>
-                                <input type="submit" value="Search">
-                            </label>
-                        </form>
-                    </div>
                     <div class="profile-view">
                         <ul id="personInfo" style="display:none">
                             <li>
@@ -366,32 +356,34 @@
             dataType: "json",
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
-                var lastPage = result.data.pageInfo.pages;
-                var ICOList = result.data.lockedProjectList;
-                $("#investedIcoProject").html("");
-                $("#investedIcoProject").append(
-                    "<div class='form-group'>"
-                );
-                $.each(ICOList, function (i, item) {
-                    var pictureUrl = null;
-                    if(item.pictureUrl.trim()){
-                        pictureUrl = item.pictureUrl;
-                    }else{
-                        pictureUrl = "assets/extra-images/img.jpg";
-                    }
+                if (result.code == 200){
+                    var lastPage = result.data.pageInfo.pages;
+                    var ICOList = result.data.lockedProjectList;
+                    $("#investedIcoProject").html("");
                     $("#investedIcoProject").append(
-                        "                <div class='col-md-3 'style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a href='tokenmessage.html?pid=" + item.id + "&name=" + item.name
-                        + "'><span class='thumb-info thumb-info-hide-wrapper-bg'"
-                        + "                                                     style='width:200px;'><span"
-                        + "                        class='thumb-info-wrapper'><img src='"+pictureUrl+"'"
-                        + "                                                        class='img-responsive'></span></span></a><span"
-                        + "                        style='font-size:20px;color:#FF8000;font-weight:bold;'>" + item.name + "</span><BR>" + item.startTime + "——" + item.endTime
-                        + "                </div>"
+                        "<div class='form-group'>"
                     );
-                });
-                $("#investedIcoProject").append("</div>");
-                //添加已投资项目
-                fenye("pagination1","pageOldProject",page,lastPage);
+                    $.each(ICOList, function (i, item) {
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
+                        $("#investedIcoProject").append(
+                            "                <div class='col-md-3 'style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a href='tokenmessage.html?pid=" + item.id + "&name=" + item.name
+                            + "'><span class='thumb-info thumb-info-hide-wrapper-bg'"
+                            + "                                                     style='width:200px;'><span"
+                            + "                        class='thumb-info-wrapper'><img src='"+pictureUrl+"'"
+                            + "                                                        class='img-responsive'></span></span></a><span"
+                            + "                        style='font-size:20px;color:#FF8000;font-weight:bold;'>" + item.name + "</span><BR>" + item.startTime + "——" + item.endTime
+                            + "                </div>"
+                        );
+                    });
+                    $("#investedIcoProject").append("</div>");
+                    //添加已投资项目
+                    fenye("pagination1","pageOldProject",page,lastPage);
+                }
             },
             error: function (xhr, type, errerThrown) {
                 app.myAlert("",'网络异常,请稍候再试',"");
@@ -409,34 +401,37 @@
             dataType: "json",
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
-                var lastPage = result.data.pages;
-                var ICOList = result.data.list;
-                $("#IcoProject").html("");
-                $("#IcoProject").append(
-                    "<div class='form-group'>"
-                );
-                $.each(ICOList, function (i, item) {
-                    var pictureUrl = null;
-                    if(item.pictureUrl.trim()){
-                        pictureUrl = item.pictureUrl;
-                    }else{
-                        pictureUrl = "assets/extra-images/img.jpg";
-                    }
-
+                if (result.code == 200){
+                    var lastPage = result.data.pages;
+                    var ICOList = result.data.list;
+                    $("#IcoProject").html("");
                     $("#IcoProject").append(
-                        "                <div class='col-md-3 'style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a href='tokenmessage.html?pid=" + item.id + "&name=" + item.name
-                        + "'><span class='thumb-info thumb-info-hide-wrapper-bg'"
-                        + "                                                     style='width:200px;'><span"
-                        + "                        class='thumb-info-wrapper'><img src='"+pictureUrl+"'"
-                        + "                                                        class='img-responsive'></span></span></a><span"
-                        + "                        style='font-size:20px;color:#FF8000;font-weight:bold;'>" + item.name + "</span><BR>" + item.startTime + "——" + item.endTime
-                        + "                </div>"
+                        "<div class='form-group'>"
                     );
-                });
-                $("#IcoProject").append("</div>");
-                fenye("pagination","pageLockProject",page,lastPage);
+                    $.each(ICOList, function (i, item) {
+                        var pictureUrl = null;
+                        if(item.pictureUrl.trim()){
+                            pictureUrl = item.pictureUrl;
+                        }else{
+                            pictureUrl = "assets/extra-images/img.jpg";
+                        }
 
-                console.log(ICOList);
+                        $("#IcoProject").append(
+                            "                <div class='col-md-3 'style='text-align:center;border:0px solid #111;padding-bottom:0px;'><a href='tokenmessage.html?pid=" + item.id + "&name=" + item.name
+                            + "'><span class='thumb-info thumb-info-hide-wrapper-bg'"
+                            + "                                                     style='width:200px;'><span"
+                            + "                        class='thumb-info-wrapper'><img src='"+pictureUrl+"'"
+                            + "                                                        class='img-responsive'></span></span></a><span"
+                            + "                        style='font-size:20px;color:#FF8000;font-weight:bold;'>" + item.name + "</span><BR>" + item.startTime + "——" + item.endTime
+                            + "                </div>"
+                        );
+                    });
+                    $("#IcoProject").append("</div>");
+                    fenye("pagination","pageLockProject",page,lastPage);
+
+                    console.log(ICOList);
+                }
+
             },
             error: function (xhr, type, errerThrown) {
                 app.myAlert("",'网络异常,请稍候再试',"error");
