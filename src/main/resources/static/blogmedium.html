@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,69 +22,25 @@
     <link href="assets/css/jplayer.blue.monday.min.css" rel="stylesheet">
     <link href="assets/css/themetypo.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
     <style>
-        .text {
-            background-color: #fe6500;
-            border-radius: 5px;
-            height: 80px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .text h4 {
-            margin-left: 10px;
-            margin-right: 10px;
-            margin-top: 5px;
-            padding-top: 35px;
-        }
-
-        .slideShow ul {
-            width: 2000px;
-            position: relative; /*此处需注意relative : 对象不可层叠，但将依据left，right，top，bottom等属性在正常文档流中偏移位置，如果没有这个属性，图片将不可左右移动*/
-        }
-
-        .slideShow ul li {
-            float: left; /*让四张图片左浮动，形成并排的横着布局，方便点击按钮时的左移动*/
-            width: 346px;
-        }
-
-        .slideShow .showNav { /*用绝对定位给数字按钮进行布局*/
-            position: absolute;
-            right: 10px;
-            bottom: 5px;
-            text-align: center;
-            font-size: 12px;
-            line-height: 20px;
-        }
-
-        .slideShow .showNav span {
-            cursor: pointer;
-            display: block;
-            float: left;
-            width: 20px;
-            height: 20px;
-            background: #ff5a28;
-            margin-left: 2px;
-            color: #fff;
-        }
-
-        .widget-recent-blog article figure {
-            width: 100%;
-        }
-
-        .cs-banner .flex-next {
-            color: #fe6500;
-        }
-
-        .cs-banner .flex-prev {
-            color: #fe6500;
-        }
-
-        .img-responsive {
-            width: 370px;
-            height: 203px;
+        p{
+            margin-right: 5px;
+            padding-right: 2px;
+            width: 95%;
+            height: auto;
+            word-wrap:break-word;
+            word-break:break-all;
+            overflow: hidden;
         }
     </style>
+
 </head>
 <body>
 <div class="wrapper">
@@ -134,7 +90,6 @@
         </div>
     </header>
     <!-- Header -->
-
     <div class="breadcrumb-sec"
          style="background:url(assets/extra-images/banner.jpg) no-repeat; background-size:100% auto; min-height:157px!important;">
         <div class="absolute-sec">
@@ -151,10 +106,9 @@
             </div>
         </div>
     </div>
+
     <!-- Main Content -->
-
     <main id="main-content">
-
         <div class="main-section">
             <div class="page-section">
                 <div class="container">
@@ -163,30 +117,26 @@
                             <div class="row" id="noNews" style="display: none;text-align: center"><h2>暂无新闻消息</h2></div>
                             <div class="cs-content-holder" id="haveNews">
                                 <div class="row" id="notify">
-                                    <div class="widget widget-recent-blog">
-
-                                        <article>
-                                            <div class="cs-banner">
-                                                <div class="flexslider">
-                                                    <div class="flex-viewport"
-                                                         style="overflow: hidden; position: relative;">
-                                                        <div>
-                                                            <ul class="slides" id="notifyList">
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    <aside class="page-sidebar col-lg-3">
+                                        <div class="flexslider widget">
+                                            <div class="title">
+                                                <h2>公告</h2>
                                             </div>
-                                        </article>
-                                    </div>
-                                </div>
+                                            <style>
+                                                p{
+                                                    font-family: 微软雅黑;
+                                                    font-size: 14px;
+                                                }
+                                            </style>
+                                            <ul class="slides" id="notifyList" >
+                                                <li></li>
+                                            </ul>
+                                        </div>
 
-                                <div class="row" id="news" style="margin-top: 5%;">
-                                    <div class="page-content col-lg-12">
+                                    </aside>
+                                    <div class="page-content col-lg-9" id="news">
                                         <div class="cs-blog blog-medium">
-                                            <div class="row">
-                                                    <div id="newsList">
-                                                    </div>
+                                            <div class="row" id="newsList">
                                             </div>
                                         </div>
                                         <nav class="pagination" style="text-align: center">
@@ -214,37 +164,36 @@
     </main>
     <!--// Main Content //-->
 
-    <!--// Footer Widget //-->
-        <footer id="footer-sec">
-            <div class="container">
-                <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
-                    <div class="widget-section-title"><strong class="title">关于我们</strong></div>
-                    <div style="color: #999;font-weight: 400">
-                        <p>ICO.TT是一个专业为ICO项目提供完整服务解决方案的平台，能够帮助投资者更好的了解进行ICO的区块链项目，并且帮助投资者更好的管理自己的投资资金和投资项目。
-                            <br>ICO.TT所提供的各项服务的所有权和运营权均归ICO.TT网站所有。ICO.TT用户通过访问或使用本网站，即表示接受并同意网站协议的所有条件和条款。</p>
-                    </div>
-                </aside>
-                <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
-                    <div class="widget-section-title"><strong class="title">法律说明</strong></div>
-                    <div style="color: #999;font-weight: 400">
-                        <p>ICO.TT的所有运营行为将会尊重客户所在地相关法律和法规，本网站法律声明未涉及的问题参见当地国家有关法律法规，当本声明与当地国家法律法规冲突时，以当地国家法律法规为准。
-                            因用户使用本网站而引起或与之相关的一切争议、权利主张或其它事项，均受当地法律法规区域的管辖。
-                        </p>
-                    </div>
-                </aside>
-                <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
-                    <div class="widget-section-title"><strong class="title">联系我们</strong></div>
-                    <div style="color: #999;font-weight: 400">
-                        <p>您的信任是对我们最大的肯定，我们随时为您提供相关服务，敬请关注一下QQ号、微信号或者Email给我们。
-                            <br>客服微信号: ICO.TT
-                            <br>客服QQ: 2318798407
-                            <br>官方QQ群: 389428765
-                            <br>Email:2318798407@qq.com
-                        </p>
-                    </div>
-                </aside>
-            </div>
-        </footer>
+    <footer id="footer-sec">
+        <div class="container">
+            <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
+                <div class="widget-section-title"><strong class="title">关于我们</strong></div>
+                <div style="color: #999;font-weight: 400">
+                    <p>ICO.TT是一个专业为ICO项目提供完整服务解决方案的平台，能够帮助投资者更好的了解进行ICO的区块链项目，并且帮助投资者更好的管理自己的投资资金和投资项目。
+                        <br>ICO.TT所提供的各项服务的所有权和运营权均归ICO.TT网站所有。ICO.TT用户通过访问或使用本网站，即表示接受并同意网站协议的所有条件和条款。</p>
+                </div>
+            </aside>
+            <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
+                <div class="widget-section-title"><strong class="title">法律说明</strong></div>
+                <div style="color: #999;font-weight: 400">
+                    <p>ICO.TT的所有运营行为将会尊重客户所在地相关法律和法规，本网站法律声明未涉及的问题参见当地国家有关法律法规，当本声明与当地国家法律法规冲突时，以当地国家法律法规为准。
+                        因用户使用本网站而引起或与之相关的一切争议、权利主张或其它事项，均受当地法律法规区域的管辖。
+                    </p>
+                </div>
+            </aside>
+            <aside class="col-lg-4 col-md-4 col-sm-6 widget widget_categories">
+                <div class="widget-section-title"><strong class="title">联系我们</strong></div>
+                <div style="color: #999;font-weight: 400">
+                    <p>您的信任是对我们最大的肯定，我们随时为您提供相关服务，敬请关注一下QQ号、微信号或者Email给我们。
+                        <br>客服微信号: ICO.TT
+                        <br>客服QQ: 2318798407
+                        <br>官方QQ群: 389428765
+                        <br>Email:2318798407@qq.com
+                    </p>
+                </div>
+            </aside>
+        </div>
+    </footer>
     <!--// Footer Widget //-->
 
     <!--// CopyRight //-->
@@ -267,8 +216,6 @@
 
 <!-- jQuery (necessary JavaScript) -->
 <script src="assets/scripts/jquery.js"></script>
-<script src="assets/scripts/app.js"></script>
-<script src="assets/scripts/jquery.js"></script>
 <script src="assets/scripts/bootstrap.min.js"></script>
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
@@ -276,6 +223,11 @@
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/jquery.jplayer.min.js"></script>
 <script src="assets/scripts/functions.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.navigation>ul').slicknav();
+    });
+</script>
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
@@ -286,7 +238,14 @@
             $("#li_login").css("display","none");
             $("#userName").text(app.getUserInfo().nickName);
         }
-
+        jQuery('.flexslider').flexslider({
+            animation: "slide",
+            prevText:"<em class='icon-arrow-left9'></em>",
+            nextText:"<em class='icon-arrow-right9'></em>",
+            start: function(slider){
+                jQuery('body').removeClass('loading');
+            }
+        });
         // 获取所有公告信息以及通知
         $.ajax({
             url: "/message/getNotifyMessage",
@@ -299,15 +258,15 @@
                         $("#notify").css("display", "none");
                     } else {
                         $.each(notifyMessages, function (i, item) {
-                            $("#notifyList").append(
-                                    "<li><div class='text'><h4><a href='#' style='color: #ffffff;'>" + item.content + "</a></h4></div></li>"
+                            $("#notifyList").children('li').append(
+                                    "<a><p>" + item.content + "</p></a><hr>"
                             );
                         });
                         jQuery('.flexslider').flexslider({
                             animation: "slide",
-                            prevText: "<em class='icon-arrow-left9'></em>",
-                            nextText: "<em class='icon-arrow-right9'></em>",
-                            start: function (slider) {
+                            prevText:"<em class='icon-arrow-left9'></em>",
+                            nextText:"<em class='icon-arrow-right9'></em>",
+                            start: function(slider){
                                 jQuery('body').removeClass('loading');
                             }
                         });
@@ -315,7 +274,6 @@
                 } else {
                     $("#haveNews").css("display", "none");
                     $("#noNews").css("display", "block");
-//                    $("#notify").css("display", "none");
                 }
             },
             error: function (xhr, type, errerThrown) {
@@ -399,3 +357,5 @@
 </script>
 </body>
 </html>
+
+
