@@ -47,6 +47,10 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="assets/scripts/app.js"></script>
+    <script>
+        if(!Object.keys(app.getUserInfo()).length) location.href = "sign.html";
+    </script>
 </head>
 <body>
 <div class="wrapper">
@@ -325,19 +329,13 @@
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
-<script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "sign.html";
-//            $("#personInfo").css('display', 'none');
-        } else {
-            $("#personInfo").css('display', 'block');
-            $("#userName").text(app.getUserInfo().nickName);
-        }
+        $("#personInfo").css('display', 'block');
+        $("#userName").text(app.getUserInfo().nickName);
         var pid = app.getQueryString("pid");
         var projectName = decodeURI(app.getQueryString("name"));
         var userWallet = app.getUserInfo().userWallets;
@@ -345,10 +343,10 @@
         var ETHBalance = null;
         //添加用户钱包信息
         $.each(userWallet, function (i, item) {
-            if(item.tokenMoneyEnName == "ETH"){
+            if(item.tokenMoneyEnName === "ETH"){
                 ETHBalance = item.walletBalance;
             }
-            if(item.tokenMoneyEnName == "BTC"){
+            if(item.tokenMoneyEnName === "BTC"){
                 BTCBalance = item.walletBalance.substring(0,item.walletBalance.length-3);
             }
             $("#numMoney").append(
