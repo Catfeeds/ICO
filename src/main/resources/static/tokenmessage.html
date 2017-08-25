@@ -68,7 +68,7 @@
                             <li><a href="under.html">即将ICO</a></li>
                             <li><a href="listing.html">已结束ICO</a></li>
                             <li><a href="blogmedium.html">新闻媒体</a></li>
-                            <li><a href="sign.html">登录/注册</a></li>
+                            <li id="li_login"><a href="sign.html">登录/注册</a></li>
                             <li><a href="#">关于</a><i class="icon-arrow-down8"></i>
                                 <ul class="sub-dropdown">
                                     <li><a href="about.html">关于我们</a></li>
@@ -79,11 +79,11 @@
                     </nav>
 
                 </div>
-                <div class="right-side">
+                <div class="right-side" style="margin-right:20%">
                     <div class="profile-view">
                         <ul id="personInfo" style="display:none">
                             <li>
-                                <img alt="#" src="assets/extra-images/user-img.jpg">
+                                <a href="contect.html"><img src="assets/extra-images/user-img.jpg"></a>
                                 <i class="icon-arrow-down8"></i>
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
@@ -335,6 +335,7 @@
 <script type="text/javascript">
     jQuery(window).load(function () {
         $("#personInfo").css('display', 'block');
+        $("#li_login").css('display', 'none');
         $("#userName").text(app.getUserInfo().nickName);
         var pid = app.getQueryString("pid");
         var projectName = decodeURI(app.getQueryString("name"));
@@ -382,6 +383,9 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
+                    if(!result.data){
+                        app.myAlert("", "详情信息为空!", "warning","tokeninvestment.html");
+                    }
                     var jshb = "";
                     //接收货币数据
                     var inputTokenDetails = result.data.projectInfo.inputTokenDetails;

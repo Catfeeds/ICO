@@ -44,7 +44,7 @@
                             <li><a href="listing.html">已结束ICO</a></li>
                             <li><a href="blogmedium.html">新闻媒体</a></li>
                             <li><a href="sign.html">登录/注册</a></li>
-                            <li><a href="#">关于</a><i class="icon-arrow-down8"></i>
+                            <li><a>关于</a><i class="icon-arrow-down8"></i>
                                 <ul class="sub-dropdown">
                                     <li><a href="about.html">关于我们</a></li>
                                     <li><a href="services.html">服务与帮助</a></li>
@@ -361,18 +361,17 @@
             contentType: "application/json; charset=utf-8",
             success: function (result) {
                 if (result.code == 200) {
-                    app.myAlert("","注册成功，请登录!","success");
-                    location.href = "sign.html";
+                    app.myAlert("","注册成功，请登录!","success","sign.html");
                     $("#sign_name").text(result.data.userInfo.emailAccount);
                 }
                 else {
-                    sweetAlert(result.message);
+                    app.myAlertWithoutFunction("",result.message,"warning");
                     return;
                     console.log("注册失败!");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试!","error");
+                app.myAlertWithoutFunction("","网络异常,请稍候再试!","error");
                 return;
             }
         });
@@ -382,11 +381,11 @@
         var signName = $("#sign_name").val();
         var signPassword = $("#sign_password").val();
         if (signName.length <= 0) {
-            app.myAlert(" ","用户名不能为空","warning");
+            app.myAlertWithoutFunction(" ","用户名不能为空","warning");
             return false;
         }
         if (signPassword.length <= 0) {
-            app.myAlert(" ","密码不能为空","warning");
+            app.myAlertWithoutFunction(" ","密码不能为空","warning");
             return false;
         }
         var json = {emailAccount: signName, password: signPassword};
@@ -404,11 +403,11 @@
                     location.href = "contect.html";
                 }
                 else {
-                    app.myAlert("","登录失败!"+result.message,"error");
+                    app.myAlertWithoutFunction("","登录失败!"+result.message,"error");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试!","error");
+                app.myAlertWithoutFunction("","网络异常,请稍候再试!","error");
             }
         });
     }
