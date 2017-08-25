@@ -7,10 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.*;
 import com.tongwii.ico.service.*;
-import com.tongwii.ico.util.CurrentConfigEnum;
-import com.tongwii.ico.util.DesEncoder;
-import com.tongwii.ico.util.EthConverter;
-import com.tongwii.ico.util.TokenMoneyEnum;
+import com.tongwii.ico.util.*;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.ECKey;
@@ -62,10 +59,6 @@ public class ProjectController {
     public Result add(@RequestBody Project project) {
         projectService.save(project);
         // 生成项目钱包，保存钱包信息
-
-        // 比特币钱包
-        // 使用des加密密钥
-        DesEncoder desEncoder = new DesEncoder();
         TokenMoney bitCoin = tokenMoneyService.findByENShortName(TokenMoneyEnum.BTC.name());
         ProjectWallet bitCoinWallet = new ProjectWallet();
         bitCoinWallet.setTokenMoneyId(bitCoin.getId());
@@ -82,7 +75,13 @@ public class ProjectController {
         Address addressFromKey = bitCoinKey.toAddress(netParams);
 
         bitCoinWallet.setWalletAddress(addressFromKey.toBase58());
-        bitCoinWallet.setWalletPrivateKey(desEncoder.encrypt(bitCoinKey.getPrivateKeyAsHex()));
+        try {
+            String key1 =  RSAEncodeUtil.encrypt(Hex.toHexString(bitCoinKey.getPrivKeyBytes()));
+            bitCoinWallet.setWalletPrivateKey(key1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         bitCoinWallet.setDes("比特币钱包");
         projectWalletService.save(bitCoinWallet);
 
@@ -93,7 +92,12 @@ public class ProjectController {
         ethWallet.setProjectId(project.getId());
         org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
         ethWallet.setWalletAddress(Hex.toHexString(ethKey.getAddress()));
-        ethWallet.setWalletPrivateKey(desEncoder.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
+        try {
+            String key2 =  RSAEncodeUtil.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes()));
+            ethWallet.setWalletPrivateKey(key2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ethWallet.setDes("以太坊钱包");
         projectWalletService.save(ethWallet);
 

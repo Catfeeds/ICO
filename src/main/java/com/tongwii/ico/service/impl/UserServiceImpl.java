@@ -6,7 +6,9 @@ import com.tongwii.ico.model.*;
 import com.tongwii.ico.service.*;
 import com.tongwii.ico.util.CurrentConfigEnum;
 import com.tongwii.ico.util.DesEncoder;
+import com.tongwii.ico.util.RSAEncodeUtil;
 import com.tongwii.ico.util.TokenMoneyEnum;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
@@ -102,9 +104,13 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         Address addressFromKey = bitCoinKey.toAddress(netParams);
 
         bitCoinWallet.setTokenMoneyUrl(addressFromKey.toBase58());
-        // 使用des加密密钥
-        DesEncoder desEncoder = new DesEncoder();
-        bitCoinWallet.setTokenPrivateKey(desEncoder.encrypt(bitCoinKey.getPrivateKeyAsHex()));
+        // 使用RAS公钥加密
+        try {
+           String key =  RSAEncodeUtil.encrypt(bitCoinKey.getPrivateKeyAsHex());
+            bitCoinWallet.setTokenPrivateKey(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         bitCoinWallet.setDes("比特币钱包");
         bitCoinWallet.setType(IN_PUT.getValue());
         bitCoinWallet.setState(1);
@@ -117,8 +123,13 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         ethWallet.setUserId(user.getId());
         org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
         ethWallet.setTokenMoneyUrl(TypeConverter.toJsonHex(ethKey.getAddress()));
-        // 使用des加密密钥
-        ethWallet.setTokenPrivateKey(desEncoder.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes())));
+        // 使用RAS公钥加密
+        try {
+            String key1 =  RSAEncodeUtil.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes()));
+            ethWallet.setTokenPrivateKey(key1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ethWallet.setDes("以太坊钱包");
         ethWallet.setType(IN_PUT.getValue());
         ethWallet.setState(1);
