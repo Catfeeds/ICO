@@ -1,6 +1,7 @@
 package com.tongwii.ico.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "user_project_invest_record")
@@ -23,6 +24,18 @@ public class UserProjectInvestRecord {
 
     @Column(name = "lock_date")
     private Date lockDate;
+
+    @Transient
+    private TokenMoney tokenMoney;
+
+    @Transient
+    private Project project;
+
+    @Transient
+    private ProjectWallet projectWallet;
+
+    @Transient
+    private UserWallet userWallet;
 
     /**
      * @return id
@@ -106,5 +119,37 @@ public class UserProjectInvestRecord {
      */
     public void setLockDate(Date lockDate) {
         this.lockDate = lockDate;
+    }
+
+    public TokenMoney getTokenMoney() {
+        return tokenMoney;
+    }
+
+    public void setTokenMoney(TokenMoney tokenMoney) {
+        this.tokenMoney = tokenMoney;
+    }
+
+    public ProjectWallet getProjectWallet() {
+        return projectWallet;
+    }
+
+    public void setProjectWallet(ProjectWallet projectWallet) {
+        this.projectWallet = projectWallet;
+    }
+
+    public UserWallet getUserWallet() {
+        return userWallet;
+    }
+
+    public void setUserWallet(UserWallet userWallet) {
+        this.userWallet = userWallet;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

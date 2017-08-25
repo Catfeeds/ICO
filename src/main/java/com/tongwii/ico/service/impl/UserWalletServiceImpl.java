@@ -52,22 +52,9 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
         List<Object> userWalletList = new ArrayList<Object>();
         for(int i=0;i<userWallets.size();i++){
             JSONObject wallet = new JSONObject();
-
-            // 根据用户钱包地址获取用户钱包余额
-            // 首先获取钱包的类型
-            String walletName = tokenMoneyService.findById(userWallets.get(i).getTokenMoneyId()).getNameEnShort();
-            String balance = "";
-            if(walletName.equals(TokenMoneyEnum.ETH.name())){
-                // 获取以太币钱包余额
-                balance = transactionService.getEthAddressBalance(userWallets.get(i).getTokenMoneyUrl());
-            }else{
-                // 获取比特币钱包余额
-                balance = transactionService.getBitCoinAddressBalance(userWallets.get(i).getTokenMoneyUrl());
-            }
             wallet.put("tokenMoneyId",userWallets.get(i).getTokenMoneyId());
 //            wallet.put("tokenMoneyURL",userWallets.get(i).getTokenMoneyUrl());
             wallet.put("walletState",userWallets.get(i).getState());
-            wallet.put("walletBalance", balance);
             wallet.put("tokenMoneyName",tokenMoneyService.findById(userWallets.get(i).getTokenMoneyId()).getName());
             wallet.put("tokenMoneyEnName",tokenMoneyService.findById(userWallets.get(i).getTokenMoneyId()).getNameEnShort());
             userWalletList.add(wallet);

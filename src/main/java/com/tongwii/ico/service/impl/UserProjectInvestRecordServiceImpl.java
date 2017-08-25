@@ -7,7 +7,9 @@ import com.tongwii.ico.core.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 
 
 /**
@@ -19,4 +21,14 @@ public class UserProjectInvestRecordServiceImpl extends AbstractService<UserProj
     @Autowired
     private UserProjectInvestRecordMapper userProjectInvestRecordMapper;
 
+    @Override
+    public List<UserProjectInvestRecord> findByUserId(Integer userId) {
+        UserProjectInvestRecord userProjectInvestRecord = new UserProjectInvestRecord();
+        userProjectInvestRecord.setUserId(userId);
+        List<UserProjectInvestRecord> userProjectInvestRecords = userProjectInvestRecordMapper.select(userProjectInvestRecord);
+        if(CollectionUtils.isEmpty(userProjectInvestRecords)){
+            return null;
+        }
+        return userProjectInvestRecords;
+    }
 }
