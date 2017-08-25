@@ -85,8 +85,8 @@ public class UserWalletController {
         try{
             // 获取用户的输入交易钱包
             List<UserWallet> userWallets = userWalletService.findWalletByUser(userId, UserWallet.WalletType.IN_PUT.getValue());
-            UserWallet BTCWallet = new UserWallet();
-            UserWallet ETHWallet = new UserWallet();
+            UserWallet BTCWallet = null;
+            UserWallet ETHWallet = null;
 
             // 根据用户钱包地址获取用户钱包余额
             // 首先获取钱包的类型

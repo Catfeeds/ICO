@@ -1,18 +1,14 @@
 package com.tongwii.ico.service.impl;
 
 import com.tongwii.ico.dao.ProjectUserRelationMapper;
-import com.tongwii.ico.model.Project;
 import com.tongwii.ico.model.ProjectUserRelation;
-import com.tongwii.ico.service.ProjectService;
 import com.tongwii.ico.service.ProjectUserRelationService;
 import com.tongwii.ico.core.AbstractService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,7 +39,7 @@ public class ProjectUserRelationServiceImpl extends AbstractService<ProjectUserR
         projectUserRelation.setProjectId(projectId);
         projectUserRelation.setUserId(userId);
         List<ProjectUserRelation> projectUserRelations = projectUserRelationMapper.select(projectUserRelation);
-        if(CollectionUtils.isEmpty(projectUserRelations)){
+        if(CollectionUtils.isNotEmpty(projectUserRelations)){
             return true;
         }else{
             return false;

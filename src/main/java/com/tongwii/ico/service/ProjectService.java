@@ -3,6 +3,7 @@ import com.tongwii.ico.model.Project;
 import com.tongwii.ico.core.Service;
 import com.tongwii.ico.model.TokenDetail;
 import com.tongwii.ico.model.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,4 +43,5 @@ public interface ProjectService extends Service<Project> {
     List<Project> findProjectByState(Integer state);
 
     List<Project> test();
+  
 }

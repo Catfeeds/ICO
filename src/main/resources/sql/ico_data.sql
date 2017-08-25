@@ -41,8 +41,8 @@ INSERT INTO `token_money` VALUES (2, '以太坊', 'ETH', NULL, NULL, NULL, NULL)
 -- Records of token_detail
 -- ----------------------------
 
-INSERT INTO `token_detail` VALUES (1, 1, NULL, 1000, 6000, 10000, NULL, NULL, 1,1);
-INSERT INTO `token_detail` VALUES (2, 2, NULL, 20, 50, 20, NULL, NULL, 1,2);
+INSERT INTO `token_detail` VALUES (1, 1, NULL, 1000, 6000, 10000, NULL, NULL, 1, 1);
+INSERT INTO `token_detail` VALUES (2, 2, NULL, 20, 50, 20, NULL, NULL, 1, 2);
 
 -- ----------------------------
 -- Records of user_wallet

@@ -78,7 +78,7 @@
                     </nav>
 
                 </div>
-                <div class="right-side">
+                <div class="right-side" style="margin-right:20%">
                     <div class="profile-view">
                         <ul id="personInfo" style="display:none">
                             <li>
@@ -160,9 +160,6 @@
                                             <a href="addphone.html"> 添加手机号码</a>
                                         </li>
                                     </ul>
-                                </li>
-                                <li>
-                                    <a id="signOut" style="cursor:pointer"> 退出登录</a>
                                 </li>
                             </ul>
                         </aside>
@@ -453,11 +450,6 @@
     });
 
     $("#sign_out").click(function () {
-        $("#personInfo").css('display', 'none');
-        app.setUserInfo({});
-        location.href = "index.html";
-    });
-    $("#signOut").click(function () {
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});
         location.href = "index.html";

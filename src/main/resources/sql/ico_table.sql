@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/25 8:58:36                            */
+/* Created on:     2017/8/25 11:16:01                           */
 /*==============================================================*/
 
 
@@ -174,6 +174,7 @@ create table token_detail
   token_money_whitePaper_cn_url varchar(255),
   token_money_whitePaper_en_url varchar(255),
   input_token_money_project_id int(11) unsigned,
+  type                 tinyint default 1,
   primary key (id)
 );
 

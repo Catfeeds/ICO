@@ -75,7 +75,7 @@ public class AuthController {
             // 返回
             return Result.successResult().add( "token", token ).add("userInfo", userInfo);
         } catch (AuthenticationException e) {
-            return Result.failResult(e.getMessage());
+            return Result.failResult("用户名或密码错误");
         }
     }
 

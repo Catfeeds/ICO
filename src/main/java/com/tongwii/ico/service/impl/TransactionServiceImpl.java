@@ -56,6 +56,17 @@ public class TransactionServiceImpl implements TransactionsService {
         return Coin.valueOf(0).toFriendlyString();
     }
 
+    @Override
+    public String getEthAddressBalance(String address) {
+        Map<String, String> params = Maps.newHashMap();
+        params.put("address", address);
+        String response = RestTemplateUtil.restTemplate(ETH_HOST+"/api?module=account&action=balance&address={address}&tag=latest&apikey="+ethApiKey, null, String.class, params, HttpMethod.GET);
+        JSONObject result = JSON.parseObject(response);
+        if(result.getIntValue("status") == 1) {
+            return EthConverter.fromWei(result.getBigDecimal("result"), EthConverter.Unit.ETHER) + " " + EthConverter.Unit.ETHER.toString().toUpperCase();
+        }
+        return "0.00 "+EthConverter.Unit.ETHER.toString().toUpperCase();
+    }
 
     @Override
     public JSONArray getBitCoinAddressTransaction(String address) {
@@ -95,17 +106,6 @@ public class TransactionServiceImpl implements TransactionsService {
         return null;
     }
 
-    @Override
-    public String getEthAddressBalance(String address) {
-        Map<String, String> params = Maps.newHashMap();
-        params.put("address", address);
-        String response = RestTemplateUtil.restTemplate(ETH_HOST+"/api?module=account&action=balance&address={address}&tag=latest&apikey="+ethApiKey, null, String.class, params, HttpMethod.GET);
-        JSONObject result = JSON.parseObject(response);
-        if(result.getIntValue("status") == 1) {
-            return EthConverter.fromWei(result.getBigDecimal("result"), EthConverter.Unit.ETHER) + EthConverter.Unit.ETHER.toString().toUpperCase();
-        }
-        return "0.0"+EthConverter.Unit.ETHER.toString().toUpperCase();
-    }
 
 /*    @Override
     public String sendBitCoin(String fromAddress, String recipient, String amountToSend) {
