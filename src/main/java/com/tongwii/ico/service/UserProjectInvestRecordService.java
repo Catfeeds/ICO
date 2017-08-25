@@ -23,4 +23,12 @@ public interface UserProjectInvestRecordService extends Service<UserProjectInves
      */
     List<UserProjectInvestRecord> findByProjectId(Integer projectId);
 
+    /**
+     * 保存锁定记录并更新项目进度
+     * @param userId
+     * @param coinId
+     * @param projectId
+     * @param investmentMoney
+     */
+    void saveRecordAndUpdateProjectProjess(Integer userId, Integer coinId, Integer projectId, String investmentMoney);
 }

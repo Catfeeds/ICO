@@ -186,15 +186,14 @@
                                       class="form-horizontal mb-lg" method="post">
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            <label class="col-md-10" style="padding-left:40px;">单用户以太币最低投资金额为 <span
-                                                    style="font-size:18px;font-weight:bold;color:#FF8000;">.01</span>
-                                                ETH</label><label class="col-md-10" style="padding-left:40px;"><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></label>
+                                            <label class="col-md-10" style="padding-left:40px;">单用户代币最低投资金额为 <span
+                                                    style="font-size:18px;font-weight:bold;color:#FF8000;">0.01</span>
+                                                ETHER/BTC</label><label class="col-md-10" style="padding-left:40px;"><b>最低投资金额为本用户在本项目单次投资金额下限，非累计投资金额下限。</b></label>
                                         </div>
                                         <input type="hidden" value="2" name="investtype" id="investtype2">
                                         <div class="form-group">
                                             <div class="col-sm-12" style="padding-left:80px;">我将投资
-                                                <input type="text" style="width:60px;" id="inputmoney"
-                                                       onkeyup="value=value.replace(/[^\d.]/g,'')">
+                                                <input type="text" style="width: 70px; max-width: 120px;" id="inputmoney">
                                                 <select style="width:80px;" id="moneytype2">
                                                 </select>
                                                 到正在ICO项目 <span style="font-size:18px;font-weight:bold;color:#FF8000;"
@@ -205,8 +204,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-12" style="padding-left:10%;">
                                                 <input type="button" class="cs-bgcolor btn" id="commit"
-                                                       data-toggle="modal" style="color: #ffffff; font-weight: bold;"
-                                                       data-target="#formModal" value="递交委托单"/>
+                                                       style="color: #ffffff; font-weight: bold;" value="递交委托单"/>
                                             </div>
                                         </div>
 
@@ -237,7 +235,7 @@
                                                                data-dismiss="modal"
                                                                style="color: #ffffff; font-weight: bold;"
                                                                value="取消"/>
-                                                        <input type="button" class="cs-bgcolor btn" id="makesure"
+                                                        <input type="button" disabled class="cs-bgcolor btn" id="makesure"
                                                                data-dismiss="modal"
                                                                style="color: #ffffff; font-weight: bold;"
                                                                value="确定"/>
@@ -335,7 +333,6 @@
 <script type="text/javascript">
     jQuery(window).load(function () {
         $("#personInfo").css('display', 'block');
-        $("#li_login").css('display', 'none');
         $("#userName").text(app.getUserInfo().nickName);
         var pid = app.getQueryString("pid");
         var projectName = decodeURI(app.getQueryString("name"));
@@ -365,11 +362,11 @@
                         );
                     });
                 } else {
-//                    app.myAlert("", result.message, "warning","tokeninvestment.html");
+                    app.myAlert("", result.message, "warning","tokeninvestment.html");
                 }
             },
             error: function (xhr, type, errerThrown) {
-//                app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
+                app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
                 return;
             }
         });
@@ -383,25 +380,21 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
-                    if(!result.data){
-                        app.myAlert("", "详情信息为空!", "warning","tokeninvestment.html");
-                    }
-                    var jshb = "";
+                    var jshb = [];
                     //接收货币数据
                     var inputTokenDetails = result.data.projectInfo.inputTokenDetails;
-                    //接收货币
-                    $.each(inputTokenDetails, function (i, item) {
-                        if (jshb == "") {
-                            jshb = item.tokenMoney.nameEnShort;
-                        } else {
-                            jshb = "," + item.tokenMoney.nameEnShort;
-                        }
-                    });
-                    if (jshb != "") {
-                        var types = jshb.split(",");
-                        $.each(types, function (i, item) {
-                            $("#moneytype2").append("<option value='" + item + "'>" + item + "</option>");
+                    if(!inputTokenDetails.length) {
+                        app.myAlert("", "接收代币为空", "warning","tokeninvestment.html");
+                    } else {
+                        //接收货币
+                        $.each(inputTokenDetails, function (i, item) {
+                            jshb.push(item.tokenMoney);
                         });
+                        if (jshb.length > 0) {
+                            $.each(jshb, function (i, item) {
+                                $("#moneytype2").append("<option value='" + item.id + "'>" + item.nameEnShort + "</option>");
+                            });
+                        }
                     }
                 } else {
                     app.myAlert("", result.message, "warning","tokeninvestment.html");
@@ -415,64 +408,83 @@
         $("#projectName").text(projectName);
 
         $("#commit").click(function () {
-            if ($("#inputmoney").val()) {
-                $("#MoneyNumber").text($("#inputmoney").val().toString());
-            } else {
-                $("#MoneyNumber").text(0.00);
-            }
-            $("#Showproject").text(projectName);
-            $("#Showmoneytype").text($('option').attr("value"));
-        });
+            if ($("#inputmoney").val() /*&& $("#inputmoney").val() > 0*/) {
+                var cionType = $('#moneytype2').val();
 
-        $("#makesure").click(function () {
-            var cionType = $('option').attr("value");
-            var investmentMoney = $("#inputmoney").val().toString();
-
-            if($("#inputmoney").val()){
-                if(cionType == "ETH"){
+                if(cionType === "1"){
                     if($("#inputmoney").val().toString() > ETHBalance){
                         app.myAlertWithoutFunction("","您的余额不足!","warning");
                         return;
                     }
                 }
-                if(cionType == "BTC"){
+                if(cionType === "2"){
                     if($("#inputmoney").val().toString() > BTCBalance){
                         app.myAlertWithoutFunction("","您的余额不足!","warning");
                         return;
                     }
                 }
-                if( !$("input[type='checkbox']").is(':checked')){
-                    app.myAlertWithoutFunction("","请选择必填项!","warning");
-                    return;
-                }
+                $("#MoneyNumber").text($("#inputmoney").val().toString());
+                $("#Showproject").text(projectName);
+                $("#Showmoneytype").text($('option').text());
+                $('#formModal').modal('show');
+            } else {
+                app.myAlert("", "请输入锁定金额", "warning");
+                return;
+            }
+        });
 
-                var json = {cionType:cionType,projectId:pid,investmentMoney:investmentMoney};
-                $.ajax({
-                    url: "/token/money/transaction",
-                    type: 'POST',
-                    timeout: 10000,//超时时间设置为10秒；
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(json),
-                    dataType: "json",
-                    headers: app.createAuthorizationTokenHeader(),
-                    success: function (result) {
-                        if (result.code == 200) {
-                            app.myAlert("", result.message, "success","tokeninvestment.html");
-                            return;
-                        } else {
-                            app.myAlert("", result.message, "warning","tokeninvestment.html");
-                            return;
-                        }
-                    },
-                    error: function (xhr, type, errerThrown) {
-                        app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
+        $("input[type='checkbox']").click(function () {
+            if($(this).is(":checked")) {
+                $("#makesure").removeAttr("disabled");
+            } else {
+                $("#makesure").attr("disabled", true);
+            }
+        });
+
+
+        $("#inputmoney").keyup(function () {
+            var reg = $(this).val().match(/\d+\.?\d{0,2}/);
+            var txt = '';
+            if (reg != null) {
+                txt = reg[0];
+            }
+            $(this).val(txt);
+        }).change(function () {
+            $(this).keypress();
+            var v = $(this).val();
+            if (/\.$/.test(v))
+            {
+                $(this).val(v.substr(0, v.length - 1));
+            }
+        });
+
+        $("#makesure").click(function () {
+
+            var investmentMoney = $("#inputmoney").val().toString();
+
+            var json = {coinId:$('#moneytype2').val(),projectId:pid,investmentMoney:investmentMoney};
+            $.ajax({
+                url: "/token/money/transaction",
+                type: 'POST',
+                timeout: 10000,//超时时间设置为10秒；
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                dataType: "json",
+                headers: app.createAuthorizationTokenHeader(),
+                success: function (result) {
+                    if (result.code == 200) {
+                        app.myAlert("", result.message, "success","tokeninvestment.html");
+                        return;
+                    } else {
+                        app.myAlert("", result.message, "warning","tokeninvestment.html");
                         return;
                     }
-                });
-            }else{
-                app.myAlertWithoutFunction("", "投资数目不可为0!", "warning");
-            }
-
+                },
+                error: function (xhr, type, errerThrown) {
+                    app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
+                    return;
+                }
+            });
         });
     });
 

@@ -7,7 +7,7 @@
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="token_money_id" jdbcType="INTEGER" property="tokenMoneyId" />
-    <result column="current_number" jdbcType="INTEGER" property="currentNumber" />
+    <result column="current_number" jdbcType="DOUBLE" property="currentNumber" />
     <result column="ico_number" jdbcType="INTEGER" property="icoNumber" />
     <result column="min_target_number" jdbcType="INTEGER" property="minTargetNumber" />
     <result column="target_number" jdbcType="INTEGER" property="targetNumber" />

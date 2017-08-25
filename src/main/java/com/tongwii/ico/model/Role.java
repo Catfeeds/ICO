@@ -72,11 +72,12 @@ public class Role {
     }
 
     public enum RoleCode {
-        ADMIN("ROLE_ADMIN", "管理员"),
-        USER("ROLE_USER", "用户");
+        ADMIN("ROLE_ADMIN", "管理员", 1),
+        USER("ROLE_USER", "用户", 2);
 
-        public String code;
+        private String code;
         private String roleName;
+        private Integer id;
 
         public String getCode() {
             return code;
@@ -86,9 +87,14 @@ public class Role {
             return roleName;
         }
 
-        RoleCode(String code, String roleName) {
+        public Integer getId() {
+            return id;
+        }
+
+        RoleCode(String code, String roleName, Integer id) {
             this.code = code;
             this.roleName = roleName;
+            this.id = id;
         }
     }
 }
