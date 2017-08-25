@@ -152,9 +152,6 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a id="signOut" style="cursor:pointer"> 退出登录</a>
-                                </li>
                             </ul>
                         </aside>
                     </div>
@@ -551,12 +548,6 @@
         });
 
         $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
-//        列表中退出登录的触发事件
-        $("#signOut").click(function () {
             $("#personInfo").css('display', 'none');
             app.setUserInfo({});
             location.href = "index.html";
