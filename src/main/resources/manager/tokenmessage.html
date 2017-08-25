@@ -430,7 +430,7 @@
         $("#name1").append(userName);
         var moneyId = app.getQueryString("id")
         $.ajax({
-            url: "/token/money/"+moneyId,
+            url: app.getServerUrl()+"/token/money/"+moneyId,
             type: 'GET',
             success: function (result) {
                 if (result.code == 200) {
@@ -492,7 +492,7 @@
                 twitterUrl: twitterUrl
             };
             $.ajax({
-                url: "/token/money",
+                url: app.getServerUrl()+"/token/money",
                 type: 'PUT',
                 timeout: 10000,//超时时间设置为10秒；
                 data: JSON.stringify(moneyJson),

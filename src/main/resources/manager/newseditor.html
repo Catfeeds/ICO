@@ -283,7 +283,7 @@
         var formData = new FormData($("#myform")[0]);
         var pictureUrl = null;
         $.ajax({
-            url: '/file',
+            url: app.getServerUrl()+'/file',
             type: 'POST',
             data: formData,
             async: false,
@@ -331,7 +331,7 @@
             pictureUrl: pictureUrl
         };
         $.ajax({
-            url: "/message/insertMessage", //后台接口
+            url: app.getServerUrl()+"/message/insertMessage", //后台接口
             type: 'POST',
             timeout: 10000,//超时时间设置为10秒；
             data: JSON.stringify(newsJson),
@@ -362,7 +362,7 @@
         }
         var notifyJson = {content: content, createDate: createTime, type: type};
         $.ajax({
-            url: "/message/insertMessage", //后台接口
+            url: app.getServerUrl()+"/message/insertMessage", //后台接口
             type: 'POST',
             timeout: 10000,//超时时间设置为10秒；
             data: JSON.stringify(notifyJson),

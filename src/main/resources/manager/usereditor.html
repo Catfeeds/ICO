@@ -431,7 +431,7 @@
         $("#name1").append(userName);
         var userId = app.getQueryString("id");
         $.ajax({
-            url: "/user/"+userId,
+            url: app.getServerUrl()+"/user/"+userId,
             type: 'GET',
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
@@ -510,7 +510,7 @@
                 enabled: enabled
             };
             $.ajax({
-                url: "/user",
+                url: app.getServerUrl()+"/user",
                 type: 'PUT',
                 timeout: 10000,//超时时间设置为10秒；
                 data: JSON.stringify(userJson),

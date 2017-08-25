@@ -360,7 +360,7 @@
 
         var id = app.getQueryString("id");
         $.ajax({
-            url: "/project/"+id,
+            url: app.getServerUrl()+"/project/"+id,
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             contentType: "application/json; charset=utf-8",
@@ -447,7 +447,7 @@
         var formData = new FormData($("#myform")[0]);
         var pictureUrl = null;
         $.ajax({
-            url: '/file',
+            url: app.getServerUrl()+'/file',
             type: 'POST',
             data: formData,
             async: false,
@@ -470,7 +470,7 @@
         //保存图片
         var projectFileJson = {id:projectFileId,projectId:id,fileType:"image",fileUrl:pictureUrl};
         $.ajax({
-            url: '/project/file',
+            url: app.getServerUrl()+'/project/file',
             type: 'PUT',
             headers: app.createAuthorizationTokenHeader(),
             contentType: "application/json; charset=utf-8",
@@ -488,7 +488,7 @@
         });
         var projectJson = {id:id,name:enName,nameCn:cnName,startTime:startTime,endTime:endTime,partPersonNumber:partPersonNumber,des:des,thirdEndorsement:thirdEndorsement,state:state, content:content};
         $.ajax({
-            url: "/project",
+            url: app.getServerUrl()+"/project",
             type: 'PUT',
             headers: app.createAuthorizationTokenHeader(),
             contentType: "application/json; charset=utf-8",

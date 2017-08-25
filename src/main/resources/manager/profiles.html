@@ -473,7 +473,7 @@
 
         //添加可投资项目数据
         $.ajax({
-            url: "/token/money/findAll",
+            url: app.getServerUrl()+"/token/money/findAll",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
@@ -521,7 +521,7 @@
                 return;
             }
             $.ajax({
-                url: "/user/findByIdCard/" + userCard,
+                url: app.getServerUrl()+"/user/findByIdCard/" + userCard,
                 type: 'GET',
                 headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
@@ -607,7 +607,7 @@
             var pictureUrl = null;
             //上传图片
             $.ajax({
-                url: '/file',
+                url: app.getServerUrl()+'/file',
                 type: 'POST',
                 data: formData,
                 async: false,
@@ -655,7 +655,7 @@
                         var prjId;
                         var prjjson = {name: prjname,nameCn:nameCn,startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
                         $.ajax({
-                            url: "/project/add",
+                            url: app.getServerUrl()+"/project/add",
                             type: 'POST',
                             headers: app.createAuthorizationTokenHeader(),
 //                            timeout: 10000,//超时时间设置为10秒；
@@ -669,7 +669,7 @@
                                     //保存图片
                                     var projectFileJson = {projectId:prjId,fileType:"image",fileUrl:pictureUrl};
                                     $.ajax({
-                                        url: '/project/file',
+                                        url: app.getServerUrl()+'/project/file',
                                         type: 'POST',
                                         headers: app.createAuthorizationTokenHeader(),
                                         contentType: "application/json; charset=utf-8",

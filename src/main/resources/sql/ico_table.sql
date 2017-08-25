@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/25 11:16:01                           */
+/* Created on:     2017/8/25 17:47:20                           */
 /*==============================================================*/
 
 
@@ -137,7 +137,7 @@ create table project_wallet
 (
   id                   int(11) unsigned not null auto_increment,
   wallet_address       varchar(255),
-  wallet_private_key   varchar(255),
+  wallet_private_key   text,
   token_money_id       int(11) unsigned,
   project_id           int(11) unsigned,
   des                  text,
@@ -167,7 +167,7 @@ create table token_detail
 (
   id                   int(11) unsigned not null auto_increment,
   token_money_id       int(11) unsigned,
-  current_number       int,
+  current_number       double,
   ico_number           int,
   min_target_number    int,
   target_number        int,
@@ -260,7 +260,7 @@ create table user_wallet
   token_money_id       int(11) unsigned,
   user_id              int(11) unsigned,
   token_money_url      varchar(255) comment '需要加密',
-  token_private_key    varchar(255),
+  token_private_key    text,
   des                  text,
   state                tinyint,
   type                 tinyint comment '- 存入钱包

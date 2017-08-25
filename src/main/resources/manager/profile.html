@@ -328,7 +328,7 @@
 
         var projectJson = {name:enName,nameCn:cnName,startTime:startTime,endTime:endTime,partPersonNumber:partPersonNumber,des:des,thirdEndorsement:thirdEndorsement,state:state};
         $.ajax({
-            url: "/project/add",
+            url: app.getServerUrl()+"/project/add",
             type: 'POST',
             headers: app.createAuthorizationTokenHeader(),
             contentType: "application/json; charset=utf-8",
