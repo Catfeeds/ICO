@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/24 20:55:11                           */
+/* Created on:     2017/8/25 8:58:36                            */
 /*==============================================================*/
 
 
@@ -229,6 +229,7 @@ create table user_project_invest_record
   id                   int(11) unsigned not null auto_increment,
   user_id              int(11) unsigned not null,
   project_id           int(11) unsigned,
+  token_id             int(11) unsigned,
   invest_value         double,
   lock_date            datetime,
   primary key (id)
@@ -312,6 +313,9 @@ references user (id) on delete restrict on update restrict;
 
 alter table user_project_invest_record add constraint fk_record_2_project_id foreign key (project_id)
 references project (id) on delete restrict on update restrict;
+
+alter table user_project_invest_record add constraint fk_record_2_token_money_id foreign key (token_id)
+references token_money (id) on delete restrict on update restrict;
 
 alter table user_role_relation add constraint fk_user_role_2_role_role_id foreign key (role_id)
 references role (id) on delete restrict on update restrict;
