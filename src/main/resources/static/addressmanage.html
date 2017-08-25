@@ -359,7 +359,7 @@
         }
 
         $.ajax({
-            url: "/token/money/findAll",
+            url: app.getServerUrl()+"/token/money/findAll",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
@@ -381,7 +381,7 @@
 
         // 获取addressList中的数据
         $.ajax({
-            url: "/user/wallet/findPaymentWallet",
+            url: app.getServerUrl()+"/user/wallet/findPaymentWallet",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             headers: app.createAuthorizationTokenHeader(),
@@ -429,7 +429,7 @@
         }
         var walletJson = {des: addressDes, tokenMoneyUrl: address, tokenMoneyId: moneyType};
         $.ajax({
-            url: "/user/wallet/addUserWallet",
+            url: app.getServerUrl()+"/user/wallet/addUserWallet",
             type: 'POST',
             timeout: 10000,//超时时间设置为10秒；
             contentType: "application/json; charset=utf-8",
@@ -460,7 +460,7 @@
         // 更改用户钱包状态
         var updateWallet = {id: id, state: -1}
         $.ajax({
-            url: "/user/wallet",
+            url: app.getServerUrl()+"/user/wallet",
             type: 'PUT',
             headers: app.createAuthorizationTokenHeader(),
             contentType: "application/json; charset=utf-8",

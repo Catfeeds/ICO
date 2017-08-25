@@ -421,7 +421,7 @@
         var coinType = coinType;
         var address = address;
         $.ajax({
-            url: "/project/getETHAddressTransaction",
+            url: app.getServerUrl()+"/project/getETHAddressTransaction",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             data: {address: address},
@@ -535,7 +535,7 @@
         var coinType = coinType;
         var address = address;
         $.ajax({
-            url: "/project/getBitCoinAddressTransaction",
+            url: app.getServerUrl()+"/project/getBitCoinAddressTransaction",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             data: {address: address},

@@ -240,7 +240,7 @@
         var page = page;
         var size = "10";
         $.ajax({
-            url: "/project/findAllProject",
+            url: app.getServerUrl()+"/project/findAllProject",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             contentType: "application/json; charset=utf-8",
@@ -399,7 +399,7 @@
     function dodel(id) {
         var projectJson = {id:id,state:-1};
         $.ajax({
-            url: "/project",
+            url: app.getServerUrl()+"/project",
             type: 'PUT',
             headers: app.createAuthorizationTokenHeader(),
             contentType: "application/json; charset=utf-8",

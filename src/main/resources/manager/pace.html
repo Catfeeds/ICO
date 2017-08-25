@@ -405,7 +405,7 @@
         var id = app.getQueryString("id");
         if(id!=undefined){
             $.ajax({
-                url: "/project/wallet/"+id,
+                url: app.getServerUrl()+"/project/wallet/"+id,
                 type: 'GET',
                 timeout: 10000,//超时时间设置为10秒；
                 contentType: "application/json; charset=utf-8",
@@ -443,7 +443,7 @@
 
         var walletJson = {id:id,des:des,walletAddress:walletAddress};
         $.ajax({
-            url: "/project/wallet",
+            url: app.getServerUrl()+"/project/wallet",
             type: 'PUT',
             timeout: 10000,//超时时间设置为10秒；
             headers: app.createAuthorizationTokenHeader(),

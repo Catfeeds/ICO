@@ -322,7 +322,7 @@
             $("#userName").text(app.getUserInfo().nickName);
         }
         $.ajax({
-            url: "/project/"+id,
+            url: app.getServerUrl()+"/project/"+id,
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             contentType: "application/json; charset=utf-8",

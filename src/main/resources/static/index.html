@@ -530,7 +530,7 @@
         });
 
         $.ajax({
-            url: "/project/findProjectsAndSort",
+            url: app.getServerUrl()+"/project/findProjectsAndSort",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {

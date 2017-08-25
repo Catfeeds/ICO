@@ -337,7 +337,7 @@
         var BTCBalance = null;
         // ajax请求用户钱包余额
         $.ajax({
-            url: "/user/wallet/findWalletByUser",
+            url: app.getServerUrl()+"/user/wallet/findWalletByUser",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             contentType: "application/json; charset=utf-8",
@@ -370,7 +370,7 @@
 
         //添加用户投资货币分类（该项目接收货币类型）
         $.ajax({
-            url: "/project/" + pid,
+            url: app.getServerUrl()+"/project/" + pid,
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             contentType: "application/json; charset=utf-8",
@@ -461,7 +461,7 @@
 
             var json = {coinId:$('#moneytype2').val(),projectId:pid,investmentMoney:investmentMoney};
             $.ajax({
-                url: "/token/money/transaction",
+                url: app.getServerUrl()+"/token/money/transaction",
                 type: 'POST',
                 timeout: 10000,//超时时间设置为10秒；
                 contentType: "application/json; charset=utf-8",
