@@ -53,7 +53,6 @@ public class UserProjectInvestRecordController {
      * @param userProjectInvestRecord
      * @return
      */
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @PostMapping
     @ResponseBody
     public Result add(@RequestBody UserProjectInvestRecord userProjectInvestRecord) {
@@ -66,7 +65,7 @@ public class UserProjectInvestRecordController {
      * @param size
      * @return
      */
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public Result findUserProjectInvestRecordByUserId(@RequestParam(required = true,defaultValue = "0") Integer page,
                                                       @RequestParam(required = true,defaultValue = "1") Integer size){
@@ -100,7 +99,7 @@ public class UserProjectInvestRecordController {
      * @param size
      * @return
      */
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/project/{projectId}")
     public Result findUserProjectInvestRecordByProjectId(@PathVariable("projectId")Integer projectId,@RequestParam(required = true,defaultValue = "0") Integer page,
                                                       @RequestParam(required = true,defaultValue = "1") Integer size){
