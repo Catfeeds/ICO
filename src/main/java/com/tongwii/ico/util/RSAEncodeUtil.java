@@ -1,36 +1,35 @@
 package com.tongwii.ico.util;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Security;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+
+import com.tongwii.ico.bean.PemFile;
 import com.tongwii.ico.exception.ApplicationException;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
-import java.io.*;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.Properties;
 
-@Component
 public class RSAEncodeUtil {
+    // 待加密文字
+    public final static String data = "hello world";
     /**
      * String to hold name of the encryption algorithm.
      */
-    public static final String ALGORITHM = "RSA";
-
-    /**
-     * 秘钥文件地址如C:/keys/private.key
-     */
-    public static String PRIVATE_KEY_FILE = null;
-
-    /**
-     * 公钥文件地址如C:/keys/public.key"
-     */
-    public static String PUBLIC_KEY_FILE = null;
-
+    public  static String RESOURCES_DIR = null;
     private static String fileDir;
 
     static {
@@ -39,165 +38,99 @@ public class RSAEncodeUtil {
         try {
             Properties properties = PropertiesLoaderUtils.loadProperties(resource);
             fileDir = properties.getProperty("publickey.location");
-            Resource publicKey = new ClassPathResource(
-                    fileDir+"/id_rsa.pub");
-            Resource privateKey = new ClassPathResource(
-                    fileDir+"/id_rsa");
-            PRIVATE_KEY_FILE = publicKey.getFile().getPath();
-            PRIVATE_KEY_FILE = privateKey.getURL().toString();
+            Resource publicKey = new ClassPathResource(fileDir);
+            RESOURCES_DIR = publicKey.getFile().toString();
+            System.out.println(RESOURCES_DIR);
         } catch (IOException e) {
             e.printStackTrace();
             throw new ApplicationException("加载配置文件出错");
         }
     }
+    public static void main(String[] args) throws FileNotFoundException, IOException, NoSuchAlgorithmException, NoSuchProviderException, Exception {
+        Security.addProvider(new BouncyCastleProvider());
 
-    /**
-     * Generate key which contains a pair of private and public key using 1024
-     * bytes. Store the set of keys in Prvate.key and Public.key files.
-     *
-     */
-    public static void generateKey() {
+
+        KeyFactory factory = KeyFactory.getInstance("RSA", "BC");
         try {
-            final KeyPairGenerator keyGen = KeyPairGenerator.getInstance(ALGORITHM);
-            keyGen.initialize(1024);
-            final KeyPair key = keyGen.generateKeyPair();
+            // 读取证书文件并解析密钥
+            PrivateKey priv = generatePrivateKey(factory, RESOURCES_DIR + "/id_rsa");
+//            LOGGER.info(String.format("私钥：%s", priv));
 
-            File privateKeyFile = new File(PRIVATE_KEY_FILE);
-            File publicKeyFile = new File(PUBLIC_KEY_FILE);
+            PublicKey pub = generatePublicKey(factory, RESOURCES_DIR + "/id_rsa.pub");
+//            LOGGER.info(String.format("公钥：%s", pub));
 
-            // Create files to store public and private key
-            if (privateKeyFile.getParentFile() != null) {
-                privateKeyFile.getParentFile().mkdirs();
-            }
-            privateKeyFile.createNewFile();
 
-            if (publicKeyFile.getParentFile() != null) {
-                publicKeyFile.getParentFile().mkdirs();
-            }
-            publicKeyFile.createNewFile();
+            // 公钥加密
+            byte[] encryptedBytes = encrypt(data.getBytes(), pub);
+            // 加密后是乱码不便于存入数据库，所以用Base64转换下
+            String eCode = Base64.encodeBase64String(encryptedBytes);
+//            LOGGER.info(String.format("加密后：%s", eCode));
+            System.out.println(String.format("加密后：%s", eCode));
 
-            // Saving the Public key in a file
-            ObjectOutputStream publicKeyOS = new ObjectOutputStream(
-                    new FileOutputStream(publicKeyFile));
-            publicKeyOS.writeObject(key.getPublic());
-            publicKeyOS.close();
-
-            // Saving the Private key in a file
-            ObjectOutputStream privateKeyOS = new ObjectOutputStream(
-                    new FileOutputStream(privateKeyFile));
-            privateKeyOS.writeObject(key.getPrivate());
-            privateKeyOS.close();
-        } catch (Exception e) {
+            // 私钥解密
+            byte[] decryptedBytes = decrypt(Base64.decodeBase64(eCode), priv);
+//            LOGGER.info(String.format("加密后：%s", new String(decryptedBytes)));
+            System.out.println(String.format("解密后：%s", new String(decryptedBytes)));
+        } catch (InvalidKeySpecException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
-     * The method checks if the pair of public and private key has been generated.
-     *
-     * @return flag indicating if the pair of keys were generated.
+     * 文件获取私钥
+     * @param factory
+     * @param filename
+     * @return
+     * @throws InvalidKeySpecException
+     * @throws FileNotFoundException
+     * @throws IOException
      */
-    public static boolean areKeysPresent() {
-
-        File privateKey = new File(PRIVATE_KEY_FILE);
-        File publicKey = new File(PUBLIC_KEY_FILE);
-
-        if (privateKey.exists() && publicKey.exists()) {
-            return true;
-        }
-        return false;
+    private static PrivateKey generatePrivateKey(KeyFactory factory, String filename) throws InvalidKeySpecException, FileNotFoundException, IOException {
+        PemFile pemFile = new PemFile(filename);
+        byte[] content = pemFile.getPemObject().getContent();
+        PKCS8EncodedKeySpec privKeySpec = new PKCS8EncodedKeySpec(content);
+        return factory.generatePrivate(privKeySpec);
     }
 
     /**
-     * Encrypt the plain text using public key.
-     *
-     * @param text
-     *          : original plain text
-     * @param key
-     *          :The public key
-     * @return Encrypted text
-     * @throws java.lang.Exception
+     * 文件获取公钥
+     * @param factory
+     * @param filename
+     * @return
+     * @throws InvalidKeySpecException
+     * @throws FileNotFoundException
+     * @throws IOException
      */
-    public static byte[] encrypt(String text, PublicKey key) {
-        byte[] cipherText = null;
-        try {
-            // get an RSA cipher object and print the provider
-            final Cipher cipher = Cipher.getInstance(ALGORITHM);
-            // encrypt the plain text using the public key
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            cipherText = cipher.doFinal(text.getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return cipherText;
+    private static PublicKey generatePublicKey(KeyFactory factory, String filename) throws InvalidKeySpecException, FileNotFoundException, IOException {
+        PemFile pemFile = new PemFile(filename);
+        byte[] content = pemFile.getPemObject().getContent();
+        X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(content);
+        return factory.generatePublic(pubKeySpec);
     }
 
     /**
-     * Decrypt text using private key.
-     *
-     * @param text
-     *          :encrypted text
-     * @param key
-     *          :The private key
-     * @return plain text
-     * @throws java.lang.Exception
+     * 公钥加密
+     * @param content
+     * @param publicKey
+     * @return
+     * @throws Exception
      */
-    public static String decrypt(byte[] text, PrivateKey key) {
-        byte[] dectyptedText = null;
-        try {
-            // get an RSA cipher object and print the provider
-            final Cipher cipher = Cipher.getInstance(ALGORITHM);
-
-            // decrypt the text using the private key
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            dectyptedText = cipher.doFinal(text);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return new String(dectyptedText);
+    private static byte[] encrypt(byte[] content, PublicKey publicKey) throws Exception {
+        Cipher cipher = Cipher.getInstance("RSA");//java默认"RSA"="RSA/ECB/PKCS1Padding"
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        return cipher.doFinal(content);
     }
 
     /**
-     * Test the EncryptionUtil
+     * 私钥解密
+     * @param content
+     * @param privateKey
+     * @return
+     * @throws Exception
      */
-    public static void main(String[] args) {
-
-        try {
-
-            /*// Check if the pair of keys are present else generate those.
-            if (!areKeysPresent()) {
-                // Method generates a pair of keys using the RSA algorithm and stores it
-                // in their respective files
-                generateKey();
-            }*/
-
-            // Check if the pair of keys are present else generate those.
-            if (areKeysPresent()) {
-                final String originalText = "Text to be encrypted ";
-                ObjectInputStream inputStream = null;
-
-                // Encrypt the string using the public key
-                inputStream = new ObjectInputStream(new FileInputStream(PUBLIC_KEY_FILE));
-                final PublicKey publicKey = (PublicKey) inputStream.readObject();
-                final byte[] cipherText = encrypt(originalText, publicKey);
-
-                // Decrypt the cipher text using the private key.
-                inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
-                final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
-                final String plainText = decrypt(cipherText, privateKey);
-
-                // Printing the Original, Encrypted and Decrypted Text
-                System.out.println("Original: " + originalText);
-                System.out.println("Encrypted: " +cipherText.toString());
-                System.out.println("Decrypted: " + plainText);
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private static byte[] decrypt(byte[] content, PrivateKey privateKey) throws Exception {
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        return cipher.doFinal(content);
     }
 }
