@@ -283,7 +283,7 @@
 
         // 请求服务器，查询系统中所有交易单号的交易信息详情
         $.ajax({
-            url: "/project/user/wallet/relation/getUserTransaction",
+            url: app.getServerUrl()+"/project/user/wallet/relation/getUserTransaction",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             headers:app.createAuthorizationTokenHeader(),

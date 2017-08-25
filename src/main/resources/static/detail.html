@@ -168,7 +168,7 @@
             $("#userName").text(app.getUserInfo().nickName);
         }
         $.ajax({
-            url: "/message/"+id,
+            url: app.getServerUrl()+"/message/"+id,
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             timeout: 10000,//超时时间设置为10秒；

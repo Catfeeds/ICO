@@ -280,7 +280,7 @@
         }
 
         $.ajax({
-            url: "/user/wallet/findWalletByUser",
+            url: app.getServerUrl()+"/user/wallet/findWalletByUser",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             headers: app.createAuthorizationTokenHeader(),

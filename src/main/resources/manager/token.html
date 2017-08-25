@@ -431,7 +431,7 @@
         var page = page;
         var size = "10";
         $.ajax({
-            url: "/token/money",
+            url: app.getServerUrl()+"/token/money",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             data: {page: page, size: size},
@@ -535,7 +535,7 @@
     }
     function dodel(id) {
         $.ajax({
-            url: "/token/money/" + id,
+            url: app.getServerUrl()+"/token/money/" + id,
             type: 'Delete',
             success: function (result) {
                 if (result.code == 200) {

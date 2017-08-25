@@ -464,7 +464,7 @@
                     twitterUrl: twitterUrl
                 };
                 $.ajax({
-                    url: "/token/money",
+                    url: app.getServerUrl()+"/token/money",
                     type: 'POST',
                     timeout: 10000,//超时时间设置为10秒；
                     data: JSON.stringify(moneyJson),

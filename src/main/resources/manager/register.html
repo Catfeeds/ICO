@@ -85,7 +85,7 @@
 
           var registJson = {emailAccount: email, nickName: userName, idCard:idCard};
           $.ajax({
-              url: "/user/register",
+              url: app.getServerUrl()+"/user/register",
               type: 'POST',
               timeout: 10000,//超时时间设置为10秒；
               data: JSON.stringify(registJson),
