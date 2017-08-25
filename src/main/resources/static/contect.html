@@ -372,7 +372,6 @@
 //        window.setTimeout(window.location.href = "sign.html",5000);
         if (app.getUserInfo().emailAccount == null) {
             location.href = "sign.html";
-//            $("#personInfo").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
             $("#userName").text(app.getUserInfo().nickName);
@@ -447,8 +446,6 @@
                     success: function (result) {
                         if (result.code == 200) {
                             app.setUserInfo(result.data.userInfo);
-                            app.setToken(result.data.token);
-//                            app.myAlertWithoutFunction(" ",result.message,"success");
                             location.href = "contect.html";
                             $("#truename").css('display', 'none');
                             $("#identitycard").css('display', 'none');
@@ -537,7 +534,6 @@
                     success: function (result) {
                         if (result.code == 200) {
                             app.setUserInfo(result.data.userInfo);
-                            app.setToken(result.data.token);
                             app.myAlert("","手机验证成功!","success");
                         }
                         else {
@@ -552,9 +548,6 @@
                 });
             }
         });
-
-
-
 
         $("#sign_out").click(function () {
             $("#personInfo").css('display', 'none');

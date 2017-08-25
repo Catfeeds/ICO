@@ -50,6 +50,10 @@
     th{
         text-align:center;
     }
+    .img-responsive{
+        width:270px;
+        height: 180px;
+    }
 </style>
 <body>
 <div class="wrapper">
@@ -189,9 +193,6 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label class="col-md-12 control-label" style="text-align: center;" id="numMoney">目前持有数字代币:
-                                        <!--<span class="strong1" style="color: darkorange">0.00000</span> |
-                                        <span class='strong1' style="color: darkorange">0.00000</span> |
-                                        <span class='strong1' style="color:darkorange">0.00000</span>-->
                                     </label>
                                 </div>
                             </div>
@@ -304,22 +305,33 @@
                 $("#officalInfo").css('display', 'block');
             }
         }
-        $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
-        $("#signOut").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
+
         //添加用户钱包信息
-        $.each(userWallet, function (i, item) {
-            $("#numMoney").append(
-                "<span class='strong1'>"+ item.tokenMoneyEnName + ":"+"<span class='strong1' style='color: #fe6500'>"+item.walletBalance+"</span></span> | "
-            );
+        // ajax请求用户钱包余额
+        $.ajax({
+            url: "/user/wallet/findWalletByUser",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            contentType: "application/json; charset=utf-8",
+            headers:app.createAuthorizationTokenHeader(),
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    //添加用户钱包信息
+                    $.each(result.data, function (i, item) {
+                        $("#numMoney").append(
+                                "<span class='strong1'>" + item.tokenMoney.nameEnShort + ":" + "<span class='strong1' style='color: #fe6500'>" + item.userWalletBalance + "</span></span> | "
+                        );
+                    });
+                } else {
+                    return;
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                return;
+            }
         });
+
         //添加可投资项目数据
         pageLockProject(1);
 
@@ -329,6 +341,16 @@
         }
 
 
+    });
+    $("#sign_out").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
+    });
+    $("#signOut").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
     });
 
     function pageOldProject(page,userId) {

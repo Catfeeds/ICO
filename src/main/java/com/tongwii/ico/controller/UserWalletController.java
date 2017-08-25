@@ -6,6 +6,7 @@ import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.TokenMoney;
 import com.tongwii.ico.model.UserWallet;
 import com.tongwii.ico.service.TokenMoneyService;
+import com.tongwii.ico.service.TransactionsService;
 import com.tongwii.ico.service.UserWalletService;
 import com.tongwii.ico.util.ContextUtils;
 import com.tongwii.ico.util.DesEncoder;
@@ -35,6 +36,8 @@ public class UserWalletController {
     private TokenMoneyService tokenMoneyService;
     @Autowired
     private TokenMoneyUtil tokenMoneyUtil;
+    @Autowired
+    private TransactionsService transactionsService;
 
     private static final Integer BTC = 1;
     private static final Integer ETH = 2;
@@ -80,17 +83,29 @@ public class UserWalletController {
     public Result findWalletByUser() {
         Integer userId = ContextUtils.getUserId();
         try{
-            // 获取用户的交易钱包
-            // TODO 这里的1要用枚举数据替代
-            List<UserWallet> userWallets = userWalletService.findWalletByUser(userId,1);
+            // 获取用户的输入交易钱包
+            List<UserWallet> userWallets = userWalletService.findWalletByUser(userId, UserWallet.WalletType.IN_PUT.getValue());
             UserWallet BTCWallet = new UserWallet();
             UserWallet ETHWallet = new UserWallet();
+
+            // 根据用户钱包地址获取用户钱包余额
+            // 首先获取钱包的类型
             for(int i=0;i<userWallets.size();i++){
+                TokenMoney tokenMoney = tokenMoneyService.findById(userWallets.get(i).getTokenMoneyId());
+                userWallets.get(i).setTokenMoney(tokenMoney);
+                String walletName = tokenMoneyService.findById(userWallets.get(i).getTokenMoneyId()).getNameEnShort();
                 // 获取比特币的信息
-                if(userWallets.get(i).getTokenMoneyId() == BTC){
+                if(walletName.equals(TokenMoneyEnum.BTC.name())){
+                    // 获取钱包余额
+                    String BTCWalletBalance = transactionsService.getBitCoinAddressBalance(userWallets.get(i).getTokenMoneyUrl());
+                    userWallets.get(i).setUserWalletBalance(BTCWalletBalance);
                     BTCWallet = userWallets.get(i);
                 }
-                if(userWallets.get(i).getTokenMoneyId() == ETH){
+                // 获取以太坊的信息
+                if(walletName.equals(TokenMoneyEnum.ETH.name())){
+                    // 获取钱包余额
+                    String EHTWalletBalance = transactionsService.getEthAddressBalance(userWallets.get(i).getTokenMoneyUrl());
+                    userWallets.get(i).setUserWalletBalance(EHTWalletBalance);
                     ETHWallet = userWallets.get(i);
                 }
             }
@@ -117,9 +132,9 @@ public class UserWalletController {
         }
 
         if(islegal){
-            // 根据用户id获取所有提现钱包url，判断其是否包含此钱包，如果没有则添加
+            // 根据用户id获取所有提现钱包url，判断其是否包含此钱包，如果没有则添加，输出钱包
             // TODO 这里的2要用枚举数据替代
-            List<UserWallet> userWallets = userWalletService.findWalletByUser(userId, 2);
+            List<UserWallet> userWallets = userWalletService.findWalletByUser(userId, UserWallet.WalletType.OUT_PUT.getValue());
             if(!CollectionUtils.isEmpty(userWallets)){
                 for(int i=0; i<userWallets.size();i++){
                     if(userWallets.get(i).getTokenMoneyUrl().equals(userWallet.getTokenMoneyUrl())){
@@ -140,7 +155,8 @@ public class UserWalletController {
     @GetMapping("/findPaymentWallet")
     public Result findPaymentWallet(){
         Integer userId = ContextUtils.getUserId();
-        List<UserWallet> userWallets = userWalletService.findWalletByUser(userId, 2);
+        // 获取用户的提现地址信息
+        List<UserWallet> userWallets = userWalletService.findWalletByUser(userId, UserWallet.WalletType.OUT_PUT.getValue());
         if(CollectionUtils.isEmpty(userWallets)){
             return Result.errorResult("用户未创建提现地址!");
         }else{

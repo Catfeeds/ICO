@@ -343,7 +343,6 @@
                 success: function (result) {
                     if (result.code == 200) {
                         app.setUserInfo(result.data.userInfo);
-                        app.setToken(result.data.token);
                         app.myAlert("","手机验证成功!","success");
                     }
                     else {

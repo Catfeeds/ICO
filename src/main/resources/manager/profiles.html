@@ -597,7 +597,6 @@
         });
         //保存项目
         $("#bcPro").click(function () {
-            var id = app.getQueryString("id");
             var formData = new FormData($("#addprjs")[0]);
             var pictureUrl = null;
             //上传图片
@@ -656,7 +655,6 @@
                             data: JSON.stringify(prjjson),
                             dataType: 'json',//服务器返回json格式数据
                             contentType: "application/json; charset=utf-8",
-                            headers: app.createAuthorizationTokenHeader(),
                             success: function (result) {
                                 if (result.code == 200) {
                                     app.myAlert("", "项目添加成功！", "success");
@@ -734,6 +732,7 @@
                                 }
                                 else {
                                     app.myAlert("", "项目添加失败！", "warning");
+                                    console.log(result.message);
                                 }
                             },
                             error: function (xhr, type, errerThrown) {
