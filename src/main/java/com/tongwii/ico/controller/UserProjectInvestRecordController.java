@@ -105,7 +105,6 @@ public class UserProjectInvestRecordController {
     public Result findUserProjectInvestRecordByProjectId(@PathVariable("projectId")Integer projectId,@RequestParam(required = true,defaultValue = "0") Integer page,
                                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);
-        Integer userId = ContextUtils.getUserId();
         List<UserProjectInvestRecord> userProjectInvestRecordList = userProjectInvestRecordService.findByProjectId(projectId);
         if(!CollectionUtils.isEmpty(userProjectInvestRecordList)){
             for(int i=0;i<userProjectInvestRecordList.size();i++){
