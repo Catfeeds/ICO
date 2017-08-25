@@ -1,12 +1,20 @@
 package com.tongwii.ico.util;
 
+import com.tongwii.ico.exception.ApplicationException;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.stereotype.Component;
+
 import javax.crypto.Cipher;
 import java.io.*;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Properties;
 
+@Component
 public class RSAEncodeUtil {
     /**
      * String to hold name of the encryption algorithm.
@@ -16,12 +24,32 @@ public class RSAEncodeUtil {
     /**
      * 秘钥文件地址如C:/keys/private.key
      */
-    public static final String PRIVATE_KEY_FILE = "";
+    public static String PRIVATE_KEY_FILE = null;
 
     /**
      * 公钥文件地址如C:/keys/public.key"
      */
-    public static final String PUBLIC_KEY_FILE = "";
+    public static String PUBLIC_KEY_FILE = null;
+
+    private static String fileDir;
+
+    static {
+        Resource resource = new ClassPathResource(
+                "application.properties");
+        try {
+            Properties properties = PropertiesLoaderUtils.loadProperties(resource);
+            fileDir = properties.getProperty("publickey.location");
+            Resource publicKey = new ClassPathResource(
+                    fileDir+"/id_rsa.pub");
+            Resource privateKey = new ClassPathResource(
+                    fileDir+"/id_rsa");
+            PRIVATE_KEY_FILE = publicKey.getFile().getPath();
+            PRIVATE_KEY_FILE = privateKey.getURL().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ApplicationException("加载配置文件出错");
+        }
+    }
 
     /**
      * Generate key which contains a pair of private and public key using 1024
@@ -139,30 +167,34 @@ public class RSAEncodeUtil {
 
         try {
 
-            // Check if the pair of keys are present else generate those.
+            /*// Check if the pair of keys are present else generate those.
             if (!areKeysPresent()) {
                 // Method generates a pair of keys using the RSA algorithm and stores it
                 // in their respective files
                 generateKey();
+            }*/
+
+            // Check if the pair of keys are present else generate those.
+            if (areKeysPresent()) {
+                final String originalText = "Text to be encrypted ";
+                ObjectInputStream inputStream = null;
+
+                // Encrypt the string using the public key
+                inputStream = new ObjectInputStream(new FileInputStream(PUBLIC_KEY_FILE));
+                final PublicKey publicKey = (PublicKey) inputStream.readObject();
+                final byte[] cipherText = encrypt(originalText, publicKey);
+
+                // Decrypt the cipher text using the private key.
+                inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
+                final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
+                final String plainText = decrypt(cipherText, privateKey);
+
+                // Printing the Original, Encrypted and Decrypted Text
+                System.out.println("Original: " + originalText);
+                System.out.println("Encrypted: " +cipherText.toString());
+                System.out.println("Decrypted: " + plainText);
             }
 
-            final String originalText = "Text to be encrypted ";
-            ObjectInputStream inputStream = null;
-
-            // Encrypt the string using the public key
-            inputStream = new ObjectInputStream(new FileInputStream(PUBLIC_KEY_FILE));
-            final PublicKey publicKey = (PublicKey) inputStream.readObject();
-            final byte[] cipherText = encrypt(originalText, publicKey);
-
-            // Decrypt the cipher text using the private key.
-            inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
-            final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
-            final String plainText = decrypt(cipherText, privateKey);
-
-            // Printing the Original, Encrypted and Decrypted Text
-            System.out.println("Original: " + originalText);
-            System.out.println("Encrypted: " +cipherText.toString());
-            System.out.println("Decrypted: " + plainText);
 
         } catch (Exception e) {
             e.printStackTrace();
