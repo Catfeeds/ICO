@@ -41,6 +41,8 @@ public class EncoderTest extends Tester {
         DesEncoder desEncoder = new DesEncoder();
         System.out.println(desEncoder.decrypt(desEncoder.encrypt(password)));
 
+        System.out.println(desEncoder.decrypt("fe07c3c066e1ed08f59b0db02c98e7b158aa971672d82253"));
+
         AesEncoder aesEncoder = new AesEncoder();
         System.out.println(aesEncoder.decrypt(aesEncoder.encrypt(password)));
     }

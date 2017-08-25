@@ -2,7 +2,6 @@ package com.tongwii.ico.service.impl;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.MoreExecutors;
 import com.tongwii.ico.exception.ServiceException;
 import com.tongwii.ico.util.CurrentConfigEnum;
 import com.tongwii.ico.util.DesEncoder;
@@ -18,7 +17,6 @@ import org.bitcoinj.utils.BriefLogFormatter;
 import org.bitcoinj.wallet.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;

@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/22 13:07:23                           */
+/* Created on:     2017/8/24 20:55:11                           */
 /*==============================================================*/
 
 
@@ -25,6 +25,8 @@ drop table if exists token_detail;
 drop table if exists token_money;
 
 drop table if exists user;
+
+drop table if exists user_project_invest_record;
 
 drop table if exists user_role_relation;
 
@@ -220,6 +222,21 @@ create table user
 alter table user comment '用户信息';
 
 /*==============================================================*/
+/* Table: user_project_invest_record                            */
+/*==============================================================*/
+create table user_project_invest_record
+(
+  id                   int(11) unsigned not null auto_increment,
+  user_id              int(11) unsigned not null,
+  project_id           int(11) unsigned,
+  invest_value         double,
+  lock_date            datetime,
+  primary key (id)
+);
+
+alter table user_project_invest_record comment '用户项目投资记录';
+
+/*==============================================================*/
 /* Table: user_role_relation                                    */
 /*==============================================================*/
 create table user_role_relation
@@ -289,6 +306,12 @@ references project (id) on delete restrict on update restrict;
 
 alter table token_detail add constraint fk_token_money_detail_2_token_money_token_money_id foreign key (token_money_id)
 references token_money (id) on delete restrict on update restrict;
+
+alter table user_project_invest_record add constraint fk_record_2_user_id foreign key (user_id)
+references user (id) on delete restrict on update restrict;
+
+alter table user_project_invest_record add constraint fk_record_2_project_id foreign key (project_id)
+references project (id) on delete restrict on update restrict;
 
 alter table user_role_relation add constraint fk_user_role_2_role_role_id foreign key (role_id)
 references role (id) on delete restrict on update restrict;
