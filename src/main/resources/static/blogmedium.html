@@ -330,6 +330,7 @@
                     } else {
                         $("#newsList").html("");
                         $.each(newsMessages, function (i, item) {
+                            if(!item.pictureUrl) item.pictureUrl = "/assets/extra-images/img.jpg";
                             $("#newsList").append(
                                     "<article class='col-lg-12'><div class='main-thumb'><figure><a href='#'>"
                                     + "<img src='" + item.pictureUrl + "' class='img-responsive' alt='" + item.title + "'></a><figcaption>"
