@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -18,13 +19,29 @@ import java.util.List;
 @Service
 @Transactional
 public class UserProjectInvestRecordServiceImpl extends AbstractService<UserProjectInvestRecord> implements UserProjectInvestRecordService {
-    @Autowired
+    @Resource
     private UserProjectInvestRecordMapper userProjectInvestRecordMapper;
 
     @Override
     public List<UserProjectInvestRecord> findByUserId(Integer userId) {
         UserProjectInvestRecord userProjectInvestRecord = new UserProjectInvestRecord();
         userProjectInvestRecord.setUserId(userId);
+        List<UserProjectInvestRecord> userProjectInvestRecords = userProjectInvestRecordMapper.select(userProjectInvestRecord);
+        if(CollectionUtils.isEmpty(userProjectInvestRecords)){
+            return null;
+        }
+        return userProjectInvestRecords;
+    }
+    /**
+     * 根据项目Id查询所有用户的交易记录
+     *
+     * @param projectId
+     * @return
+     */
+    @Override
+    public List<UserProjectInvestRecord> findByProjectId(Integer projectId) {
+        UserProjectInvestRecord userProjectInvestRecord = new UserProjectInvestRecord();
+        userProjectInvestRecord.setProjectId(projectId);
         List<UserProjectInvestRecord> userProjectInvestRecords = userProjectInvestRecordMapper.select(userProjectInvestRecord);
         if(CollectionUtils.isEmpty(userProjectInvestRecords)){
             return null;

@@ -16,5 +16,11 @@ public interface UserProjectInvestRecordService extends Service<UserProjectInves
      * @return
      */
     List<UserProjectInvestRecord> findByUserId(Integer userId);
+    /**
+     * 根据项目Id查询所用户的交易记录
+     * @param projectId
+     * @return
+     */
+    List<UserProjectInvestRecord> findByProjectId(Integer projectId);
 
 }
