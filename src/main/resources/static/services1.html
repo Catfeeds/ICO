@@ -41,8 +41,8 @@
                             <li><a href="under.html">即将ICO</a></li>
                             <li><a href="listing.html">已结束ICO</a></li>
                             <li><a href="blogmedium.html">新闻媒体</a></li>
-                            <li><a href="sign.html">登录/注册</a></li>
-                            <li><a href="#">关于</a><i class="icon-arrow-down8"></i>
+                            <li id="li_login"><a href="sign.html">登录/注册</a></li>
+                            <li><a>关于</a><i class="icon-arrow-down8"></i>
                                 <ul class="sub-dropdown">
                                     <li><a href="about.html">关于我们</a></li>
                                     <li><a href="services.html">服务与帮助</a></li>
@@ -263,16 +263,9 @@
             $("#contect").css('display', 'none');
         } else {
             $("#personInfo").css('display','block');
+            $("#li_login").css("display","none");
             $("#userName").text(app.getUserInfo().nickName);
         }
-        jQuery('.flexslider').flexslider({
-            animation: "slide",
-            prevText: "<em class='icon-arrow-left9'></em>",
-            nextText: "<em class='icon-arrow-right9'></em>",
-            start: function (slider) {
-                jQuery('body').removeClass('loading');
-            }
-        });
         $("#sign_out").click(function () {
             $("#personInfo").css('display', 'none');
             app.setUserInfo({});
