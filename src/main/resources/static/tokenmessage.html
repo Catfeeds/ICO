@@ -338,21 +338,41 @@
         $("#userName").text(app.getUserInfo().nickName);
         var pid = app.getQueryString("pid");
         var projectName = decodeURI(app.getQueryString("name"));
-        var userWallet = app.getUserInfo().userWallets;
-        var BTCBalance = null;
         var ETHBalance = null;
-        //添加用户钱包信息
-        $.each(userWallet, function (i, item) {
-            if(item.tokenMoneyEnName === "ETH"){
-                ETHBalance = item.walletBalance;
+        var BTCBalance = null;
+        // ajax请求用户钱包余额
+        $.ajax({
+            url: "/user/wallet/findWalletByUser",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            contentType: "application/json; charset=utf-8",
+            headers:app.createAuthorizationTokenHeader(),
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    //添加用户钱包信息
+                    $.each(result.data, function (i, item) {
+                        if(item.tokenMoney.nameEnShort == "ETH"){
+                           ETHBalance = item.userWalletBalance;
+                        }
+                        if(item.tokenMoney.nameEnShort == "BTC"){
+//                            .substr(0,item.userWalletBalance.length-3)
+                            BTCBalance = item.userWalletBalance;
+                        }
+                        $("#numMoney").append(
+                                "<span class='strong1'>" + item.tokenMoney.nameEnShort + ":" + "<span class='strong1' style='color: #fe6500'>" + item.userWalletBalance + "</span></span> | "
+                        );
+                    });
+                } else {
+//                    app.myAlert("", result.message, "warning","tokeninvestment.html");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+//                app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
+                return;
             }
-            if(item.tokenMoneyEnName === "BTC"){
-                BTCBalance = item.walletBalance.substring(0,item.walletBalance.length-3);
-            }
-            $("#numMoney").append(
-                    "<span class='strong1'>" + item.tokenMoneyEnName + ":" + "<span class='strong1' style='color: #fe6500'>" + item.walletBalance + "</span></span> | "
-            );
         });
+
         //添加用户投资货币分类（该项目接收货币类型）
         $.ajax({
             url: "/project/" + pid,
@@ -364,7 +384,7 @@
                 if (result.code == 200) {
                     var jshb = "";
                     //接收货币数据
-                    var inputTokenDetails = result.data.inputTokenDetails;
+                    var inputTokenDetails = result.data.projectInfo.inputTokenDetails;
                     //接收货币
                     $.each(inputTokenDetails, function (i, item) {
                         if (jshb == "") {

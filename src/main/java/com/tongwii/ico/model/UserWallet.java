@@ -42,6 +42,9 @@ public class UserWallet {
     @Transient
     private TokenMoney tokenMoney;
 
+    @Transient
+    private String userWalletBalance;
+
     /**
      * @return id
      */
@@ -168,11 +171,19 @@ public class UserWallet {
         this.tokenMoney = tokenMoney;
     }
 
+    public String getUserWalletBalance() {
+        return userWalletBalance;
+    }
+
+    public void setUserWalletBalance(String userWalletBalance) {
+        this.userWalletBalance = userWalletBalance;
+    }
+
     public enum WalletType {
         IN_PUT(1),
         OUT_PUT(2);
 
-        public Integer value;
+        private Integer value;
 
         WalletType(Integer value) {
             this.value = value;
