@@ -442,7 +442,7 @@
         var page = page;
         var size = "10";
         $.ajax({
-            url: "/user",
+            url: app.getServerUrl()+"/user",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             data: {page: page, size: size},
@@ -565,7 +565,7 @@
             enabled: 2
         };
         $.ajax({
-            url: "/user/state",
+            url: app.getServerUrl()+"/user/state",
             type: 'PUT',
             timeout: 10000,//超时时间设置为10秒；
             data: JSON.stringify(userJson),
@@ -594,7 +594,7 @@
             enabled: 1
         };
         $.ajax({
-            url: "/user/state",
+            url: app.getServerUrl()+"/user/state",
             type: 'PUT',
             timeout: 10000,//超时时间设置为10秒；
             data: JSON.stringify(userJson),

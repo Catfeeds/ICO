@@ -192,7 +192,7 @@
 
         // 通过ajax请求从数据库中获取数据
         $.ajax({
-            url: "/project/findProjectsAndSort",
+            url: app.getServerUrl()+"/project/findProjectsAndSort",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {

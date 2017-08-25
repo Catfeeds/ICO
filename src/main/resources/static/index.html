@@ -60,7 +60,6 @@
                             </li>
                         </ul>
                     </nav>
-
                 </div>
                 <div class="right-side" style="margin-right:20%">
                     <!--style="display: none"-->
@@ -185,19 +184,24 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="container">
-                                        <div class="row">
-                                            <ul class="team-list sort-destination" data-sort-id="team" id="ICOList">
 
+                                    <div class="page-content">
+                                        <div class="listing_grid">
+                                            <ul class="team-list sort-destination" data-sort-id="team" id="ICOList">
                                             </ul>
                                         </div>
                                     </div>
+                                    <br>
+                                    <div class="container" style="text-align:center;margin-top:20px;display: none;" id="checkMore1">
+                                        <button class="btn btn-lg explore-btn cs-bgcolor mt-md">查看更多</button>
+                                    </div>
+                                    <br>
+                                    <br>
 
                                     <div class="container" id="preparation">
                                         <div class="row mt-xlg">
                                             <div class="col-md-12">
                                                 <div class="heading heading-border heading-middle-border heading-middle-border-center center">
-
                                                     <h2>即将ICO <span class="inverted inverted-quaternary"
                                                                     style="font-family:Arial;"> </span></h2>
 
@@ -215,14 +219,13 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="container" style="text-align:center;margin-top: 20px">
-                                        <button class="btn btn-lg explore-btn cs-bgcolor mt-md"
-                                                id="checkMore1" style="display: none">查看更多
-                                        </button>
+                                    <br>
+                                    <div class="container" style="text-align:center;margin-top:20px;display: none;" id="checkMore2">
+                                        <button class="btn btn-lg explore-btn cs-bgcolor mt-md">查看更多</button>
                                     </div>
                                     <br>
                                     <br>
+
                                     <div class="container" id="stop">
                                         <div class="row mt-xlg">
                                             <div class="col-md-12">
@@ -234,7 +237,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <br>
                                     <div class="page-content ">
                                         <div class="listing_grid">
                                             <div class="row">
@@ -244,11 +247,9 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="container" style="text-align:center;margin-top:20px">
-                                        <button class="btn btn-lg explore-btn cs-bgcolor mt-md"
-                                                id="checkMore2" style="display: none">查看更多
-                                        </button>
+                                    <br>
+                                    <div class="container" style="text-align:center;margin-top:20px;display: none;" id="checkMore3">
+                                        <button class="btn btn-lg explore-btn cs-bgcolor mt-md">查看更多</button>
                                     </div>
                                     <br>
                                     <br>
@@ -529,7 +530,7 @@
         });
 
         $.ajax({
-            url: "/project/findProjectsAndSort",
+            url: app.getServerUrl()+"/project/findProjectsAndSort",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             success: function (result) {
@@ -537,12 +538,15 @@
                     var ICOList = result.data.ICO;
                     var willICOList = result.data.willICO;
                     var finishICOList = result.data.finishICO;
-                    if(willICOList.length>0){
+                    if(ICOList.length>4){
                         $("#checkMore1").css("display","block");
                     }
-                   /* if(finishICOList.length>0){
-                        $("#checkMore1").css("display","block");
-                    }*/
+                    if(willICOList.length>4){
+                        $("#checkMore2").css("display","block");
+                    }
+                    if(finishICOList.length>4){
+                        $("#checkMore3").css("display","block");
+                    }
 
                     $.each(ICOList, function (i, item) {
                         var date = new Date();
@@ -560,31 +564,33 @@
                         }else{
                             pictureUrl = "assets/extra-images/img.jpg";
                         }
-                        $("#ICOList").append(
-                            "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
-                            + "<div class='directory-section'>"
-                            + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
-                            + "<span class='thumb-info-wrapper'>"
-                            + "<a><img src='"+pictureUrl+"' class='img-responsive'>"
-                            + "<span class='thumb-info-title'>"
-                            + "<span class='thumb-info-inner'>" + item.name + "</span>"
-                            + "<span class='thumb-info-type' style='color: black'>" + item.startTime + " —— " + item.endTime + "</span>"
-                            + "</span></a></span>"
-                            + "<span class='thumb-info-action'>"
-                            + "<span class='thumb-info-action-icon' style='background-color: #0d6aad'>"
-                            + "<img src='assets/images/open_cn.png' style='width:60%;'>"
-                            + "</span></span></span>"
-                            + "<div class='content_info'>"
-                            + "<div class='title'>"
-                            + "<span class='ico-ellipsis-6'>" + item.des + "</span>"
-                            + "<br></div>"
-                            + "<div class='dr_info'>"
-                            + "<ul><li> <i class='cscolor icon-clock7'></i>"
-                            + "<p style='margin-left:18px;'>剩余天数 " + day + "</p></li></ul>"
-                            + "<span class='bar'><span style='width:12%;'></span></span>"
-                            + "<div class='detail'> <span class=''fund=>12%</span>"
-                            + "<a href='#' class='star icon-star'></a></div>"
-                            + "</div></div></div></li>");
+                        if(i<4){
+                            $("#ICOList").append(
+                                    "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
+                                    + "<div class='directory-section'>"
+                                    + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
+                                    + "<span class='thumb-info-wrapper'>"
+                                    + "<a><img src='"+pictureUrl+"' class='img-responsive'>"
+                                    + "<span class='thumb-info-title'>"
+                                    + "<span class='thumb-info-inner'>" + item.name + "</span>"
+                                    + "<span class='thumb-info-type' style='color: black'>" + item.startTime + " —— " + item.endTime + "</span>"
+                                    + "</span></a></span>"
+                                    + "<span class='thumb-info-action'>"
+                                    + "<span class='thumb-info-action-icon' style='background-color: #0d6aad'>"
+                                    + "<img src='assets/images/open_cn.png' style='width:60%;'>"
+                                    + "</span></span></span>"
+                                    + "<div class='content_info'>"
+                                    + "<div class='title'>"
+                                    + "<span class='ico-ellipsis-6'>" + item.des + "</span>"
+                                    + "<br></div>"
+                                    + "<div class='dr_info'>"
+                                    + "<ul><li> <i class='cscolor icon-clock7'></i>"
+                                    + "<p style='margin-left:18px;'>剩余天数 " + day + "</p></li></ul>"
+                                    + "<span class='bar'><span style='width:12%;'></span></span>"
+                                    + "<div class='detail'> <span class=''fund=>12%</span>"
+                                    + "<a class='star icon-star'></a></div>"
+                                    + "</div></div></div></li>");
+                        }
                     });
                     $.each(willICOList, function (i, item) {
                         var pictureUrl = null;
@@ -593,27 +599,28 @@
                         }else{
                             pictureUrl = "assets/extra-images/img.jpg";
                         }
-                        $("#willICOList").append(
-                            "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
-                            + "<div class='directory-section'>"
-                            + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
-                            + "<span class='thumb-info-wrapper'>"
-                            + "<a><img src='"+pictureUrl+"'"
-                            + "class='img-responsive'>"
-                            + "<span class='thumb-info-title'>"
-                            + "<span class='thumb-info-inner'>" + item.name + "</span>"
-                            + "<span class='thumb-info-type' style='color: black'>" + item.startTime + " —— " + item.endTime + "</span>"
-                            + "</span></a></span>"
-                            + "<span class='thumb-info-action'>"
-                            + "<div class='content_info'>"
-                            + "<div class='title'>"
-                            + "<span class='ico-ellipsis-6'>" + item.des + "</span>"
-                            + "<br></div>"
-                            + "<div class='dr_info'>"
-                            + "<ul><li> <i class='cscolor icon-clock7'></i>"
-                            + "<p style='margin-left:20px;'>剩余天数 待定" + "</p></li></ul>"
-                            + "</div></div></div></li>");
-
+                        if(i<4){
+                            $("#willICOList").append(
+                                    "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
+                                    + "<div class='directory-section'>"
+                                    + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
+                                    + "<span class='thumb-info-wrapper'>"
+                                    + "<a><img src='"+pictureUrl+"'"
+                                    + "class='img-responsive'>"
+                                    + "<span class='thumb-info-title'>"
+                                    + "<span class='thumb-info-inner'>" + item.name + "</span>"
+                                    + "<span class='thumb-info-type' style='color: black'>" + item.startTime + " —— " + item.endTime + "</span>"
+                                    + "</span></a></span>"
+                                    + "<span class='thumb-info-action'>"
+                                    + "<div class='content_info'>"
+                                    + "<div class='title'>"
+                                    + "<span class='ico-ellipsis-6'>" + item.des + "</span>"
+                                    + "<br></div>"
+                                    + "<div class='dr_info'>"
+                                    + "<ul><li> <i class='cscolor icon-clock7'></i>"
+                                    + "<p style='margin-left:20px;'>剩余天数 待定</p></li></ul>"
+                                    + "</div></div></div></li>");
+                        }
                     });
                     $.each(finishICOList, function (i, item) {
                         var pictureUrl = null;
@@ -622,26 +629,28 @@
                         }else{
                             pictureUrl = "assets/extra-images/img.jpg";
                         }
-                        $("#finishICOList").append(
-                            "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
-                            + "<div class='directory-section'>"
-                            + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
-                            + "<span class='thumb-info-wrapper'>"
-                            + "<a><img src='"+pictureUrl+"'"
-                            + "class='img-responsive'>"
-                            + "<span class='thumb-info-title'>"
-                            + "<span class='thumb-info-inner'>" + item.name + "</span>"
-                            + "<span class='thumb-info-type' style='color: black'>" + item.startTime + " —— " + item.endTime + "</span>"
-                            + "</span></a></span>"
-                            + "<span class='thumb-info-action'>"
-                            + "<div class='content_info'>"
-                            + "<div class='title'>"
-                            + "<span class='ico-ellipsis-6'>" + item.des + "</span>"
-                            + "<br></div>"
-                            + "<div class='dr_info'>"
-                            + "<ul><li> <i class='cscolor icon-clock7'></i>"
-                            + "<p style='margin-left:20px;'>剩余天数 0" + "</p></li></ul>"
-                            + "</div></div></div></li>");
+                        if(i<4){
+                            $("#finishICOList").append(
+                                    "<li id='" + item.id + "' class='col-md-3 col-sm-6 col-xs-12 isotope-item leadership' style='cursor:pointer'>"
+                                    + "<div class='directory-section'>"
+                                    + "<span class='thumb-info thumb-info-hide-wrapper-bg mb-xlg'>"
+                                    + "<span class='thumb-info-wrapper'>"
+                                    + "<a><img src='"+pictureUrl+"'"
+                                    + "class='img-responsive'>"
+                                    + "<span class='thumb-info-title'>"
+                                    + "<span class='thumb-info-inner'>" + item.name + "</span>"
+                                    + "<span class='thumb-info-type' style='color: black'>" + item.startTime + " —— " + item.endTime + "</span>"
+                                    + "</span></a></span>"
+                                    + "<span class='thumb-info-action'>"
+                                    + "<div class='content_info'>"
+                                    + "<div class='title'>"
+                                    + "<span class='ico-ellipsis-6'>" + item.des + "</span>"
+                                    + "<br></div>"
+                                    + "<div class='dr_info'>"
+                                    + "<ul><li> <i class='cscolor icon-clock7'></i>"
+                                    + "<p style='margin-left:20px;'>剩余天数 0</p></li></ul>"
+                                    + "</div></div></div></li>");
+                        }
                     });
                     // 设计每个li标签的点击事件
                     $('#ICOList').children("li").click(function () {
@@ -664,7 +673,15 @@
                 return;
             }
         });
-
+        $("#checkMore1").click(function () {
+            location.href = "listing-grid.html";
+        });
+        $("#checkMore2").click(function () {
+            location.href = "under.html";
+        });
+        $("#checkMore3").click(function () {
+            location.href = "listing.html";
+        });
         $("#sign_out").click(function () {
             $("#personInfo").css('display', 'none');
             app.setUserInfo({});

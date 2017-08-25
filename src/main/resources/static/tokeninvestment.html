@@ -166,9 +166,6 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a id="signOut" style="cursor:pointer"> 退出登录</a>
-                                </li>
                             </ul>
                         </aside>
                     </div>
@@ -309,7 +306,7 @@
         //添加用户钱包信息
         // ajax请求用户钱包余额
         $.ajax({
-            url: "/user/wallet/findWalletByUser",
+            url: app.getServerUrl()+"/user/wallet/findWalletByUser",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             contentType: "application/json; charset=utf-8",
@@ -347,17 +344,12 @@
         app.setUserInfo({});
         location.href = "index.html";
     });
-    $("#signOut").click(function () {
-        $("#personInfo").css('display', 'none');
-        app.setUserInfo({});
-        location.href = "index.html";
-    });
 
     function pageOldProject(page,userId) {
         var page = page;
         var size = "3";
         $.ajax({
-            url: "/project/user/relation/getUserProject/" + userId,
+            url: app.getServerUrl()+"/project/user/relation/getUserProject/" + userId,
             type: 'GET',
             data: {page:page,size:size},
             dataType: "json",
@@ -402,7 +394,7 @@
         var size = "3";
         //添加可投资项目数据
         $.ajax({
-            url: "/project/findLockProject",
+            url: app.getServerUrl()+"/project/findLockProject",
             type: 'GET',
             data: {page:page,size:size},
             dataType: "json",

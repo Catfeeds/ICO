@@ -22,7 +22,7 @@ public class UserWallet {
     /**
      * 钱包密钥，加密过后的
      */
-    @JSONField(serialize = false)
+//    @JSONField(serialize = false)
     @Column(name = "token_private_key")
     private String tokenPrivateKey;
 

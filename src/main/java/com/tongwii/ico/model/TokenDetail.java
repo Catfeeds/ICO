@@ -12,7 +12,7 @@ public class TokenDetail {
     private Integer tokenMoneyId;
 
     @Column(name = "current_number")
-    private Integer currentNumber;
+    private Double currentNumber;
 
     @Column(name = "ico_number")
     private Integer icoNumber;
@@ -69,14 +69,14 @@ public class TokenDetail {
     /**
      * @return current_number
      */
-    public Integer getCurrentNumber() {
+    public Double getCurrentNumber() {
         return currentNumber;
     }
 
     /**
      * @param currentNumber
      */
-    public void setCurrentNumber(Integer currentNumber) {
+    public void setCurrentNumber(Double currentNumber) {
         this.currentNumber = currentNumber;
     }
 
@@ -178,5 +178,20 @@ public class TokenDetail {
 
     public void setInputTokenMoneyProjectId(Integer inputTokenMoneyProjectId) {
         this.inputTokenMoneyProjectId = inputTokenMoneyProjectId;
+    }
+
+    public enum TokenDetailType {
+        INPUT_CION(1),
+        OUTPUT_ICON(2);
+
+        private Integer code;
+
+        public Integer getCode() {
+            return code;
+        }
+
+        TokenDetailType(Integer code) {
+            this.code = code;
+        }
     }
 }

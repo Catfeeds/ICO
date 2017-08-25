@@ -154,9 +154,6 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a id="signOut" style="cursor:pointer"> 退出登录</a>
-                                </li>
                             </ul>
                         </aside>
                     </div>
@@ -322,7 +319,7 @@
         var phoneJson = {"phone":app.getUserInfo().phone};
         // 此处调用发送手机验证码的接口获取手机验证码
         $.ajax({
-            url: "/user/validatePhone",
+            url: app.getServerUrl()+"/user/validatePhone",
             type: 'POST',
             timeout: 10000,//超时时间设置为10秒；
             data: JSON.stringify(phoneJson),
@@ -383,7 +380,7 @@
         }else {
             var updatePassword = {oldPassword:oldPassword,newPassword:newPassword,verifycode:verifycode};
             $.ajax({
-                url: "/user/updatePassword",
+                url: app.getServerUrl()+"/user/updatePassword",
                 type: 'PUT',
                 timeout: 10000,//超时时间设置为10秒；
                 data: JSON.stringify(updatePassword),
@@ -410,11 +407,6 @@
     });
 
     $("#sign_out").click(function () {
-        $("#personInfo").css('display', 'none');
-        app.setUserInfo({});
-        location.href = "index.html";
-    });
-    $("#signOut").click(function () {
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});
         location.href = "index.html";

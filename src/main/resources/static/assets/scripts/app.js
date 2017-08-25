@@ -7,7 +7,7 @@
     /**
      * 默认配置信息
      */
-    var serverUrl = 'http://192.168.0.42:8080'
+    var serverUrl = 'http://192.168.0.191'
 
 
     // VARIABLES =============================================================
@@ -125,3 +125,9 @@
         });
     };
 }(window.app = {}));
+
+$("#sign_out").click(function () {
+    $("#personInfo").css('display', 'none');
+    app.setUserInfo({});
+    location.href = "index.html";
+});

@@ -408,7 +408,7 @@
         var page = page;
         var size = "5";
         $.ajax({
-            url: "/project/findAllProject",
+            url: app.getServerUrl()+"/project/findAllProject",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             data: {page: page, size: size},
@@ -532,7 +532,7 @@
     }
     function dodel(id) {
         $.ajax({
-            url: "/project/wallet/"+id,
+            url: app.getServerUrl()+"/project/wallet/"+id,
             type: 'DELETE',
             headers: app.createAuthorizationTokenHeader(),
             timeout: 10000,//超时时间设置为10秒；

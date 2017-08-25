@@ -27,6 +27,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.*;
 
+import static com.tongwii.ico.model.Project.State.END;
+import static com.tongwii.ico.model.Project.State.NOW;
+import static com.tongwii.ico.model.Project.State.UN_COMING;
+import static com.tongwii.ico.model.Role.RoleCode.ADMIN;
+import static com.tongwii.ico.model.TokenDetail.TokenDetailType.INPUT_CION;
+
 /**
 * Created by Zeral on 2017-08-02.
 */
@@ -51,11 +57,6 @@ public class ProjectController {
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
 
-    private final static Integer ICO = 0;
-    private final static Integer WILLICO = 1;
-    private final static Integer FINISHICO = 2;
-    private final static Integer INPUTCION = 1;
-    private final static Integer ADMIN = 1;
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Result add(@RequestBody Project project) {
@@ -180,7 +181,7 @@ public class ProjectController {
             Project project = projectService.findById(id);
             projectFile projectFile = projectFileService.findProjectFileByProjectId(id);
             // 首先需要通过项目id查询token_details表目标代币数据
-            List<TokenDetail> tokenDetails = tokenDetailService.findByProjectIdAndType(id,INPUTCION);
+            List<TokenDetail> tokenDetails = tokenDetailService.findByProjectIdAndType(id, INPUT_CION.getCode());
             if(!CollectionUtils.isEmpty(tokenDetails)){
                 for(int i=0; i<tokenDetails.size(); i++){
                     // 获取目标代币的代币详细信息
@@ -203,7 +204,7 @@ public class ProjectController {
             }
             return Result.successResult().add("projectFile",projectFile).add("projectInfo",project);
         }catch (Exception e){
-            return Result.successResult("详情信息为空!");
+            return Result.errorResult("详情信息为空!");
         }
     }
 
@@ -246,17 +247,17 @@ public class ProjectController {
                 Date endTime = p.getEndTime();
                 //分离已结束的项目
                 if(endTime.before(date)){
-                    p.setState(2);
+                    p.setState(END.getState());
                     finishICOList.add(p);
                 }
                 // 分离即将开始的项目
                 if(date.before(startTime)){
-                    p.setState(1);
+                    p.setState(UN_COMING.getState());
                     willICOList.add(p);
                 }
                 // 分离正在进行中的项目
                 if(startTime.before(date) && date.before(endTime)){
-                    p.setState(0);
+                    p.setState(NOW.getState());
                     ICOList.add(p);
                 }
                 update(p);
@@ -279,8 +280,8 @@ public class ProjectController {
         JSONArray coin = transactionsService.getBitCoinAddressTransaction(address);
         JSONArray data = new JSONArray();
         for(int i = 0;i<coin.size();i++){
-            JSONObject jsonObj =  coin.getJSONObject(i);
-            String inputsvalue =  Coin.valueOf(jsonObj.getLong("inputs_value")).toFriendlyString();
+            JSONObject jsonObj = coin.getJSONObject(i);
+            String inputsvalue = Coin.valueOf(jsonObj.getLong("inputs_value")).toFriendlyString();
             jsonObj.put("inputs_value",inputsvalue);
             data.add(jsonObj);
             System.out.println(jsonObj);
@@ -332,12 +333,12 @@ public class ProjectController {
                User createUser = userService.findById( projectList.get(i).getCreateUserId());
                projectList.get(i).setCreateUser(createUser);
            }catch (Exception e){
-               projectList.get(i).setCreateUser(userService.findById(ADMIN));
+               projectList.get(i).setCreateUser(userService.findById(ADMIN.getId()));
            }
 
 
            // 根据项目ID查寻目标代币信息
-           List<TokenDetail> tokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, INPUTCION);
+           List<TokenDetail> tokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, INPUT_CION.getCode());
            if(!CollectionUtils.isEmpty(tokenDetails)){
                for(int j=0; j<tokenDetails.size();j++){
                    // 获取目标代币的代币详细信息
@@ -365,7 +366,7 @@ public class ProjectController {
     public Result findLockProject(@RequestParam(required = true,defaultValue = "0") Integer page,
                                       @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);
-        List<Project> projectList = projectService.findProjectByState(ICO);
+        List<Project> projectList = projectService.findProjectByState(NOW.getState());
         for(int i=0;i<projectList.size();i++){
             // 获取项目图片
             try {
