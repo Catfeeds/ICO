@@ -208,6 +208,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label  class="col-sm-2 control-label">项目中文名称</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="nameCn" placeholder="项目名称请务必包含产品的关键词（项目名称不超过25个字）">
+                                            </div>
+                                      </div>
+                                        <div class="form-group">
                                             <label class="col-sm-2 control-label">开始时间</label>
                                             <div class="col-sm-2">
                                                 <div class="layui-inline">
@@ -640,13 +646,14 @@
                         outputTokenMoneyDetailId =  result.data.id;
                         //项目的字段
                         var prjname = $("#prjname").val();
+                        var nameCn = $("#nameCn").val();
                         var prjopentime = $("#startTime").val();
                         var prjclosetime = $("#endTime").val();
                         var prjproduce = $("#prjproduce").val();
                         var prjcontent =$('.summernote').summernote('code');
                         var id = userId;
                         var prjId;
-                        var prjjson = {name: prjname, startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
+                        var prjjson = {name: prjname,nameCn:nameCn,startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
                         $.ajax({
                             url: "/project/add",
                             type: 'POST',
