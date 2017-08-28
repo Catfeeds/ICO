@@ -431,29 +431,6 @@
                 app.myAlert("", "姓名信息不可为空!", "warning");
                 return;
             }
-            /*var json = {cardno:cardNO,name:realName};
-             $.ajax({
-             url: "http://idcard.market.alicloudapi.com/lianzhuo/idcard",
-             type: 'GET',
-             timeout: 10000,//超时时间设置为10秒；
-             data: JSON.stringify(json),
-             dataType: 'json',//服务器返回json格式数据
-             contentType: "application/json; charset=utf-8",
-             success: function (result) {
-             if (result.code == 200) {
-             isValidate = true;
-             app.myAlert("","身份证验证成功!","success");
-             return;
-             }
-             else {
-             app.myAlert(" ","身份证验证失败!","error");
-             return;
-             }
-             },
-             error: function (xhr, type, errerThrown) {
-             sweetAlert(" ","网络异常,请稍候再试!","error");
-             }
-             });*/
             if (isValidate == null) {
                 var json = {idCard: cardNO, realName: realName, id: app.getUserInfo().id, isValidateUser: true};
                 $.ajax({
@@ -548,7 +525,23 @@
                     app.myAlert(" ", "网络异常,请稍候再试!", "error");
                 }
             });
+
+            time(this);
         });
+        var wait = 60;
+        function time(obj) {
+            $this = $(obj);
+            if (wait === 0) {
+                $this.removeAttr("disabled").val("发送手机验证码");
+                wait = 60;
+            } else {
+                $this.attr("disabled", true).val("重新发送(" + wait + ")");
+                wait--;
+                setTimeout(function() {
+                    time(obj)
+                }, 1000)
+            }
+        }
         //提交按钮触发事件
         $("#commit").click(function () {
             var phoneNum = $("#mobile").val();

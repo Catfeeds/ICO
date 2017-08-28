@@ -101,9 +101,10 @@ public class FileServiceImpl implements FileService {
     @Override
     public void init() {
         try {
-            Files.createDirectories(rootLocation);
-        }
-        catch (IOException e) {
+            if(!Files.exists(rootLocation)) {
+                Files.createDirectories(rootLocation);
+            }
+        } catch (IOException e) {
             throw new StorageException("无法初始化文件目录", e);
         }
     }

@@ -351,12 +351,29 @@
     var startTime;
     var data = new FormData();
     $(function () {
-        $('.summernote').summernote({
-            placeholder:'项目描述'
+        $('#editor').summernote({
+            placeholder:'项目描述',
+            callbacks: {
+                onImageUpload: function(files, editor, welEditable) {
+                    sendFile(files[0], editor, welEditable);
+                }
+            }
         });
-
-        $('#editor').summernote();
-
+        function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("file", file);
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: app.getServerUrl() + "/file",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(path) {
+                    editor.insertImage(welEditable, path);
+                }
+            });
+        }
 
         var id = app.getQueryString("id");
         $.ajax({
