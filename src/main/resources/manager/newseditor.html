@@ -180,15 +180,14 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">新闻描述</label>
                                             <div class="col-sm-11">
-                                                <textarea type="text" class="form-control" id="descript"
-                                                          >
-                                                </textarea>
+                                                <textarea type="text" class="form-control" id="descript"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">上传图片</label>
                                             <div class="col-sm-4" >
-                                                <input name="file" class="layui-upload-file" type="file">
+                                                <input name="file"  type="file" id="content" accept="image/png,image/gif,image/jpeg" onChange="handleConFiles(this.files);">
+                                                <img class="conImage" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -206,7 +205,7 @@
                                                 </button>
                                                 <button type="button" class="btn btn-danger"
                                                         style="margin-left: 25px"
-                                                        onclick="cancleNews()">取消
+                                                        onclick="cancleNews()">清空
                                                 </button>
                                             </div>
                                         </div>
@@ -268,6 +267,51 @@
 <script src="dist/js/demo.js"></script>
 <script src="scripts/sweet-alert.js"></script>
 <script>
+    var width,height;
+    function handleConFiles(files){
+        if((navigator.userAgent.indexOf("MSIE 8.0")>0 )||(navigator.userAgent.indexOf("MSIE 9.0")>0)){
+            var objPreviewSizeFake = $(".conImage").get(0);//jquery对象转化为DOM对象
+            var fileupload = document.getElementById("head");
+            var $fileupload = $(fileupload);
+            $fileupload.select();
+            $fileupload.blur();
+            path = document.selection.createRange().text;
+
+            if (/"\w\W"/.test(path)) {
+                path = path.slice(1,-1);
+            }
+
+            objPreviewSizeFake.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = path;
+            width=objPreviewSizeFake.offsetWidth;
+            height=objPreviewSizeFake.offsetHeight;
+            if(width < 270 || height < 203){
+                fill = false;
+                app.myAlert("上传图片", "上传图片的尺寸应为270*203及以上", "error");
+            }
+
+            document.selection.empty();
+        }else{
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                var ret = [];
+                reader.onload = function(theFile) {
+                    var image = new Image();
+                    image.onload = function() {
+                        width=this.width;
+                        height=this.height;
+                        if(width < 270 || height < 203){
+                            fill = false;
+                            app.myAlert("上传图片", "上传图片的尺寸应为270*203及以上", "error");
+                        }
+                    };
+                    image.src = theFile.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+    }
     jQuery(window).load(function () {
         var userName = app.getUserInfo().nickName;  var userName = app.getUserInfo().nickName;
         $("#name").append(userName);
