@@ -84,7 +84,8 @@
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
                                     <ul class="dropdown">
-                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a></li>
+                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a>
+                                        </li>
                                     </ul>
                                     <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
@@ -168,7 +169,8 @@
                                         <label class="col-md-3 control-label"> 真实姓名</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <label class="control-label" id="trueNamelable" style="display: none"></label>
+                                                <label class="control-label" id="trueNamelable"
+                                                       style="display: none"></label>
                                                 <input type="text" id="truename" class="form-control"
                                                        placeholder="" required>
                                             </div>
@@ -178,16 +180,18 @@
                                         <label class="col-md-3 control-label"> 身份证号码</label>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <label class="control-label" id="identityCardlable" style="display: none"></label>
+                                                <label class="control-label" id="identityCardlable"
+                                                       style="display: none"></label>
                                                 <input type="text" id="identitycard" class="form-control"
-                                                       placeholder=""  onblur="id_card()" required  >
+                                                       placeholder="" onblur="id_card()" required>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label"></label>
                                         <div class="col-md-6 col-xs-11">
-                                            <button id="submitRealInfo" class="btn cs-bgcolor" style="color:#ffffff; font-weight: bold"
+                                            <button id="submitRealInfo" class="btn cs-bgcolor"
+                                                    style="color:#ffffff; font-weight: bold"
                                                     type="button">递交信息，递交后将不能修改
                                             </button>
                                         </div>
@@ -205,7 +209,7 @@
                                     <tbody>
                                     </tbody>
                                 </table>
-                                <form class="form-horizontal form-bordered" method="post">
+                                <form class="form-horizontal form-bordered">
                                     <div class="form-group">
                                         <label class="col-md-2 control-label" style="text-align:right;">BTC合计</label>
                                         <label class="col-md-2 control-label"
@@ -222,77 +226,90 @@
                             <header class="panel-heading">
                                 <h2 class="panel-title"> 我的联系信息</h2>
                             </header>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label"> 手机 </label>
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <input type="button" class="cs-bgcolor btn" id="phone_a"
-                                                   data-toggle="modal" style="color: #ffffff; font-weight: bold;"
-                                                   data-target="#formModal" value="添加手机号"/>
-                                            <label class="control-label" id="phonelable" style="display: none">
-                                            </label>
-                                        </div>
+                            <form class="form-bordered">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label"> 手机 </label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input type="button" class="cs-bgcolor btn" id="phone_a"
+                                                       data-toggle="modal" style="color: #ffffff; font-weight: bold;"
+                                                       data-target="#formModal" value="添加手机号"/>
+                                                <label class="control-label" id="phonelable" style="display: none">
+                                                </label>
+                                            </div>
+                                            <div class="modal fade" id="formModal" tabindex="-1" role="dialog"
+                                                 aria-labelledby="formModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-hidden="true"></button>
+                                                            <h4 class="modal-title" id="formModalLabel">添加手机</h4>
+                                                        </div>
+                                                        <form id="demo-form" class="form-horizontal mb-lg">
+                                                            <div class="modal-body">
+                                                                <div class="form-group mt-lg">
+                                                                    <label class="col-sm-2 control-label">手机号码</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" id="mobile" onblur="aaa()"
+                                                                               class="form-control"
+                                                                               placeholder="请输入您的手机号码"/>
+                                                                    </div>
+                                                                </div>
 
-
-
-                                        <div class="modal fade" id="formModal" tabindex="-1" role="dialog"
-                                             aria-labelledby="formModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-hidden="true"></button>
-                                                        <h4 class="modal-title" id="formModalLabel">添加手机</h4>
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-2 control-label">验证码</label>
+                                                                    <div class="col-sm-3">
+                                                                        <input type="text" id="verifycode"
+                                                                               class="form-control" style="width:140px;"
+                                                                               maxlength="6"/>
+                                                                    </div>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="button" id="sendsms"
+                                                                               class="cs-bgcolor btn"
+                                                                               style="color: #ffffff; font-weight: bold;"
+                                                                               value="发送手机验证码"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input type="button" class="cs-bgcolor btn"
+                                                                       style="color: #ffffff; font-weight: bold;"
+                                                                       value="取消"
+                                                                       id="cancle"/>
+                                                                <input type="button" class="cs-bgcolor btn"
+                                                                       style="color: #ffffff; font-weight: bold;"
+                                                                       value="确定"
+                                                                       id="commit"/>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    <form id="demo-form" class="form-horizontal mb-lg">
-                                                        <div class="modal-body">
-                                                            <div class="form-group mt-lg">
-                                                                <label class="col-sm-2 control-label">手机号码</label>
-                                                                <div class="col-sm-10">
-                                                                    <input type="text" id="mobile" onblur="aaa()"
-                                                                           class="form-control" placeholder="请输入您的手机号码"/>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">验证码</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" id="verifycode"
-                                                                           class="form-control" style="width:140px;"
-                                                                           maxlength="6"/>
-                                                                </div>
-                                                                <div class="col-sm-7">
-                                                                    <input type="button" id="sendsms"
-                                                                           class="cs-bgcolor btn"
-                                                                           style="color: #ffffff; font-weight: bold;"
-                                                                           value="发送手机验证码"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="取消" id="cancle"/>
-                                                            <input type="button" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" value="确定" id="commit"/>
-                                                        </div>
-                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label"> 邮箱验证 </label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input type="button" class="cs-bgcolor btn" id="emailVailate"
+                                                       style="color: #ffffff; font-weight: bold;"
+                                                       value="发送邮箱验证"/>
+                                                <label class="control-label" id="emailLable" style="display: none">
+                                                        邮箱已验证!</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         <br>
                         <div class="row">
                             <header class="panel-heading">
                                 <h2 class="panel-title"> 我的提示</h2>
                             </header>
-                            <div class="panel-body">
-                            </div>
                             <div class="col-md-12">
                                 <div class="toggle toggle-primary toggle-simple" data-plugin-toggle>
                                     <section class="toggle active">
@@ -355,7 +372,7 @@
         </div>
     </div>
 </div>
- <!--jQuery (necessary JavaScript) -->
+<!--jQuery (necessary JavaScript) -->
 <script src="assets/scripts/jquery.js"></script>
 <script src="assets/scripts/bootstrap.min.js"></script>
 <script src="assets/scripts/modernizr.js"></script>
@@ -367,26 +384,35 @@
 <script src="assets/scripts/functions.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
+        var isValidateEmail = app.getQueryString("isValidateEmail");
 //        window.setTimeout(window.location.href = "sign.html",5000);
         if (app.getUserInfo().emailAccount == null) {
             location.href = "sign.html";
         } else {
             $("#personInfo").css('display', 'block');
-            $("#li_login").css("display","none");
+            $("#li_login").css("display", "none");
             $("#userName").text(app.getUserInfo().nickName);
-            if(app.getUserInfo().validateUser){
-                var name = app.getUserInfo().realName.substr(0,1)+"**";
-                var idcard = app.getUserInfo().idCard.substr(0,4)+"****"+app.getUserInfo().idCard.substr(app.getUserInfo().idCard.length-4);
+            if (app.getUserInfo().validateUser) {
+                var name = app.getUserInfo().realName.substr(0, 1) + "**";
+                var idcard = app.getUserInfo().idCard.substr(0, 4) + "****" + app.getUserInfo().idCard.substr(app.getUserInfo().idCard.length - 4);
                 $("#trueNamelable").text(name).css('display', 'block');
-                $("#identityCardlable").text(idcard).css('display','block');
+                $("#identityCardlable").text(idcard).css('display', 'block');
                 $("#truename").css('display', 'none');
                 $("#identitycard").css('display', 'none');
                 $("#submitRealInfo").css('display', 'none');
             }
-            if(app.getUserInfo().validatePhone){
+            if (app.getUserInfo().validatePhone) {
                 $("#phone_a").css('display', 'none');
                 $("#phonelable").text(app.getUserInfo().phone);
                 $("#phonelable").css('display', 'block');
+            }
+            if(isValidateEmail){
+                $("#emailVailate").css("display","none");
+                $("#emailLable").css("display","block");
+            }
+            if(app.getUserInfo().isValidateEmail){
+                $("#emailVailate").css("display","none");
+                $("#emailLable").css("display","block");
             }
         }
         jQuery('.flexslider').flexslider({
@@ -401,41 +427,41 @@
             var cardNO = $('#identitycard').val();
             var realName = $("#truename").val();
             var isValidate = null;
-            if(cardNO.length <= 0){
-                app.myAlert(" ","身份证信息不可为空!","warning");
+            if (cardNO.length <= 0) {
+                app.myAlert(" ", "身份证信息不可为空!", "warning");
                 return;
             }
-            if(realName.length <= 0){
-                app.myAlert("","姓名信息不可为空!","warning");
+            if (realName.length <= 0) {
+                app.myAlert("", "姓名信息不可为空!", "warning");
                 return;
             }
             /*var json = {cardno:cardNO,name:realName};
-            $.ajax({
-                url: "http://idcard.market.alicloudapi.com/lianzhuo/idcard",
-                type: 'GET',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(json),
-                dataType: 'json',//服务器返回json格式数据
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    if (result.code == 200) {
-                        isValidate = true;
-                        app.myAlert("","身份证验证成功!","success");
-                        return;
-                    }
-                    else {
-                        app.myAlert(" ","身份证验证失败!","error");
-                        return;
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    sweetAlert(" ","网络异常,请稍候再试!","error");
-                }
-            });*/
-            if(isValidate == null){
-                var json = {idCard:cardNO,realName:realName,id:app.getUserInfo().id,isValidateUser:true};
+             $.ajax({
+             url: "http://idcard.market.alicloudapi.com/lianzhuo/idcard",
+             type: 'GET',
+             timeout: 10000,//超时时间设置为10秒；
+             data: JSON.stringify(json),
+             dataType: 'json',//服务器返回json格式数据
+             contentType: "application/json; charset=utf-8",
+             success: function (result) {
+             if (result.code == 200) {
+             isValidate = true;
+             app.myAlert("","身份证验证成功!","success");
+             return;
+             }
+             else {
+             app.myAlert(" ","身份证验证失败!","error");
+             return;
+             }
+             },
+             error: function (xhr, type, errerThrown) {
+             sweetAlert(" ","网络异常,请稍候再试!","error");
+             }
+             });*/
+            if (isValidate == null) {
+                var json = {idCard: cardNO, realName: realName, id: app.getUserInfo().id, isValidateUser: true};
                 $.ajax({
-                    url: app.getServerUrl()+"/user",
+                    url: app.getServerUrl() + "/user",
                     type: 'PUT',
                     timeout: 10000,//超时时间设置为10秒；
                     data: JSON.stringify(json),
@@ -453,19 +479,49 @@
                             $("#identityCardlable").css('display', 'block');
                         }
                         else {
-                            app.myAlertWithoutFunction(" ",result.message,"warning");
+                            app.myAlertWithoutFunction(" ", result.message, "warning");
                             return;
                         }
                     },
                     error: function (xhr, type, errerThrown) {
-                        app.myAlertWithoutFunction("","网络异常,请重新验证!","error");
+                        app.myAlertWithoutFunction("", "网络异常,请重新验证!", "error");
                         return;
                     }
                 });
             }
         });
+        // 验证邮箱
+        $("#emailVailate").click(function () {
+            var emailAccount = app.getUserInfo().emailAccount;
+            $.ajax({
+                url: app.getServerUrl() + "/user/sendVerifyEmail",
+                type: 'GET',
+                timeout: 10000,//超时时间设置为10秒；
+//                data: JSON.stringify(json),
+                dataType: 'json',//服务器返回json格式数据
+                contentType: "application/json; charset=utf-8",
+                headers: app.createAuthorizationTokenHeader(),
+                success: function (result) {
+                    if (result.code == 200) {
+                        location.href = "contect.html";
+                        $("#emailVailate").css("display","none");
+                        $("#emailLable").css("display","block");
+                    }
+                    else {
+                        app.myAlertWithoutFunction(" ", "邮箱验证失败!", "warning");
+                        return;
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    app.myAlertWithoutFunction("", "网络异常,请重新验证!", "error");
+                    return;
+                }
+            });
+        });
+
+
         // 取消button绑定事件
-        $("#cancle").click(function(){
+        $("#cancle").click(function () {
             window.location.reload();
         });
         //给发送验证码按钮绑定监听事件
@@ -474,14 +530,14 @@
             // 此处判断该用户信息中是否有同样的手机号
             if (app.getUserInfo().phone != null) {
                 if (app.getUserInfo().phone == phoneNum) {
-                    app.myAlertWithoutFunction(" ","此手机号码已经验证过!","warning");
+                    app.myAlertWithoutFunction(" ", "此手机号码已经验证过!", "warning");
                     return;
                 }
             }
             var phoneJson = {"phone": phoneNum};
             // 此处调用发送手机验证码的接口获取手机验证码
             $.ajax({
-                url: app.getServerUrl()+"/user/validatePhone",
+                url: app.getServerUrl() + "/user/validatePhone",
                 type: 'POST',
                 timeout: 10000,//超时时间设置为10秒；
                 data: JSON.stringify(phoneJson),
@@ -493,11 +549,11 @@
                         app.setUserInfo(result.data.userInfo);
                     }
                     else {
-                        app.myAlert("",result.message,"warning");
+                        app.myAlert("", result.message, "warning");
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    app.myAlert(" ","网络异常,请稍候再试!","error");
+                    app.myAlert(" ", "网络异常,请稍候再试!", "error");
                 }
             });
         });
@@ -506,24 +562,24 @@
             var phoneNum = $("#mobile").val();
             var verifycode = $("#verifycode").val();
             if (phoneNum.length != 11) {
-                app.myAlertWithoutFunction(" ","请填写正确的手机号码!","warning");
+                app.myAlertWithoutFunction(" ", "请填写正确的手机号码!", "warning");
                 return;
             }
             if (verifycode.length <= 0) {
-                app.myAlertWithoutFunction(" ","验证码不能为空!","warning");
+                app.myAlertWithoutFunction(" ", "验证码不能为空!", "warning");
                 return;
             }
             if (verifycode != app.getUserInfo().verifyCode) {
-                app.myAlertWithoutFunction("","验证码信息错误，请重新输入!","error");
+                app.myAlertWithoutFunction("", "验证码信息错误，请重新输入!", "error");
                 return;
             } else if (app.getUserInfo().expireDate < new Date()) {
-                app.myAlertWithoutFunction("","验证码已过期，请重新发送！","warning");
+                app.myAlertWithoutFunction("", "验证码已过期，请重新发送！", "warning");
                 return;
             } else {
                 var verifycodeJson = {"validatePhone": true};
                 // 此处调用发送手机验证码的接口获取手机验证码
                 $.ajax({
-                    url: app.getServerUrl()+"/user/phoneValidated",
+                    url: app.getServerUrl() + "/user/phoneValidated",
                     type: 'POST',
                     timeout: 10000,//超时时间设置为10秒；
                     contentType: "application/json; charset=utf-8",
@@ -533,15 +589,15 @@
                     success: function (result) {
                         if (result.code == 200) {
                             app.setUserInfo(result.data.userInfo);
-                            app.myAlert("","手机验证成功!","success");
+                            app.myAlert("", "手机验证成功!", "success");
                         }
                         else {
-                            app.myAlertWithoutFunction("",result.message,"warning");
+                            app.myAlertWithoutFunction("", result.message, "warning");
                             return;
                         }
                     },
                     error: function (xhr, type, errerThrown) {
-                        app.myAlert("","网络异常,请稍候再试!","error");
+                        app.myAlert("", "网络异常,请稍候再试!", "error");
                         return;
                     }
                 });
@@ -556,16 +612,14 @@
     });
 
     function id_card() {
-        var cardAccount=$("#identitycard").val();
-        var iscardAccount=/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
-        if(cardAccount.length <= 0)
-        {
-            app.myAlert("","身份证号码不为空！","warning");
+        var cardAccount = $("#identitycard").val();
+        var iscardAccount = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+        if (cardAccount.length <= 0) {
+            app.myAlert("", "身份证号码不为空！", "warning");
             return;
         }
-        else if (!iscardAccount.test(cardAccount))
-        {
-            app.myAlert("","请输入正确的身份证号码！","warning");
+        else if (!iscardAccount.test(cardAccount)) {
+            app.myAlert("", "请输入正确的身份证号码！", "warning");
             return;
         }
     }
@@ -574,10 +628,10 @@
         var mobileAccount = $("#mobile").val();
         var ismobileAccount = /^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$/;
         if (mobileAccount.length <= 0) {
-            app.myAlert("","号码不能为空!","warning");
+            app.myAlert("", "号码不能为空!", "warning");
             return;
         } else if (ismobileAccount.test(mobileAccount)) {
-            app.myAlert("","请输入正确的号码!","warning");
+            app.myAlert("", "请输入正确的号码!", "warning");
 
             return;
         }

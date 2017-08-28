@@ -251,7 +251,7 @@ public class UserController {
         User user = userService.findById(userId);
         user.setValidateEmail(true);
         userService.update(user);
-        return "redirect:"+ domain +"/sign.html";
+        return "redirect:"+ domain +"/contect.html?isValidateEmail=true";
     }
 
     /**
