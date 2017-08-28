@@ -309,7 +309,7 @@
                     <div class="footer_icon"><a href="#"><img src="assets/images/footer-logo.png" alt=""></a></div>
                     <div class="fnav-area">
                         <br>
-                        <p>© 0000</p>
+                        <p> © Copyright 2017 ICO All Rights Reserved.</p>
                     </div>
                 </div>
             </div>
@@ -334,7 +334,8 @@
             $("#contect").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
-            $("#li_login").css("display","none");
+            $("#li_login").text("已登录");
+            $("#li_login").attr("href","#");
             $("#userName").text(app.getUserInfo().nickName);
         }
         $.ajax({
