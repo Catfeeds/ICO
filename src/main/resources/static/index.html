@@ -553,12 +553,18 @@
                         var y = date.getFullYear();
                         var m = date.getMonth();
                         var d = date.getDate();
+                        var startDate = item.startTime;
                         var endDate = item.endTime;
+                        var nowDate = new Date();
                         var array = endDate.split("-");
                         var endTime = new Date(parseInt(array[0]), parseInt(array[1]) - 1, parseInt(array[2]));
                         var nowTime = new Date(parseInt(y), parseInt(m), parseInt(d));
                         var day = (Number(endTime) - Number(nowTime)) / (1000 * 60 * 60 * 24);
                         var pictureUrl = null;
+                        var s = new Date(startDate);
+                        var e =  new Date(endDate);
+                        var passtime= (e-s)-(e - nowDate);
+                        var precent = parseInt((passtime/(e-s))*100);
                         if(item.pictureUrl.trim()){
                             pictureUrl = item.pictureUrl;
                         }else{
@@ -586,8 +592,8 @@
                                     + "<div class='dr_info'>"
                                     + "<ul><li> <i class='cscolor icon-clock7'></i>"
                                     + "<p style='margin-left:18px;'>剩余天数 " + day + "</p></li></ul>"
-                                    + "<span class='bar'><span style='width:12%;'></span></span>"
-                                    + "<div class='detail'> <span class=''fund=>12%</span>"
+                                    + "<span class='bar'><span style='width:"+precent+"%;'></span></span>"
+                                    + "<div class='detail'> <span class=''fund=>"+precent+"%</span>"
                                     + "<a class='star icon-star'></a></div>"
                                     + "</div></div></div></li>");
                         }
