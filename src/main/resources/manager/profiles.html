@@ -468,8 +468,33 @@
         $('#editor').summernote({
             placeholder:'项目描述',
             lang: 'zh-CN', // default: 'en-US'
-            height: 200   //set editable area's height
+            height: 200,   //set editable area's height
+            callbacks: {
+                onImageUpload: function(files) {
+                    sendFile(files[0]);
+                }
+            }
         });
+        function sendFile(file) {
+            data = new FormData();
+            data.append("file", file);
+            $.ajax({
+                data: data,
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: app.getServerUrl() + "/file",
+                cache: false,
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function(result) {
+                    if(result.code == 200) {
+                        var image = $('<img>').attr('src', result.data.path);
+                        $('#editor').summernote("insertNode", image[0]);
+                    }
+                }
+            });
+        }
 
         //添加可投资项目数据
         $.ajax({
