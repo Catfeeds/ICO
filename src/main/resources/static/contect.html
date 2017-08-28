@@ -180,7 +180,7 @@
                                                 <label class="control-label" id="identityCardlable"
                                                        style="display: none"></label>
                                                 <input type="text" id="identitycard" class="form-control"
-                                                       placeholder="" onblur="id_card()" required>
+                                                       placeholder="" onblur="id_card()">
                                             </div>
                                         </div>
                                     </div>
@@ -407,10 +407,6 @@
                 $("#phonelable").text(app.getUserInfo().phone);
                 $("#phonelable").css('display', 'block');
             }
-           /* if(isValidateEmail){
-                $("#emailVailate").css("display","none");
-                $("#emailLable").css("display","block");
-            }*/
             if(app.getUserInfo().validateEmail){
                 $("#emailVailate").css("display","none");
                 $("#emailLable").css("display","block");
@@ -493,12 +489,10 @@
         });
         // 验证邮箱
         $("#emailVailate").click(function () {
-            var emailAccount = app.getUserInfo().emailAccount;
             $.ajax({
                 url: app.getServerUrl() + "/user/sendVerifyEmail",
                 type: 'GET',
                 timeout: 10000,//超时时间设置为10秒；
-//                data: JSON.stringify(json),
                 dataType: 'json',//服务器返回json格式数据
                 contentType: "application/json; charset=utf-8",
                 headers: app.createAuthorizationTokenHeader(),

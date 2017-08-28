@@ -634,7 +634,7 @@
             var type2 = 2;
             var jsmoneyJson = {targetNumber: fbnumber,tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook1, tokenMoneyWhitepaperEnUrl: enbook1, type:type2};
             $.ajax({
-                url : "/token/detail", //后台接口
+                url : app.getServerUrl()+"/token/detail", //后台接口
                 type: 'POST',
 //                timeout: 10000,//超时时间设置为10秒；
                 data: JSON.stringify(jsmoneyJson),
@@ -694,7 +694,7 @@
                                     var type1 = 1;
                                     var moneyJson = {minTargetNumber: minnumber, targetNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId1, tokenMoneyWhitepaperCnUrl:znbook, tokenMoneyWhitepaperEnUrl: enbook, type:type1};
                                     $.ajax({
-                                        url : "/token/detail", //后台接口
+                                        url : app.getServerUrl()+"/token/detail", //后台接口
                                         type: 'POST',
 //                                        timeout: 10000,//超时时间设置为10秒；
                                         data: JSON.stringify(moneyJson),
@@ -704,7 +704,7 @@
                                             if (result.code == 200) {
                                                 var updateJson = {id: outputTokenMoneyDetailId, inputTokenMoneyProjectId:prjId}
                                                 $.ajax({
-                                                    url : "/token/detail", //后台接口
+                                                    url : app.getServerUrl()+"/token/detail", //后台接口
                                                     type: 'PUT',
 //                                                    timeout: 10000,//超时时间设置为10秒；
                                                     data: JSON.stringify(updateJson),

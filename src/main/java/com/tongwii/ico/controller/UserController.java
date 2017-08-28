@@ -156,7 +156,7 @@ public class UserController {
     /**
      * 修改用户密码
      */
-    @PutMapping("/ ")
+    @PutMapping("/")
     @ResponseBody
     public Result updatePassword(@RequestBody Map<Object,String> passwordInfo) {
         Integer userId = ContextUtils.getUserId();
@@ -215,10 +215,6 @@ public class UserController {
         }
         User user = null;
         try {
-            if(ContextUtils.getUserId() == null){
-                user = new User();
-                user.setPhone(phone);
-            }
             user = userService.findById(ContextUtils.getUserId());
             user.setPhone(phone);
             Integer code = messageUtil.getSixRandNum();
@@ -267,10 +263,4 @@ public class UserController {
         User user = userService.findById(ContextUtils.getUserId());
         return Result.successResult(user);
     }
-
-    /**
-     * 忘记密码接口
-     * */
-
-
 }
