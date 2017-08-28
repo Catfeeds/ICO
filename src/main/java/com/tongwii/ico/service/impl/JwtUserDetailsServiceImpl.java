@@ -29,10 +29,6 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
                 user.getId(),
                 user.getEmailAccount(),
                 user.getPassword(),
-                user.getNickName(),
-                user.getRealName(),
-                user.getPhone(),
-                user.getIdCard(),
                 user.getEnabled(),
                 userRoleRelationService.getByUserId( user.getId() )
         );
