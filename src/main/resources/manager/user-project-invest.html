@@ -31,7 +31,7 @@
     </script>
     <style type="text/css">
         table {width:200px;table-layout:fixed;}
-        td {white-space:nowrap;overflow:hidden;word-wrap:break-word;}
+
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -317,11 +317,11 @@
                         $("#tableData").append(
                             "       <tr id='"+ item.id +"'>"
                             +"         <td style='width:50px;'>" + item.project.name + "</td>"
-                            +"         <td title='"+item.projectWallet.walletAddress +"'><input readonly='readonly' value='"+ item.projectWallet.walletAddress +"'></td>"
-                            +"         <td title='"+item.projectWallet.walletPrivateKey +"'><input readonly='readonly' value='"+ item.projectWallet.walletPrivateKey +"'></td>"
+                            +"         <td title='"+item.projectWallet.walletAddress +"' style='word-wrap:break-word'>"+ item.projectWallet.walletAddress +"</td>"
+                            +"         <td title='"+item.projectWallet.walletPrivateKey +"' style='word-wrap:break-word'>"+ item.projectWallet.walletPrivateKey +"</td>"
                             +"         <td >" + item.userId + "</td>"
-                            +"         <td title='"+item.userWallet.tokenMoneyUrl+"'><input readonly='readonly' value='"+ item.userWallet.tokenMoneyUrl +"'></td>"
-                            +"         <td title='"+item.userWallet.tokenPrivateKey+"'><input readonly='readonly' value='"+ item.userWallet.tokenPrivateKey +"'></td>"
+                            +"         <td title='"+item.userWallet.tokenMoneyUrl+"' style='word-wrap:break-word'>"+ item.userWallet.tokenMoneyUrl +"</td>"
+                            +"         <td title='"+item.userWallet.tokenPrivateKey+"' style='word-wrap:break-word'>"+ item.userWallet.tokenPrivateKey +"</td>"
                             +"         <td >" + item.tokenMoney.nameEnShort + "</td>"
                             +"         <td>" + item.investValue + "</td>"
                             +"         <td>" + item.lockDate + "</td>"
