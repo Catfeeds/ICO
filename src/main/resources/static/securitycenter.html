@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="assets/css/theme-blog.css">
     <link rel="stylesheet" href="assets/css/theme-shop.css">
     <link rel="stylesheet" href="assets/css/theme-animate.css">
-    <link rel="stylesheet" href="assets/css/default.css">
     <!--<script src="master/style-switcher/style.switcher.localstorage.js"></script>-->
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/extension.css">
@@ -27,7 +26,7 @@
     <link rel="stylesheet" href="assets/css/component.css" media="screen">
     <link rel="stylesheet" href="assets/css/skin-corporate-hosting.css">
     <link rel="stylesheet" href="assets/css/custom.css">
-
+    <link rel="stylesheet" href="assets/css/sweet-alert.css">
     <!-- Css (necessary Css) -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-theme.css" rel="stylesheet">
@@ -177,8 +176,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <div class="switch switch-success">
-                                                        <input type="checkbox" name="tpassword2"
-                                                               data-plugin-ios-switch/>
+                                                        <input type="checkbox" value="1"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,18 +186,16 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <div class="switch switch-success">
-                                                        <input type="checkbox" name="verifymobile"
-                                                               data-plugin-ios-switch/>
+                                                        <input type="checkbox" value="2"/>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="form-group">
                                             <label class="col-md-3 control-label"></label>
-                                            <button data-toggle="modal" data-target="#formModal"
-                                                    class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;"
-                                                    type="button">递交
-                                            </button>
+                                            <input class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" id="submit"
+                                                    type="button" value="递交">
                                         </div>
                                     </form>
                                 </div>
@@ -275,6 +271,7 @@
 <script src="assets/scripts/modernizr.js"></script>
 <script src="assets/scripts/menu.js"></script>
 <script src="assets/scripts/counter.js"></script>
+<script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
@@ -287,12 +284,11 @@
             $("#li_login").css("display","none");
             $("#userName").text(app.getUserInfo().nickName);
         }
-
-        $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
+    });
+    $("#sign_out").click(function () {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
     });
 </script>
 </body>
