@@ -3,8 +3,6 @@ package com.tongwii.ico.util;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Security;
@@ -39,57 +37,11 @@ public class RSAEncodeUtil {
             Properties properties = PropertiesLoaderUtils.loadProperties(resource);
             fileDir = properties.getProperty("publickey.location");
             Resource publicKey = new ClassPathResource(fileDir);
-            RESOURCES_DIR = publicKey.getFile().toString();
-            System.out.println(RESOURCES_DIR);
+            RESOURCES_DIR = publicKey.getFile().getAbsolutePath();
         } catch (IOException e) {
             e.printStackTrace();
             throw new ApplicationException("加载配置文件出错");
         }
-    }
-    public static void main(String[] args) throws FileNotFoundException, IOException, NoSuchAlgorithmException, NoSuchProviderException, Exception {
-        Security.addProvider(new BouncyCastleProvider());
-
-
-        KeyFactory factory = KeyFactory.getInstance("RSA", "BC");
-        try {
-            // 读取证书文件并解析密钥
-            PrivateKey priv = generatePrivateKey(factory, RESOURCES_DIR + "/id_rsa");
-//            LOGGER.info(String.format("私钥：%s", priv));
-
-            PublicKey pub = generatePublicKey(factory, RESOURCES_DIR + "/id_rsa.pub");
-//            LOGGER.info(String.format("公钥：%s", pub));
-
-
-            // 公钥加密
-            byte[] encryptedBytes = encrypt(data.getBytes(), pub);
-            // 加密后是乱码不便于存入数据库，所以用Base64转换下
-            String eCode = Base64.encodeBase64String(encryptedBytes);
-//            LOGGER.info(String.format("加密后：%s", eCode));
-            System.out.println(String.format("加密后：%s", eCode));
-
-            // 私钥解密
-            byte[] decryptedBytes = decrypt(Base64.decodeBase64(eCode), priv);
-//            LOGGER.info(String.format("加密后：%s", new String(decryptedBytes)));
-            System.out.println(String.format("解密后：%s", new String(decryptedBytes)));
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 文件获取私钥
-     * @param factory
-     * @param filename
-     * @return
-     * @throws InvalidKeySpecException
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
-    private static PrivateKey generatePrivateKey(KeyFactory factory, String filename) throws InvalidKeySpecException, FileNotFoundException, IOException {
-        PemFile pemFile = new PemFile(filename);
-        byte[] content = pemFile.getPemObject().getContent();
-        PKCS8EncodedKeySpec privKeySpec = new PKCS8EncodedKeySpec(content);
-        return factory.generatePrivate(privKeySpec);
     }
 
     /**
@@ -120,17 +72,40 @@ public class RSAEncodeUtil {
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         return cipher.doFinal(content);
     }
-
-    /**
-     * 私钥解密
-     * @param content
-     * @param privateKey
-     * @return
-     * @throws Exception
-     */
-    private static byte[] decrypt(byte[] content, PrivateKey privateKey) throws Exception {
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
-        return cipher.doFinal(content);
+    public static String encrypt(String content) throws Exception {
+        Security.addProvider(new BouncyCastleProvider());
+        KeyFactory factory = KeyFactory.getInstance("RSA", "BC");
+        try {
+            PublicKey pub = generatePublicKey(factory, RESOURCES_DIR + "/id_rsa.pub");
+            byte[] encryptedBytes = encrypt(content.getBytes(), pub);
+            // 加密后是乱码不便于存入数据库，所以用Base64转换下
+            String eCode = Base64.encodeBase64String(encryptedBytes);
+            System.out.println(String.format("加密后：%s", eCode));
+            return eCode;
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
+//    public static void main(String[] args) throws Exception {
+//        Security.addProvider(new BouncyCastleProvider());
+//
+//
+//        KeyFactory factory = KeyFactory.getInstance("RSA", "BC");
+//        try {
+//            PublicKey pub = generatePublicKey(factory, RESOURCES_DIR + "/id_rsa.pub");
+////            LOGGER.info(String.format("公钥：%s", pub));
+//
+//
+//            // 公钥加密
+//            byte[] encryptedBytes = encrypt(data.getBytes(), pub);
+//            // 加密后是乱码不便于存入数据库，所以用Base64转换下
+//            String eCode = Base64.encodeBase64String(encryptedBytes);
+////            LOGGER.info(String.format("加密后：%s", eCode));
+//            System.out.println(String.format("加密后：%s", eCode));
+//        } catch (InvalidKeySpecException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
