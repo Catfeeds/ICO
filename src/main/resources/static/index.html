@@ -202,7 +202,6 @@
                                         <button class="btn btn-lg explore-btn cs-bgcolor mt-md">查看更多</button>
                                     </div>
                                     <br>
-                                    <br>
                                 </div>
                                 <div class="page-section">
                                     <div class="container">
@@ -513,7 +512,7 @@
             $("#contect").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
-            $("#li_login").css("display", "none");
+            $("#li_login").text("已登录");
             $("#userName").text(app.getUserInfo().nickName);
         }
 

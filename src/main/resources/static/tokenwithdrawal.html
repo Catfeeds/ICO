@@ -344,7 +344,8 @@
 //            $("#personInfo").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
-            $("#li_login").css("display","none");
+            $("#li_login").text("已登录");
+            $("#li_login").attr("href","#");
             $("#userName").text(app.getUserInfo().nickName);
             //此处需要看看是否有身份证验证，如果验证通过就展现具体的界面，如果没有就不展现界面展现提示信息
             if (app.getUserInfo().validateUser) {
