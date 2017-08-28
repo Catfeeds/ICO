@@ -194,7 +194,7 @@ public class UserController {
         User user = ContextUtils.getUser();
         String token = request.getHeader(tokenHeader);
         messageUtil.sendRegisterMail(user.getEmailAccount(), token);
-        return Result.successResult("注册成功");
+        return Result.successResult("发送成功");
     }
 
     /**
@@ -248,7 +248,7 @@ public class UserController {
         User user = userService.findById(userId);
         user.setValidateEmail(true);
         userService.update(user);
-        return "/index.html";
+        return "redirect: /sign.html";
     }
 
     /**
