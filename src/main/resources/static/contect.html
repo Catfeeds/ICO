@@ -385,6 +385,9 @@
 <script type="text/javascript">
     jQuery(window).load(function () {
         var isValidateEmail = app.getQueryString("isValidateEmail");
+        var userInfo = app.getUserInfo();
+        userInfo.validateEmail = isValidateEmail;
+        app.setUserInfo(userInfo);
 //        window.setTimeout(window.location.href = "sign.html",5000);
         if (app.getUserInfo().emailAccount == null) {
             location.href = "sign.html";
@@ -406,11 +409,11 @@
                 $("#phonelable").text(app.getUserInfo().phone);
                 $("#phonelable").css('display', 'block');
             }
-            if(isValidateEmail){
+           /* if(isValidateEmail){
                 $("#emailVailate").css("display","none");
                 $("#emailLable").css("display","block");
-            }
-            if(app.getUserInfo().isValidateEmail){
+            }*/
+            if(app.getUserInfo().validateEmail){
                 $("#emailVailate").css("display","none");
                 $("#emailLable").css("display","block");
             }
@@ -503,9 +506,7 @@
                 headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
                     if (result.code == 200) {
-                        location.href = "contect.html";
-                        $("#emailVailate").css("display","none");
-                        $("#emailLable").css("display","block");
+                        app.myAlertWithoutFunction(" ", "请前往邮箱进行验证!", "success");
                     }
                     else {
                         app.myAlertWithoutFunction(" ", "邮箱验证失败!", "warning");
