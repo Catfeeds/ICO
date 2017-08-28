@@ -51,6 +51,8 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     @Value( "${jwt.header}" )
     private String tokenHeader;
+    @Value("${domain}")
+    private String domain;
 
     @PostMapping
     @ResponseBody
@@ -249,7 +251,7 @@ public class UserController {
         User user = userService.findById(userId);
         user.setValidateEmail(true);
         userService.update(user);
-        return "redirect: /sign.html";
+        return "redirect:"+ domain +"/sign.html";
     }
 
     /**
