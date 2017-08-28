@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
+import com.tongwii.ico.security.JwtUser;
 import com.tongwii.ico.service.FileService;
 import com.tongwii.ico.service.UserService;
 import com.tongwii.ico.service.UserWalletService;
@@ -191,10 +192,10 @@ public class UserController {
     @GetMapping("/sendVerifyEmail")
     @ResponseBody
     public Result register(HttpServletRequest request) {
-        User user = ContextUtils.getUser();
+        JwtUser user = ContextUtils.getJwtUser();
         String token = request.getHeader(tokenHeader);
-        messageUtil.sendRegisterMail(user.getEmailAccount(), token);
-        return Result.successResult("注册成功");
+        messageUtil.sendRegisterMail(user.getUsername(), token);
+        return Result.successResult("发送成功");
     }
 
     /**
@@ -248,7 +249,7 @@ public class UserController {
         User user = userService.findById(userId);
         user.setValidateEmail(true);
         userService.update(user);
-        return "/index.html";
+        return "redirect: /sign.html";
     }
 
     /**
