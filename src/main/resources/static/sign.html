@@ -93,7 +93,8 @@
                                                                                       role="tab" id="logina"
                                                                                       data-toggle="tab">登录</a></li>
                                             <li role="presentation"><a href="#profile" aria-controls="profile"
-                                                                       role="tab" data-toggle="tab" id="regista">注册</a></li>
+                                                                       role="tab" data-toggle="tab" id="regista">注册</a>
+                                            </li>
                                         </ul>
 
                                         <!-- Tab panes -->
@@ -106,17 +107,20 @@
                                                                 <ul class="row">
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
                                                                         <label>用户名</label>
-                                                                        <input type="text" placeholder=""  onkeydown="keylogin()"
+                                                                        <input type="text" placeholder=""
+                                                                               onkeydown="keylogin()"
                                                                                id="sign_name">
                                                                     </li>
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
                                                                         <label>密码</label>
-                                                                        <input type="password" placeholder="" onkeydown="keylogin()"
+                                                                        <input type="password" placeholder=""
+                                                                               onkeydown="keylogin()"
                                                                                id="sign_password">
                                                                     </li>
-                                                                    <!--<li class="col-lg-12">-->
-                                                                        <!--<a href="#"><i class="icon-question-circle"></i>忘记密码?</a>-->
-                                                                    <!--</li>-->
+                                                                    <li class="col-lg-12">
+                                                                        <a data-toggle="modal" data-target="#formModal"><i
+                                                                                class="icon-question-circle"></i>忘记密码?</a>
+                                                                    </li>
                                                                     <li class="col-lg-12">
                                                                         <input class="cs-bgcolor" type="button"
                                                                                value="登录" id="login">
@@ -180,16 +184,19 @@
                                                                 <ul class="row">
                                                                     <li class="col-lg-12">
                                                                         <label>电子邮箱</label>
-                                                                        <input type="email" placeholder="" id="email" onkeydown="keylogin()">
+                                                                        <input type="email" placeholder="" id="email"
+                                                                               onkeydown="keylogin()">
                                                                     </li>
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
                                                                         <label>密码</label>
-                                                                        <input type="password" placeholder="" onkeydown="keylogin()"
+                                                                        <input type="password" placeholder=""
+                                                                               onkeydown="keylogin()"
                                                                                id="regist_password">
                                                                     </li>
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
                                                                         <label>确认密码</label>
-                                                                        <input type="password" placeholder="" onkeydown="keylogin()"
+                                                                        <input type="password" placeholder=""
+                                                                               onkeydown="keylogin()"
                                                                                id="again_password">
                                                                     </li>
                                                                     <li class="col-lg-12">
@@ -243,6 +250,133 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade" id="formModal" tabindex="-1" role="dialog"
+                                                 aria-labelledby="formModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-hidden="true"></button>
+                                                            <h4 class="modal-title">忘记密码</h4>
+                                                        </div>
+                                                        <form id="form_first" class="form-horizontal mb-lg">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">邮箱</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" id="firstemail" placeholder="请输入您的邮箱"
+                                                                               class="form-control"/>
+                                                                    </div>
+                                                                    <div class="col-sm-2"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">手机号码</label>
+                                                                <div class="col-sm-6">
+                                                                    <input type="text" id="firstphone" class="form-control"
+                                                                           placeholder="请输入您的手机号码"/>
+                                                                </div>
+                                                                <div class="col-sm-2"></div>
+                                                            </div>
+                                                            <div class="form-group" id="resultdiv" style="display: none;">
+                                                                <div class="col-sm-12" style="text-align: center;">
+                                                                    <label style="color:#4f4a9c;" id="resultlable"></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input type="button" class="cs-bgcolor btn"
+                                                                       style="color: #ffffff; font-weight: bold;" data-toggle="modal"
+                                                                       value="下一步" id="nextstep"/>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="subformModal" tabindex="-1" role="dialog"
+                                                 aria-labelledby="formModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-hidden="true"></button>
+                                                            <h4 class="modal-title" id="formModalLabel">忘记密码</h4>
+                                                        </div>
+                                                        <form id="demo-form" class="form-horizontal mb-lg">
+                                                            <div class="modal-body">
+                                                                <div class="form-group mt-lg">
+                                                                    <label class="col-sm-2 control-label">邮箱</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" id="secondemail" class="form-control"
+                                                                               readonly="readonly"/>
+                                                                    </div>
+                                                                    <div class="col-sm-4"></div>
+                                                                </div>
+
+                                                                <div class="form-group mt-lg">
+                                                                    <label class="col-sm-2 control-label">手机号码</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" id="mobile" class="form-control"
+                                                                               readonly="readonly"/>
+                                                                    </div>
+                                                                    <div class="col-sm-4"></div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-2 control-label">验证码</label>
+                                                                    <div class="col-sm-3">
+                                                                        <input type="text" id="verifycode"
+                                                                               class="form-control" style="width:140px;"
+                                                                               maxlength="6"/>
+                                                                    </div>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="button" id="sendsms"
+                                                                               class="cs-bgcolor btn"
+                                                                               style="color: #ffffff; font-weight: bold;"
+                                                                               value="发送手机验证码"/>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-2 control-label">新密码</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="password" id="newpass"
+                                                                               class="form-control"
+                                                                               style="width:140px;"/>
+                                                                    </div>
+                                                                    <div class="col-sm-4"></div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-2 control-label">重复新密码</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="password" id="renewpass"
+                                                                               class="form-control"
+                                                                               style="width:140px;"/>
+                                                                    </div>
+                                                                    <div class="col-sm-4"></div>
+                                                                </div>
+
+                                                                <div class="form-group" id="resultdiv2" style="display: none;">
+                                                                    <div class="col-sm-12" style="text-align: center;">
+                                                                        <label style="color:#4f4a9c;" id="resultlable2"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <input type="button" class="cs-bgcolor btn"
+                                                                       style="color: #ffffff; font-weight: bold;"
+                                                                       value="取消"
+                                                                       id="cancle"/>
+                                                                <input type="button" class="cs-bgcolor btn"
+                                                                       style="color: #ffffff; font-weight: bold;"
+                                                                       value="确定"
+                                                                       id="commit"/>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -319,11 +453,11 @@
         $("#login").click(function () {
             login();
         });
-        $("#logina").click(function(){
-            flag=1;
+        $("#logina").click(function () {
+            flag = 1;
         });
-        $("#regista").click(function(){
-            flag=2;
+        $("#regista").click(function () {
+            flag = 2;
         });
         $("#regist").click(function () {
             regist();
@@ -335,24 +469,24 @@
         var registPassword = $("#regist_password").val().toString();
         var againPassword = $("#again_password").val().toString();
         if (email.length <= 0) {
-            app.myAlert("","电子邮箱不能为空!","warning");
+            app.myAlert("", "电子邮箱不能为空!", "warning");
             return;
         }
         if (registPassword.length <= 0 || againPassword.length <= 0) {
-            app.myAlert("","密码不能为空!","warning");
+            app.myAlert("", "密码不能为空!", "warning");
             return;
         }
-        if (registPassword.length <8 || registPassword.length >30) {
-            app.myAlert("","密码需为8位以上,30位以下!","warning");
+        if (registPassword.length < 8 || registPassword.length > 30) {
+            app.myAlert("", "密码需为8位以上,30位以下!", "warning");
             return;
         }
         if (registPassword != againPassword) {
-            app.myAlert("","两次输入的密码不一致!","warning");
+            app.myAlert("", "两次输入的密码不一致!", "warning");
             return;
         }
         var registJson = {emailAccount: email, password: registPassword};
         $.ajax({
-            url: app.getServerUrl()+"/user/register",
+            url: app.getServerUrl() + "/user/register",
             type: 'POST',
             timeout: 10000,//超时时间设置为10秒；
             data: JSON.stringify(registJson),
@@ -360,36 +494,36 @@
             contentType: "application/json; charset=utf-8",
             success: function (result) {
                 if (result.code == 200) {
-                    app.myAlert("","注册成功，请登录!","success","sign.html");
+                    app.myAlert("", "注册成功，请登录!", "success", "sign.html");
                     $("#sign_name").text(result.data.userInfo.emailAccount);
                 }
                 else {
-                    app.myAlertWithoutFunction("",result.message,"warning");
+                    app.myAlertWithoutFunction("", result.message, "warning");
                     return;
                     console.log("注册失败!");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlertWithoutFunction("","网络异常,请稍候再试!","error");
+                app.myAlertWithoutFunction("", "网络异常,请稍候再试!", "error");
                 return;
             }
         });
     }
 
-    function login(){
+    function login() {
         var signName = $("#sign_name").val();
         var signPassword = $("#sign_password").val();
         if (signName.length <= 0) {
-            app.myAlertWithoutFunction(" ","用户名不能为空","warning");
+            app.myAlertWithoutFunction(" ", "用户名不能为空", "warning");
             return false;
         }
         if (signPassword.length <= 0) {
-            app.myAlertWithoutFunction(" ","密码不能为空","warning");
+            app.myAlertWithoutFunction(" ", "密码不能为空", "warning");
             return false;
         }
         var json = {emailAccount: signName, password: signPassword};
         $.ajax({
-            url: app.getServerUrl()+"/auth/login",
+            url: app.getServerUrl() + "/auth/login",
             type: 'POST',
             timeout: 10000,//超时时间设置为10秒；
             data: JSON.stringify(json),
@@ -402,31 +536,164 @@
                     location.href = "contect.html";
                 }
                 else {
-                    app.myAlertWithoutFunction("","登录失败!"+result.message,"error");
+                    app.myAlertWithoutFunction("", "登录失败!" + result.message, "error");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlertWithoutFunction("","网络异常,请稍候再试!","error");
+                app.myAlertWithoutFunction("", "网络异常,请稍候再试!", "error");
             }
         });
     }
 
     function keylogin() {
-        if (event.keyCode == 13)
-        {
-            if(flag ==1){
-                setTimeout(function(){
+        if (event.keyCode == 13) {
+            if (flag == 1) {
+                setTimeout(function () {
                     login();
-                },0);
+                }, 0);
 
-            }else{
-                setTimeout(function(){
+            } else {
+                setTimeout(function () {
                     regist();
-                },0);
+                }, 0);
             }
-
         }
     }
+
+    // 下一步按钮
+    $("#nextstep").click(function () {
+        var firstEmail = $("#firstemail").val();
+        var firstPhone = $("#firstphone").val();
+        if (!firstEmail) {
+            $("#resultlable").text("邮箱不可为空!");
+            $("#resultdiv").show();
+            return;
+        }
+        if (!firstPhone) {
+            $("#resultlable").text("手机号码不可为空!");
+            $("#resultdiv").show();
+            return;
+        }
+        $.ajax({
+            url: app.getServerUrl() + "/auth/userExist/"+firstEmail+"&"+firstPhone,
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                if (result.code == 200) {
+                    app.setUserInfo(result.data.userInfo);
+                    $('#nextstep').attr("data-target","#subformModal");
+                    $("#secondemail").val(firstEmail);
+                    $("#mobile").val(firstPhone);
+                }
+                else {
+                    $("#resultlable").text(result.message);
+                    $("#resultdiv").css("display","block");
+                    return;
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                $("#resultlable").text("网络异常，请重试!");
+                $("#resultdiv").css("display","block");
+                return;
+            }
+        });
+    });
+
+    // 取消button绑定事件
+    $("#cancle").click(function () {
+        window.location.reload();
+    });
+    //给发送验证码按钮绑定监听事件
+    $("#sendsms").click(function () {
+        var phoneNum = $("#mobile").val();
+        var phoneJson = {"phone": phoneNum,"id":app.getUserInfo().id};
+        // 此处调用发送手机验证码的接口获取手机验证码
+        $.ajax({
+            url: app.getServerUrl() + "/auth/validatePhone",
+            type: 'POST',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(phoneJson),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 200) {
+                    app.setUserInfo(result.data.userInfo);
+                    $("#resultlable2").text(result.message);
+                    $("#resultdiv2").css("display","block");
+                }
+                else {
+                    $("#resultlable2").text(result.message);
+                    $("#resultdiv2").css("display","block");
+                    return;
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                $("#resultlable2").text("网络异常，请重试!");
+                $("#resultdiv2").css("display","block");
+                return;
+            }
+        });
+    });
+
+
+    //提交按钮触发事件
+    $("#commit").click(function () {
+        // 验证重置密码
+        var newPass = $("#newpass").val();
+        var renewPass = $("#renewpass").val();
+        var verifycode = $("#verifycode").val();
+        if (verifycode.length <= 0) {
+            app.myAlertWithoutFunction(" ", "验证码不能为空!", "warning");
+            return;
+        }
+        if (verifycode != app.getUserInfo().verifyCode) {
+            app.myAlertWithoutFunction("", "验证码信息错误，请重新输入!", "error");
+            return;
+        } else if (app.getUserInfo().expireDate < new Date()) {
+            app.myAlertWithoutFunction("", "验证码已过期，请重新发送！", "warning");
+            return;
+        } else {
+            if(newPass.lenth <8 || newPass.lenth >30)
+            {
+                $("#resultlable2").text("密码需为8位以上,30位以下!");
+                $("#resultdiv2").css("display","block");
+                return;
+            }
+            if(newPass != renewPass){
+                $("#resultlable2").text("两次输入的密码不一致!");
+                $("#resultdiv2").css("display","block");
+                return;
+            }
+            var forgetPassword = {"password": newPass,"id":app.getUserInfo().id};
+            // 此处调用发送手机验证码的接口获取手机验证码
+            $.ajax({
+                url: app.getServerUrl() + "/auth/forgetPassword",
+                type: 'PUT',
+                timeout: 10000,//超时时间设置为10秒；
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(forgetPassword),
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 200) {
+                        app.setUserInfo(result.data.userInfo);
+                        app.myAlert("", "重置密码成功!", "success","sign.html");
+                    }
+                    else {
+                        $("#resultlable2").text(result.message);
+                        $("#resultdiv2").css("display","block");
+                        return;
+                    }
+                },
+                error: function (xhr, type, errerThrown) {
+                    $("#resultlable2").text("网络异常,请稍候再试!");
+                    $("#resultdiv2").css("display","block");
+                    return;
+                }
+            });
+        }
+    });
 </script>
 
 </body>
