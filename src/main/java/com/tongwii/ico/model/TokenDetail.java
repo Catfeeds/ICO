@@ -29,8 +29,8 @@ public class TokenDetail {
     @Column(name = "token_money_whitePaper_en_url")
     private String tokenMoneyWhitepaperEnUrl;
 
-    @Column(name = "input_token_money_project_id")
-    private Integer inputTokenMoneyProjectId;
+    @Column(name = "token_money_project_id")
+    private Integer tokenMoneyProjectId;
 
     @Column(name = "type")
     private Integer type;
@@ -172,12 +172,12 @@ public class TokenDetail {
         this.tokenMoney = tokenMoney;
     }
 
-    public Integer getInputTokenMoneyProjectId() {
-        return inputTokenMoneyProjectId;
+    public Integer getTokenMoneyProjectId() {
+        return tokenMoneyProjectId;
     }
 
-    public void setInputTokenMoneyProjectId(Integer inputTokenMoneyProjectId) {
-        this.inputTokenMoneyProjectId = inputTokenMoneyProjectId;
+    public void setTokenMoneyProjectId(Integer tokenMoneyProjectId) {
+        this.tokenMoneyProjectId = tokenMoneyProjectId;
     }
 
     public enum TokenDetailType {

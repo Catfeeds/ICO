@@ -2,9 +2,11 @@ package com.tongwii.ico.service.impl;
 
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.dao.UserProjectInvestRecordMapper;
+import com.tongwii.ico.model.Project;
 import com.tongwii.ico.model.ProjectUserRelation;
 import com.tongwii.ico.model.TokenDetail;
 import com.tongwii.ico.model.UserProjectInvestRecord;
+import com.tongwii.ico.service.ProjectService;
 import com.tongwii.ico.service.ProjectUserRelationService;
 import com.tongwii.ico.service.TokenDetailService;
 import com.tongwii.ico.service.UserProjectInvestRecordService;
@@ -33,6 +35,8 @@ public class UserProjectInvestRecordServiceImpl extends AbstractService<UserProj
     private ProjectUserRelationService projectUserRelationService;
     @Autowired
     private TokenDetailService tokenDetailService;
+    @Autowired
+    private ProjectService projectService;
 
     @Override
     public List<UserProjectInvestRecord> findByUserId(Integer userId) {
@@ -74,6 +78,9 @@ public class UserProjectInvestRecordServiceImpl extends AbstractService<UserProj
         if(projectUserRelationService.userIsLockedProject(userId,projectId)){
             // 保存投资记录
             this.save(userProjectInvestRecord);
+        }else{
+            // 保存投资记录
+            this.save(userProjectInvestRecord);
             ProjectUserRelation projectUserRelation = new ProjectUserRelation();
             projectUserRelation.setUserId(userId);
             projectUserRelation.setProjectId(projectId);
@@ -85,11 +92,14 @@ public class UserProjectInvestRecordServiceImpl extends AbstractService<UserProj
                     tokenDetailService.update(tokenDetail);
                 }
             }
+
+            // 跟新参与人数
+            Project project = projectService.findById(projectId);
+            project.setPartPersonNumber(project.getPartPersonNumber()+1);
+            projectService.update(project);
+
             // 保存用户项目投资关系
             projectUserRelationService.save(projectUserRelation);
-        }else{
-            // 保存投资记录
-            this.save(userProjectInvestRecord);
         }
     }
 }

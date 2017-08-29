@@ -497,6 +497,15 @@
         //给发送验证码按钮绑定监听事件
         $("#sendsms").click(function () {
             var phoneNum = $("#mobile").val();
+            // 正则校验手机号码
+            var ismobileAccount = /^1[3|4|5|7|8][0-9]{9}$/;
+            if (phoneNum.length <= 0) {
+                app.myAlertWithoutFunction("", "号码不能为空!", "warning");
+                return;
+            }else if (!ismobileAccount.test(phoneNum)) {
+                app.myAlertWithoutFunction("", "请输入正确的手机号码!", "warning");
+                return;
+            }
             // 此处判断该用户信息中是否有同样的手机号
             if (app.getUserInfo().phone != null) {
                 if (app.getUserInfo().phone == phoneNum) {
@@ -504,45 +513,10 @@
                     return;
                 }
             }
-            var phoneJson = {"phone": phoneNum};
-            // 此处调用发送手机验证码的接口获取手机验证码
-            $.ajax({
-                url: app.getServerUrl() + "/user/validatePhone",
-                type: 'POST',
-                timeout: 10000,//超时时间设置为10秒；
-                data: JSON.stringify(phoneJson),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                headers: app.createAuthorizationTokenHeader(),
-                success: function (result) {
-                    if (result.code == 200) {
-                        app.setUserInfo(result.data.userInfo);
-                    }
-                    else {
-                        app.myAlert("", result.message, "warning");
-                    }
-                },
-                error: function (xhr, type, errerThrown) {
-                    app.myAlert(" ", "网络异常,请稍候再试!", "error");
-                }
-            });
-
-            time(this);
+            // 发送手机验证码
+            app.sendSMS(phoneNum,this);
         });
-        var wait = 60;
-        function time(obj) {
-            $this = $(obj);
-            if (wait === 0) {
-                $this.removeAttr("disabled").val("发送手机验证码");
-                wait = 60;
-            } else {
-                $this.attr("disabled", true).val("重新发送(" + wait + ")");
-                wait--;
-                setTimeout(function() {
-                    time(obj)
-                }, 1000)
-            }
-        }
+
         //提交按钮触发事件
         $("#commit").click(function () {
             var phoneNum = $("#mobile").val();

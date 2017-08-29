@@ -137,7 +137,10 @@ public class AuthController {
     }
 
     /**
+     * @author Yamo
      * 忘记密码——》验证手机号
+     * @param user
+     * @return
      */
     @PostMapping("/validatePhone")
     @ResponseBody
@@ -160,7 +163,10 @@ public class AuthController {
     }
 
     /**
+     * @author Yamo
      * 忘记用户密码
+     * @param user
+     * @return
      */
     @PutMapping("/forgetPassword")
     @ResponseBody

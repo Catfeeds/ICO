@@ -406,8 +406,24 @@
 
     // 发送验证码button绑定事件
     $("#sendsms").click(function () {
+        // 判空
+        var addressDes = $("#a_name").val();
+        var address = $("#a_address").val();
+        var moneyType = $('option').attr("value");
+        if(!addressDes){
+            app.myAlertWithoutFunction("","地址描述不可为空!","warning");
+            return;
+        }
+        if(!address){
+            app.myAlertWithoutFunction("","地址信息不可为空!","warning");
+            return;
+        }
+        if(!moneyType){
+            app.myAlertWithoutFunction("","地址类型不可为空!","warning");
+            return;
+        }
         if (app.getUserInfo().phone) {
-            app.sendSMS(app.getUserInfo().phone);
+            app.sendSMS(app.getUserInfo().phone,this);
         } else {
             app.myAlertWithoutFunction("", "您未绑定或验证手机!", "warning");
             return;
@@ -421,10 +437,27 @@
         var address = $("#a_address").val();
         var verifyCode = $("#verifycode").val();
         var moneyType = $('option').attr("value");
-        if (verifyCode != app.getUserInfo().verifyCode) {
-            app.myAlertWithoutFunction("", "验证码错误!", "error");
+        if(!addressDes){
+            app.myAlertWithoutFunction("","地址描述不可为空!","warning");
             return;
         }
+        if(!address){
+            app.myAlertWithoutFunction("","地址信息不可为空!","warning");
+            return;
+        }
+        if(!moneyType){
+            app.myAlertWithoutFunction("","地址类型不可为空!","warning");
+            return;
+        }
+        if(!verifyCode){
+            app.myAlertWithoutFunction("","验证码信息不可为空!","warning");
+            return;
+        }
+        if(verifyCode != app.getUserInfo().verifyCode){
+            app.myAlertWithoutFunction("","验证码错误!","warning");
+            return;
+        }
+
         var walletJson = {des: addressDes, tokenMoneyUrl: address, tokenMoneyId: moneyType};
         $.ajax({
             url: app.getServerUrl()+"/user/wallet/addUserWallet",

@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
@@ -36,23 +37,25 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void store(MultipartFile file) {
-        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+    public Path store(MultipartFile file) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String newFileName = UUID.randomUUID().toString().replaceAll("-", "") + fileName.substring(fileName.lastIndexOf("."));
         try {
             if (file.isEmpty()) {
-                throw new StorageException("上传空文件失败 " + filename);
+                throw new StorageException("上传空文件失败 " + fileName);
             }
-            if (filename.contains("..")) {
+            if (fileName.contains("..")) {
                 // This is a security check
                 throw new StorageException(
                         "无法存储当前目录外的相对路径的文件"
-                                + filename);
+                                + fileName);
             }
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(newFileName),
                     StandardCopyOption.REPLACE_EXISTING);
+            return this.rootLocation.resolve(newFileName);
         }
         catch (IOException e) {
-            throw new StorageException("存储文件失败 " + filename, e);
+            throw new StorageException("存储文件失败 " + fileName, e);
         }
     }
 

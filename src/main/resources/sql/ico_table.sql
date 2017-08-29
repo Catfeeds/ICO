@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/25 17:47:20                           */
+/* Created on:     2017/8/29 10:37:46                           */
 /*==============================================================*/
 
 
@@ -94,8 +94,7 @@ create table project
   end_time             timestamp default CURRENT_TIMESTAMP,
   state                tinyint,
   third_endorsement    bool,
-  output_token_money_detail_id int(11) unsigned,
-  part_person_number   int,
+  part_person_number   int default 0,
   des                  text,
   create_user_id       int(11) unsigned,
   content              text,
@@ -167,14 +166,14 @@ create table token_detail
 (
   id                   int(11) unsigned not null auto_increment,
   token_money_id       int(11) unsigned,
-  current_number       double,
+  current_number       int default 0,
   ico_number           int,
   min_target_number    int,
   target_number        int,
   token_money_whitePaper_cn_url varchar(255),
   token_money_whitePaper_en_url varchar(255),
-  input_token_money_project_id int(11) unsigned,
-  type                 tinyint default 1,
+  token_money_project_id int(11) unsigned,
+  type                 tinyint,
   primary key (id)
 );
 
@@ -230,7 +229,6 @@ create table user_project_invest_record
   id                   int(11) unsigned not null auto_increment,
   user_id              int(11) unsigned not null,
   project_id           int(11) unsigned,
-  token_id             int(11) unsigned,
   invest_value         double,
   lock_date            datetime,
   primary key (id)
@@ -282,9 +280,6 @@ references user (id) on delete restrict on update restrict;
 alter table project add constraint fk_project_2_user_create_user_id foreign key (create_user_id)
 references user (id) on delete restrict on update restrict;
 
-alter table project add constraint fk_project_2_token_money_detail_intput_token_money_detail_id foreign key (output_token_money_detail_id)
-references token_detail (id) on delete restrict on update restrict;
-
 alter table project_user_relation add constraint fk_user_project_2_user_user_id foreign key (project_id)
 references user (id) on delete restrict on update restrict;
 
@@ -303,7 +298,7 @@ references token_money (id) on delete restrict on update restrict;
 alter table project_wallet add constraint FK_Reference_18 foreign key (project_id)
 references project (id) on delete restrict on update restrict;
 
-alter table token_detail add constraint fk_token_money_detail_2_project_id foreign key (input_token_money_project_id)
+alter table token_detail add constraint fk_token_money_detail_2_project_id foreign key (token_money_project_id)
 references project (id) on delete restrict on update restrict;
 
 alter table token_detail add constraint fk_token_money_detail_2_token_money_token_money_id foreign key (token_money_id)
@@ -314,9 +309,6 @@ references user (id) on delete restrict on update restrict;
 
 alter table user_project_invest_record add constraint fk_record_2_project_id foreign key (project_id)
 references project (id) on delete restrict on update restrict;
-
-alter table user_project_invest_record add constraint fk_record_2_token_money_id foreign key (token_id)
-references token_money (id) on delete restrict on update restrict;
 
 alter table user_role_relation add constraint fk_user_role_2_role_role_id foreign key (role_id)
 references role (id) on delete restrict on update restrict;
