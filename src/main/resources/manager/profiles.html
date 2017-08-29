@@ -665,7 +665,7 @@
             var znbook1  = $("#znbook1").val();
             var enbook1 = $("#enbook1").val();
 
-            var outputTokenMoneyDetailId;
+            var outputTokenMoneyDetail;
             var type2 = 2;
             var jsmoneyJson = {targetNumber: fbnumber,tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook1, tokenMoneyWhitepaperEnUrl: enbook1, type:type2};
             $.ajax({
@@ -678,6 +678,7 @@
                 success : function(result) {
                     if (result.code == 200) {
                         var state = 1;
+                        outputTokenMoneyDetail =  result.data;
                         outputTokenMoneyDetailId =  result.data.id;
                         //项目的字段
                         var thirdEndorsement =  $("#thirdEndorsement option:selected").val();
@@ -694,7 +695,7 @@
                         var prjcontent =$('.summernote').summernote('code');
                         var id = userId;
                         var prjId;
-                        var prjjson = {thirdEndorsement: thirdEndorsement, name: prjname,nameCn:nameCn,startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
+                        var prjjson = {thirdEndorsement: thirdEndorsement, name: prjname,nameCn:nameCn,startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetail, state: state};
                         $.ajax({
                             url: app.getServerUrl()+"/project/add",
                             type: 'POST',
@@ -743,7 +744,7 @@
                                         contentType: "application/json; charset=utf-8",
                                         success : function(result) {
                                             if (result.code == 200) {
-                                                var updateJson = {id: outputTokenMoneyDetailId, inputTokenMoneyProjectId:prjId}
+                                                var updateJson = {id: outputTokenMoneyDetailId, tokenMoneyProjectId:prjId}
                                                 $.ajax({
                                                     url : app.getServerUrl()+"/token/detail", //后台接口
                                                     type: 'PUT',
@@ -756,7 +757,7 @@
 
                                                             location.href = "/manager/data.html";
                                                         } else {
-                                                            app.myAlert("", "导入失败！", "warning");
+                                                            app.myAlert("", "导入失败2222222222！", "warning");
                                                         }
                                                     },
                                                     error : function(data, status, e)
@@ -767,7 +768,6 @@
                                                 });
 
 
-//                                                location.href = "../tables/data.html";
                                             } else {
                                                 app.myAlert("", "导入失败！", "warning");
                                             }
