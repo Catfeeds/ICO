@@ -3,6 +3,7 @@ package com.tongwii.ico.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.core.Result;
+import com.tongwii.ico.exception.ServiceException;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.security.JwtUser;
@@ -251,11 +252,15 @@ public class UserController {
      */
     @GetMapping("/validateEmail")
     public String validateEmail() {
-        Integer userId = ContextUtils.getUserId();
-        User user = userService.findById(userId);
-        user.setValidateEmail(true);
-        userService.update(user);
-        return "redirect:"+ domain +"/contect.html?isValidateEmail=true";
+        try {
+            Integer userId = ContextUtils.getUserId();
+            User user = userService.findById(userId);
+            user.setValidateEmail(true);
+            userService.update(user);
+            return "redirect:"+ domain +"/contect.html?isValidateEmail=true";
+        } catch (Exception e) {
+            throw new ServiceException("验证邮箱失败,错误信息： " + e.getMessage());
+        }
     }
 
     /**
