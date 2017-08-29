@@ -389,6 +389,7 @@
         });
         $("#regist").click(function () {
             regist();
+            $("#regist").attr("disabled", true);
         });
 
     });
@@ -464,7 +465,7 @@
                     location.href = "contect.html";
                 }
                 else {
-                    app.myAlertWithoutFunction("", "登录失败!" + result.message, "error");
+                    app.myAlertWithoutFunction("", result.message, "error");
                 }
             },
             error: function (xhr, type, errerThrown) {
@@ -483,6 +484,7 @@
             } else {
                 setTimeout(function () {
                     regist();
+                    $("#regist").attr("disabled", true);
                 }, 0);
             }
         }
@@ -573,7 +575,7 @@
                         } else {
                             $this.attr("disabled", true).val("重新发送(" + wait + ")");
                             wait--;
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 time(obj)
                             }, 1000)
                         }
@@ -649,21 +651,8 @@
             });
         }
         time(this);
+        $("#submit").attr("disabled", true);
     });
-    var wait = 60;
-    function time(obj) {
-        $this = $(obj);
-        if (wait === 0) {
-            $this.removeAttr("disabled").val("发送手机验证码");
-            wait = 60;
-        } else {
-            $this.attr("disabled", true).val("重新发送(" + wait + ")");
-            wait--;
-            setTimeout(function () {
-                time(obj)
-            }, 1000)
-        }
-    }
 </script>
 
 </body>

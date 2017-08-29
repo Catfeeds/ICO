@@ -481,6 +481,7 @@
                 return;
             }
         });
+        $("#commitInfo").attr("disabled", true);
     });
     // 取消button绑定事件
     $("#cancle").click(function () {
@@ -509,6 +510,7 @@
                 app.myAlert("", "网络异常,请稍候再试!", "error");
             }
         });
+        $this.attr("disabled", true);
     }
 
     $("#sign_out").click(function () {

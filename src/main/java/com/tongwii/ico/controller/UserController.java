@@ -154,7 +154,11 @@ public class UserController {
     }
 
     /**
+     * @author Yamo
+     *
      * 修改用户密码
+     * @param passwordInfo
+     * @return
      */
     @PutMapping("/updatePassword")
     @ResponseBody
