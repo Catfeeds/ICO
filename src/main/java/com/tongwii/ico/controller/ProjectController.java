@@ -248,18 +248,23 @@ public class ProjectController {
             Date date = new Date();
             Date startTime = p.getStartTime();
             Date endTime = p.getEndTime();
+            if(endTime.getTime()>date.getTime()){
+                long interval = endTime.getTime()-date.getTime();
+                System.out.println("两个时间相差"+interval +"秒");
+            }
+
             //分离已结束的项目
-            if (endTime.before(date)) {
+            if (date.getTime()>endTime.getTime()) {
                 p.setState(END.getState());
                 finishICOList.add(p);
             }
             // 分离即将开始的项目
-            if (date.before(startTime)) {
+            if (date.getTime()<startTime.getTime()) {
                 p.setState(UN_COMING.getState());
                 willICOList.add(p);
             }
             // 分离正在进行中的项目
-            if (startTime.before(date) && date.before(endTime)) {
+            if ((startTime.getTime()<date.getTime()) && (date.getTime()<endTime.getTime())) {
                 p.setState(NOW.getState());
                 ICOList.add(p);
             }
