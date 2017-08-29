@@ -16,6 +16,8 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static com.tongwii.ico.model.TokenDetail.TokenDetailType.OUTPUT_ICON;
+
 
 /**
  * Created by Zeral on 2017-08-02.
@@ -32,10 +34,9 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
 
     @Override
     public void updateOutputTokenMoney(Integer id, TokenDetail tokenDetail) {
+        tokenDetail.setType(OUTPUT_ICON.getCode());
+        tokenDetail.setTokenMoneyProjectId(id);
         tokenDetailService.save(tokenDetail);
-        Project project = findById(id);
-        project.setOutputTokenMoneyDetailId(tokenDetail.getId());
-        update(project);
     }
 
     @Override

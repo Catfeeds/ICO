@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -35,14 +36,13 @@ public class FileController {
      * 上传文件
      */
     @PostMapping()
-    public Result handleFileUpload(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
-        fileService.store(file);
-        Path path = fileService.load(file.getOriginalFilename());
-        JSONObject object = new JSONObject();
+    public Result handleFileUpload(@RequestParam("file") MultipartFile file) {
+        Path path = fileService.store(file);
+        /*JSONObject object = new JSONObject();
         String url = MvcUriComponentsBuilder.fromMethodName(FileController.class,
                 "getFile", path.getFileName().toString(), response).build().toString();
-        object.put("path", url);
-        return Result.successResult(object);
+        object.put("path", path.toString());*/
+        return Result.successResult().add("path", "\\"+path.toString());
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)
@@ -83,5 +83,6 @@ public class FileController {
         response.setContentLength((int)files.length());
 
         FileCopyUtils.copy(file.getInputStream(), response.getOutputStream());
+        response.reset();
     }
 }

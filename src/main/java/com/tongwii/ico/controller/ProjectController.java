@@ -8,6 +8,7 @@ import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.*;
 import com.tongwii.ico.service.*;
 import com.tongwii.ico.util.*;
+import org.apache.commons.collections4.CollectionUtils;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.ECKey;
@@ -18,7 +19,6 @@ import org.spongycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,10 +29,11 @@ import static com.tongwii.ico.model.Project.State.NOW;
 import static com.tongwii.ico.model.Project.State.UN_COMING;
 import static com.tongwii.ico.model.Role.RoleCode.ADMIN;
 import static com.tongwii.ico.model.TokenDetail.TokenDetailType.INPUT_CION;
+import static com.tongwii.ico.model.TokenDetail.TokenDetailType.OUTPUT_ICON;
 
 /**
- * Created by Zeral on 2017-08-02.
- */
+* Created by Zeral on 2017-08-02.
+*/
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
@@ -183,31 +184,35 @@ public class ProjectController {
     public Result detail(@PathVariable Integer id) {
         try {
             Project project = projectService.findById(id);
+
+            // 接受代币
             projectFile projectFile = projectFileService.findProjectFileByProjectId(id);
             // 首先需要通过项目id查询token_details表目标代币数据
-            List<TokenDetail> tokenDetails = tokenDetailService.findByProjectIdAndType(id, INPUT_CION.getCode());
-            if (!CollectionUtils.isEmpty(tokenDetails)) {
-                for (int i = 0; i < tokenDetails.size(); i++) {
+            List<TokenDetail> inputTokenDetails = tokenDetailService.findByProjectIdAndType(id, INPUT_CION.getCode());
+            if(CollectionUtils.isNotEmpty(inputTokenDetails)){
+                for(int i=0; i<inputTokenDetails.size(); i++){
                     // 获取目标代币的代币详细信息
-                    TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(i).getTokenMoneyId());
-                    tokenDetails.get(i).setTokenMoney(inputMoney);
-                    project.setInputTokenDetails(tokenDetails);
+                    TokenMoney inputMoney = tokenMoneyService.findById(inputTokenDetails.get(i).getTokenMoneyId());
+                    inputTokenDetails.get(i).setTokenMoney(inputMoney);
                 }
+                project.setInputTokenDetails(inputTokenDetails);
             }
 
-            if (Objects.nonNull(project.getOutputTokenMoneyDetailId())) {
-                // 发行代币
-                TokenDetail outPutTokenDetail = tokenDetailService.findById(project.getOutputTokenMoneyDetailId());
-                TokenMoney tokenMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
-                outPutTokenDetail.setTokenMoney(tokenMoney);
-                project.setOutPutTokenDetail(outPutTokenDetail);
+            // 发行代币
+            List<TokenDetail> outPutTokenDetails = tokenDetailService.findByProjectIdAndType(id, OUTPUT_ICON.getCode());
+            if(CollectionUtils.isNotEmpty(outPutTokenDetails)) {
+                TokenMoney inputMoney = tokenMoneyService.findById(outPutTokenDetails.get(0).getTokenMoneyId());
+                outPutTokenDetails.get(0).setTokenMoney(inputMoney);
+                project.setOutPutTokenDetail(outPutTokenDetails.get(0));
             }
-            if (Objects.nonNull(project.getCreateUserId())) {
+
+            // 创建用户
+            if(Objects.nonNull(project.getCreateUserId())) {
                 User createUser = userService.findById(project.getCreateUserId());
                 project.setCreateUser(createUser);
             }
-            return Result.successResult().add("projectFile", projectFile).add("projectInfo", project);
-        } catch (Exception e) {
+            return Result.successResult().add("projectFile",projectFile).add("projectInfo",project);
+        }catch (Exception e){
             return Result.errorResult("详情信息为空!");
         }
     }
@@ -236,35 +241,26 @@ public class ProjectController {
             Project p = projectList.get(i);
             Integer projectId = p.getId();
             // 获取项目图片
-            try {
-                String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
-                p.setPictureUrl(pictureUrl);
-            } catch (Exception e) {
-                p.setPictureUrl("");
-            }
+            String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
+            p.setPictureUrl(pictureUrl);
 
             // 判断时间，设定state的值
             //获取系统当前时间，获取项目的开始时间以及结束时间
-            Date date = new Date();
+            Date date=new Date();
             Date startTime = p.getStartTime();
             Date endTime = p.getEndTime();
-            if(endTime.getTime()>date.getTime()){
-                long interval = endTime.getTime()-date.getTime();
-                System.out.println("两个时间相差"+interval +"秒");
-            }
-
             //分离已结束的项目
-            if (date.getTime()>endTime.getTime()) {
+            if(endTime.before(date)){
                 p.setState(END.getState());
                 finishICOList.add(p);
             }
             // 分离即将开始的项目
-            if (date.getTime()<startTime.getTime()) {
+            if(date.before(startTime)){
                 p.setState(UN_COMING.getState());
                 willICOList.add(p);
             }
             // 分离正在进行中的项目
-            if ((startTime.getTime()<date.getTime()) && (date.getTime()<endTime.getTime())) {
+            if(startTime.before(date) && date.before(endTime)){
                 p.setState(NOW.getState());
                 ICOList.add(p);
             }
@@ -347,28 +343,28 @@ public class ProjectController {
             }
 
 
-            // 根据项目ID查寻目标代币信息
-            List<TokenDetail> tokenDetails = tokenDetailService.findByProjectIdAndType(projectId, INPUT_CION.getCode());
-            if (!CollectionUtils.isEmpty(tokenDetails)) {
-                for (int j = 0; j < tokenDetails.size(); j++) {
-                    // 获取目标代币的代币详细信息
-                    TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(j).getTokenMoneyId());
-                    tokenDetails.get(j).setTokenMoney(inputMoney);
-                }
-                projectList.get(i).setInputTokenDetails(tokenDetails);
-            }
-            // 根据发行代币ID查寻发行代币信息
-            try {
-                TokenDetail outPutTokenDetail = tokenDetailService.findById(projectList.get(i).getOutputTokenMoneyDetailId());
-                TokenMoney outputMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
-                outPutTokenDetail.setTokenMoney(outputMoney);
-                projectList.get(i).setOutPutTokenDetail(outPutTokenDetail);
-            } catch (Exception e) {
-                projectList.get(i).setOutPutTokenDetail(null);
-            }
-        }
-        PageInfo pageInfo = new PageInfo(projectList);
-        return Result.successResult(pageInfo);
+           // 根据项目ID查寻目标代币信息
+           List<TokenDetail> inputTokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, INPUT_CION.getCode());
+           if(!CollectionUtils.isNotEmpty(inputTokenDetails)){
+               for(int j=0; j<inputTokenDetails.size();j++){
+                   // 获取目标代币的代币详细信息
+                   TokenMoney inputMoney = tokenMoneyService.findById(inputTokenDetails.get(j).getTokenMoneyId());
+                   inputTokenDetails.get(j).setTokenMoney(inputMoney);
+                   }
+               projectList.get(i).setInputTokenDetails(inputTokenDetails);
+           }
+
+           // 根据接收代币ID查寻接收代币信息
+           List<TokenDetail> outPutTokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, OUTPUT_ICON.getCode());
+           if(CollectionUtils.isNotEmpty(outPutTokenDetails)){
+               // 获取接收代币的代币详细信息
+               TokenMoney inputMoney = tokenMoneyService.findById(outPutTokenDetails.get(0).getTokenMoneyId());
+               outPutTokenDetails.get(0).setTokenMoney(inputMoney);
+               projectList.get(i).setOutPutTokenDetail(outPutTokenDetails.get(0));
+           }
+       }
+       PageInfo pageInfo = new PageInfo(projectList);
+       return Result.successResult(pageInfo);
     }
 
     // 获取可以锁定的项目

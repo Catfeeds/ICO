@@ -10,13 +10,6 @@ import java.util.List;
  */
 public interface TokenDetailService extends Service<TokenDetail> {
     /**
-     * 根据项目Id查询TokenDetail记录
-     * @param projectId
-     * @return
-     */
-    List<TokenDetail> findByProjectId(Integer projectId);
-
-    /**
      * 根据项目id与代币详情类型查询数据
      * @param projectId
      * @param type

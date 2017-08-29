@@ -32,10 +32,6 @@ public class Project {
     @Column(name = "third_endorsement")
     private Boolean thirdEndorsement;
 
-    @JSONField(serialize = false)
-    @Column(name = "output_token_money_detail_id")
-    private Integer outputTokenMoneyDetailId;
-
     @Column(name = "part_person_number")
     private Integer partPersonNumber;
 
@@ -167,20 +163,6 @@ public class Project {
      */
     public void setThirdEndorsement(Boolean thirdEndorsement) {
         this.thirdEndorsement = thirdEndorsement;
-    }
-
-    /**
-     * @return output_token_money_detail_id
-     */
-    public Integer getOutputTokenMoneyDetailId() {
-        return outputTokenMoneyDetailId;
-    }
-
-    /**
-     * @param outputTokenMoneyDetailId
-     */
-    public void setOutputTokenMoneyDetailId(Integer outputTokenMoneyDetailId) {
-        this.outputTokenMoneyDetailId = outputTokenMoneyDetailId;
     }
 
     /**

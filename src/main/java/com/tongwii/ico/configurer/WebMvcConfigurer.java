@@ -9,6 +9,7 @@ import com.tongwii.ico.core.Result;
 import com.tongwii.ico.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.servlet.ErrorPageRegistrar;
 import org.springframework.boot.web.servlet.ErrorPageRegistry;
@@ -42,6 +43,9 @@ import java.util.List;
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPageRegistrar {
 
     private final static Logger logger = LogManager.getLogger();
+
+    @Value("${storage.location}")
+    private String location;
 
     //使用阿里 FastJson 作为JSON MessageConverter
     @Override
@@ -139,5 +143,6 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/manager/**")
                 .addResourceLocations("classpath:/manager/");
+        registry.addResourceHandler("/upload/**").addResourceLocations("file:"+location+"/");
     }
 }
