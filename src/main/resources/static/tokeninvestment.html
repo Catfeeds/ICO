@@ -342,10 +342,13 @@
 
     });
     $("#sign_out").click(function () {
+        signOut()
+    });
+    function signOut() {
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});
         location.href = "index.html";
-    });
+    }
 
     function pageOldProject(page,userId) {
         var page = page;

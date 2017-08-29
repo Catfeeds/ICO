@@ -516,10 +516,13 @@
     }
 
     $("#sign_out").click(function () {
+        signOut()
+    });
+    function signOut() {
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});
         location.href = "index.html";
-    });
+    }
 </script>
 </body>
 </html>

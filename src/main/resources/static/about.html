@@ -265,12 +265,15 @@
             $("#li_login").attr("href","#");
             $("#userName").text(app.getUserInfo().nickName);
         }
-        $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
     });
+    $("#sign_out").click(function () {
+        signOut()
+    });
+    function signOut() {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
+    }
 </script>
 </body>
 </html>

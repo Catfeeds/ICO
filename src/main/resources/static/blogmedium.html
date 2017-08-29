@@ -286,12 +286,14 @@
         pageNews(1);
     });
 
-
     $("#sign_out").click(function () {
+        signOut()
+    });
+    function signOut() {
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});
         location.href = "index.html";
-    });
+    }
 
     function pageNews(page) {
         var page = page;
