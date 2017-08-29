@@ -93,7 +93,7 @@ public class UserProjectInvestRecordServiceImpl extends AbstractService<UserProj
                 }
             }
 
-            // 跟新参与人数
+            // 更新参与人数
             Project project = projectService.findById(projectId);
             project.setPartPersonNumber(project.getPartPersonNumber()+1);
             projectService.update(project);

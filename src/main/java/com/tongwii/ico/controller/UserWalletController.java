@@ -79,6 +79,12 @@ public class UserWalletController {
         return Result.successResult("获取用户钱包成功").add("userWallets", userWallets);
     }
 
+    /**
+     * @author Yamo
+     *
+     * 根据用户查询用户钱包
+     * @return
+     */
     @GetMapping("/findWalletByUser")
     public Result findWalletByUser() {
         Integer userId = ContextUtils.getUserId();
@@ -115,7 +121,13 @@ public class UserWalletController {
         }
     }
 
-    // 添加用户代币提现地址
+    /**
+     * @author Yamo
+     *
+     * 添加用户代币提现地址
+     * @param userWallet
+     * @return
+     */
     @PostMapping("/addUserWallet")
     @ResponseBody
     public Result addUserWallet(@RequestBody UserWallet userWallet) {
@@ -132,8 +144,7 @@ public class UserWalletController {
         }
 
         if(islegal){
-            // 根据用户id获取所有提现钱包url，判断其是否包含此钱包，如果没有则添加，输出钱包
-            // TODO 这里的2要用枚举数据替代
+            // 根据用户id获取所有提现钱包url，判断其是否包含此钱包，如果没有则添加，类型：输出钱包
             List<UserWallet> userWallets = userWalletService.findWalletByUser(userId, UserWallet.WalletType.OUT_PUT.getValue());
             if(!CollectionUtils.isEmpty(userWallets)){
                 for(int i=0; i<userWallets.size();i++){
@@ -143,8 +154,8 @@ public class UserWalletController {
                 }
             }
             userWallet.setUserId(userId);
-            userWallet.setState(1);
-            userWallet.setType(2);
+            userWallet.setState(1); // 表示钱包是可用的
+            userWallet.setType(UserWallet.WalletType.OUT_PUT.getValue());
             userWalletService.save(userWallet);
             return Result.successResult("用户钱包添加成功!");
         }else{
@@ -152,6 +163,12 @@ public class UserWalletController {
         }
     }
 
+    /**
+     * @author Yamo
+     *
+     * 获取用户的提现地址信息
+     * @return
+     */
     @GetMapping("/findPaymentWallet")
     public Result findPaymentWallet(){
         Integer userId = ContextUtils.getUserId();
@@ -173,11 +190,5 @@ public class UserWalletController {
             return Result.successResult().add("paymentWallet",paymentWalletList);
         }
 
-    }
-
-    @GetMapping("/test")
-    public Result test(){
-        List<UserWallet> userWallets = userWalletService.findWalletByUser(2, 2);
-       return Result.successResult().add("list",userWallets);
     }
 }

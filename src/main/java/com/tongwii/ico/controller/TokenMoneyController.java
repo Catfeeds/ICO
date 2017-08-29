@@ -70,7 +70,13 @@ public class TokenMoneyController {
         return Result.successResult(list);
     }
 
-    // 交易接口
+    /**
+     * @author Yamo ...
+     * 锁定项目接口
+     *
+     * @param projectInvestmentInfo
+     * @return
+     */
     @PostMapping("/transaction")
     public Result projectInvestment(@RequestBody Map<Object,String> projectInvestmentInfo){
         try{
@@ -78,7 +84,7 @@ public class TokenMoneyController {
             Integer coinId = Integer.parseInt(projectInvestmentInfo.get("coinId"));
             Integer projectId = Integer.valueOf(projectInvestmentInfo.get("projectId"));
             String investmentMoney = projectInvestmentInfo.get("investmentMoney");
-
+            // **
             userProjectInvestRecordService.saveRecordAndUpdateProjectProjess(userId, coinId, projectId, investmentMoney);
             return Result.successResult("锁定项目成功");
         }catch (Exception e){
