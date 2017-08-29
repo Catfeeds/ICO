@@ -320,8 +320,8 @@
             $("#personInfo").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
-            $("#li_login").text("已登录");
-            $("#li_login").attr("href","#");
+            $("#li_login").hide();
+            $("#asignout").show();
             $("#userName").text(app.getUserInfo().nickName);
         }
         $.ajax({
