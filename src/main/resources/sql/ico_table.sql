@@ -94,7 +94,7 @@ create table project
   end_time             timestamp default CURRENT_TIMESTAMP,
   state                tinyint,
   third_endorsement    bool,
-  part_person_number   int,
+  part_person_number   int default 0,
   des                  text,
   create_user_id       int(11) unsigned,
   content              text,
@@ -166,7 +166,7 @@ create table token_detail
 (
   id                   int(11) unsigned not null auto_increment,
   token_money_id       int(11) unsigned,
-  current_number       int,
+  current_number       int default 0,
   ico_number           int,
   min_target_number    int,
   target_number        int,
