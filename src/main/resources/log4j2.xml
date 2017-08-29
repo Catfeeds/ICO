@@ -11,12 +11,12 @@
 %L 输出行号
 %M 输出所在方法名
 %l  输出语句所在的行数, 包括类名、方法名、文件名、行数
-sys:user.home
+sys:user.home  用户目录
 -->
 <Configuration monitorInterval="3600" shutdownHook="disable">
     
     <properties>
-        <property name="LOG_HOME">${sys:user.home}</property>
+        <property name="LOG_HOME">log</property>
         <!-- 日志切割的最小单位 -->
         <property name="LOG_FILE_SIZE">100 MB</property>
         <!-- 日志备份目录 -->

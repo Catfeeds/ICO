@@ -354,23 +354,28 @@
         $('#editor').summernote({
             placeholder:'项目描述',
             callbacks: {
-                onImageUpload: function(files, editor, welEditable) {
-                    sendFile(files[0], editor, welEditable);
+                onImageUpload: function(files) {
+                    sendFile(files[0]);
                 }
             }
         });
-        function sendFile(file, editor, welEditable) {
+        function sendFile(file) {
             data = new FormData();
             data.append("file", file);
             $.ajax({
                 data: data,
                 type: "POST",
+                enctype: 'multipart/form-data',
+                dataType: "json",
                 url: app.getServerUrl() + "/file",
                 cache: false,
                 contentType: false,
                 processData: false,
-                success: function(path) {
-                    editor.insertImage(welEditable, path);
+                success: function(result) {
+                    if(result.code == 200) {
+                        var image = $('<img>').attr('src', result.data.path);
+                        $('#editor').summernote("insertNode", image[0]);
+                    }
                 }
             });
         }
