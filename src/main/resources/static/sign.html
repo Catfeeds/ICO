@@ -119,8 +119,9 @@
                                                                                id="sign_password">
                                                                     </li>
                                                                     <li class="col-lg-12">
-                                                                        <a data-toggle="modal" data-target="#formModal"  style="cursor: pointer"><i
-                                                                                class="icon-question-circle" ></i>忘记密码?</a>
+                                                                        <a data-toggle="modal" data-target="#formModal"
+                                                                           style="cursor: pointer"><i
+                                                                                class="icon-question-circle"></i>忘记密码?</a>
                                                                     </li>
                                                                     <li class="col-lg-12">
                                                                         <input class="cs-bgcolor" type="button"
@@ -512,25 +513,56 @@
                     app.setUserInfo(result.data.userInfo);
 //                    $('#nextstep').attr("data-target","#subformModal");
                     $('.modal-body').empty();
-                    $('.modal-body').append("<div class='form-group mt-lg'>"+
-                        "<label class='col-sm-2 control-label'>邮箱</label>"+
-                        "<div class='col-sm-6'><input type='text' id='secondemail' class='form-control' readonly='readonly'/></div>"+
-                        "<div class='col-sm-4'></div></div><div class='form-group mt-lg'><label class='col-sm-2 control-label'>手机号码</label>"+
-                        "<div class='col-sm-6'><input type='text' id='mobile' class='form-control' readonly='readonly'/></div>"+
-                        "<div class='col-sm-4'></div></div><div class='form-group'><label class='col-sm-2 control-label'>验证码</label>"+
-                        "<div class='col-sm-3'><input type='text' id='verifycode' class='form-control' style='width:140px;' maxlength='6'/>"+
-                        "</div><div class='col-sm-7'>" +
-                        "<input type='button' id='sendsms' class='cs-bgcolor btn'style='color: #ffffff; font-weight: bold;'value='发送手机验证码'/>"+
-                        "</div></div><div class='form-group'><label class='col-sm-2 control-label'>新密码</label>"+
-                        "<div class='col-sm-6'><input type='password' id='newpass' class='form-control' style='width:140px;'/>"+
-                        "</div><div class='col-sm-4'></div></div><div class='form-group'><label class='col-sm-2 control-label'>重复新密码</label>"+
-                        "<div class='col-sm-6'><input type='password' id='renewpass' class='form-control'style='width:140px;'/></div>"+
-                        "<div class='col-sm-4'></div></div><div class='form-group' id='resultdiv2' style='display: none;'>"+
-                        "<div class='col-sm-12' style='text-align: center;'><label style='color:#4f4a9c;' id='resultlable2'></label></div></div>");
+                    $('.modal-body').append("<div class='form-group mt-lg'>" +
+                            "<label class='col-sm-2 control-label'>邮箱</label>" +
+                            "<div class='col-sm-6'><input type='text' id='secondemail' class='form-control' readonly='readonly'/></div>" +
+                            "<div class='col-sm-4'></div></div><div class='form-group mt-lg'><label class='col-sm-2 control-label'>手机号码</label>" +
+                            "<div class='col-sm-6'><input type='text' id='mobile' class='form-control' readonly='readonly'/></div>" +
+                            "<div class='col-sm-4'></div></div><div class='form-group'><label class='col-sm-2 control-label'>验证码</label>" +
+                            "<div class='col-sm-3'><input type='text' id='verifycode' class='form-control' style='width:140px;' maxlength='6'/>" +
+                            "</div><div class='col-sm-7'>" +
+                            "<input type='button' id='sendsms' class='cs-bgcolor btn'style='color: #ffffff; font-weight: bold;'value='发送手机验证码'/>" +
+                            "</div></div><div class='form-group'><label class='col-sm-2 control-label'>新密码</label>" +
+                            "<div class='col-sm-6'><input type='password' id='newpass' class='form-control' style='width:140px;'/>" +
+                            "</div><div class='col-sm-4'></div></div><div class='form-group'><label class='col-sm-2 control-label'>重复新密码</label>" +
+                            "<div class='col-sm-6'><input type='password' id='renewpass' class='form-control'style='width:140px;'/></div>" +
+                            "<div class='col-sm-4'></div></div><div class='form-group' id='resultdiv2' style='display: none;'>" +
+                            "<div class='col-sm-12' style='text-align: center;'><label style='color:#4f4a9c;' id='resultlable2'></label></div></div>");
                     $('#nextstep').hide();
                     $('#submit').show();
                     $("#secondemail").val(firstEmail);
                     $("#mobile").val(firstPhone);
+                    //给发送验证码按钮绑定监听事件
+                    $("#sendsms").click(function () {
+                        var phoneNum = $("#mobile").val();
+                        var phoneJson = {"phone": phoneNum, "id": app.getUserInfo().id};
+                        // 此处调用发送手机验证码的接口获取手机验证码
+                        $.ajax({
+                            url: app.getServerUrl() + "/auth/validatePhone",
+                            type: 'POST',
+                            timeout: 10000,//超时时间设置为10秒；
+                            data: JSON.stringify(phoneJson),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.code == 200) {
+                                    app.setUserInfo(result.data.userInfo);
+                                    $("#resultlable2").text(result.message);
+                                    $("#resultdiv2").css("display", "block");
+                                }
+                                else {
+                                    $("#resultlable2").text(result.message);
+                                    $("#resultdiv2").css("display", "block");
+                                    return;
+                                }
+                            },
+                            error: function (xhr, type, errerThrown) {
+                                $("#resultlable2").text("网络异常，请重试!");
+                                $("#resultdiv2").css("display", "block");
+                                return;
+                            }
+                        });
+                    });
                 }
                 else {
                     $("#resultlable").text(result.message);
@@ -541,42 +573,6 @@
             error: function (xhr, type, errerThrown) {
                 $("#resultlable").text("网络异常，请重试!");
                 $("#resultdiv").css("display", "block");
-                return;
-            }
-        });
-    });
-
-    // 取消button绑定事件
-    $("#cancle").click(function () {
-        window.location.reload();
-    });
-    //给发送验证码按钮绑定监听事件
-    $("#sendsms").click(function () {
-        var phoneNum = $("#mobile").val();
-        var phoneJson = {"phone": phoneNum, "id": app.getUserInfo().id};
-        // 此处调用发送手机验证码的接口获取手机验证码
-        $.ajax({
-            url: app.getServerUrl() + "/auth/validatePhone",
-            type: 'POST',
-            timeout: 10000,//超时时间设置为10秒；
-            data: JSON.stringify(phoneJson),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                if (result.code == 200) {
-                    app.setUserInfo(result.data.userInfo);
-                    $("#resultlable2").text(result.message);
-                    $("#resultdiv2").css("display", "block");
-                }
-                else {
-                    $("#resultlable2").text(result.message);
-                    $("#resultdiv2").css("display", "block");
-                    return;
-                }
-            },
-            error: function (xhr, type, errerThrown) {
-                $("#resultlable2").text("网络异常，请重试!");
-                $("#resultdiv2").css("display", "block");
                 return;
             }
         });
