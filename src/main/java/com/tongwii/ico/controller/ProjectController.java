@@ -331,51 +331,56 @@ public class ProjectController {
                                       @RequestParam(required = true, defaultValue = "1") Integer size) {
         PageHelper.startPage(page, size);
         List<Project> projectList = projectService.findOfficalProject();
-        for (int i = 0; i < projectList.size(); i++) {
-            Integer projectId = projectList.get(i).getId();
-            // 获取项目图片
-            try {
-                String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
-                projectList.get(i).setPictureUrl(pictureUrl);
-            } catch (Exception e) {
-                projectList.get(i).setPictureUrl("");
+        try{
+            for (int i = 0; i < projectList.size(); i++) {
+                Integer projectId = projectList.get(i).getId();
+                // 获取项目图片
+                try {
+                    String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
+                    projectList.get(i).setPictureUrl(pictureUrl);
+                } catch (Exception e) {
+                    projectList.get(i).setPictureUrl("");
+                }
+
+                // 根据项目ID查询项目钱包
+                List<ProjectWallet> projectWallets = projectWalletService.findWalletByProjectId(projectId);
+                projectList.get(i).setProjectWallets(projectWallets);
+
+                // 根据createUserId查询用户信息
+                try {
+                    User createUser = userService.findById(projectList.get(i).getCreateUserId());
+                    projectList.get(i).setCreateUser(createUser);
+                } catch (Exception e) {
+                    projectList.get(i).setCreateUser(userService.findById(ADMIN.getId()));
+                }
+
+
+                // 根据项目ID查寻目标代币信息
+                List<TokenDetail> inputTokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, INPUT_CION.getCode());
+                if(!CollectionUtils.isNotEmpty(inputTokenDetails)){
+                    for(int j=0; j<inputTokenDetails.size();j++){
+                        // 获取目标代币的代币详细信息
+                        TokenMoney inputMoney = tokenMoneyService.findById(inputTokenDetails.get(j).getTokenMoneyId());
+                        inputTokenDetails.get(j).setTokenMoney(inputMoney);
+                    }
+                    projectList.get(i).setInputTokenDetails(inputTokenDetails);
+                }
+
+                // 根据接收代币ID查寻接收代币信息
+                List<TokenDetail> outPutTokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, OUTPUT_ICON.getCode());
+                if(CollectionUtils.isNotEmpty(outPutTokenDetails)){
+                    // 获取接收代币的代币详细信息
+                    TokenMoney inputMoney = tokenMoneyService.findById(outPutTokenDetails.get(0).getTokenMoneyId());
+                    outPutTokenDetails.get(0).setTokenMoney(inputMoney);
+                    projectList.get(i).setOutPutTokenDetail(outPutTokenDetails.get(0));
+                }
             }
+            PageInfo pageInfo = new PageInfo(projectList);
+            return Result.successResult(pageInfo);
+        }catch (Exception e){
+            return Result.failResult("无项目数据!");
+        }
 
-            // 根据项目ID查询项目钱包
-            List<ProjectWallet> projectWallets = projectWalletService.findWalletByProjectId(projectId);
-            projectList.get(i).setProjectWallets(projectWallets);
-
-            // 根据createUserId查询用户信息
-            try {
-                User createUser = userService.findById(projectList.get(i).getCreateUserId());
-                projectList.get(i).setCreateUser(createUser);
-            } catch (Exception e) {
-                projectList.get(i).setCreateUser(userService.findById(ADMIN.getId()));
-            }
-
-
-           // 根据项目ID查寻目标代币信息
-           List<TokenDetail> inputTokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, INPUT_CION.getCode());
-           if(!CollectionUtils.isNotEmpty(inputTokenDetails)){
-               for(int j=0; j<inputTokenDetails.size();j++){
-                   // 获取目标代币的代币详细信息
-                   TokenMoney inputMoney = tokenMoneyService.findById(inputTokenDetails.get(j).getTokenMoneyId());
-                   inputTokenDetails.get(j).setTokenMoney(inputMoney);
-                   }
-               projectList.get(i).setInputTokenDetails(inputTokenDetails);
-           }
-
-           // 根据接收代币ID查寻接收代币信息
-           List<TokenDetail> outPutTokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, OUTPUT_ICON.getCode());
-           if(CollectionUtils.isNotEmpty(outPutTokenDetails)){
-               // 获取接收代币的代币详细信息
-               TokenMoney inputMoney = tokenMoneyService.findById(outPutTokenDetails.get(0).getTokenMoneyId());
-               outPutTokenDetails.get(0).setTokenMoney(inputMoney);
-               projectList.get(i).setOutPutTokenDetail(outPutTokenDetails.get(0));
-           }
-       }
-       PageInfo pageInfo = new PageInfo(projectList);
-       return Result.successResult(pageInfo);
     }
 
     /**

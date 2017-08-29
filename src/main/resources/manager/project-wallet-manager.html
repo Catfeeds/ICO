@@ -521,7 +521,7 @@
                     console.log(result.data);
                 }
                 else {
-                    app.myAlert("", "操作失败！", "warning");
+                    app.myAlert("", result.message, "warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
