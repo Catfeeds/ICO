@@ -139,8 +139,11 @@
 
                                     <div class="page-content">
                                         <div class="listing_grid">
-                                            <ul class="team-list sort-destination" data-sort-id="team" id="ICOList">
-                                            </ul>
+                                            <div class="row">
+                                                <div class="row" id="nostartProject" style="display: none;text-align: center"><h2>目前无此类项目，请浏览其他类项目!</h2></div>
+                                                <ul class="team-list sort-destination" data-sort-id="team" id="ICOList">
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <br>
@@ -165,6 +168,7 @@
                                     <div class="page-content ">
                                         <div class="listing_grid">
                                             <div class="row">
+                                                <div class="row" id="nowillProject" style="display: none;text-align: center"><h2>目前无此类项目，请浏览其他类项目!</h2></div>
                                                 <ul class="team-list sort-destination" data-sort-id="team"
                                                     id="willICOList">
                                                 </ul>
@@ -193,6 +197,7 @@
                                     <div class="page-content ">
                                         <div class="listing_grid">
                                             <div class="row">
+                                                <div class="row" id="nofinishProject" style="display: none;text-align: center"><h2>目前无此类项目，请浏览其他类项目!</h2></div>
                                                 <ul class="team-list sort-destination" data-sort-id="team"
                                                     id="finishICOList">
                                                 </ul>
@@ -371,6 +376,15 @@
                     var ICOList = result.data.ICO;
                     var willICOList = result.data.willICO;
                     var finishICOList = result.data.finishICO;
+                    if(ICOList.length<=0){
+                        $("#nostartProject").show();
+                    }
+                    if(willICOList.length<=0){
+                        $("#nowillProject").show();
+                    }
+                    if(finishICOList.length<=0){
+                        $("#nofinishProject").show();
+                    }
                     if(ICOList.length>4){
                         $("#checkMore1").css("display","block");
                     }
