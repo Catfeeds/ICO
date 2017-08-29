@@ -31,8 +31,8 @@ import static com.tongwii.ico.model.Role.RoleCode.ADMIN;
 import static com.tongwii.ico.model.TokenDetail.TokenDetailType.INPUT_CION;
 
 /**
-* Created by Zeral on 2017-08-02.
-*/
+ * Created by Zeral on 2017-08-02.
+ */
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
@@ -66,7 +66,7 @@ public class ProjectController {
         ECKey bitCoinKey = new ECKey();
         final NetworkParameters netParams;
 
-        if(env.equals(CurrentConfigEnum.dev.toString())) {
+        if (env.equals(CurrentConfigEnum.dev.toString())) {
             netParams = TestNet3Params.get();
         } else {
             netParams = MainNetParams.get();
@@ -76,7 +76,7 @@ public class ProjectController {
 
         bitCoinWallet.setWalletAddress(addressFromKey.toBase58());
         try {
-            String key1 =  RSAEncodeUtil.encrypt(Hex.toHexString(bitCoinKey.getPrivKeyBytes()));
+            String key1 = RSAEncodeUtil.encrypt(Hex.toHexString(bitCoinKey.getPrivKeyBytes()));
             bitCoinWallet.setWalletPrivateKey(key1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,7 +93,7 @@ public class ProjectController {
         org.ethereum.crypto.ECKey ethKey = new org.ethereum.crypto.ECKey();
         ethWallet.setWalletAddress(Hex.toHexString(ethKey.getAddress()));
         try {
-            String key2 =  RSAEncodeUtil.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes()));
+            String key2 = RSAEncodeUtil.encrypt(Hex.toHexString(ethKey.getPrivKeyBytes()));
             ethWallet.setWalletPrivateKey(key2);
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,13 +181,13 @@ public class ProjectController {
      */
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
-        try{
+        try {
             Project project = projectService.findById(id);
             projectFile projectFile = projectFileService.findProjectFileByProjectId(id);
             // 首先需要通过项目id查询token_details表目标代币数据
             List<TokenDetail> tokenDetails = tokenDetailService.findByProjectIdAndType(id, INPUT_CION.getCode());
-            if(!CollectionUtils.isEmpty(tokenDetails)){
-                for(int i=0; i<tokenDetails.size(); i++){
+            if (!CollectionUtils.isEmpty(tokenDetails)) {
+                for (int i = 0; i < tokenDetails.size(); i++) {
                     // 获取目标代币的代币详细信息
                     TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(i).getTokenMoneyId());
                     tokenDetails.get(i).setTokenMoney(inputMoney);
@@ -195,19 +195,19 @@ public class ProjectController {
                 }
             }
 
-            if(Objects.nonNull(project.getOutputTokenMoneyDetailId())) {
+            if (Objects.nonNull(project.getOutputTokenMoneyDetailId())) {
                 // 发行代币
                 TokenDetail outPutTokenDetail = tokenDetailService.findById(project.getOutputTokenMoneyDetailId());
                 TokenMoney tokenMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
                 outPutTokenDetail.setTokenMoney(tokenMoney);
                 project.setOutPutTokenDetail(outPutTokenDetail);
             }
-            if(Objects.nonNull(project.getCreateUserId())) {
+            if (Objects.nonNull(project.getCreateUserId())) {
                 User createUser = userService.findById(project.getCreateUserId());
                 project.setCreateUser(createUser);
             }
-            return Result.successResult().add("projectFile",projectFile).add("projectInfo",project);
-        }catch (Exception e){
+            return Result.successResult().add("projectFile", projectFile).add("projectInfo", project);
+        } catch (Exception e) {
             return Result.errorResult("详情信息为空!");
         }
     }
@@ -226,49 +226,47 @@ public class ProjectController {
      * @return the result
      */
     @GetMapping("/findProjectsAndSort")
-    public Result findProjectsAndSort(){
+    public Result findProjectsAndSort() {
         List<Project> projectList = projectService.findOfficalProject();
 
         List<Project> ICOList = new ArrayList<>(); // ICO中的数据列表
         List<Project> willICOList = new ArrayList<>(); // 即将进行ICO中的数据列表
         List<Project> finishICOList = new ArrayList<>(); // 结束ICO的数据列表
-        for (int i =0; i<projectList.size();i++){
+        for (int i = 0; i < projectList.size(); i++) {
             Project p = projectList.get(i);
             Integer projectId = p.getId();
             // 获取项目图片
             try {
                 String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
                 p.setPictureUrl(pictureUrl);
-            }catch (Exception e){
+            } catch (Exception e) {
                 p.setPictureUrl("");
             }
 
-            if(p.getThirdEndorsement() != null && p.getOutputTokenMoneyDetailId()!=null){
-                // 判断时间，设定state的值
-                //获取系统当前时间，获取项目的开始时间以及结束时间
-                Date date=new Date();
-                Date startTime = p.getStartTime();
-                Date endTime = p.getEndTime();
-                //分离已结束的项目
-                if(endTime.before(date)){
-                    p.setState(END.getState());
-                    finishICOList.add(p);
-                }
-                // 分离即将开始的项目
-                if(date.before(startTime)){
-                    p.setState(UN_COMING.getState());
-                    willICOList.add(p);
-                }
-                // 分离正在进行中的项目
-                if(startTime.before(date) && date.before(endTime)){
-                    p.setState(NOW.getState());
-                    ICOList.add(p);
-                }
-                update(p);
+            // 判断时间，设定state的值
+            //获取系统当前时间，获取项目的开始时间以及结束时间
+            Date date = new Date();
+            Date startTime = p.getStartTime();
+            Date endTime = p.getEndTime();
+            //分离已结束的项目
+            if (endTime.before(date)) {
+                p.setState(END.getState());
+                finishICOList.add(p);
             }
+            // 分离即将开始的项目
+            if (date.before(startTime)) {
+                p.setState(UN_COMING.getState());
+                willICOList.add(p);
+            }
+            // 分离正在进行中的项目
+            if (startTime.before(date) && date.before(endTime)) {
+                p.setState(NOW.getState());
+                ICOList.add(p);
+            }
+            update(p);
         }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("ICO",ICOList);
+        jsonObject.put("ICO", ICOList);
         jsonObject.put("willICO", willICOList);
         jsonObject.put("finishICO", finishICOList);
         return Result.successResult(jsonObject);
@@ -276,34 +274,37 @@ public class ProjectController {
 
 
     /***
-     *根据BTC钱包地址获取交易记录
+     * 根据BTC钱包地址获取交易记录
+     *
      * @return
      */
     @GetMapping("/getBitCoinAddressTransaction")
-    public Result getBitCoinAddressTransaction(@RequestParam(required = true,defaultValue = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4") String  address){
+    public Result getBitCoinAddressTransaction(@RequestParam(required = true, defaultValue = "155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4") String address) {
         JSONArray coin = transactionsService.getBitCoinAddressTransaction(address);
         JSONArray data = new JSONArray();
-        for(int i = 0;i<coin.size();i++){
+        for (int i = 0; i < coin.size(); i++) {
             JSONObject jsonObj = coin.getJSONObject(i);
             String inputsvalue = Coin.valueOf(jsonObj.getLong("inputs_value")).toFriendlyString();
-            jsonObj.put("inputs_value",inputsvalue);
+            jsonObj.put("inputs_value", inputsvalue);
             data.add(jsonObj);
             System.out.println(jsonObj);
         }
         return Result.successResult(data);
     }
+
     /***
      * 根据ETH钱包地址获取交易记录
+     *
      * @return
      */
     @GetMapping("/getETHAddressTransaction")
-    public Result getETHAddressTransaction(@RequestParam(required = true,defaultValue = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A") String  address,@RequestParam(defaultValue = "1") String  page, @RequestParam(defaultValue = "1") String size){
+    public Result getETHAddressTransaction(@RequestParam(required = true, defaultValue = "0x3a6e4D83689405a1EA16DafaC6f1614253f3Bb9A") String address, @RequestParam(defaultValue = "1") String page, @RequestParam(defaultValue = "1") String size) {
         JSONArray coin = transactionsService.getETHAddressTransaction(address);
         JSONArray data = new JSONArray();
-        for (Iterator iterator = coin.iterator(); iterator.hasNext();) {
+        for (Iterator iterator = coin.iterator(); iterator.hasNext(); ) {
             JSONObject object = (JSONObject) iterator.next();
-            String inputsvalue  = EthConverter.fromWei(object.getBigDecimal("value"), EthConverter.Unit.ETHER) + EthConverter.Unit.ETHER.toString().toUpperCase();
-            object.put("value",inputsvalue);
+            String inputsvalue = EthConverter.fromWei(object.getBigDecimal("value"), EthConverter.Unit.ETHER) + EthConverter.Unit.ETHER.toString().toUpperCase();
+            object.put("value", inputsvalue);
             data.add(object);
             System.out.println(object);
         }
@@ -313,70 +314,70 @@ public class ProjectController {
     /*
     * 获取所有项目信息的接口
     */
-   @GetMapping("/findAllProject")
-    public Result findProjectsByState(@RequestParam(required = true,defaultValue = "0") Integer page,
-                                      @RequestParam(required = true,defaultValue = "1") Integer size){
-       PageHelper.startPage(page, size);
-       List<Project> projectList = projectService.findOfficalProject();
-       for(int i=0; i<projectList.size(); i++){
-           Integer projectId = projectList.get(i).getId();
-           // 获取项目图片
-           try {
-               String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
-               projectList.get(i).setPictureUrl(pictureUrl);
-           }catch (Exception e){
-               projectList.get(i).setPictureUrl("");
-           }
+    @GetMapping("/findAllProject")
+    public Result findProjectsByState(@RequestParam(required = true, defaultValue = "0") Integer page,
+                                      @RequestParam(required = true, defaultValue = "1") Integer size) {
+        PageHelper.startPage(page, size);
+        List<Project> projectList = projectService.findOfficalProject();
+        for (int i = 0; i < projectList.size(); i++) {
+            Integer projectId = projectList.get(i).getId();
+            // 获取项目图片
+            try {
+                String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
+                projectList.get(i).setPictureUrl(pictureUrl);
+            } catch (Exception e) {
+                projectList.get(i).setPictureUrl("");
+            }
 
-           // 根据项目ID查询项目钱包
-           List<ProjectWallet> projectWallets = projectWalletService.findWalletByProjectId(projectId);
-           projectList.get(i).setProjectWallets(projectWallets);
+            // 根据项目ID查询项目钱包
+            List<ProjectWallet> projectWallets = projectWalletService.findWalletByProjectId(projectId);
+            projectList.get(i).setProjectWallets(projectWallets);
 
-           // 根据createUserId查询用户信息
-           try{
-               User createUser = userService.findById( projectList.get(i).getCreateUserId());
-               projectList.get(i).setCreateUser(createUser);
-           }catch (Exception e){
-               projectList.get(i).setCreateUser(userService.findById(ADMIN.getId()));
-           }
+            // 根据createUserId查询用户信息
+            try {
+                User createUser = userService.findById(projectList.get(i).getCreateUserId());
+                projectList.get(i).setCreateUser(createUser);
+            } catch (Exception e) {
+                projectList.get(i).setCreateUser(userService.findById(ADMIN.getId()));
+            }
 
 
-           // 根据项目ID查寻目标代币信息
-           List<TokenDetail> tokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, INPUT_CION.getCode());
-           if(!CollectionUtils.isEmpty(tokenDetails)){
-               for(int j=0; j<tokenDetails.size();j++){
-                   // 获取目标代币的代币详细信息
-                   TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(j).getTokenMoneyId());
-                   tokenDetails.get(j).setTokenMoney(inputMoney);
-                   }
-               projectList.get(i).setInputTokenDetails(tokenDetails);
-           }
-           // 根据发行代币ID查寻发行代币信息
-           try{
-               TokenDetail outPutTokenDetail = tokenDetailService.findById(projectList.get(i).getOutputTokenMoneyDetailId());
-               TokenMoney outputMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
-               outPutTokenDetail.setTokenMoney(outputMoney);
-               projectList.get(i).setOutPutTokenDetail(outPutTokenDetail);
-           }catch (Exception e){
-               projectList.get(i).setOutPutTokenDetail(null);
-           }
-       }
-       PageInfo pageInfo = new PageInfo(projectList);
-       return Result.successResult(pageInfo);
+            // 根据项目ID查寻目标代币信息
+            List<TokenDetail> tokenDetails = tokenDetailService.findByProjectIdAndType(projectId, INPUT_CION.getCode());
+            if (!CollectionUtils.isEmpty(tokenDetails)) {
+                for (int j = 0; j < tokenDetails.size(); j++) {
+                    // 获取目标代币的代币详细信息
+                    TokenMoney inputMoney = tokenMoneyService.findById(tokenDetails.get(j).getTokenMoneyId());
+                    tokenDetails.get(j).setTokenMoney(inputMoney);
+                }
+                projectList.get(i).setInputTokenDetails(tokenDetails);
+            }
+            // 根据发行代币ID查寻发行代币信息
+            try {
+                TokenDetail outPutTokenDetail = tokenDetailService.findById(projectList.get(i).getOutputTokenMoneyDetailId());
+                TokenMoney outputMoney = tokenMoneyService.findById(outPutTokenDetail.getTokenMoneyId());
+                outPutTokenDetail.setTokenMoney(outputMoney);
+                projectList.get(i).setOutPutTokenDetail(outPutTokenDetail);
+            } catch (Exception e) {
+                projectList.get(i).setOutPutTokenDetail(null);
+            }
+        }
+        PageInfo pageInfo = new PageInfo(projectList);
+        return Result.successResult(pageInfo);
     }
 
     // 获取可以锁定的项目
     @GetMapping("/findLockProject")
-    public Result findLockProject(@RequestParam(required = true,defaultValue = "0") Integer page,
-                                      @RequestParam(required = true,defaultValue = "1") Integer size){
+    public Result findLockProject(@RequestParam(required = true, defaultValue = "0") Integer page,
+                                  @RequestParam(required = true, defaultValue = "1") Integer size) {
         PageHelper.startPage(page, size);
         List<Project> projectList = projectService.findProjectByState(NOW.getState());
-        for(int i=0;i<projectList.size();i++){
+        for (int i = 0; i < projectList.size(); i++) {
             // 获取项目图片
             try {
                 String pictureUrl = projectFileService.findProjectFileByProjectId(projectList.get(i).getId()).getFileUrl();
                 projectList.get(i).setPictureUrl(pictureUrl);
-            }catch (Exception e){
+            } catch (Exception e) {
                 projectList.get(i).setPictureUrl("");
             }
 

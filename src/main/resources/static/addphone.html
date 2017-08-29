@@ -8,7 +8,6 @@
     <link href="assets/images/favicon.ico" rel="bookmark" type="image/x-icon">
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/css/theme-admin-extension.css">
     <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
@@ -181,18 +180,19 @@
                                         <div class="col-md-2">
                                             <input type="text" id="verifycode" class="form-control" style="width:140px;" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="6"/>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <input type="button" id="sendsms"
                                                    class="cs-bgcolor btn"
                                                    style="color: #ffffff; font-weight: bold;"
                                                    value="发送手机验证码"/>
                                         </div>
                                     </div>
-                                    <div class="form-group" style="text-align: center">
-                                        <!--<label class="col-md-3 control-label"></label>-->
-                                        <input data-toggle="modal" data-target="#formModal" id="commit"
-                                                class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;" type="button" value="提交">
-                                        </input>
+                                    <div class="form-group">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <input  id="commit" class="cs-bgcolor btn" style="color: #ffffff; font-weight: bold;width: 30%" type="button" value="提交">
+                                            </input>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
