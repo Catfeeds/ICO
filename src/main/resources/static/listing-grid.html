@@ -106,6 +106,7 @@
                         <div class="row">
                             <div class="container">
                                 <div class="row">
+                                    <div class="row" id="noProject" style="display: none;text-align: center"><h2>目前无此类项目，请浏览其他类项目!</h2></div>
                                     <ul class="team-list sort-destination" data-sort-id="team" id="ICOList">
                                     </ul>
                                 </div>
@@ -198,6 +199,10 @@
             success: function (result) {
                 if(result.code == 200){
                     var ICOList = result.data.ICO;
+                    if(ICOList.length <=0){
+                        $("#noProject").show();
+                        return;
+                    }
                     $.each(ICOList, function (i, item) {
                         var pictureUrl = null;
                         if(item.pictureUrl.trim()){
@@ -245,10 +250,12 @@
                         location.href = "startICO.html?id=" + id;
                     });
                 }else{
+                    $("#noProject").show();
                     return;
                 }
             },
             error: function (xhr, type, errerThrown) {
+                $("#noProject").show();
                 return;
             }
         });
