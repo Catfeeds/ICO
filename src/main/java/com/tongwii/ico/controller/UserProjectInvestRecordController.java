@@ -1,38 +1,27 @@
 package com.tongwii.ico.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.core.Result;
-import com.tongwii.ico.exception.StorageFileNotFoundException;
 import com.tongwii.ico.model.ProjectWallet;
 import com.tongwii.ico.model.TokenMoney;
 import com.tongwii.ico.model.UserProjectInvestRecord;
 import com.tongwii.ico.model.UserWallet;
 import com.tongwii.ico.service.*;
-import com.tongwii.ico.service.impl.UserWalletServiceImpl;
 import com.tongwii.ico.util.ContextUtils;
+import com.tongwii.ico.util.TokenMoneyEnum;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.net.URLConnection;
-import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 
 /**
- *用户项目投资记录
- * @date 2017-08-25
+ *  用户项目投资记录
+ *
+ *  @date 2017-08-25
  */
 @RestController
 @RequestMapping("/userProjectInvestRecord")
@@ -72,9 +61,8 @@ public class UserProjectInvestRecordController {
         PageHelper.startPage(page, size);
         Integer userId = ContextUtils.getUserId();
         List<UserProjectInvestRecord> userProjectInvestRecordList = userProjectInvestRecordService.findByUserId(userId);
-        if(!CollectionUtils.isEmpty(userProjectInvestRecordList)){
+        if(CollectionUtils.isNotEmpty(userProjectInvestRecordList)){
             for(int i=0;i<userProjectInvestRecordList.size();i++){
-                userProjectInvestRecordList.get(i);
                 // 根据projectId获取projictInfo
                 userProjectInvestRecordList.get(i).setProject(projectService.findById(userProjectInvestRecordList.get(i).getProjectId()));
                 // 查询币种信息
@@ -93,6 +81,7 @@ public class UserProjectInvestRecordController {
             return Result.failResult("暂无用户交易记录!");
         }
     }
+
     /***
      * 根据项目获取用户项目投资记录
      * @param page
@@ -101,29 +90,57 @@ public class UserProjectInvestRecordController {
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/project/{projectId}")
-    public Result findUserProjectInvestRecordByProjectId(@PathVariable("projectId")Integer projectId,@RequestParam(required = true,defaultValue = "0") Integer page,
-                                                      @RequestParam(required = true,defaultValue = "1") Integer size){
+    public Result findUserProjectInvestRecordByProjectId(@PathVariable("projectId")Integer projectId,
+                                                         @RequestParam(required = true,defaultValue = "0") Integer page,
+                                                         @RequestParam(required = true,defaultValue = "1") Integer size){
         PageHelper.startPage(page, size);
         List<UserProjectInvestRecord> userProjectInvestRecordList = userProjectInvestRecordService.findByProjectId(projectId);
-        if(!CollectionUtils.isEmpty(userProjectInvestRecordList)){
-            for(int i=0;i<userProjectInvestRecordList.size();i++){
-                userProjectInvestRecordList.get(i);
+        if(CollectionUtils.isNotEmpty(userProjectInvestRecordList)){
+            for (UserProjectInvestRecord userProjectInvestRecord : userProjectInvestRecordList) {
                 // 根据projectId获取projictInfo
-                userProjectInvestRecordList.get(i).setProject(projectService.findById(userProjectInvestRecordList.get(i).getProjectId()));
+                userProjectInvestRecord.setProject(projectService.findById(userProjectInvestRecord.getProjectId()));
                 // 查询币种信息
-                TokenMoney tokenMoney = tokenMoneyService.findById(userProjectInvestRecordList.get(i).getTokenId());
-                userProjectInvestRecordList.get(i).setTokenMoney(tokenMoney);
+                TokenMoney tokenMoney = tokenMoneyService.findById(userProjectInvestRecord.getTokenId());
+                userProjectInvestRecord.setTokenMoney(tokenMoney);
                 // 根据tokenMoneyId与projectId查询projectWallet
-                ProjectWallet projectWallet = projectWalletService.findWalletByCionId(tokenMoney.getId(),userProjectInvestRecordList.get(i).getProjectId());
-                userProjectInvestRecordList.get(i).setProjectWallet(projectWallet);
+                ProjectWallet projectWallet = projectWalletService.findWalletByCionId(tokenMoney.getId(),userProjectInvestRecord.getProjectId());
+                userProjectInvestRecord.setProjectWallet(projectWallet);
                 // 根据tokenMoneyId与userId查询userWallet
-                UserWallet userWallet = userWalletService.findWalletByCionId(tokenMoney.getId(),userProjectInvestRecordList.get(i).getUserId());
-                userProjectInvestRecordList.get(i).setUserWallet(userWallet);
+                UserWallet userWallet = userWalletService.findWalletByCionId(tokenMoney.getId(),userProjectInvestRecord.getUserId());
+                userProjectInvestRecord.setUserWallet(userWallet);
             }
             PageInfo pageInfo = new PageInfo(userProjectInvestRecordList);
             return Result.successResult(pageInfo);
         }else {
             return Result.failResult("暂无用户交易记录!");
+        }
+    }
+
+
+    /***
+     * 根据用户代币投资总和
+     *
+     * @return
+     */
+    @GetMapping("/sumRecord")
+    public Result findUserInvestSumRecord(){
+        Integer userId = ContextUtils.getUserId();
+        List<UserProjectInvestRecord> records = userProjectInvestRecordService.findByUserId(userId);
+        TokenMoney BTCTokenMoney = tokenMoneyService.findByENShortName(TokenMoneyEnum.BTC.toString());
+        TokenMoney ETCTokenMoney = tokenMoneyService.findByENShortName(TokenMoneyEnum.ETH.toString());
+        Double BTCSumRecord = 0.0;
+        Double ETHSumRecord = 0.0;
+        if(CollectionUtils.isNotEmpty(records)) {
+            for (UserProjectInvestRecord record : records) {
+                if(record.getTokenId().equals(BTCTokenMoney.getId())) {
+                    BTCSumRecord += Objects.isNull(record.getInvestValue()) ? 0.0 : record.getInvestValue();
+                } else if(record.getTokenId().equals(ETCTokenMoney.getId())) {
+                    ETHSumRecord += Objects.isNull(record.getInvestValue()) ? 0.0 :record.getInvestValue();
+                }
+            }
+            return Result.successResult("查询成功").add("BTCSumRecord", BTCSumRecord).add("ETHSumRecord", ETHSumRecord);
+        } else {
+            return Result.failResult("用户无交易记录");
         }
     }
 

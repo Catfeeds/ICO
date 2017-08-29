@@ -294,10 +294,10 @@
                                 <form class="form-horizontal form-bordered">
                                     <div class="form-group">
                                         <label class="col-md-2 control-label" style="text-align:right;">BTC合计</label>
-                                        <label class="col-md-2 control-label"
+                                        <label class="col-md-2 control-label" id="btcRecord"
                                                style="text-align:left;font-size:26px;color:#FF8000;">0.00000</label>
                                         <label class="col-md-2 control-label" style="text-align:right;">ETH合计</label>
-                                        <label class="col-md-2 control-label"
+                                        <label class="col-md-2 control-label" id="ethRecord"
                                                style="text-align:left;font-size:26px;color:#FF8000;">0.00000</label>
                                     </div>
                                 </form>
@@ -415,6 +415,31 @@
         }
     }
     jQuery(window).load(function () {
+        // 请求交易记录信息
+        $.ajax({
+            url: app.getServerUrl() + "/userProjectInvestRecord/sumRecord",
+            type: 'GET',
+            timeout: 10000,//超时时间设置为10秒；
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    $("#btcRecord").text(result.data.BTCSumRecord);
+                    $("#ethRecord").text(result.data.ETHSumRecord);
+                } else if(result.code == 400) {
+                    return;
+                } else {
+                    app.myAlertWithoutFunction(" ", result.message, "warning");
+                    return;
+                }
+            },
+            error: function () {
+                app.myAlertWithoutFunction("", "网络异常,请重新验证!", "error");
+                return;
+            }
+        });
+
         $('#submitRealInfo').click(function () {
             var cardNO = $('#identitycard').val();
             var realName = $("#truename").val();
