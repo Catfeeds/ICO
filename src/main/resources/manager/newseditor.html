@@ -22,13 +22,7 @@
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="css/sweet-alert.css">
     <link rel="stylesheet" href="plugins/summernote/summernote.css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
-    <![endif]-->
     <style>
         .note-editor.note-frame .note-editing-area .note-editable {
             padding: 10px;
@@ -193,7 +187,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">编辑详情</label>
                                             <div  style="margin-left: 120px">
-                                                <div class="box-body pad">
+                                                <div class="box-body pad ">
                                                     <div id="editor" class="summernote" ></div>
                                                 </div>
                                             </div>
@@ -218,18 +212,20 @@
                             <div class="tab-pane" id="activity">
                                 <form class="form-horizontal">
                                     <div class="box box-info">
-
-
                                         <br>
                                         <br>
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">公告编辑</label>
-                                            <div  class="col-sm-10">
-                                                <form>
-                                                <textarea class="textarea"
-                                                          id="notifyContent" style="width: 1200px; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                                </form>
-                                            </div>
+
+
+
+
+
+
+                                                <div class="col-sm-11">
+                                                    <textarea type="text" class="form-control" style="height:450px;" id="notifyContent"></textarea>
+                                                </div>
+
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-5 col-sm-10">
