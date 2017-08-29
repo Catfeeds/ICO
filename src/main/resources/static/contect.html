@@ -40,6 +40,7 @@
     <link href="assets/css/themetypo.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
     <link href="assets/css/theme-elements_0529.css" rel="stylesheet">
+    <link href="assets/css/pace-theme-flash.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -272,7 +273,7 @@
                                                     style="color:#ffffff; font-weight: bold"
                                                     type="button">发送邮箱验证
                                             </button>
-                                            <label class="control-label" id="emailLable" style="display: none">
+                                            <label id="emailLable" style="display: none">
                                                 邮箱已验证!</label>
                                         </div>
                                     </div>
@@ -378,38 +379,41 @@
 <script src="assets/scripts/sweet-alert.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
+<script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
-    jQuery(window).load(function () {
-        var isValidateEmail = app.getQueryString("isValidateEmail");
+    var isValidateEmail = app.getQueryString("isValidateEmail");
+    if(isValidateEmail) {
         var userInfo = app.getUserInfo();
-        userInfo.validateEmail = isValidateEmail;
+        userInfo.validateEmail = isValidateEmail === 'true';
         app.setUserInfo(userInfo);
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "sign.html";
-        } else {
-            $("#personInfo").css('display', 'block');
-            $("#li_login").text("已登录");
-            $("#li_login").attr("href","#");
-            $("#userName").text(app.getUserInfo().nickName);
-            if (app.getUserInfo().validateUser) {
-                var name = app.getUserInfo().realName.substr(0, 1) + "**";
-                var idcard = app.getUserInfo().idCard.substr(0, 4) + "****" + app.getUserInfo().idCard.substr(app.getUserInfo().idCard.length - 4);
-                $("#trueNamelable").text(name).css('display', 'block');
-                $("#identityCardlable").text(idcard).css('display', 'block');
-                $("#truename").css('display', 'none');
-                $("#identitycard").css('display', 'none');
-                $("#submitRealInfo").css('display', 'none');
-            }
-            if (app.getUserInfo().validatePhone) {
-                $("#phone_a").css('display', 'none');
-                $("#phonelable").text(app.getUserInfo().phone);
-                $("#phonelable").css('display', 'block');
-            }
-            if(app.getUserInfo().validateEmail){
-                $("#emailVailate").css("display","none");
-                $("#emailLable").css("display","block");
-            }
+    }
+    if (app.getUserInfo().emailAccount == null) {
+        location.href = "sign.html";
+    } else {
+        $("#personInfo").show();
+        $("#li_login").text("已登录");
+        $("#li_login").attr("href","#");
+        $("#userName").text(app.getUserInfo().nickName);
+        if (app.getUserInfo().validateUser) {
+            var name = app.getUserInfo().realName.substr(0, 1) + "**";
+            var idcard = app.getUserInfo().idCard.substr(0, 4) + "****" + app.getUserInfo().idCard.substr(app.getUserInfo().idCard.length - 4);
+            $("#trueNamelable").text(name).show();
+            $("#identityCardlable").text(idcard).show();
+            $("#truename").hide();
+            $("#identitycard").hide();
+            $("#submitRealInfo").hide();
         }
+        if (app.getUserInfo().validatePhone) {
+            $("#phone_a").hide();
+            $("#phonelable").text(app.getUserInfo().phone);
+            $("#phonelable").show();
+        }
+        if(app.getUserInfo().validateEmail){
+            $("#emailVailate").hide();
+            $("#emailLable").show();
+        }
+    }
+    jQuery(window).load(function () {
         $('#submitRealInfo').click(function () {
             var cardNO = $('#identitycard').val();
             var realName = $("#truename").val();
@@ -469,7 +473,7 @@
             $.ajax({
                 url: app.getServerUrl() + "/user/sendVerifyEmail",
                 type: 'GET',
-                timeout: 10000,//超时时间设置为10秒；
+                timeout: 30000,//超时时间设置为30秒；
                 dataType: 'json',//服务器返回json格式数据
                 contentType: "application/json; charset=utf-8",
                 headers: app.createAuthorizationTokenHeader(),
@@ -487,6 +491,7 @@
                     return;
                 }
             });
+            $("#emailVailate").attr("disabled", true);
         });
 
 
@@ -566,6 +571,7 @@
                         return;
                     }
                 });
+                $("#commit").attr("disabled", true);
             }
         });
 

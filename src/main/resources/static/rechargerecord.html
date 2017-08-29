@@ -39,6 +39,7 @@
     <link href="assets/css/themetypo.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
     <link href="assets/css/theme-elements_0529.css" rel="stylesheet">
+    <link href="assets/css/pace-theme-flash.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -46,8 +47,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-        th{
-            text-align:center;
+        th {
+            text-align: center;
         }
     </style>
 </head>
@@ -85,7 +86,8 @@
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
                                     <ul class="dropdown">
-                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a></li>
+                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a>
+                                        </li>
                                     </ul>
                                     <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
@@ -166,39 +168,42 @@
                         </aside>
                     </div>
                     <div class="col-md-9">
-                        <div class="col-md-12" id="untransactionInfo" style="display: block">
-                            <div class="row" style="text-align: center;margin-top: 10%;">
-                                <div class="col-md-12">
-                                    <p>
-                                        <strong>无投资信息!</strong>
-                                    </p>
+                        <h2><strong>投资记录</strong></h2>
+                        <div class="row">
+                            <div class="panel-body">
+                                <div class="row" id="untransactionInfo" style="display: block">
+                                    <div class="col-md-9" style="text-align: center;">
+                                        <p>
+                                            <strong>无投资信息!</strong>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row" id="transactionInfo">
+                                    <h2><strong>投资记录</strong></h2>
+                                    <!--<div class="col-md-6 col-xs-11" id="noIcotext" style="display: none">请您先登录!</div>-->
+                                    <header class="panel-heading">
+                                        <h2 class="panel-title">投资记录信息</h2>
+                                    </header>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>发送地址</th>
+                                            <th>接收地址</th>
+                                            <th>转账金额</th>
+                                            <th>状态</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="transactionList">
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" id="transactionInfo">
-                            <h2><strong>投资记录</strong></h2>
-                            <!--<div class="col-md-6 col-xs-11" id="noIcotext" style="display: none">请您先登录!</div>-->
-                            <header class="panel-heading">
-                                <h2 class="panel-title">投资记录信息</h2>
-                            </header>
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>发送地址</th>
-                                    <th>接收地址</th>
-                                    <th>转账金额</th>
-                                    <th>状态</th>
-                                </tr>
-                                </thead>
-                                <tbody id="transactionList">
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -206,8 +211,6 @@
         </div>
     </main>
 </div>
-
-
 </main>
 <!--// Main Content //-->
 
@@ -259,7 +262,7 @@
     </div>
 </div>
 
- <!--jQuery (necessary JavaScript) -->
+<!--jQuery (necessary JavaScript) -->
 <script src="assets/scripts/jquery.js"></script>
 <script src="assets/scripts/bootstrap.min.js"></script>
 <script src="assets/scripts/modernizr.js"></script>
@@ -268,6 +271,7 @@
 <script src="assets/scripts/app.js"></script>
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/functions.js"></script>
+<script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
         if (app.getUserInfo().emailAccount == null) {
@@ -276,37 +280,37 @@
         } else {
             $("#personInfo").css('display', 'block');
             $("#li_login").text("已登录");
-            $("#li_login").attr("href","#");
+            $("#li_login").attr("href", "#");
             $("#userName").text(app.getUserInfo().nickName);
         }
 
         // 请求服务器，查询系统中所有交易单号的交易信息详情
         $.ajax({
-            url: app.getServerUrl()+"/project/user/wallet/relation/getUserTransaction",
+            url: app.getServerUrl() + "/project/user/wallet/relation/getUserTransaction",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
-            headers:app.createAuthorizationTokenHeader(),
+            headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
-                if(result.code == 200){
-                    if(result.data){
+                if (result.code == 200) {
+                    if (result.data) {
                         $.each(result.data, function (i, item) {
                             $("#transactionList").append(
-                                    "<tr><th>" + item.sendAddress+"</th><th>"+item.getAddress+"</th><th>"+item.transactionNum+"</th><th>"+item.transactionState+"</th></tr>"
+                                    "<tr><th>" + item.sendAddress + "</th><th>" + item.getAddress + "</th><th>" + item.transactionNum + "</th><th>" + item.transactionState + "</th></tr>"
                             );
                         });
-                    }else{
-                        $("#transactionInfo").css("display","none");
-                        $("#untransactionInfo").css("display","block");
+                    } else {
+                        $("#transactionInfo").css("display", "none");
+                        $("#untransactionInfo").css("display", "block");
                     }
 
-                }else{
-                    $("#transactionInfo").css("display","none");
-                    $("#untransactionInfo").css("display","block");
+                } else {
+                    $("#transactionInfo").css("display", "none");
+                    $("#untransactionInfo").css("display", "block");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                $("#transactionInfo").css("display","none");
-                $("#untransactionInfo").css("display","block");
+                $("#transactionInfo").css("display", "none");
+                $("#untransactionInfo").css("display", "block");
             }
         });
 
