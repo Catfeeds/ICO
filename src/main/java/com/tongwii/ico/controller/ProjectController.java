@@ -175,8 +175,8 @@ public class ProjectController {
     }
 
     /**
+     * @author Yamo ...
      * 查看项目详情
-     *
      * @param id the id
      * @return the result
      */
@@ -226,8 +226,8 @@ public class ProjectController {
     }
 
     /**
-     * 返回给首页的数据
-     *
+     * @author Yamo
+     * 分类获取所有项目的数据
      * @return the result
      */
     @GetMapping("/findProjectsAndSort")
@@ -241,26 +241,35 @@ public class ProjectController {
             Project p = projectList.get(i);
             Integer projectId = p.getId();
             // 获取项目图片
-            String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
-            p.setPictureUrl(pictureUrl);
+            try {
+                String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
+                p.setPictureUrl(pictureUrl);
+            } catch (Exception e) {
+                p.setPictureUrl("");
+            }
 
             // 判断时间，设定state的值
             //获取系统当前时间，获取项目的开始时间以及结束时间
-            Date date=new Date();
+            Date date = new Date();
             Date startTime = p.getStartTime();
             Date endTime = p.getEndTime();
+            if(endTime.getTime()>date.getTime()){
+                long interval = endTime.getTime()-date.getTime();
+                System.out.println("两个时间相差"+interval +"秒");
+            }
+
             //分离已结束的项目
-            if(endTime.before(date)){
+            if (date.getTime()>endTime.getTime()) {
                 p.setState(END.getState());
                 finishICOList.add(p);
             }
             // 分离即将开始的项目
-            if(date.before(startTime)){
+            if (date.getTime()<startTime.getTime()) {
                 p.setState(UN_COMING.getState());
                 willICOList.add(p);
             }
             // 分离正在进行中的项目
-            if(startTime.before(date) && date.before(endTime)){
+            if ((startTime.getTime()<date.getTime()) && (date.getTime()<endTime.getTime())) {
                 p.setState(NOW.getState());
                 ICOList.add(p);
             }
@@ -272,7 +281,6 @@ public class ProjectController {
         jsonObject.put("finishICO", finishICOList);
         return Result.successResult(jsonObject);
     }
-
 
     /***
      * 根据BTC钱包地址获取交易记录
@@ -312,9 +320,12 @@ public class ProjectController {
         return Result.successResult(data);
     }
 
-    /*
-    * 获取所有项目信息的接口
-    */
+    /**
+     * @author Yamo
+     * 不分类获取所有项目信息的接口
+     * @param page
+     * @param size
+     */
     @GetMapping("/findAllProject")
     public Result findProjectsByState(@RequestParam(required = true, defaultValue = "0") Integer page,
                                       @RequestParam(required = true, defaultValue = "1") Integer size) {
@@ -367,7 +378,13 @@ public class ProjectController {
        return Result.successResult(pageInfo);
     }
 
-    // 获取可以锁定的项目
+    /**
+     * @author Yamo
+     * 获取可以锁定的项目
+     * @param page
+     * @param size
+     * @return
+     */
     @GetMapping("/findLockProject")
     public Result findLockProject(@RequestParam(required = true, defaultValue = "0") Integer page,
                                   @RequestParam(required = true, defaultValue = "1") Integer size) {

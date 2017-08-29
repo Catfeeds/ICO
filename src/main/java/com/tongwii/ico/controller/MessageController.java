@@ -55,7 +55,14 @@ public class MessageController {
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult(pageInfo);
     }
-    // 获取所有正常状态下的message信息
+
+    /**
+     * @author Yamo
+     * 获取所有正常状态下的message信息
+     * @param page
+     * @param size
+     * @return
+     */
     @GetMapping("/getOfficalMessage")
     public Result officalMessageList(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "1") Integer size) {
         PageHelper.startPage(page, size);
@@ -68,7 +75,12 @@ public class MessageController {
             return Result.errorResult("获取信息失败!");
         }
     }
-    // 获取新闻消息
+
+    /**
+     * @author Yamo
+     * 获取公告消息
+     * @return
+     */
     @GetMapping("/getNotifyMessage")
     public Result getNotifyMessage() {
         try{
@@ -80,7 +92,11 @@ public class MessageController {
 
     }
 
-    // 获取新闻消息
+    /**
+     * @author Yamo
+     * 获取新闻消息
+     * @return
+     */
     @GetMapping("/getNewsMessage")
     public Result getNewsMessage(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "1") Integer size) {
         PageHelper.startPage(page, size);
@@ -88,7 +104,13 @@ public class MessageController {
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult("获取信息成功!").add("newsMessages", pageInfo);
     }
-    // 添加新闻消息
+
+    /**
+     * @author Yamo
+     * 添加新闻消息
+     * @param message
+     * @return
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/insertMessage")
     public Result insertMessage(@RequestBody Message message) {

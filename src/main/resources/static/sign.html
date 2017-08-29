@@ -107,7 +107,7 @@
                                                             <form class="signup-form">
                                                                 <ul class="row">
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
-                                                                        <label>用户名</label>
+                                                                        <label>电子邮箱</label>
                                                                         <input type="text" placeholder=""
                                                                                onkeydown="keylogin()"
                                                                                id="sign_name">
@@ -562,7 +562,22 @@
                                 return;
                             }
                         });
+                        time(this);
                     });
+                    var wait = 60;
+                    function time(obj) {
+                        $this = $(obj);
+                        if (wait === 0) {
+                            $this.removeAttr("disabled").val("发送手机验证码");
+                            wait = 60;
+                        } else {
+                            $this.attr("disabled", true).val("重新发送(" + wait + ")");
+                            wait--;
+                            setTimeout(function() {
+                                time(obj)
+                            }, 1000)
+                        }
+                    }
                 }
                 else {
                     $("#resultlable").text(result.message);

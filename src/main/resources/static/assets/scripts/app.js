@@ -79,11 +79,11 @@
         return null;
     }
     
-    owner.sendSMS = function(phone){
+    owner.sendSMS = function(phone,window){
         var phoneJson = {"phone": phone};
         // 此处调用发送手机验证码的接口获取手机验证码
         $.ajax({
-            url: "/user/validatePhone",
+            url: app.getServerUrl()+"/user/validatePhone",
             type: 'POST',
             timeout: 10000,//超时时间设置为10秒；
             data: JSON.stringify(phoneJson),
@@ -95,15 +95,29 @@
                     app.setUserInfo(result.data.userInfo);
                 }
                 else {
-                    sweetAlert(result.message);
+                    app.myAlertWithoutFunction("",result.message,"warning");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试!","error");
+                app.myAlertWithoutFunction("","网络异常,请稍候再试!","error");
             }
         });
+        time(window);
     }
-
+    var wait = 60;
+    function time(obj) {
+        $this = $(obj);
+        if (wait === 0) {
+            $this.removeAttr("disabled").val("发送手机验证码");
+            wait = 60;
+        } else {
+            $this.attr("disabled", true).val("重新发送(" + wait + ")");
+            wait--;
+            setTimeout(function() {
+                time(obj)
+            }, 1000)
+        }
+    }
     owner.myAlert = function(title, text, type, jumphtml){
         sweetAlert({
             title: title,

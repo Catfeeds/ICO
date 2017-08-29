@@ -52,6 +52,14 @@ public class ProjectUserRelationController {
         return Result.successResult(projectUserRelation);
     }
 
+    /**
+     *  @author Yamo
+     * 获取用户投资的项目
+     * @param page
+     * @param size
+     * @param userId
+     * @return
+     */
     @GetMapping("/getUserProject/{userId}")
     public Result getUserProject(@RequestParam(required = true,defaultValue = "0") Integer page,
                                  @RequestParam(required = true,defaultValue = "1") Integer size,
@@ -69,8 +77,6 @@ public class ProjectUserRelationController {
             }catch (Exception e){
                 project.setPictureUrl("");
             }
-            String pictureUrl = projectFileService.findProjectFileByProjectId(projectId).getFileUrl();
-            project.setPictureUrl(pictureUrl);
             projectList.add(project);
         }
         PageInfo pageInfo = new PageInfo(projectUserRelations);

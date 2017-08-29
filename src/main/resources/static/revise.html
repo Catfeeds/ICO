@@ -305,6 +305,7 @@
         var oldPassword = $("#oldPassword").val();
         var newPassword = $("#newPassword").val();
         var newPassword2 = $("#newPassword2").val();
+        var phoneNum = app.getUserInfo().phone;
         if(oldPassword.length <= 0){
             app.myAlert("","旧密码不可为空!","warning");
             return;
@@ -317,30 +318,20 @@
             app.myAlert("","密码长度不可小于8位或大于30位!","warning");
             return;
         }
-        var phoneJson = {"phone":app.getUserInfo().phone};
-        // 此处调用发送手机验证码的接口获取手机验证码
-        $.ajax({
-            url: app.getServerUrl()+"/user/validatePhone",
-            type: 'POST',
-            timeout: 10000,//超时时间设置为10秒；
-            data: JSON.stringify(phoneJson),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            headers: app.createAuthorizationTokenHeader(),
-            success: function (result) {
-                if (result.code == 200) {
-                    app.setUserInfo(result.data.userInfo);
-                    app.myAlert("",result.message,"warning");
-                }
-                else {
-                    app.myAlert("",result.message,"warning");
-                }
-            },
-            error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试!","error");
-            }
-        });
+        // 正则校验手机号码
+        var ismobileAccount = /^1[3|4|5|7|8][0-9]{9}$/;
+        if (!phoneNum) {
+            app.myAlertWithoutFunction("", "您未绑定或验证手机!", "warning");
+            return;
+        }else if (!ismobileAccount.test(phoneNum)) {
+            app.myAlertWithoutFunction("", "请输入正确的手机号码!", "warning");
+            return;
+        }else{
+            app.sendSMS(phoneNum,this);
+        }
     });
+
+
 
     $("#updatePassword").click(function () {
         // 获取表单中的值
@@ -371,6 +362,7 @@
         var date1 = app.getUserInfo().expireDate;
         var date2 = new Date();
         var d = date1 > date2;
+        console.log(d);
        /* else if(app.getUserInfo().expireDate < new Date().toDateString()){
             sweetAlert("验证码已过期，请重新发送！");
             return;
@@ -390,17 +382,17 @@
                 headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
                     if (result.code == 200) {
-                        app.setUserInfo(result.data.userInfo);
-                        app.myAlert("",result.message,"warning");
+                        app.setUserInfo({});
+                        app.myAlert("",result.message,"success","sign.html");
                         return;
                     }
                     else {
-                        app.myAlert("",result.message,"warning");
+                        app.myAlertWithoutFunction("",result.message,"warning");
                         return;
                     }
                 },
                 error: function (xhr, type, errerThrown) {
-                    app.myAlert("","网络异常,请稍候再试!","error");
+                    app.myAlertWithoutFunction("","网络异常,请稍候再试!","error");
                     return;
                 }
             });
