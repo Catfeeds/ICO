@@ -60,6 +60,12 @@ public class ProjectUserWalletRelationController {
         PageInfo pageInfo = new PageInfo(list);
         return Result.successResult(pageInfo);
     }
+
+    /**
+     * @author Yamo
+     * 获取交易记录，并且根据交易记录获取交易详情
+     * @return
+     */
     @GetMapping("/getUserTransaction")
     public Result getUserTransaction(){
         Integer userId = ContextUtils.getUserId();

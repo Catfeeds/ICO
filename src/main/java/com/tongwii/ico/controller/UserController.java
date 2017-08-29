@@ -156,7 +156,7 @@ public class UserController {
     /**
      * 修改用户密码
      */
-    @PutMapping("/")
+    @PutMapping("/updatePassword")
     @ResponseBody
     public Result updatePassword(@RequestBody Map<Object,String> passwordInfo) {
         Integer userId = ContextUtils.getUserId();
