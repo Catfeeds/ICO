@@ -678,7 +678,6 @@
                 success : function(result) {
                     if (result.code == 200) {
                         var state = 1;
-                        outputTokenMoneyDetail =  result.data;
                         outputTokenMoneyDetailId =  result.data.id;
                         //项目的字段
                         var thirdEndorsement =  $("#thirdEndorsement option:selected").val();
@@ -695,7 +694,7 @@
                         var prjcontent =$('.summernote').summernote('code');
                         var id = userId;
                         var prjId;
-                        var prjjson = {thirdEndorsement: thirdEndorsement, name: prjname,nameCn:nameCn,startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetail, state: state};
+                        var prjjson = {thirdEndorsement: thirdEndorsement, name: prjname,nameCn:nameCn,startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, state: state};
                         $.ajax({
                             url: app.getServerUrl()+"/project/add",
                             type: 'POST',
@@ -734,6 +733,7 @@
                                     var znbook  = $("#znbook").val();
                                     var enbook = $("#enbook").val();
                                     var type1 = 1;
+                                    var inputMoneyId;
                                     var moneyJson = {minTargetNumber: minnumber, targetNumber: maxnumber, inputTokenMoneyProjectId: prjId, tokenMoneyId: moneyTypeId1, tokenMoneyWhitepaperCnUrl:znbook, tokenMoneyWhitepaperEnUrl: enbook, type:type1};
                                     $.ajax({
                                         url : app.getServerUrl()+"/token/detail", //后台接口
@@ -744,6 +744,7 @@
                                         contentType: "application/json; charset=utf-8",
                                         success : function(result) {
                                             if (result.code == 200) {
+                                                inputMoneyId = result.data.id;
                                                 var updateJson = {id: outputTokenMoneyDetailId, tokenMoneyProjectId:prjId}
                                                 $.ajax({
                                                     url : app.getServerUrl()+"/token/detail", //后台接口
@@ -754,8 +755,27 @@
                                                     contentType: "application/json; charset=utf-8",
                                                     success : function(result) {
                                                         if (result.code == 200) {
+                                                            var updateJson1 = {id: inputMoneyId, tokenMoneyProjectId:prjId}
+                                                            $.ajax({
+                                                                url : app.getServerUrl()+"/token/detail", //后台接口
+                                                                type: 'PUT',
+//                                                                  timeout: 10000,//超时时间设置为10秒；
+                                                                data: JSON.stringify(updateJson1),
+                                                                dataType: 'json',//服务器返回json格式数据
+                                                                contentType: "application/json; charset=utf-8",
+                                                                success : function(result) {
+                                                                    if (result.code == 200) {
+                                                                        location.href = "/manager/data.html";
+                                                                    } else {
+                                                                        app.myAlert("", "导入失败333333！", "warning");
+                                                                    }
+                                                                },
+                                                                error : function(data, status, e)
+                                                                {
 
-                                                            location.href = "/manager/data.html";
+                                                                    app.myAlert("", "导入失败，网络异常或表单数据错误！", "warning");
+                                                                }
+                                                            });
                                                         } else {
                                                             app.myAlert("", "导入失败2222222222！", "warning");
                                                         }
@@ -772,6 +792,7 @@
                                                 app.myAlert("", "导入失败！", "warning");
                                             }
                                         },
+
                                         error : function(data, status, e)
                                         {
                                             app.myAlert("", "导入失败，网络异常或表单数据错误3！", "warning");
