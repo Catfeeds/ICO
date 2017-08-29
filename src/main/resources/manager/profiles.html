@@ -234,6 +234,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label  class="col-sm-2 control-label">第三方背书</label>
+                                            <div class="col-sm-2">
+                                                <select name="select" id="thirdEndorsement" style="width: 100px;" class="form-control">
+                                                    <option value="1" selected="selected">是</option>
+                                                    <option value="0">否</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-sm-2 control-label">上传图片</label>
                                             <div class="col-sm-10">
                                                 <input name="file"  type="file" id="content" accept="image/png,image/gif,image/jpeg" onChange="handleConFiles(this.files);">
@@ -630,6 +639,7 @@
             var fbnumber = $("#fbnumber").val();
             var znbook1  = $("#znbook1").val();
             var enbook1 = $("#enbook1").val();
+
             var outputTokenMoneyDetailId;
             var type2 = 2;
             var jsmoneyJson = {targetNumber: fbnumber,tokenMoneyId: moneyTypeId, tokenMoneyWhitepaperCnUrl:znbook1, tokenMoneyWhitepaperEnUrl: enbook1, type:type2};
@@ -645,6 +655,12 @@
                         var state = 1;
                         outputTokenMoneyDetailId =  result.data.id;
                         //项目的字段
+                        var thirdEndorsement =  $("#thirdEndorsement option:selected").val();
+                        if(thirdEndorsement == 1){
+                            thirdEndorsement  = true;
+                        } else {
+                            thirdEndorsement  = false;
+                        }
                         var prjname = $("#prjname").val();
                         var nameCn = $("#nameCn").val();
                         var prjopentime = $("#startTime").val();
@@ -653,7 +669,7 @@
                         var prjcontent =$('.summernote').summernote('code');
                         var id = userId;
                         var prjId;
-                        var prjjson = {name: prjname,nameCn:nameCn,startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
+                        var prjjson = {thirdEndorsement: thirdEndorsement, name: prjname,nameCn:nameCn,startTime: prjopentime, endTime: prjclosetime, des: prjproduce, content: prjcontent, createUserId: id, outputTokenMoneyDetailId:outputTokenMoneyDetailId, state: state};
                         $.ajax({
                             url: app.getServerUrl()+"/project/add",
                             type: 'POST',
