@@ -94,6 +94,7 @@
                         </ul>
                     </div>
                     <a href="sign.html" class="free-btn" id="li_login" style="font-family:'微软雅黑'">登录/注册</a>
+                    <a onclick="signOut()" class="free-btn" id="asignout" style="font-family:'微软雅黑';display: none;">退出登录</a>
                 </div>
                 <div class="mob-nav">
                 </div>
@@ -330,8 +331,12 @@
 <script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-        $("#personInfo").css('display', 'block');
-        $("#userName").text(app.getUserInfo().nickName);
+        if(app.getUserInfo().emailAccount) {
+            $("#personInfo").css('display', 'block');
+            $("#li_login").hide();
+            $("#asignout").show();
+            $("#userName").text(app.getUserInfo().nickName);
+        }
         var pid = app.getQueryString("pid");
         var projectName = decodeURI(app.getQueryString("name"));
         var ETHBalance = null;
@@ -488,10 +493,13 @@
     });
 
     $("#sign_out").click(function () {
+        signOut()
+    });
+    function signOut() {
         $("#personInfo").css('display', 'none');
         app.setUserInfo({});
         location.href = "index.html";
-    });
+    }
 </script>
 </body>
 </html>

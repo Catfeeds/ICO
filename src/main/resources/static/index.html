@@ -78,6 +78,7 @@
                     </ul>
                 </div>
                 <a href="sign.html" class="free-btn" id="li_login" style="font-family:'微软雅黑'">登录/注册</a>
+                <a onclick="signOut()" class="free-btn" id="asignout" style="font-family:'微软雅黑';display: none;">退出登录</a>
             </div>
             <div class="mob-nav">
             </div>
@@ -355,7 +356,8 @@
             $("#contect").css('display', 'none');
         } else {
             $("#personInfo").css('display', 'block');
-            $("#li_login").text("已登录");
+            $("#li_login").hide();
+            $("#asignout").show();
             $("#userName").text(app.getUserInfo().nickName);
         }
 
@@ -528,21 +530,24 @@
                 return;
             }
         });
-        $("#checkMore1").click(function () {
-            location.href = "listing-grid.html";
-        });
-        $("#checkMore2").click(function () {
-            location.href = "under.html";
-        });
-        $("#checkMore3").click(function () {
-            location.href = "listing.html";
-        });
-        $("#sign_out").click(function () {
-            $("#personInfo").css('display', 'none');
-            app.setUserInfo({});
-            location.href = "index.html";
-        });
     });
+    $("#checkMore1").click(function () {
+        location.href = "listing-grid.html";
+    });
+    $("#checkMore2").click(function () {
+        location.href = "under.html";
+    });
+    $("#checkMore3").click(function () {
+        location.href = "listing.html";
+    });
+    $("#sign_out").click(function () {
+        signOut();
+    });
+    function signOut() {
+        $("#personInfo").css('display', 'none');
+        app.setUserInfo({});
+        location.href = "index.html";
+    }
 </script>
 </body>
 </html>

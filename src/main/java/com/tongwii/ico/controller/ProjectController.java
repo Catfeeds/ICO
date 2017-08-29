@@ -357,7 +357,7 @@ public class ProjectController {
 
                 // 根据项目ID查寻目标代币信息
                 List<TokenDetail> inputTokenDetails  = tokenDetailService.findByProjectIdAndType(projectId, INPUT_CION.getCode());
-                if(!CollectionUtils.isNotEmpty(inputTokenDetails)){
+                if(CollectionUtils.isNotEmpty(inputTokenDetails)){
                     for(int j=0; j<inputTokenDetails.size();j++){
                         // 获取目标代币的代币详细信息
                         TokenMoney inputMoney = tokenMoneyService.findById(inputTokenDetails.get(j).getTokenMoneyId());

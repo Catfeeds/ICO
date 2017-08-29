@@ -56,6 +56,7 @@
                 </div>
                 <div class="right-side">
                     <a href="sign.html" class="free-btn" id="li_login" style="font-family:'微软雅黑'">登录/注册</a>
+                    <a onclick="signOut()" class="free-btn" id="asignout" style="font-family:'微软雅黑';display: none;">退出登录</a>
                 </div>
                 <div class="mob-nav">
                 </div>
@@ -616,7 +617,7 @@
             app.myAlertWithoutFunction("", "验证码已过期，请重新发送！", "warning");
             return;
         } else {
-            if (newPass.lenth < 8 || newPass.lenth > 30) {
+            if (newPass.length < 8 || newPass.length > 30) {
                 $("#resultlable2").text("密码需为8位以上,30位以下!");
                 $("#resultdiv2").css("display", "block");
                 return;
