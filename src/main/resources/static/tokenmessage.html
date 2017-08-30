@@ -352,7 +352,6 @@
                            ETHBalance = item.userWalletBalance;
                         }
                         if(item.tokenMoney.nameEnShort == "BTC"){
-//                            .substr(0,item.userWalletBalance.length-3)
                             BTCBalance = item.userWalletBalance;
                         }
                         $("#numMoney").append(
@@ -407,7 +406,7 @@
         $("#projectName").text(projectName);
 
         $("#commit").click(function () {
-            if ($("#inputmoney").val() /*&& $("#inputmoney").val() > 0*/) {
+            if ($("#inputmoney").val() && $("#inputmoney").val() > 0) {
                 var cionType = $('#moneytype2').val();
 
                 if(cionType === "1"){
@@ -497,7 +496,7 @@
     });
     function signOut() {
         $("#personInfo").css('display', 'none');
-        app.setUserInfo({});
+        app.clearState();
         location.href = "index.html";
     }
 </script>

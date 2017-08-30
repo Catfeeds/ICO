@@ -394,28 +394,28 @@
         });
         $("#regist").click(function () {
             regist();
-            $("#regist").attr("disabled", true);
         });
 
     });
     function regist() {
+        $("#regist").attr("disabled", true);
         var email = $("#email").val().toString();
         var registPassword = $("#regist_password").val().toString();
         var againPassword = $("#again_password").val().toString();
         if (email.length <= 0) {
-            app.myAlert("", "电子邮箱不能为空!", "warning");
+            app.myAlert("", "电子邮箱不能为空!", "warning","sign.html");
             return;
         }
         if (registPassword.length <= 0 || againPassword.length <= 0) {
-            app.myAlert("", "密码不能为空!", "warning");
+            app.myAlert("", "密码不能为空!", "warning","sign.html");
             return;
         }
         if (registPassword.length < 8 || registPassword.length > 30) {
-            app.myAlert("", "密码需为8位以上,30位以下!", "warning");
+            app.myAlert("", "密码需为8位以上,30位以下!", "warning","sign.html");
             return;
         }
         if (registPassword != againPassword) {
-            app.myAlert("", "两次输入的密码不一致!", "warning");
+            app.myAlert("", "两次输入的密码不一致!", "warning","sign.html");
             return;
         }
         var registJson = {emailAccount: email, password: registPassword};
@@ -432,13 +432,13 @@
                     $("#sign_name").text(result.data.userInfo.emailAccount);
                 }
                 else {
-                    app.myAlertWithoutFunction("", result.message, "warning");
+                    app.myAlert("", result.message, "warning","sign.html");
                     return;
                     console.log("注册失败!");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlertWithoutFunction("", "网络异常,请稍候再试!", "error");
+                app.myAlert("", "网络异常,请稍候再试!", "error","sign.html");
                 return;
             }
         });
@@ -489,7 +489,6 @@
             } else {
                 setTimeout(function () {
                     regist();
-                    $("#regist").attr("disabled", true);
                 }, 0);
             }
         }

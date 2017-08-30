@@ -78,7 +78,8 @@
                                 <div class="dropdown-area">
                                     <h5 id="userName"></h5>
                                     <ul class="dropdown">
-                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a></li>
+                                        <li><a href="contect.html" id="contect"><i class="icon-file-text-o"></i>我的信息</a>
+                                        </li>
                                     </ul>
                                     <a class="sign-btn" id="sign_out"><i class="icon-logout"></i>退出登录</a>
                                 </div>
@@ -86,7 +87,8 @@
                         </ul>
                     </div>
                     <a href="sign.html" class="free-btn" id="li_login" style="font-family:'微软雅黑'">登录/注册</a>
-                    <a onclick="signOut()" class="free-btn" id="asignout" style="font-family:'微软雅黑';display: none;cursor: pointer">退出登录</a>
+                    <a onclick="signOut()" class="free-btn" id="asignout"
+                       style="font-family:'微软雅黑';display: none;cursor: pointer">退出登录</a>
                 </div>
                 <div class="mob-nav">
                 </div>
@@ -132,70 +134,63 @@
                                 </p>
                                 <div id="projectContent">此处是项目添加时上传到后台数据库的html</div>
 
-
-                            <div class="col-md-4"><h3>项目情况</h3>
-                                 <style>
-                                   y{
-                                       font-size: 14px;
-                                       font-family:"微软雅黑", "Open Sans", Arial, sans-serif;
-                                       font-weight: 700;
-                                   }
-                                </style>
-                                <dl>
-                                    <y>项目名称</y>
-                                    <dd id="enName1"></dd>
-                                    <y>项目中文名称</y>
-                                    <dd id="cnName1"></dd>
-                                    <y>ICO时间</y>
-                                    <dd id="projectTime"></dd>
-                                    <y>第三方背书</y>
-                                    <dd id="beishu"></dd>
-                                </dl>
+                                <div id="projectinfo">
+                                    <div class="col-md-4"><h3>项目情况</h3>
+                                        <style>
+                                            y {
+                                                font-size: 14px;
+                                                font-family: "微软雅黑", "Open Sans", Arial, sans-serif;
+                                                font-weight: 700;
+                                            }
+                                        </style>
+                                        <dl>
+                                            <y>项目名称</y>
+                                            <dd id="enName1"></dd>
+                                            <y>项目中文名称</y>
+                                            <dd id="cnName1"></dd>
+                                            <y>ICO时间</y>
+                                            <dd id="projectTime"></dd>
+                                            <y>第三方背书</y>
+                                            <dd id="beishu"></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-md-4"><h3>发行代币情况</h3>
+                                        <dl>
+                                            <y>代币简称</y>
+                                            <dd id="cornName"></dd>
+                                            <y>代币总量</y>
+                                            <dd id="cornCount"></dd>
+                                            <y>ICO总量</y>
+                                            <dd id="cornTotleCount"></dd>
+                                        </dl>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-4"><h3>发行代币情况</h3>
-                                <dl>
-                                    <y>代币简称</y>
-                                    <dd id="cornName">[DPY]</dd>
-                                    <y>代币总量</y>
-                                    <dd id="cornCount">100000000 DPY</dd>
-                                    <y>ICO总量</y>
-                                    <dd id="cornTotleCount">18000000 DPY</dd>
-                                </dl>
-                            </div>
-                            <div class="col-md-4"><h3>目标代币情况</h3>
-                                <dl>
-                                    <y>接受币种</y>
-                                    <dd id="getCornType">eth</dd>
-                                    <y>最低目标</y>
-                                    <dd id="lowTarget">待定</dd>
-                                    <y>最高目标</y>
-                                    <dd id="highTarget">23000 以太坊</dd>
-                                </dl>
-                            </div>
-                            <div class="col-md-4"><h3>相关链接</h3>
-                                <dl>
-                                    <y>官网链接</y>
+                            <div>
+                                <div class="col-md-4"><h3>相关链接</h3>
+                                    <dl>
+                                        <y>官网链接</y>
+                                        <dd>
+                                            <a href="#" id="officialLink" target="_blank"></a>
+                                        </dd>
+                                        <y>twitter</y>
+                                        <dd><a href="#" id="twitter" target="_blank">推特</a>
+                                        </dd>
+                                        <y>github</y>
+                                        <dd><a href="#" id="github"
+                                               target="_blank">github</a>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-4"><h3>资料下载</h3>
                                     <dd>
-                                        <a href="#" id="officialLink" target="_blank"></a>
+                                        <y>Whitepaper</y>
+                                        <br><a href="#" id="cnWhitepaper"
+                                               target="_blank">白皮书资料下载</a>
+                                        <br><a href="#" id="enWhitepaper"
+                                               target="_blank">White paper Download</a>
                                     </dd>
-                                    <y>twitter</y>
-                                    <dd><a href="#" id="twitter" target="_blank">推特</a>
-                                    </dd>
-                                     <y>github</y>
-                                    <dd><a href="#" id="github"
-                                           target="_blank">github</a>
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="col-md-4"><h3>资料下载</h3>
-                                <dd>
-                                    <y>Whitepaper</y>
-                                    <br><a href="#" id="cnWhitepaper"
-                                           target="_blank">白皮书资料下载</a>
-                                    <a href="#" id="enWhitepaper"
-                                       target="_blank">White paper Download</a>
-                                    </dd>
-                            </div>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -234,15 +229,19 @@
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-primary progress-bar-striped active"
                                          id="monenyBar"
-                                         data-appear-progress-animation="0%" data-appear-animation-delay="300" style="width: 100%;">
-                                        <span class="progress-bar-tooltip" style="opacity: 1;" id="monenyPTIP">100%</span>
+                                         data-appear-progress-animation="0%" data-appear-animation-delay="300"
+                                         style="width: 100%;">
+                                        <span class="progress-bar-tooltip" style="opacity: 1;"
+                                              id="monenyPTIP">100%</span>
                                     </div>
                                 </div>
                                  <div class="progress-label">
                                 <span>时间进度</span>
                                 </div>
                                 <div class="progress">
-                                    <div id="timeBar" class="progress-bar progress-bar-primary progress-bar-striped active" data-appear-progress-animation="100%"
+                                    <div id="timeBar"
+                                         class="progress-bar progress-bar-primary progress-bar-striped active"
+                                         data-appear-progress-animation="100%"
                                          data-appear-animation-delay="300" style="width: 100%;">
                                         <span class="progress-bar-tooltip" style="opacity: 1;" id="timePTIP">100%</span>
                                     </div>
@@ -318,58 +317,87 @@
     jQuery(window).load(function () {
         var id = app.getQueryString("id");
         $.ajax({
-            url: app.getServerUrl()+"/project/"+id,
+            url: app.getServerUrl() + "/project/" + id,
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
-                    if(!result.data){
+                    if (!result.data) {
+                        window.location.href = "404.html";
+                    }
+                    // 此处判断项目是不是此类项目
+                    if(!result.data.projectInfo.state==2){
                         window.location.href = "404.html";
                     }
                     //获取数据
                     var content = result.data.projectInfo.content;
                     var enName = result.data.projectInfo.name;//英文
                     var cnName = result.data.projectInfo.nameCn;//中文
-                    var  des= result.data.projectInfo.des;//描述
+                    var des = result.data.projectInfo.des;//描述
                     var endDate = result.data.projectInfo.endTime;
                     var startDate = result.data.projectInfo.startTime;
                     var startTime = new Date(startDate);
-                    var endTime =  new Date(endDate);
+                    var endTime = new Date(endDate);
                     var thirdEndorsement = result.data.projectInfo.thirdEndorsement;
                     //接收货币数据
-                    var inputTokenDetails = result.data.projectInfo.inputTokenDetails;
+                    if (result.data.projectInfo.inputTokenDetails) {
+                        var inputTokenDetails = result.data.projectInfo.inputTokenDetails;
+                        //接收货币
+                        $.each(inputTokenDetails, function (i, item) {
+                            $("#projectinfo").append(
+                                    "<div class='col-md-4'><h3>目标代币情况</h3><dl>" +
+                                    "<y>接受币种</y><dd>" + item.tokenMoney.nameEnShort + "</dd><y>最低目标</y>" +
+                                    "<dd>" + item.minTargetNumber + "</dd><y>最高目标</y>" +
+                                    "<dd>" + item.targetNumber + "</dd></dl></div>"
+                            );
+                        });
+                    }
+
                     //发行货币数据
-                    var outNameEnShort = result.data.projectInfo.outPutTokenDetail.tokenMoney.nameEnShort;//简称
-                    var outCurrentNumber = result.data.projectInfo.outPutTokenDetail.currentNumber;//代币总量
-                    var outTargetNumber = result.data.projectInfo.outPutTokenDetail.targetNumber;//目标
-                    var tokenMoneyWhitepaperCnUrl = result.data.projectInfo.outPutTokenDetail.tokenMoneyWhitepaperCnUrl;//中文
-                    var tokenMoneyWhitepaperEnUrl = result.data.projectInfo.outPutTokenDetail.tokenMoneyWhitepaperEnUrl;//英文
-                    var officialUrl = result.data.projectInfo.outPutTokenDetail.tokenMoney.officialUrl;
-                    var twitterUrl = result.data.projectInfo.outPutTokenDetail.tokenMoney.twitterUrl;
-                    var githubUrl = result.data.projectInfo.outPutTokenDetail.tokenMoney.githubUrl;
+                    if (result.data.projectInfo.outPutTokenDetail) {
+                        var outNameEnShort = item.tokenMoney.nameEnShort;//简称
+                        var outCurrentNumber = item.currentNumber;//代币总量
+                        var outTargetNumber = item.targetNumber;//目标
+                        var tokenMoneyWhitepaperCnUrl = item.tokenMoneyWhitepaperCnUrl;//中文
+                        var tokenMoneyWhitepaperEnUrl = item.tokenMoneyWhitepaperEnUrl;//英文
+                        var officialUrl = item.officialUrl;
+                        var twitterUrl = item.twitterUrl;
+                        var githubUrl = item.githubUrl;
+                        //发行货币
+                        $("#cornName").text(outNameEnShort);
+                        $("#cornCount").text(outCurrentNumber);
+                        $("#cornTotleCount").text(outTargetNumber + outNameEnShort);
+                        $("#cnName1").text(outTargetNumber);
 
-
+                        //链接
+                        $('#officialLink').attr('href', officialUrl);
+                        $('#officialLink').text(officialUrl);
+                        $('#twitter').attr('href', twitterUrl);
+                        $('#github').attr('href', githubUrl);
+                        $('#cnWhitepaper').attr('href', tokenMoneyWhitepaperCnUrl);
+                        $('#enWhitepaper').attr('href', tokenMoneyWhitepaperEnUrl);
+                    }
                     //替换相应数据
-                    if(enName.length<=0){
+                    if (enName.length <= 0) {
                         $("#enName").hide();
-                    }else{
+                    } else {
                         $("#enName").text(enName);
                     }
-                    if(cnName.length<=0){
+                    if (cnName.length <= 0) {
                         $("#cnName").hide();
-                    }else{
+                    } else {
                         $("#cnName").text(cnName);
                     }
-                    if(des.length<=0){
+                    if (des.length <= 0) {
                         $("#projectDes").hide();
-                    }else{
+                    } else {
                         $("#projectDes").text(des);
                     }
-                    if(content.length<=0){
+                    if (content.length <= 0) {
                         $("#projectContent").hide();
-                    }else{
+                    } else {
                         $("#projectContent").html(content);
                     }
 
@@ -381,38 +409,14 @@
                     //项目详情数据
                     $("#enName1").text(enName);
                     $("#cnName1").text(cnName);
-                    $("#projectTime").text(startDate+"—"+endDate);
-                    if(thirdEndorsement){
+                    $("#projectTime").text(startDate + "—" + endDate);
+                    if (thirdEndorsement) {
                         $("#beishu").text("是");
-                    }else{
+                    } else {
                         $("#beishu").text("否");
                     }
-                    //发行货币
-                    $("#cornName").text(outNameEnShort);
-                    $("#cornCount").text(outCurrentNumber);
-                    $("#cornTotleCount").text(outTargetNumber+outNameEnShort);
-                    $("#cnName1").text(outTargetNumber);
 
-                    //接收货币
-                    var jshb = "";
-                    $.each(inputTokenDetails, function (i, item) {
-                        if(jshb==""){
-                            jshb = item.tokenMoney.name;
-                        }else{
-                            jshb =","+ item.tokenMoney.name;
-                        }
-                    });
-                    $("#getCornType").text(jshb);
-
-
-                    //链接
-                    $('#officialLink').attr('href',officialUrl);
-                    $('#officialLink').text(officialUrl);
-                    $('#twitter').attr('href',twitterUrl);
-                    $('#github').attr('href',githubUrl);
-                    $('#cnWhitepaper').attr('href',tokenMoneyWhitepaperCnUrl);
-                    $('#enWhitepaper').attr('href',tokenMoneyWhitepaperEnUrl);
-                }else{
+                } else {
                     return;
                 }
             },
@@ -444,7 +448,7 @@
     });
     function signOut() {
         $("#personInfo").css('display', 'none');
-        app.setUserInfo({});
+        app.clearState();
         location.href = "index.html";
     }
 
