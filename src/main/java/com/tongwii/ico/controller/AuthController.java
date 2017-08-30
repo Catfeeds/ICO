@@ -11,6 +11,7 @@ import com.tongwii.ico.service.UserService;
 import com.tongwii.ico.service.UserWalletService;
 import com.tongwii.ico.util.ContextUtils;
 import com.tongwii.ico.util.MessageUtil;
+import com.tongwii.ico.util.OperatorRecordUtil;
 import com.tongwii.ico.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,6 +59,8 @@ public class AuthController {
     private UserWalletService userWalletService;
     @Autowired
     private MessageUtil messageUtil;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 前台登陆认证
@@ -84,6 +87,8 @@ public class AuthController {
         List<Object> userWallets = userWalletService.findWalletByUserId(userInfo.getId());
         // 给用户信息中添加用户钱包信息
         userInfo.setUserWallets(userWallets);
+        // 记录用户登陆
+        OperatorRecordUtil.record("用户登陆");
         // 返回
         return Result.successResult().add( "token", token ).add("userInfo", userInfo);
     }
@@ -111,6 +116,7 @@ public class AuthController {
             final String token = jwtTokenUtil.generateToken( userDetails);
             // 通过email查询数据库中的唯一记录
             User userInfo = userService.findByUsername(user.getEmailAccount());
+            OperatorRecordUtil.record("管理员登陆");
             // 返回
             return Result.successResult().add( "token", token ).add("userInfo", userInfo);
         } else {
@@ -200,11 +206,11 @@ public class AuthController {
     @PutMapping("/forgetPassword")
     @ResponseBody
     public Result forgetPassword(@RequestBody User user) {
+        OperatorRecordUtil.record("修改密码");
         // 通过userID查询用户信息
         try{
             User u = userService.findById(user.getId());
-            BCryptPasswordEncoder encoderPassword = new BCryptPasswordEncoder();
-            u.setPassword(encoderPassword.encode(user.getPassword()));
+            u.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.update(u);
             return Result.successResult().add("userInfo",u);
         }catch (Exception e){

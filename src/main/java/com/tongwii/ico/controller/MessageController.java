@@ -7,6 +7,7 @@ import com.tongwii.ico.model.Message;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.service.MessageService;
 import com.tongwii.ico.util.ContextUtils;
+import com.tongwii.ico.util.OperatorRecordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,18 +27,21 @@ public class MessageController {
     private static int NEWSMESSAGE = 1;
     @PostMapping
     public Result add(@RequestBody Message message) {
+        OperatorRecordUtil.record("添加新闻消息");
         messageService.save(message);
         return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
+        OperatorRecordUtil.record("删除新闻消息");
         messageService.deleteById(id);
         return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody Message message) {
+        OperatorRecordUtil.record("更新新闻消息");
         messageService.update(message);
         return Result.successResult();
     }
@@ -114,6 +118,7 @@ public class MessageController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/insertMessage")
     public Result insertMessage(@RequestBody Message message) {
+        OperatorRecordUtil.record("添加新闻消息");
         User user = ContextUtils.getUser();
         message.setState(1);
         message.setCreateUserId(user.getId());

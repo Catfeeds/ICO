@@ -1,6 +1,5 @@
 package com.tongwii.ico.service.impl;
 
-import com.tongwii.ico.core.Result;
 import com.tongwii.ico.dao.UserProjectInvestRecordMapper;
 import com.tongwii.ico.model.Project;
 import com.tongwii.ico.model.ProjectUserRelation;

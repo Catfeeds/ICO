@@ -1,5 +1,8 @@
 package com.tongwii.ico.security;
 
+import com.tongwii.ico.util.IPUtil;
+import com.tongwii.ico.util.OperatorRecordUtil;
+import com.tongwii.ico.util.SpringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,10 +60,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         final String authToken = token;
         final String username  = jwtTokenUtil.getUsernameFromToken( authToken );
 
-        if ( logger.isDebugEnabled() ) {
-            logger.debug( "authToken : {},username : {}", authToken, username );
-        }
-
         if ( username != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
             // 对于简单的验证，只需检查令牌的完整性即可。 您不必强制调用数据库。 由你自己决定
             // 是否查询数据看情况,目前是查询数据库
@@ -76,43 +75,18 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 );
 
                 ThreadContext.put( USER_ID, String.valueOf( ( (JwtUser) userDetails ).getId() ) );
-                ThreadContext.put( USER_IP, getIpAddress(request));
+                ThreadContext.put( USER_IP, IPUtil.getIpAddress(request));
                 ThreadContext.put( USER_NAME, username );
 
                 authentication.setDetails( new WebAuthenticationDetailsSource().buildDetails( request ) );
 
                 if ( logger.isDebugEnabled() ) {
-                    logger.debug( "该{}用户已认证, 设置安全上下文, 登陆ip:{}", username, getIpAddress(request) );
+                    logger.debug( "该{}用户已认证, 设置安全上下文, 登陆ip:{}", username, IPUtil.getIpAddress(request) );
                 }
                 SecurityContextHolder.getContext().setAuthentication( authentication );
             }
         }
         chain.doFilter( request, response );
         return;
-    }
-
-    private String getIpAddress(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        // 如果是多级代理，那么取第一个ip为客户端ip
-        if (ip != null && ip.indexOf(",") != -1) {
-            ip = ip.substring(0, ip.indexOf(",")).trim();
-        }
-
-        return ip;
     }
 }

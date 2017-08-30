@@ -6,6 +6,7 @@ import com.tongwii.ico.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.util.ContextUtils;
+import com.tongwii.ico.util.OperatorRecordUtil;
 import com.tongwii.ico.util.TokenMoneyEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,17 +30,20 @@ public class TokenMoneyController {
     @PostMapping
     public Result add(@RequestBody TokenMoney tokenMoney) {
         tokenMoneyService.save(tokenMoney);
+        OperatorRecordUtil.record("新增代币, 代币id" + tokenMoney.getId());
         return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         tokenMoneyService.deleteById(id);
+        OperatorRecordUtil.record("修改代币， 代币id" + id);
         return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody TokenMoney tokenMoney) {
+        OperatorRecordUtil.record("更新代币， 代币id" + tokenMoney.getId());
         tokenMoneyService.update(tokenMoney);
         return Result.successResult();
     }

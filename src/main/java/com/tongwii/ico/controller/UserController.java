@@ -12,6 +12,7 @@ import com.tongwii.ico.service.UserService;
 import com.tongwii.ico.service.UserWalletService;
 import com.tongwii.ico.util.ContextUtils;
 import com.tongwii.ico.util.MessageUtil;
+import com.tongwii.ico.util.OperatorRecordUtil;
 import com.tongwii.ico.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,15 +40,11 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private FileService fileService;
-    @Autowired
     private UserWalletService userWalletService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private MessageUtil messageUtil;
-    @Autowired
-    private AuthenticationManager authenticationManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Value( "${jwt.header}" )
@@ -59,6 +56,7 @@ public class UserController {
     @ResponseBody
     public Result add(@RequestBody User user) {
         userService.save(user);
+        OperatorRecordUtil.record("新增用户， 用户id" + user.getId());
         return Result.successResult();
     }
 
@@ -66,6 +64,7 @@ public class UserController {
     @ResponseBody
     public Result delete(@PathVariable Integer id) {
         userService.deleteById(id);
+        OperatorRecordUtil.record("删除用户， 用户id" + id);
         return Result.successResult();
     }
 
@@ -76,6 +75,7 @@ public class UserController {
         userService.update(user);
         User u = userService.findById(user.getId());
         u.setUserWallets(userWalletService.findWalletByUserId(u.getId()));
+        OperatorRecordUtil.record("更新用户状态， 用户id" + user.getId());
         return Result.successResult().add("userInfo",u);
     }
     @PutMapping
@@ -94,6 +94,7 @@ public class UserController {
         userService.update(user);
         User u = userService.findById(user.getId());
         u.setUserWallets(userWalletService.findWalletByUserId(u.getId()));
+        OperatorRecordUtil.record("更新用户信息， 用户id" + user.getId());
         return Result.successResult().add("userInfo",u);
     }
 
@@ -150,7 +151,7 @@ public class UserController {
         } catch (Exception e) {
             return Result.errorResult("注册失败");
         }
-
+        OperatorRecordUtil.record("新用户注册， 用户id" + user.getId());
         return Result.successResult("注册成功");
     }
 
@@ -164,6 +165,7 @@ public class UserController {
     @PutMapping("/updatePassword")
     @ResponseBody
     public Result updatePassword(@RequestBody Map<Object,String> passwordInfo) {
+        OperatorRecordUtil.record("修改密码");
         Integer userId = ContextUtils.getUserId();
         String oldPassword = passwordInfo.get("oldPassword");
         String newPassword = passwordInfo.get("newPassword");
@@ -202,6 +204,7 @@ public class UserController {
         JwtUser user = ContextUtils.getJwtUser();
         String token = request.getHeader(tokenHeader);
         messageUtil.sendRegisterMail(user.getUsername(), token);
+        OperatorRecordUtil.record("发送认证邮箱");
         return Result.successResult("发送成功");
     }
 
@@ -211,6 +214,7 @@ public class UserController {
     @PostMapping("/validatePhone")
     @ResponseBody
     public Result validatePhone(@RequestBody Map<String, String> map) {
+        OperatorRecordUtil.record("验证手机号");
         String phone = "";
         if(map.containsKey("phone")) {
             phone = map.get("phone");
@@ -218,7 +222,7 @@ public class UserController {
         if(!ValidateUtil.validateMobile(phone)) {
             return Result.failResult("手机号码格式不正确");
         }
-        User user = null;
+        User user;
         try {
             user = userService.findById(ContextUtils.getUserId());
             user.setPhone(phone);
@@ -252,6 +256,7 @@ public class UserController {
      */
     @GetMapping("/validateEmail")
     public String validateEmail() {
+        OperatorRecordUtil.record("验证邮箱");
         try {
             Integer userId = ContextUtils.getUserId();
             User user = userService.findById(userId);

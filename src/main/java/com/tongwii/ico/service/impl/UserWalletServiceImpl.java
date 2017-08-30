@@ -29,8 +29,6 @@ public class UserWalletServiceImpl extends AbstractService<UserWallet> implement
     private UserWalletMapper userWalletMapper;
     @Autowired
     private TokenMoneyService tokenMoneyService;
-    @Autowired
-    private TransactionsService transactionService;
 
     @Override
     public List<UserWallet> findByUserId(Integer userId) {

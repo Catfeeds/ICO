@@ -9,6 +9,7 @@ import com.tongwii.ico.model.UserProjectInvestRecord;
 import com.tongwii.ico.model.UserWallet;
 import com.tongwii.ico.service.*;
 import com.tongwii.ico.util.ContextUtils;
+import com.tongwii.ico.util.OperatorRecordUtil;
 import com.tongwii.ico.util.TokenMoneyEnum;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class UserProjectInvestRecordController {
     @ResponseBody
     public Result add(@RequestBody UserProjectInvestRecord userProjectInvestRecord) {
         userProjectInvestRecordService.save(userProjectInvestRecord);
+        OperatorRecordUtil.record("用户投资");
         return Result.successResult();
     }
     /***

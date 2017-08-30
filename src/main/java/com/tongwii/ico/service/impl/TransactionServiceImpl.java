@@ -17,7 +17,7 @@ import java.util.Map;
 
 
 /**
- * ${DESCRIPTION}
+ * 代币余额、事物、交易查询
  *
  * @author Zeral
  * @date 2017-08-11
@@ -105,17 +105,4 @@ public class TransactionServiceImpl implements TransactionsService {
         }
         return null;
     }
-
-
-/*    @Override
-    public String sendBitCoin(String fromAddress, String recipient, String amountToSend) {
-        return bitCoinService.sendTransaction(fromAddress, recipient, amountToSend);
-    }
-
-
-    @Override
-    public String sendETHCoin(String fromPrivateEncoderAddress, String toAddress, String amount) {
-        return ethService.sendTransaction(fromPrivateEncoderAddress, toAddress, amount);
-    }*/
-
 }

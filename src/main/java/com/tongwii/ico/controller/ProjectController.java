@@ -101,7 +101,7 @@ public class ProjectController {
         }
         ethWallet.setDes("以太坊钱包");
         projectWalletService.save(ethWallet);
-
+        OperatorRecordUtil.record("新增项目, 项目id" + project.getId());
         return Result.successResult(project);
     }
 
@@ -157,6 +157,7 @@ public class ProjectController {
         } catch (Exception e) {
             return Result.errorResult("更新用户信息失败");
         }
+        OperatorRecordUtil.record("更新用户信息");
         return Result.successResult("更新用户信息成功");
     }
 
@@ -164,6 +165,7 @@ public class ProjectController {
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         projectService.deleteById(id);
+        OperatorRecordUtil.record("删除项目，项目id" + id);
         return Result.successResult();
     }
 
@@ -171,6 +173,7 @@ public class ProjectController {
     @PutMapping
     public Result update(@RequestBody Project project) {
         projectService.update(project);
+        OperatorRecordUtil.record("修改项目，项目id" + project.getId());
         return Result.successResult();
     }
 

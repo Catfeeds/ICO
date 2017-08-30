@@ -8,10 +8,7 @@ import com.tongwii.ico.model.UserWallet;
 import com.tongwii.ico.service.TokenMoneyService;
 import com.tongwii.ico.service.TransactionsService;
 import com.tongwii.ico.service.UserWalletService;
-import com.tongwii.ico.util.ContextUtils;
-import com.tongwii.ico.util.DesEncoder;
-import com.tongwii.ico.util.TokenMoneyEnum;
-import com.tongwii.ico.util.TokenMoneyUtil;
+import com.tongwii.ico.util.*;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.AddressFormatException;
 import org.spongycastle.util.encoders.Hex;
@@ -39,24 +36,24 @@ public class UserWalletController {
     @Autowired
     private TransactionsService transactionsService;
 
-    private static final Integer BTC = 1;
-    private static final Integer ETH = 2;
-
     @PostMapping
     public Result add(@RequestBody UserWallet userWallet) {
         userWalletService.save(userWallet);
+        OperatorRecordUtil.record("添加用户钱包");
         return Result.successResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         userWalletService.deleteById(id);
+        OperatorRecordUtil.record("删除用户钱包");
         return Result.successResult();
     }
 
     @PutMapping
     public Result update(@RequestBody UserWallet userWallet) {
         userWalletService.update(userWallet);
+        OperatorRecordUtil.record("更新用户钱包");
         return Result.successResult();
     }
 
@@ -131,6 +128,7 @@ public class UserWalletController {
     @PostMapping("/addUserWallet")
     @ResponseBody
     public Result addUserWallet(@RequestBody UserWallet userWallet) {
+        OperatorRecordUtil.record("添加用户代币提现地址");
         Integer userId = ContextUtils.getUserId();
         // 验证提现地址是否有效
         boolean islegal = false;
