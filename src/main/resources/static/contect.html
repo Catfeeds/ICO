@@ -47,6 +47,11 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        input[type=text]{
+            color: gray;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper">
@@ -231,7 +236,7 @@
                                                                     <div class="col-sm-10">
                                                                         <input type="text" id="mobile"
                                                                                class="form-control"
-                                                                               placeholder="请输入您的手机号码"/>
+                                                                               placeholder="请输入您的手机号码"  />
                                                                     </div>
                                                                 </div>
 
@@ -240,7 +245,7 @@
                                                                     <div class="col-sm-3">
                                                                         <input type="text" id="verifycode"
                                                                                class="form-control" style="width:140px;"
-                                                                               maxlength="6"/>
+                                                                               onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="6"/>
                                                                     </div>
                                                                     <div class="col-sm-7">
                                                                         <input type="button" id="sendsms"
