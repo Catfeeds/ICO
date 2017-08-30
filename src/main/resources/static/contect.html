@@ -461,6 +461,7 @@
                 return;
             }else if(!pattern.test(realName)){
                 app.myAlertWithoutFunction("", "请用正确的姓名信息!", "warning");
+                return;
             }
             if (isValidate == null) {
                 var json = {idCard: cardNO, realName: realName, id: app.getUserInfo().id, isValidateUser: true};
@@ -506,6 +507,7 @@
                 success: function (result) {
                     if (result.code == 200) {
                         app.myAlertWithoutFunction(" ", "请前往邮箱进行验证!", "success");
+                        return;
                     }
                     else {
                         app.myAlertWithoutFunction(" ", "邮箱验证失败!", "warning");
