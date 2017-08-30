@@ -556,6 +556,7 @@
             var prjopentime = $("#startTime").val();
             var prjclosetime = $("#endTime").val();
             var prjproduce = $("#prjproduce").val();
+            var parent=/^[A-Za-z]+$/;
             if(prjname !== null && prjname !== undefined && prjname !== '') {
                 if(prjopentime !== null && prjopentime !== undefined && prjopentime !== '') {
                     if(prjclosetime !== null && prjclosetime !== undefined && prjclosetime !== '') {
@@ -573,6 +574,8 @@
                 }else {
                     app.myAlert("请填写项目开始时间！");
                 }
+            } else if(!prjname.test(parent)){
+                app.myAlert("请填写项目英文名称！");
             } else {
                 app.myAlert("请填写项目英文名称！");
             }
