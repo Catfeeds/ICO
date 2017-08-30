@@ -32,6 +32,7 @@ public class OperatorRecordUtil {
             operatorHistory.setMessage(operatorMessage);
             operatorHistory.setOperatorTime(new Date());
             operatorHistoryMapper.insert(operatorHistory);
+            logger.info("操作记录{}", operatorHistory.toString());
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("操作记录记录失败, 错误消息：{}", e.getMessage() );

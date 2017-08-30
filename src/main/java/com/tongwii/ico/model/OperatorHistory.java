@@ -121,4 +121,17 @@ public class OperatorHistory {
     public void setDes(String des) {
         this.des = des;
     }
+
+    @Override
+    public String toString() {
+        return "OperatorHistory{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", message='" + message + '\'' +
+                ", ip='" + ip + '\'' +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", operatorTime=" + operatorTime +
+                ", des='" + des + '\'' +
+                '}';
+    }
 }
