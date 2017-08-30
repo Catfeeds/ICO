@@ -556,22 +556,27 @@
             var prjopentime = $("#startTime").val();
             var prjclosetime = $("#endTime").val();
             var prjproduce = $("#prjproduce").val();
+            var regexp =/^[0-9a-zA-Z\s?]+$/;
             if(prjname !== null && prjname !== undefined && prjname !== '') {
-                if(prjopentime !== null && prjopentime !== undefined && prjopentime !== '') {
-                    if(prjclosetime !== null && prjclosetime !== undefined && prjclosetime !== '') {
-                        if(prjproduce !== null && prjproduce !== undefined && prjproduce !== '') {
-                            $("#nexttwo").css("display","inline");
-                            $("#baocun2").css("display","none");
-                            $("#3").removeClass("disabled");
-                            nextOne(3);
+                if(regexp.test(prjname)){
+                    if(prjopentime !== null && prjopentime !== undefined && prjopentime !== '') {
+                        if(prjclosetime !== null && prjclosetime !== undefined && prjclosetime !== '') {
+                            if(prjproduce !== null && prjproduce !== undefined && prjproduce !== '') {
+                                $("#nexttwo").css("display","inline");
+                                $("#baocun2").css("display","none");
+                                $("#3").removeClass("disabled");
+                                nextOne(3);
+                            }else {
+                                app.myAlert("请填写项目简介！");
+                            }
                         }else {
-                            app.myAlert("请填写项目简介！");
+                            app.myAlert("请填写项目结束时间！");
                         }
                     }else {
-                        app.myAlert("请填写项目结束时间！");
+                        app.myAlert("请填写项目开始时间！");
                     }
-                }else {
-                    app.myAlert("请填写项目开始时间！");
+                }else{
+                    app.myAlert("请输入英文名称！");
                 }
             } else {
                 app.myAlert("请填写项目英文名称！");
