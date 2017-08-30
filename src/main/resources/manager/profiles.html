@@ -553,6 +553,7 @@
         });
         $("#baocun2").click(function () {
             var prjname = $("#prjname").val();
+            var nameCn = $("#nameCn").val();
             var prjopentime = $("#startTime").val();
             var prjclosetime = $("#endTime").val();
             var prjproduce = $("#prjproduce").val();
@@ -562,10 +563,14 @@
                     if(prjopentime !== null && prjopentime !== undefined && prjopentime !== '') {
                         if(prjclosetime !== null && prjclosetime !== undefined && prjclosetime !== '') {
                             if(prjproduce !== null && prjproduce !== undefined && prjproduce !== '') {
-                                $("#nexttwo").css("display","inline");
-                                $("#baocun2").css("display","none");
-                                $("#3").removeClass("disabled");
-                                nextOne(3);
+                                if(nameCn !== null && nameCn !== undefined && nameCn !== '') {
+                                    $("#nexttwo").css("display","inline");
+                                    $("#baocun2").css("display","none");
+                                    $("#3").removeClass("disabled");
+                                    nextOne(3);
+                                }else {
+                                    app.myAlert("请填写项目中文名称！");
+                                }
                             }else {
                                 app.myAlert("请填写项目简介！");
                             }
