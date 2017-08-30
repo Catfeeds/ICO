@@ -11,8 +11,8 @@
 
 
     // VARIABLES =============================================================
-    var TOKEN_KEY = "$token";
-    var USER_KEY = "$user";
+    var TOKEN_KEY = "$adminToken";
+    var USER_KEY = "$adminUser";
 
     /**
      * 常量定义
