@@ -276,16 +276,6 @@
 <script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "sign.html";
-//            $("#personInfo").css('display', 'none');
-        } else {
-            $("#personInfo").css('display', 'block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-        }
-
         // 请求服务器，查询系统中所有交易单号的交易信息详情
         $.ajax({
             url: app.getServerUrl() + "/project/user/wallet/relation/getUserTransaction",
@@ -315,9 +305,15 @@
                 $("#untransactionInfo").css("display", "block");
             }
         });
-
-
     });
+    if (!app.isUserValid()) {
+        location.href = "sign.html";
+    } else {
+        $("#personInfo").css('display', 'block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+    }
     $("#sign_out").click(function () {
         signOut()
     });

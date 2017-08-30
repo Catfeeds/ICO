@@ -332,12 +332,6 @@
 <script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-        if(app.getUserInfo().emailAccount) {
-            $("#personInfo").css('display', 'block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-        }
         var pid = app.getQueryString("pid");
         var projectName = decodeURI(app.getQueryString("name"));
         var ETHBalance = null;
@@ -492,7 +486,12 @@
             });
         });
     });
-
+    if(!app.isUserValidate()) {
+        $("#personInfo").css('display', 'block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+    }
     $("#sign_out").click(function () {
         signOut()
     });

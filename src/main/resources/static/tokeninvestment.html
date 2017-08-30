@@ -292,21 +292,6 @@
 <script type="text/javascript">
     jQuery(window).load(function () {
         var userId = app.getUserInfo().id;
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "sign.html";
-//            $("#personInfo").css('display', 'none');
-        } else {
-            $("#personInfo").css('display', 'block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-            //此处需要看看是否有身份证验证，如果验证通过就展现具体的界面，如果没有就不展现界面展现提示信息
-            if (app.getUserInfo().validateUser) {
-                $("#warningInfo").css('display', 'none');
-                $("#officalInfo").css('display', 'block');
-            }
-        }
-
         //添加用户钱包信息
         // ajax请求用户钱包余额
         $.ajax({
@@ -340,9 +325,20 @@
             //添加已投资项目数据
             pageOldProject(1,userId);
         }
-
-
     });
+    if (!app.isUserValid()) {
+        location.href = "sign.html";
+    } else {
+        $("#personInfo").css('display', 'block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+        //此处需要看看是否有身份证验证，如果验证通过就展现具体的界面，如果没有就不展现界面展现提示信息
+        if (app.getUserInfo().validateUser) {
+            $("#warningInfo").css('display', 'none');
+            $("#officalInfo").css('display', 'block');
+        }
+    }
     $("#sign_out").click(function () {
         signOut()
     });

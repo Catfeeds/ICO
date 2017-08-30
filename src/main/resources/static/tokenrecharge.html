@@ -274,16 +274,6 @@
 <script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "sign.html";
-//            $("#personInfo").css('display', 'none');
-        } else {
-            $("#personInfo").css('display','block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-        }
-
         $.ajax({
             url: app.getServerUrl()+"/user/wallet/findWalletByUser",
             type: 'GET',
@@ -303,8 +293,16 @@
                 return;
             }
         });
-
     });
+    if (!app.isUserValid()) {
+        location.href = "sign.html";
+    } else {
+        $("#personInfo").css('display','block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+    }
+
     $("#sign_out").click(function () {
         signOut()
     });

@@ -292,17 +292,14 @@
 <script src="assets/scripts/jquery.flexslider-min.js"></script>
 <script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
-    jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "sign.html";
-//            $("#personInfo").css('display', 'none');
-        } else {
-            $("#personInfo").css('display','block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-        }
-    });
+    if (!app.isUserValid()) {
+        location.href = "sign.html";
+    } else {
+        $("#personInfo").css('display','block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+    }
     // 首先先获取验证码
     $("#sendsms").click(function () {
         var oldPassword = $("#oldPassword").val();

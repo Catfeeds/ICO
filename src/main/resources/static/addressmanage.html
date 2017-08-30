@@ -345,21 +345,6 @@
 <script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            location.href = "sign.html";
-//            $("#personInfo").css('display', 'none');
-        } else {
-            $("#personInfo").css('display', 'block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-            //此处需要看看是否有身份证验证，如果验证通过就展现具体的界面，如果没有就不展现界面展现提示信息
-            if (app.getUserInfo().validateUser) {
-                $("#warningInfo").css('display', 'none');
-                $("#officalInfo").css('display', 'block');
-            }
-        }
-
         $.ajax({
             url: app.getServerUrl()+"/token/money/findAll",
             type: 'GET',
@@ -405,8 +390,21 @@
                 app.myAlert("", "网络异常,请稍候再试", "error");
             }
         });
-
     });
+
+    if (!app.isUserValid()) {
+        location.href = "sign.html";
+    } else {
+        $("#personInfo").css('display', 'block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+        //此处需要看看是否有身份证验证，如果验证通过就展现具体的界面，如果没有就不展现界面展现提示信息
+        if (app.getUserInfo().validateUser) {
+            $("#warningInfo").css('display', 'none');
+            $("#officalInfo").css('display', 'block');
+        }
+    }
 
     // 发送验证码button绑定事件
     $("#sendsms").click(function () {

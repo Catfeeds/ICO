@@ -389,7 +389,7 @@
         userInfo.validateEmail = isValidateEmail === 'true';
         app.setUserInfo(userInfo);
     }
-    if (app.getUserInfo().emailAccount == null) {
+    if (!app.isUserValid()) {
         location.href = "sign.html";
     } else {
         $("#personInfo").show();

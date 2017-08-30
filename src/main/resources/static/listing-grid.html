@@ -184,16 +184,6 @@
 <script src="assets/scripts/pace.min.js"></script>
 <script>
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display','none');
-            $("#contect").css('display','none');
-        } else {
-            $("#personInfo").css('display','block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-        }
-
         // 通过ajax请求从数据库中获取数据
         $.ajax({
             url: app.getServerUrl()+"/project/findProjectsAndSort",
@@ -263,6 +253,15 @@
             }
         });
     });
+    if (!app.isUserValid()) {
+        $("#personInfo").css('display','none');
+        $("#contect").css('display','none');
+    } else {
+        $("#personInfo").css('display','block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+    }
     $("#sign_out").click(function () {
         signOut()
     });
