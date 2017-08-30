@@ -272,4 +272,21 @@ public class UserController {
         User user = userService.findById(ContextUtils.getUserId());
         return Result.successResult(user);
     }
+
+    /**
+     * @author Yamo
+     * 通过email查询用户记录
+     * @param emailAccount
+     * @return
+     */
+    @GetMapping("/getUserInfoByEmailAccount/{emailAccount}")
+    @ResponseBody
+    public Result getUserInfoByEmailAccount( @PathVariable String emailAccount){
+        try{
+            User user = userService.findByUsername(emailAccount);
+            return Result.successResult(user);
+        }catch (Exception e){
+            return Result.failResult("无此用户信息!");
+        }
+    }
 }
