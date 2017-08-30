@@ -49,6 +49,41 @@
     }
 
     /**
+     * 判断用户状态是否有效
+     *
+     * @return {boolean}
+     */
+    owner.isUserValid = function() {
+        var jwtToken = app.getToken();
+
+        if(Object.keys(jwtToken).length) {
+            var decodedToken = jwt_decode(jwtToken);
+
+            var expireDate = new Date(decodedToken.exp * 1000);
+
+            if(expireDate >= new Date()) {
+                return true;
+            } else {
+                // 清空旧用户信息
+                app.setUserInfo({});
+                return false;
+            }
+        } else {
+            // 清空旧用户信息
+            app.setUserInfo({});
+            return false;
+        }
+    };
+
+    /**
+     * 清空用户状态
+     */
+    owner.clearState = function () {
+        app.setUserInfo({});
+        app.setToken({});
+    }
+
+    /**
      * 获取当前Token
      **/
     owner.getToken = function() {

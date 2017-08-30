@@ -20,9 +20,10 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="css/sweet-alert.css">
+    <script src="scripts/jwt-decode.min.js"></script>
     <script src="scripts/app.js"></script>
     <script>
-        if (app.getUserInfo().emailAccount == null) {
+        if (!app.isUserValid()) {
             location.href = "login.html";
         }
     </script>
