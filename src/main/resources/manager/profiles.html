@@ -498,6 +498,7 @@
             url: app.getServerUrl()+"/token/money/findAll",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
+            dataType: "json",
             success: function (result) {
                 $.each(result.data, function (i, item) {
                     $("#jieshouMoney").append(
@@ -532,6 +533,7 @@
             $.ajax({
                 url: app.getServerUrl()+"/user/getUserInfoByEmailAccount/" + emailAccount,
                 type: 'GET',
+                dataType: "json",
                 headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
                     if (result.code == 200) {
@@ -546,8 +548,7 @@
                             $("#2").removeClass("disabled");
                             nextOne(2);
                         }
-                    }
-                    else {
+                    } else {
                         app.myAlert("", "操作失败！", "warning");
                     }
                 },

@@ -539,6 +539,7 @@
         $.ajax({
             url: app.getServerUrl()+"/token/money/" + id,
             type: 'Delete',
+            dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
                     $("#moneyData").find("#" + id).remove();
