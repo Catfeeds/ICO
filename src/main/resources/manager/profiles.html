@@ -804,7 +804,7 @@
     });
     function logout() {
         $("#personInfo").css('display', 'none');
-        app.setUserInfo({});
+        app.clearState();
         location.href = "/manager/login.html";
     }
     function nextOne(id) {

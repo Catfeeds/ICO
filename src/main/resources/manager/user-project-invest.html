@@ -240,7 +240,7 @@
     });
     function pageProject(page) {
         var page = page;
-        var size = "10";
+        var size = "1";
         $.ajax({
             url: "/userProjectInvestRecord/project/"+id,
             type: 'GET',
@@ -344,7 +344,7 @@
 
     function logout() {
         $("#personInfo").css('display', 'none');
-        app.setUserInfo({});
+        app.clearState();
         location.href = "/manager/login.html";
     }
 </script>

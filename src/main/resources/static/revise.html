@@ -379,7 +379,7 @@
                 headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
                     if (result.code == 200) {
-                        app.setUserInfo({});
+                        app.clearState();
                         app.myAlert("",result.message,"success","sign.html");
                         return;
                     }
