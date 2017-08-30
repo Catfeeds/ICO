@@ -7,7 +7,7 @@
     /**
      * 默认配置信息
      */
-    var serverUrl = 'http://192.168.0.191';
+    var serverUrl = 'http://192.168.0.42';
 
 
     // VARIABLES =============================================================
@@ -92,7 +92,12 @@
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
-                    app.setUserInfo(result.data.userInfo);
+                    // app.setUserInfo(result.data.userInfo);
+                    var userInfo = app.getUserInfo();
+                    userInfo.verifyCode = result.data.userInfo.verifyCode;
+                    userInfo.expireDate = result.data.userInfo.expireDate;
+                    app.setUserInfo(userInfo);
+                    // app.myAlertWithoutFunction("",result.message,"warning");
                 }
                 else {
                     app.myAlertWithoutFunction("",result.message,"warning");

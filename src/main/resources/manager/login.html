@@ -156,7 +156,7 @@
           }
           var userjson = {emailAccount: userName, password: password};
           $.ajax({
-              url: app.getServerUrl()+"/auth/login",
+              url: app.getServerUrl()+"/auth/adminLogin",
               type: 'POST',
               timeout: 10000,//超时时间设置为10秒；
               data: JSON.stringify(userjson),
@@ -166,10 +166,9 @@
                   if (result.code == 200) {
                       app.setUserInfo(result.data.userInfo);
                       app.setToken(result.data.token);
-                      location.href = "/manager/index.html";
-                  }
-                  else {
-                      app.myAlert("", "登录失败！", "warning");
+                      location.href = "./index.html";
+                  } else {
+                      app.myAlert("", result.message, "warning");
                   }
               },
               error: function (xhr, type, errerThrown) {
