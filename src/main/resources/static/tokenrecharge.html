@@ -280,6 +280,7 @@
             contentType: "application/json; charset=utf-8",
             headers: app.createAuthorizationTokenHeader(),
             timeout: 10000,//超时时间设置为10秒；
+            dataType: 'json',//服务器返回json格式数据
             success: function (result) {
                 if (result.code == 200) {
                     $("#BTC").text(result.data.BTCWallet.tokenMoneyUrl);
