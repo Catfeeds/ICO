@@ -731,6 +731,9 @@
                                                                 data: JSON.stringify(updateJson1),
                                                                 dataType: 'json',//服务器返回json格式数据
                                                                 contentType: "application/json; charset=utf-8",
+                                                                beforeSend : function(){
+                                                                    $("#bcPro").attr("disabled","disabled");
+                                                                },
                                                                 success : function(result) {
                                                                     if (result.code == 200) {
                                                                         location.href = "/manager/data.html";
