@@ -520,11 +520,15 @@
         //保存用户信息
         $("#bcUserInfo").click(function() {
             var emailAccount = $("#emailAccount").val().toString();
-
+            var isEmailAccount = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
             if (emailAccount.length <= 0) {
                 app.myAlert("账户", "邮箱不能为空！", "error");
                 return;
+            }else if (!isEmailAccount.test(emailAccount)) {
+                app.myAlert("邮箱账号", "邮箱账号格式不正确！", "error");
+                return;
             }
+
             $.ajax({
                 url: app.getServerUrl()+"/user/getUserInfoByEmailAccount/" + emailAccount,
                 type: 'GET',
