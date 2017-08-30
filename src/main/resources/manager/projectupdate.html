@@ -19,8 +19,6 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-    <script src="scripts/app.js"></script>
-    <script src="scripts/sweet-alert.js"></script>
     <link rel="stylesheet" href="css/sweet-alert.css">
     <link rel="stylesheet" href="plugins/summernote/summernote.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -30,7 +28,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script>
-        if (app.getUserInfo().emailAccount == null) {
+        if (!app.isUserValid()) {
             location.href = "login.html";
         }
     </script>
@@ -38,7 +36,6 @@
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="layui/css/modules/laydate/laydate.css">
     <link rel="stylesheet" href="layui/css/modules/layer/default/layer.css">
-    <script src="layui/layui.js"></script>
     <style>
         .conImage{
             filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image); /* 该对象只用来在IE下获得图片的原始尺寸，无其它用途 */
@@ -59,6 +56,10 @@
             padding: 8px;
         }
     </style>
+    <script src="scripts/jwt-decode.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/sweet-alert.js"></script>
+    <script src="layui/layui.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">

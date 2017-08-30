@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/8/29 18:30:11                           */
+/* Created on:     2017/8/30 10:26:12                           */
 /*==============================================================*/
 
 
@@ -281,10 +281,10 @@ references user (id) on delete restrict on update restrict;
 alter table project add constraint fk_project_2_user_create_user_id foreign key (create_user_id)
 references user (id) on delete restrict on update restrict;
 
-alter table project_user_relation add constraint fk_user_project_2_user_user_id foreign key (project_id)
+alter table project_user_relation add constraint fk_user_project_2_user_user_id foreign key (user_id)
 references user (id) on delete restrict on update restrict;
 
-alter table project_user_relation add constraint fk_user_project_2_project_project_id foreign key (user_id)
+alter table project_user_relation add constraint fk_user_project_2_project_project_id foreign key (project_id)
 references project (id) on delete restrict on update restrict;
 
 alter table project_user_wallet_relation add constraint fk_user_project_wallet_2_user_wallet_user_wallet_id foreign key (user_wallet)
