@@ -433,6 +433,7 @@
         $.ajax({
             url: app.getServerUrl()+"/token/money/"+moneyId,
             type: 'GET',
+            dataType: "json",
             success: function (result) {
                 if (result.code == 200) {
                     var name = $("#name").val(result.data.name);

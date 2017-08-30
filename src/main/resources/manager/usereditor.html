@@ -429,6 +429,7 @@
         $.ajax({
             url: app.getServerUrl()+"/user/"+userId,
             type: 'GET',
+            dataType: "json",
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {

@@ -189,7 +189,7 @@
                                                                 <ul class="row">
                                                                     <li class="col-lg-12">
                                                                         <label>电子邮箱</label>
-                                                                        <input type="email" placeholder="" id="email"
+                                                                        <input type="text" placeholder="" id="email" style="width: 47%"
                                                                                onkeydown="keylogin()">
                                                                     </li>
                                                                     <li class="col-lg-6 col-md-6 col-sm-6">
@@ -394,28 +394,33 @@
         });
         $("#regist").click(function () {
             regist();
-            $("#regist").attr("disabled", true);
         });
 
     });
+    var emailRegular = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
     function regist() {
+        $("#regist").attr("disabled", true);
         var email = $("#email").val().toString();
         var registPassword = $("#regist_password").val().toString();
         var againPassword = $("#again_password").val().toString();
+
         if (email.length <= 0) {
-            app.myAlert("", "电子邮箱不能为空!", "warning");
+            app.myAlert("", "电子邮箱不能为空!", "warning","sign.html");
+            return;
+        }else if(!emailRegular.test(email)){
+            app.myAlert("", "电子邮箱非法!", "warning","sign.html");
             return;
         }
         if (registPassword.length <= 0 || againPassword.length <= 0) {
-            app.myAlert("", "密码不能为空!", "warning");
+            app.myAlert("", "密码不能为空!", "warning","sign.html");
             return;
         }
         if (registPassword.length < 8 || registPassword.length > 30) {
-            app.myAlert("", "密码需为8位以上,30位以下!", "warning");
+            app.myAlert("", "密码需为8位以上,30位以下!", "warning","sign.html");
             return;
         }
         if (registPassword != againPassword) {
-            app.myAlert("", "两次输入的密码不一致!", "warning");
+            app.myAlert("", "两次输入的密码不一致!", "warning","sign.html");
             return;
         }
         var registJson = {emailAccount: email, password: registPassword};
@@ -432,13 +437,13 @@
                     $("#sign_name").text(result.data.userInfo.emailAccount);
                 }
                 else {
-                    app.myAlertWithoutFunction("", result.message, "warning");
+                    app.myAlert("", result.message, "warning","sign.html");
                     return;
                     console.log("注册失败!");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlertWithoutFunction("", "网络异常,请稍候再试!", "error");
+                app.myAlert("", "网络异常,请稍候再试!", "error","sign.html");
                 return;
             }
         });
@@ -448,8 +453,11 @@
         var signName = $("#sign_name").val();
         var signPassword = $("#sign_password").val();
         if (signName.length <= 0) {
-            app.myAlertWithoutFunction(" ", "用户名不能为空", "warning");
+            app.myAlertWithoutFunction(" ", "电子邮箱不能为空", "warning");
             return false;
+        }else if(!emailRegular.test(signName)){
+            app.myAlert("", "电子邮箱非法!", "warning","sign.html");
+            return;
         }
         if (signPassword.length <= 0) {
             app.myAlertWithoutFunction(" ", "密码不能为空", "warning");
@@ -489,7 +497,6 @@
             } else {
                 setTimeout(function () {
                     regist();
-                    $("#regist").attr("disabled", true);
                 }, 0);
             }
         }
@@ -501,6 +508,10 @@
         var firstPhone = $("#firstphone").val();
         if (!firstEmail) {
             $("#resultlable").text("邮箱不可为空!");
+            $("#resultdiv").show();
+            return;
+        }else if(!emailRegular.test(firstEmail)){
+            $("#resultlable").text("电子邮箱非法!");
             $("#resultdiv").show();
             return;
         }

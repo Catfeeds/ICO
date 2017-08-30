@@ -353,6 +353,7 @@
             url: app.getServerUrl()+"/token/money/findAll",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
+            dataType: 'json',//服务器返回json格式数据
             success: function (result) {
                 if(result.code == 200){
                     $.each(result.data, function (i, item) {
@@ -376,6 +377,7 @@
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             headers: app.createAuthorizationTokenHeader(),
+            dataType: 'json',//服务器返回json格式数据
             success: function (result) {
                 if (result.code == 200) {
                     $.each(result.data.paymentWallet, function (i, item) {
