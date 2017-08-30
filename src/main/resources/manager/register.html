@@ -75,8 +75,12 @@
       $("#regist").click(function () {
           var emailAccount = $("#email").val().toString();
 
+          var isEmailAccount = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
           if (emailAccount.length <= 0) {
               app.myAlert("账户", "邮箱不能为空！", "error");
+              return;
+          }else if (!isEmailAccount.test(emailAccount)) {
+              app.myAlert("邮箱账号", "邮箱账号格式不正确！", "error");
               return;
           }
           var registJson = {emailAccount: emailAccount};
