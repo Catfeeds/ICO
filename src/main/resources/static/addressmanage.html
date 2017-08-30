@@ -51,6 +51,9 @@
     th{
         text-align:center;
     }
+     input[type=text]{
+         color: gray;
+     }
 </style>
 <body>
 <div class="wrapper">
@@ -234,7 +237,7 @@
                                                             <div class="col-sm-3">
                                                                 <input type="text" id="verifycode"
                                                                        class="form-control" style="width:140px;"
-                                                                       maxlength="6"/>
+                                                                        onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="6"/>
                                                             </div>
                                                             <div class="col-sm-7">
                                                                 <input type="button" id="sendsms"
@@ -349,6 +352,7 @@
             url: app.getServerUrl()+"/token/money/findAll",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
+            dataType: 'json',//服务器返回json格式数据
             success: function (result) {
                 if (result.code == 200) {
                     $.each(result.data, function (i, item) {
@@ -371,6 +375,7 @@
             url: app.getServerUrl()+"/user/wallet/findPaymentWallet",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
+            dataType: 'json',//服务器返回json格式数据
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
