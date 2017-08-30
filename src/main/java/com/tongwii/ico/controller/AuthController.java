@@ -1,7 +1,9 @@
 package com.tongwii.ico.controller;
 
 import com.tongwii.ico.core.Result;
+import com.tongwii.ico.exception.ServiceException;
 import com.tongwii.ico.exception.StorageFileNotFoundException;
+import com.tongwii.ico.model.Role;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
 import com.tongwii.ico.security.JwtUser;
@@ -17,6 +19,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -53,11 +58,9 @@ public class AuthController {
     private UserWalletService userWalletService;
     @Autowired
     private MessageUtil messageUtil;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     /**
-     * 创建身份验证token
+     * 前台登陆认证
      *
      * @param user
      * @return
@@ -65,27 +68,53 @@ public class AuthController {
      */
     @PostMapping("/login")
     public Result createAuthenticationToken (@RequestBody User user) throws AuthenticationException {
-        try {
-            // 执行安全
-            final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            user.getEmailAccount(),
-                            user.getPassword()
-                    )
-            );
+        // 执行安全
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        user.getEmailAccount(),
+                        user.getPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication( authentication );
+        final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
+        final String token = jwtTokenUtil.generateToken( userDetails);
+        // 通过email查询数据库中的唯一记录
+        User userInfo = userService.findByUsername(user.getEmailAccount());
+        // 通过用户Id查询用户钱包
+        List<Object> userWallets = userWalletService.findWalletByUserId(userInfo.getId());
+        // 给用户信息中添加用户钱包信息
+        userInfo.setUserWallets(userWallets);
+        // 返回
+        return Result.successResult().add( "token", token ).add("userInfo", userInfo);
+    }
+
+    /**
+     * 后台登陆认证
+     *
+     * @param user
+     * @return
+     * @throws AuthenticationException
+     */
+    @PostMapping("/adminLogin")
+    public Result adminAuthenticationToken (@RequestBody User user) throws AuthenticationException {
+        // 执行安全
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        user.getEmailAccount(),
+                        user.getPassword()
+                )
+        );
+        GrantedAuthority authority = new SimpleGrantedAuthority(Role.RoleCode.ADMIN.getCode());
+        if(authentication.getAuthorities().contains(authority)) {
             SecurityContextHolder.getContext().setAuthentication( authentication );
             final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
             final String token = jwtTokenUtil.generateToken( userDetails);
             // 通过email查询数据库中的唯一记录
             User userInfo = userService.findByUsername(user.getEmailAccount());
-            // 通过用户Id查询用户钱包
-            List<Object> userWallets = userWalletService.findWalletByUserId(userInfo.getId());
-            // 给用户信息中添加用户钱包信息
-            userInfo.setUserWallets(userWallets);
             // 返回
             return Result.successResult().add( "token", token ).add("userInfo", userInfo);
-        } catch (AuthenticationException e) {
-            return Result.failResult("用户名或密码错误");
+        } else {
+            throw new ServiceException("用户没有权限");
         }
     }
 
