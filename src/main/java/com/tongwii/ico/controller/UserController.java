@@ -279,7 +279,7 @@ public class UserController {
      * @param emailAccount
      * @return
      */
-    @GetMapping("/getUserInfoByEmailAccount/{emailAccount}")
+    @GetMapping("/getUserInfoByEmailAccount/{emailAccount:.+}")
     @ResponseBody
     public Result getUserInfoByEmailAccount( @PathVariable String emailAccount){
         try{

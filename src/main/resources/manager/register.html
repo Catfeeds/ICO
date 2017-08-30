@@ -19,7 +19,7 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
   <link rel="stylesheet" href="css/sweet-alert.css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -29,7 +29,7 @@
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="register-logo">
-    <a href="/manager/register.html"><b>管理员注册</b></a>
+    <a href="/manager/register.html"><b>管理员注册新用户</b></a>
   </div>
 
   <div class="register-box-body">
@@ -37,16 +37,8 @@
 
     <form method="post">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" id="userName" placeholder="用户名">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
         <input type="email" class="form-control" id="email" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" id="idCard" placeholder="身份证号码">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="row">
         <!-- /.col -->
@@ -68,6 +60,7 @@
 <!-- iCheck -->
 <script src="plugins/iCheck/icheck.min.js"></script>
 <script src="scripts/sweet-alert.js"></script>
+<script src="scripts/app.js"></script>
 
 <script>
   $(function () {
@@ -79,11 +72,13 @@
   });
   jQuery(window).load(function () {
       $("#regist").click(function () {
-          var email = $("#email").val().toString();
-          var userName = $("#userName").val();
-          var idCard = $("#idCard").val();
+          var emailAccount = $("#email").val().toString();
 
-          var registJson = {emailAccount: email, nickName: userName, idCard:idCard};
+          if (emailAccount.length <= 0) {
+              app.myAlert("账户", "邮箱不能为空！", "error");
+              return;
+          }
+          var registJson = {emailAccount: emailAccount};
           $.ajax({
               url: app.getServerUrl()+"/user/register",
               type: 'POST',
@@ -93,7 +88,7 @@
               contentType: "application/json; charset=utf-8",
               success: function (result) {
                   if (result.code == 200) {
-                      app.myAlert("", "注册成功，请登录！", "success");
+                      app.myAlert("", "注册成功，初始密码为6个1！", "success");
                       location.href = "/manager/profiles.html";
 
                   }

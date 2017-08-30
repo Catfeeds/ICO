@@ -78,7 +78,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
                 } else if (e instanceof ServletException) {
                     result = Result.failResult(e.getMessage());
                 } else if (e instanceof AuthenticationException || e instanceof AccessDeniedException) {
-                    result = Result.unauthorized("未经授权:身份验证令牌丢失或无效。");
+                    result = Result.unauthorized("认证失败:身份验证令牌丢失、过期或无效。");
                 } else if (e instanceof SQLException || e instanceof DataAccessException) {
                     result = Result.errorResult( "服务器内部错误");
                 } else  {

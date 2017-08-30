@@ -171,22 +171,9 @@
                             <div class="active tab-pane" id="timeline">
                                 <form class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">姓名</label>
+                                            <label class="col-sm-2 control-label">账户</label>
                                             <div class="col-sm-3">
-                                                <input type="email" class="form-control" id="userName">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">身份证号码</label>
-                                            <div class="col-sm-3">
-                                                <input type="email" class="form-control" id="userCard">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">手机号码</label>
-
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="userPhone">
+                                                <input type="email" class="form-control" id="emailAccount" placeholder="账户邮箱 ">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -202,7 +189,7 @@
                             <div class="tab-pane" id="newproject" >
                                     <form class="form-horizontal" id="addprjs">
                                         <div class="form-group">
-                                            <label  class="col-sm-2 control-label">项目名称</label>
+                                            <label  class="col-sm-2 control-label">项目英文名称</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="prjname" placeholder="项目名称请务必包含产品的关键词（项目名称不超过25个字）">
                                             </div>
@@ -531,31 +518,14 @@
 
         //保存用户信息
         $("#bcUserInfo").click(function() {
-            var userName = $("#userName").val();
-            var userCard = $("#userCard").val();
-            var userPhone = $("#userPhone").val();
-            if (userName.length <= 0) {
-                app.myAlert("姓名", "姓名不能为空！", "error");
-                return;
-            }
-            var isUserCard = /(^\d{15}$)|(^\d{17}(\d|X)$)/;
-            if(userCard.length <= 0) {
-                app.myAlert("身份证号码", "身份证号码不能为空！", "error");
-                return;
-            }  else if (!isUserCard.test(userCard)) {
-                app.myAlert("身份证号码", "身份证号码格式不正确！", "error");
-                return;
-            }
-            var isUserPhone = /^1[3|4|5|8][0-9]\d{4,8}$/;
-            if(userPhone.length <= 0) {
-                app.myAlert("手机号码", "手机号码不能为空！", "error");
-                return;
-            } else if (!isUserPhone.test(userPhone)) {
-                app.myAlert("手机号码", "手机号码格式不正确！", "error");
+            var emailAccount = $("#emailAccount").val().toString();
+
+            if (emailAccount.length <= 0) {
+                app.myAlert("账户", "邮箱不能为空！", "error");
                 return;
             }
             $.ajax({
-                url: app.getServerUrl()+"/user/findByIdCard/" + userCard,
+                url: app.getServerUrl()+"/user/getUserInfoByEmailAccount/" + emailAccount,
                 type: 'GET',
                 headers: app.createAuthorizationTokenHeader(),
                 success: function (result) {
@@ -564,10 +534,8 @@
                             // 此处的执行结果是提醒完毕后，点击确定按钮，就直接跳转到指定页面/manager/register.html
                             app.myAlertWithHtml("", "发起人不存在，请注册！", "warning","/manager/register.html");
                         } else {
-                             userId = result.data.id;
-                            $("#userName").attr("readonly","readonly");
-                            $("#userCard").attr("readonly","readonly");
-                            $("#userPhone").attr("readonly","readonly");
+                            userId = result.data.id;
+                            $("#emailAccount").attr("readonly","readonly");
                             $("#bcUserInfo").css("display","none");
                             $("#nextone").css("display","inline");
                             $("#2").removeClass("disabled");
@@ -606,7 +574,7 @@
                     app.myAlert("请填写项目开始时间！");
                 }
             } else {
-                app.myAlert("请填写项目名称！");
+                app.myAlert("请填写项目英文名称！");
             }
         });
         $("#baocun3").click(function () {
