@@ -57,12 +57,13 @@ public class FileController {
     public Result handleFilesUpload(@RequestParam("files") MultipartFile [] files, HttpServletResponse response) {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < files.length; i++) {
-            fileService.store(files[i]);
-            Path path = fileService.load(files[i].getOriginalFilename());
+            Path path = fileService.store(files[i]);
+            JSONObject object = new JSONObject();
+            /*Path path = fileService.load(files[i].getOriginalFilename());
             JSONObject object = new JSONObject();
             String url = MvcUriComponentsBuilder.fromMethodName(FileController.class,
-                    "getFile", path.getFileName().toString(), response).build().toString();
-            object.put("path", url);
+                    "getFile", path.getFileName().toString(), response).build().toString();*/
+            object.put("path", "\\" + path.toString());
             jsonArray.add(object);
         }
         return Result.successResult(jsonArray);
