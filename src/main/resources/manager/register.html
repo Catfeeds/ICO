@@ -89,9 +89,9 @@
               contentType: "application/json; charset=utf-8",
               success: function (result) {
                   if (result.code == 200) {
-                      app.myAlert("", "注册成功，初始密码为6个1！", "success");
-                      location.href = "/manager/profiles.html";
-
+                      sweetAlert({title:"",text:"注册成功，初始密码为6个1！",confirmButtonColor: "#d9534f"}, function() {
+                          window.location="/manager/profiles.html";
+                      });
                   }
                   else {
                       app.myAlert("", result.message, "warning");
