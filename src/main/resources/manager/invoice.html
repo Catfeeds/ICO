@@ -32,9 +32,10 @@
             font-size: 18px;
         }
     </style>
+    <script src="scripts/jwt-decode.min.js"></script>
     <script src="scripts/app.js"></script>
     <script>
-        if (app.getUserInfo().emailAccount == null) {
+        if (!app.isUserValid()) {
             location.href = "login.html";
         }
     </script>

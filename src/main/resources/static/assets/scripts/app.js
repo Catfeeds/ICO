@@ -29,7 +29,7 @@
         } else {
             return {};
         }
-    }
+    };
 
     /**
      * 设置用户信息
@@ -37,7 +37,7 @@
     owner.setUserInfo = function(userInfo) {
         userInfo = userInfo || {};
         localStorage.setItem(USER_KEY, JSON.stringify(userInfo));
-    }
+    };
 
     /**
      * 获取用户信息， 不存在返回空对象
@@ -46,6 +46,41 @@
     owner.getUserInfo = function() {
         var userInfo = localStorage.getItem(USER_KEY) || '{}';
         return JSON.parse(userInfo);
+    };
+
+    /**
+     * 判断用户状态是否有效
+     *
+     * @return {boolean}
+     */
+    owner.isUserValid = function() {
+        var jwtToken = app.getToken();
+
+        if(Object.keys(jwtToken).length) {
+            var decodedToken = jwt_decode(jwtToken);
+
+            var expireDate = new Date(decodedToken.exp * 1000);
+
+            if(expireDate >= new Date()) {
+                return true;
+            } else {
+                // 清空旧用户信息
+                app.setUserInfo({});
+                return false;
+            }
+        } else {
+            // 清空旧用户信息
+            app.setUserInfo({});
+            return false;
+        }
+    };
+
+    /**
+     * 清空用户状态
+     */
+    owner.clearState = function () {
+        app.setUserInfo({});
+        app.setToken({});
     }
 
     /**
@@ -144,9 +179,3 @@
         });
     };
 }(window.app = {}));
-
-$("#sign_out").click(function () {
-    $("#personInfo").css('display', 'none');
-    app.setUserInfo({});
-    location.href = "index.html";
-});
