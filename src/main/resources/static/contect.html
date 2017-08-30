@@ -383,15 +383,15 @@
 <script src="assets/scripts/functions.js"></script>
 <script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
-    var isValidateEmail = app.getQueryString("isValidateEmail");
-    if(isValidateEmail) {
-        var userInfo = app.getUserInfo();
-        userInfo.validateEmail = isValidateEmail === 'true';
-        app.setUserInfo(userInfo);
-    }
     if (!app.isUserValid()) {
         location.href = "sign.html";
     } else {
+        var isValidateEmail = app.getQueryString("isValidateEmail");
+        if(isValidateEmail) {
+            var userInfo = app.getUserInfo();
+            userInfo.validateEmail = isValidateEmail === 'true';
+            app.setUserInfo(userInfo);
+        }
         $("#personInfo").show();
         $("#li_login").hide();
         $("#asignout").show();
