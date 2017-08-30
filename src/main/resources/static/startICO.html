@@ -330,15 +330,6 @@
 <script type="text/javascript">
     jQuery(window).load(function () {
         var id = app.getQueryString("id");
-        if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display', 'none');
-            $("#contect").css('display', 'none');
-        } else {
-            $("#personInfo").css('display', 'block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-        }
         $.ajax({
             url: app.getServerUrl()+"/project/"+id,
             type: 'GET',
@@ -467,8 +458,17 @@
         });
 
     });
+    if (!app.isUserValid()) {
+        $("#personInfo").css('display', 'none');
+        $("#contect").css('display', 'none');
+    } else {
+        $("#personInfo").css('display', 'block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+    }
     function join() {
-        if (app.getUserInfo().emailAccount == null) {
+        if (!app.isUserValid()) {
             location.href="sign.html";
         } else {
             location.href="tokeninvestment.html";

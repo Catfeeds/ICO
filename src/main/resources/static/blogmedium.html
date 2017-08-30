@@ -233,15 +233,6 @@
 </script>
 <script type="text/javascript">
     jQuery(window).load(function () {
-        if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display', 'none');
-            $("#contect").css('display', 'none');
-        } else {
-            $("#personInfo").css('display', 'block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-        }
         jQuery('.flexslider').flexslider({
             animation: "slide",
             prevText:"<em class='icon-arrow-left9'></em>",
@@ -287,7 +278,15 @@
         });
         pageNews(1);
     });
-
+    if (!app.isUserValid()) {
+        $("#personInfo").css('display', 'none');
+        $("#contect").css('display', 'none');
+    } else {
+        $("#personInfo").css('display', 'block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+    }
     $("#sign_out").click(function () {
         signOut()
     });

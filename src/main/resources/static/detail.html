@@ -162,15 +162,6 @@
     //    $('.tab-pane').addClass('fade in');
     jQuery(window).load(function () {
         var id = app.getQueryString("id");
-        if (app.getUserInfo().emailAccount == null) {
-            $("#personInfo").css('display', 'none');
-            $("#contect").css('display', 'none');
-        } else {
-            $("#personInfo").css('display', 'block');
-            $("#li_login").hide();
-            $("#asignout").show();
-            $("#userName").text(app.getUserInfo().nickName);
-        }
         $.ajax({
             url: app.getServerUrl()+"/message/"+id,
             type: 'GET',
@@ -190,6 +181,15 @@
             }
         });
     });
+    if (!app.isUserValid()) {
+        $("#personInfo").css('display', 'none');
+        $("#contect").css('display', 'none');
+    } else {
+        $("#personInfo").css('display', 'block');
+        $("#li_login").hide();
+        $("#asignout").show();
+        $("#userName").text(app.getUserInfo().nickName);
+    }
     $("#sign_out").click(function () {
         signOut()
     });
