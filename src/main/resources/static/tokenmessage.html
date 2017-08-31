@@ -250,7 +250,7 @@
                             <h2 class="panel-title">ICO项目信息</h2>
                         </header>
                         <div class="col-md-12">
-                            <table class="table table-striped">
+                            <table id="table" class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th>时间</th>
@@ -366,7 +366,32 @@
                 return;
             }
         });
-
+        $.ajax({
+            url: app.getServerUrl()+"/userProjectInvestRecord/investRecords/project/" + pid,
+            type: 'GET',
+            dataType: "json",
+            headers:app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    var $trList = [];
+                    result.data.forEach(function (record) {
+                        var $tableTr = $("<tr>");
+                        $tableTr.append($("<td>").text(record.lockDate));
+                        $tableTr.append($("<td>").text(record.investValue + ' ' + record.tokenMoney.nameEnShort));
+                        $tableTr.append($("<td>").text(record.project.nameCn + (record.project.name)));
+                        $tableTr.append($("<td>").text(""));
+                        $trList.push($tableTr);
+                    });
+                    $("#table tbody").append($trList);
+                }
+                else {
+                    app.myAlert("", "查询失败!", "warning");
+                }
+            },
+            error: function (xhr, type, errerThrown) {
+                app.myAlert("", "网络异常,请稍候再试!", "error");
+            }
+        });
         //添加用户投资货币分类（该项目接收货币类型）
         $.ajax({
             url: app.getServerUrl()+"/project/" + pid,
@@ -393,13 +418,11 @@
                         }
                     }
                 } else {
-//                    app.myAlertWithoutFunction("", "项目信息错误!", "warning");
                     app.myAlert("", "项目信息错误!", "warning","tokeninvestment.html");
                 }
             },
             error: function (xhr, type, errerThrown) {
                 app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
-                return;
             }
         });
         $("#projectName").text(projectName);
@@ -488,7 +511,7 @@
             });
         });
     });
-    if(!app.isUserValidate()) {
+    if(app.isUserValid()) {
         $("#personInfo").css('display', 'block');
         $("#li_login").hide();
         $("#asignout").show();

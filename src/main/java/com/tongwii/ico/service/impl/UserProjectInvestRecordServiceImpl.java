@@ -101,4 +101,16 @@ public class UserProjectInvestRecordServiceImpl extends AbstractService<UserProj
             projectUserRelationService.save(projectUserRelation);
         }
     }
+
+    @Override
+    public List<UserProjectInvestRecord> findByUserIdAndProjectId(Integer userId, Integer projectId) {
+        UserProjectInvestRecord userProjectInvestRecord = new UserProjectInvestRecord();
+        userProjectInvestRecord.setUserId(userId);
+        userProjectInvestRecord.setProjectId(projectId);
+        List<UserProjectInvestRecord> userProjectInvestRecords = userProjectInvestRecordMapper.select(userProjectInvestRecord);
+        if(CollectionUtils.isEmpty(userProjectInvestRecords)){
+            return null;
+        }
+        return userProjectInvestRecords;
+    }
 }

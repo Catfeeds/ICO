@@ -119,6 +119,7 @@ public class UserProjectInvestRecordController {
         }
     }
 
+
     /***
      * 根据当前用户获取用户项目投资记录简单信息
      *
@@ -147,6 +148,28 @@ public class UserProjectInvestRecordController {
         }
     }
 
+    /***
+     * 根据当前用户和当前项目查看投资记录
+     *
+     * @return
+     */
+    @GetMapping("/investRecords/project/{id}")
+    public Result findUserProjectInvestRecordByUserIdAndProjectId(@PathVariable("id") Integer projectId){
+        Integer userId = ContextUtils.getUserId();
+        List<UserProjectInvestRecord> userProjectInvestRecordList = userProjectInvestRecordService.findByUserIdAndProjectId(userId, projectId);
+        if(CollectionUtils.isNotEmpty(userProjectInvestRecordList)){
+            for (UserProjectInvestRecord userProjectInvestRecord : userProjectInvestRecordList) {
+                // 根据projectId获取projictInfo
+                userProjectInvestRecord.setProject(projectService.findById(userProjectInvestRecord.getProjectId()));
+                // 查询币种信息
+                TokenMoney tokenMoney = tokenMoneyService.findById(userProjectInvestRecord.getTokenId());
+                userProjectInvestRecord.setTokenMoney(tokenMoney);
+            }
+            return Result.successResult(userProjectInvestRecordList);
+        }else {
+            return Result.failResult("暂无用户交易记录!");
+        }
+    }
 
     /***
      * 根据用户代币投资总和
