@@ -19,9 +19,7 @@
     <link href="assets/css/color.css" rel="stylesheet">
     <link href="assets/css/widget.css" rel="stylesheet">
     <link href="assets/css/responsive.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link href="assets/css/sweet-alert.css" rel="stylesheet">
-    <link href="assets/css/pace-theme-flash.css" rel="stylesheet">
     <link href="assets/css/pace-theme-flash.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -438,13 +436,10 @@
                 }
                 else {
                     app.myAlert("", result.message, "warning","sign.html");
-                    return;
-                    console.log("注册失败!");
                 }
             },
             error: function (xhr, type, errerThrown) {
                 app.myAlert("", "网络异常,请稍候再试!", "error","sign.html");
-                return;
             }
         });
     }
@@ -456,7 +451,9 @@
             app.myAlertWithoutFunction(" ", "电子邮箱不能为空", "warning");
             return false;
         }else if(!emailRegular.test(signName)){
-            app.myAlert("", "电子邮箱非法!", "warning","sign.html");
+            app.myAlert("", "电子邮箱非法!", "warning");
+            $("#sign_name").val("");
+            $("#sign_password").val("");
             return;
         }
         if (signPassword.length <= 0) {

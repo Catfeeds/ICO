@@ -91,11 +91,11 @@ public class IPUtil {
     public static String getIpAddressInfo(String ip) {
         Map<String, String> params = Maps.newHashMap();
         params.put("ip", ip);
-        String response = RestTemplateUtil.restTemplate(IP_API_URL+"/getIpInfo.php?ip={ip}", null, String.class, params, HttpMethod.GET);
+        String response = RestTemplateUtil.restTemplate(IP_API_URL + "/getIpInfo.php?ip={ip}", null, String.class, params, HttpMethod.GET);
         JSONObject result = JSON.parseObject(response);
-        if(result.getIntValue("code") == 0) {
+        if (result.getIntValue("code") == 0) {
             JSONObject data = result.getJSONObject("data");
-            return data.getString("country") + data.getString("area") + data.getString("region") + data.getString("city") + " 服务提供商：" +data.getString("isp");
+            return data.getString("country") + data.getString("area") + data.getString("region") + data.getString("city") + " 服务提供商：" + data.getString("isp");
         } else {
             JSONObject data = result.getJSONObject("data");
             return data.toString();

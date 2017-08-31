@@ -1,8 +1,8 @@
 ﻿-- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'user', '$2a$10$WIUYeUw1.TcoKiIxUAf.7Ot5QN3CZNlP0.nts5USRBsvu5F7D02.2', 'user', '王亚妮', '18829012080', '610522199401203242', null, '1', '1', '1', null, null, '233122', '2017-08-24 14:36:29');
-INSERT INTO `user` VALUES ('2', 'admin', '$2a$10$i689y0x9zhtnFtmGmkOPRuLChsxsdBbHLN2/bpMicev/VPcdZAnrC', 'admin', '王雅默', '18829012090', '610524199901293422', null, null, '1', '1', null, null, '411882', '2017-08-24 20:28:30');
+INSERT INTO `user` VALUES ('1', 'user@user.com', '$2a$10$WIUYeUw1.TcoKiIxUAf.7Ot5QN3CZNlP0.nts5USRBsvu5F7D02.2', 'user', '王亚妮', '18829012080', '610522199401203242', null, '1', '1', '1', null, null, '233122', '2017-08-24 14:36:29');
+INSERT INTO `user` VALUES ('2', 'admin@admin.com', '$2a$10$i689y0x9zhtnFtmGmkOPRuLChsxsdBbHLN2/bpMicev/VPcdZAnrC', 'admin', '王雅默', '18829012090', '610524199901293422', null, null, '1', '1', null, null, '411882', '2017-08-24 20:28:30');
 INSERT INTO `user` VALUES ('3', '2318798407@qq.com', '$2a$10$7vJj4waN5c776mhFC4s02.hkbl7JhE4GzmY3hg78Y4SvAD4gFUhYG', '2318798407', '王军滢', '18409272347', '610524199301203243', '1', null, '1', '1', null, null, '111111', '2017-08-28 17:14:17');
 INSERT INTO `user` VALUES ('4', '303082448@qq.com', '$2a$10$N31DbXe4.4.XjLalTpOBue2Zh17C/sIbGKLxJxAtDierBDVWoJ6pu', '303082448', null, null, null, null, null, null, '1', null, null, null, '2017-08-23 14:55:04');
 INSERT INTO `user` VALUES ('5', '1227031866@qq.com', '$2a$10$vRFziCt.IwP5sCGqluFL/OcN/WUg1c7DqN/RIC9twv/D3LtLR0bm.', '1227031866', null, null, null, null, null, null, '1', null, null, null, '2017-08-25 10:57:01');

@@ -14,7 +14,7 @@
         showCancelButton: false,
         closeOnConfirm: true,
         closeOnCancel: true,
-        confirmButtonText: 'OK',
+        confirmButtonText: '确定',
         confirmButtonColor: '#AEDEF4',
         cancelButtonText: 'Cancel',
         imageUrl: null,
