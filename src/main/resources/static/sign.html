@@ -43,7 +43,7 @@
                             <li><a href="under.html">即将ICO</a></li>
                             <li><a href="listing.html">已结束ICO</a></li>
                             <li><a href="blogmedium.html">新闻媒体</a></li>
-                            <li><a>关于</a><i class="icon-arrow-down8"></i>
+                            <li><a style="cursor: pointer;">关于</a><i class="icon-arrow-down8"></i>
                                 <ul class="sub-dropdown">
                                     <li><a href="about.html">关于我们</a></li>
                                     <li><a href="services.html">服务与帮助</a></li>
@@ -397,28 +397,27 @@
     });
     var emailRegular = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
     function regist() {
-        $("#regist").attr("disabled", true);
         var email = $("#email").val().toString();
         var registPassword = $("#regist_password").val().toString();
         var againPassword = $("#again_password").val().toString();
 
         if (email.length <= 0) {
-            app.myAlert("", "电子邮箱不能为空!", "warning","sign.html");
+            app.myAlert("", "电子邮箱不能为空!", "warning");
             return;
         }else if(!emailRegular.test(email)){
-            app.myAlert("", "电子邮箱非法!", "warning","sign.html");
+            app.myAlert("", "电子邮箱非法!", "warning");
             return;
         }
         if (registPassword.length <= 0 || againPassword.length <= 0) {
-            app.myAlert("", "密码不能为空!", "warning","sign.html");
+            app.myAlert("", "密码不能为空!", "warning");
             return;
         }
         if (registPassword.length < 8 || registPassword.length > 30) {
-            app.myAlert("", "密码需为8位以上,30位以下!", "warning","sign.html");
+            app.myAlert("", "密码需为8位以上,30位以下!", "warning");
             return;
         }
         if (registPassword != againPassword) {
-            app.myAlert("", "两次输入的密码不一致!", "warning","sign.html");
+            app.myAlert("", "两次输入的密码不一致!", "warning");
             return;
         }
         var registJson = {emailAccount: email, password: registPassword};
@@ -432,7 +431,6 @@
             success: function (result) {
                 if (result.code == 200) {
                     app.myAlert("", "注册成功，请登录!", "success", "sign.html");
-                    $("#sign_name").text(result.data.userInfo.emailAccount);
                 }
                 else {
                     app.myAlert("", result.message, "warning","sign.html");
@@ -442,6 +440,7 @@
                 app.myAlert("", "网络异常,请稍候再试!", "error","sign.html");
             }
         });
+        $("#regist").attr("disabled", true);
     }
 
     function login() {
