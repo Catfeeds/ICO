@@ -51,7 +51,8 @@ public class UserProjectInvestRecordController {
         return Result.successResult();
     }
     /***
-     * 根据当前用户获取用户项目投资记录
+     * 根据当前用户获取用户项目投资记录,包括项目钱包、用户钱包信息
+     *
      * @param page
      * @param size
      * @return
@@ -110,6 +111,34 @@ public class UserProjectInvestRecordController {
                 // 根据tokenMoneyId与userId查询userWallet
                 UserWallet userWallet = userWalletService.findWalletByCionId(tokenMoney.getId(),userProjectInvestRecord.getUserId());
                 userProjectInvestRecord.setUserWallet(userWallet);
+            }
+            PageInfo pageInfo = new PageInfo(userProjectInvestRecordList);
+            return Result.successResult(pageInfo);
+        }else {
+            return Result.failResult("暂无用户交易记录!");
+        }
+    }
+
+    /***
+     * 根据当前用户获取用户项目投资记录简单信息
+     *
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("/userInvestRecords")
+    public Result findUserProjectInvestRecord(@RequestParam(required = true,defaultValue = "1") Integer page,
+                                              @RequestParam(required = true,defaultValue = "5") Integer size){
+        PageHelper.startPage(page, size);
+        Integer userId = ContextUtils.getUserId();
+        List<UserProjectInvestRecord> userProjectInvestRecordList = userProjectInvestRecordService.findByUserId(userId);
+        if(CollectionUtils.isNotEmpty(userProjectInvestRecordList)){
+            for(int i=0;i<userProjectInvestRecordList.size();i++){
+                // 根据projectId获取projictInfo
+                userProjectInvestRecordList.get(i).setProject(projectService.findById(userProjectInvestRecordList.get(i).getProjectId()));
+                // 查询币种信息
+                TokenMoney tokenMoney = tokenMoneyService.findById(userProjectInvestRecordList.get(i).getTokenId());
+                userProjectInvestRecordList.get(i).setTokenMoney(tokenMoney);
             }
             PageInfo pageInfo = new PageInfo(userProjectInvestRecordList);
             return Result.successResult(pageInfo);

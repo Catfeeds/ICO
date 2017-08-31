@@ -180,27 +180,19 @@
                                     </div>
                                 </div>
                                 <div class="row" id="transactionInfo">
-                                    <h2><strong>投资记录</strong></h2>
-                                    <!--<div class="col-md-6 col-xs-11" id="noIcotext" style="display: none">请您先登录!</div>-->
                                     <header class="panel-heading">
                                         <h2 class="panel-title">投资记录信息</h2>
                                     </header>
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
-                                            <th>发送地址</th>
-                                            <th>接收地址</th>
-                                            <th>转账金额</th>
+                                            <th>投资时间</th>
+                                            <th>投资项目</th>
+                                            <th>投资金额</th>
                                             <th>状态</th>
                                         </tr>
                                         </thead>
                                         <tbody id="transactionList">
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -275,10 +267,10 @@
 <script src="assets/scripts/functions.js"></script>
 <script src="assets/scripts/pace.min.js"></script>
 <script type="text/javascript">
-    jQuery(window).load(function () {
+    $(function () {
         // 请求服务器，查询系统中所有交易单号的交易信息详情
         $.ajax({
-            url: app.getServerUrl() + "/project/user/wallet/relation/getUserTransaction",
+            url: app.getServerUrl() + "/userProjectInvestRecord/userInvestRecords",
             type: 'GET',
             timeout: 10000,//超时时间设置为10秒；
             headers: app.createAuthorizationTokenHeader(),
@@ -286,9 +278,10 @@
             success: function (result) {
                 if (result.code == 200) {
                     if (result.data) {
-                        $.each(result.data, function (i, item) {
+                        $("#untransactionInfo").remove();
+                        $.each(result.data.list, function (i, item) {
                             $("#transactionList").append(
-                                    "<tr><th>" + item.sendAddress + "</th><th>" + item.getAddress + "</th><th>" + item.transactionNum + "</th><th>" + item.transactionState + "</th></tr>"
+                                    "<tr><td>" + item.lockDate + "</td><td>" + item.project.nameCn + (item.project.name) + "</td><td>" + item.investValue + " " + item.tokenMoney.nameEnShort + "</td><td></td></tr>"
                             );
                         });
                     } else {

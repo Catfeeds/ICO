@@ -397,33 +397,27 @@
     });
     var emailRegular = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
     function regist() {
-        $("#regist").attr("disabled", true);
         var email = $("#email").val().toString();
         var registPassword = $("#regist_password").val().toString();
         var againPassword = $("#again_password").val().toString();
 
         if (email.length <= 0) {
-            app.myAlertWithoutFunction("", "电子邮箱不能为空!", "warning");
-            $("#regist").removeAttr("disabled");
+            app.myAlert("", "电子邮箱不能为空!", "warning");
             return;
         }else if(!emailRegular.test(email)){
-            app.myAlertWithoutFunction("", "电子邮箱非法!", "warning");
-            $("#regist").removeAttr("disabled");
+            app.myAlert("", "电子邮箱非法!", "warning");
             return;
         }
         if (registPassword.length <= 0 || againPassword.length <= 0) {
-            app.myAlertWithoutFunction("", "密码不能为空!", "warning");
-            $("#regist").removeAttr("disabled");
+            app.myAlert("", "密码不能为空!", "warning");
             return;
         }
         if (registPassword.length < 8 || registPassword.length > 30) {
-            app.myAlertWithoutFunction("", "密码需为8位以上,30位以下!", "warning");
-            $("#regist").removeAttr("disabled");
+            app.myAlert("", "密码需为8位以上,30位以下!", "warning");
             return;
         }
         if (registPassword != againPassword) {
-            app.myAlertWithoutFunction("", "两次输入的密码不一致!", "warning");
-            $("#regist").removeAttr("disabled");
+            app.myAlert("", "两次输入的密码不一致!", "warning");
             return;
         }
         var registJson = {emailAccount: email, password: registPassword};
@@ -439,18 +433,14 @@
                     app.myAlert("", "注册成功，请登录!", "success", "sign.html");
                 }
                 else {
-                    app.myAlertWithoutFunction("", result.message, "warning");
-                    $("#regist").removeAttr("disabled");
-                    return;
-                    console.log("注册失败!");
+                    app.myAlert("", result.message, "warning","sign.html");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlertWithoutFunction("", "网络异常,请稍候再试!", "error");
-                $("#regist").removeAttr("disabled");
-                return;
+                app.myAlert("", "网络异常,请稍候再试!", "error","sign.html");
             }
         });
+        $("#regist").attr("disabled", true);
     }
 
     function login() {
@@ -459,11 +449,6 @@
         if (signName.length <= 0) {
             app.myAlertWithoutFunction(" ", "电子邮箱不能为空", "warning");
             return false;
-        }else if(!emailRegular.test(signName)){
-            app.myAlertWithoutFunction("", "电子邮箱非法!", "warning");
-            $("#sign_name").val("");
-            $("#sign_password").val("");
-            return;
         }
         if (signPassword.length <= 0) {
             app.myAlertWithoutFunction(" ", "密码不能为空", "warning");

@@ -10,8 +10,8 @@ import com.github.pagehelper.PageInfo;
 import com.tongwii.ico.service.TransactionsService;
 import com.tongwii.ico.util.ContextUtils;
 import com.tongwii.ico.util.TokenMoneyEnum;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -60,18 +60,18 @@ public class ProjectUserWalletRelationController {
         return Result.successResult(pageInfo);
     }
 
-    /**
+/*    *//**
      * @author Yamo
      * 获取交易记录，并且根据交易记录获取交易详情
      * @return
-     */
+     *//*
     @GetMapping("/getUserTransaction")
     public Result getUserTransaction(){
         Integer userId = ContextUtils.getUserId();
         // 根据用户Id查询用户项目钱包的交易信息
         List<ProjectUserWalletRelation> projectUserWalletRelationList = projectUserWalletRelationService.findUserTransactionList(userId);
         JSONArray BTCTransactionDetails = new JSONArray();
-        if(!CollectionUtils.isEmpty(projectUserWalletRelationList)){
+        if(CollectionUtils.isNotEmpty(projectUserWalletRelationList)){
            for(int i=0; i<projectUserWalletRelationList.size(); i++){
                 try{
                     String transactionNumber = projectUserWalletRelationList.get(i).getTransactionNumber();
@@ -94,5 +94,5 @@ public class ProjectUserWalletRelationController {
             return Result.successResult("此用户无项目投资记录!");
         }
 
-    }
+    }*/
 }

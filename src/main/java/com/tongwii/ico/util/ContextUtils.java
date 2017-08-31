@@ -53,6 +53,9 @@ public final class ContextUtils {
      * @return
      */
     public static JwtUser getJwtUser () {
+        if(isNotLogin()) {
+            throw new AuthenticationCredentialsNotFoundException( "未经授权:不允许匿名访问。" );
+        }
         return ( JwtUser ) getAuthentication().getPrincipal();
     }
 
@@ -75,6 +78,9 @@ public final class ContextUtils {
      * @return {@link User#id}
      */
     public static Integer getUserId () {
+        if(isNotLogin()) {
+            throw new AuthenticationCredentialsNotFoundException( "未经授权:不允许匿名访问。" );
+        }
         return getJwtUser().getId();
     }
 
