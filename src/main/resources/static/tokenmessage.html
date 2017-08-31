@@ -405,18 +405,21 @@
         $("#projectName").text(projectName);
 
         $("#commit").click(function () {
+            $("#commit").attr("disabled", true);
             if ($("#inputmoney").val() && $("#inputmoney").val() > 0) {
                 var cionType = $('#moneytype2').val();
 
                 if(cionType === "1"){
                     if($("#inputmoney").val().toString() > ETHBalance){
                         app.myAlertWithoutFunction("","您的余额不足!","warning");
+                        $("#commit").removeAttr("disabled");
                         return;
                     }
                 }
                 if(cionType === "2"){
                     if($("#inputmoney").val().toString() > BTCBalance){
                         app.myAlertWithoutFunction("","您的余额不足!","warning");
+                        $("#commit").removeAttr("disabled");
                         return;
                     }
                 }
@@ -426,6 +429,7 @@
                 $('#formModal').modal('show');
             } else {
                 app.myAlert("", "请输入锁定金额", "warning");
+                $("#commit").removeAttr("disabled");
                 return;
             }
         });

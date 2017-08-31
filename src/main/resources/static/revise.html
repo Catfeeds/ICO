@@ -339,29 +339,35 @@
         }
     });
     $("#updatePassword").click(function () {
+        $("#updatePassword").attr("disabled", true);
         // 获取表单中的值
         var oldPassword = $("#oldPassword").val();
         var newPassword = $("#newPassword").val();
         var newPassword2 = $("#newPassword2").val();
         var verifycode = $("#verifycode").val();
         if(oldPassword.length <= 0){
-            app.myAlert("","旧密码不可为空!","warning");
+            app.myAlertWithoutFunction("","旧密码不可为空!","warning");
+            $("#updatePassword").removeAttr("disabled");
             return;
         }
         if(newPassword.length <= 8 || newPassword2.length >30){
-            app.myAlert("","密码长度不可小于8位或大于30位!","warning");
+            app.myAlertWithoutFunction("","密码长度不可小于8位或大于30位!","warning");
+            $("#updatePassword").removeAttr("disabled");
             return;
         }
         if(newPassword2.length < 8 || newPassword2.length >30){
-            app.myAlert("","密码长度不可小于8位或大于30位!","warning");
+            app.myAlertWithoutFunction("","密码长度不可小于8位或大于30位!","warning");
+            $("#updatePassword").removeAttr("disabled");
             return;
         }
         if(newPassword != newPassword2){
-            app.myAlert("","两次输入的新密码不一样!","warning");
+            app.myAlertWithoutFunction("","两次输入的新密码不一样!","warning");
+            $("#updatePassword").removeAttr("disabled");
             return;
         }
         if(verifycode.length <= 0){
-            app.myAlert("","验证码信息不可为空","warning");
+            app.myAlertWithoutFunction("","验证码信息不可为空","warning");
+            $("#updatePassword").removeAttr("disabled");
             return;
         }
         var date1 = app.getUserInfo().expireDate;
@@ -373,7 +379,8 @@
             return;
         }*/
         if(verifycode != app.getUserInfo().verifyCode){
-            app.myAlert("","验证码信息错误，请重新输入!","error");
+            app.myAlertWithoutFunction("","验证码信息错误，请重新输入!","error");
+            $("#updatePassword").removeAttr("disabled");
             return;
         }else {
             var updatePassword = {oldPassword:oldPassword,newPassword:newPassword,verifycode:verifycode};
@@ -393,15 +400,17 @@
                     }
                     else {
                         app.myAlertWithoutFunction("",result.message,"warning");
+                        $("#updatePassword").removeAttr("disabled");
                         return;
                     }
                 },
                 error: function (xhr, type, errerThrown) {
                     app.myAlertWithoutFunction("","网络异常,请稍候再试!","error");
+                    $("#updatePassword").removeAttr("disabled");
                     return;
                 }
             });
-            $("#updatePassword").attr("disabled", true);
+
         }
     });
 

@@ -436,6 +436,7 @@
     });
 
     $("#commitInfo").click(function () {
+        $("#commitInfo").attr("disabled", true);
         // 取值
         var addressDes = $("#a_name").val();
         var address = $("#a_address").val();
@@ -443,22 +444,27 @@
         var moneyType = $('option').attr("value");
         if(!addressDes){
             app.myAlertWithoutFunction("","地址描述不可为空!","warning");
+            $("#commitInfo").removeAttr("disabled");
             return;
         }
         if(!address){
             app.myAlertWithoutFunction("","地址信息不可为空!","warning");
+            $("#commitInfo").removeAttr("disabled");
             return;
         }
         if(!moneyType){
             app.myAlertWithoutFunction("","地址类型不可为空!","warning");
+            $("#commitInfo").removeAttr("disabled");
             return;
         }
         if(!verifyCode){
             app.myAlertWithoutFunction("","验证码信息不可为空!","warning");
+            $("#commitInfo").removeAttr("disabled");
             return;
         }
         if(verifyCode != app.getUserInfo().verifyCode){
             app.myAlertWithoutFunction("","验证码错误!","warning");
+            $("#commitInfo").removeAttr("disabled");
             return;
         }
         var walletJson = {des:addressDes,tokenMoneyUrl:address,tokenMoneyId:moneyType};
@@ -472,19 +478,20 @@
             headers: app.createAuthorizationTokenHeader(),
             success: function (result) {
                 if (result.code == 200) {
-                    app.myAlert("",result.message,"success");
+                    app.myAlert("",result.message,"success","tokenwithdrawal.html");
                 }
                 else {
-                    app.myAlert("",result.message,"warning");
+                    app.myAlertWithoutFunction("",result.message,"warning");
+                    $("#commitInfo").removeAttr("disabled");
                     return;
                 }
             },
             error: function (xhr, type, errerThrown) {
-                app.myAlert("","网络异常,请稍候再试!","error");
+                app.myAlertWithoutFunction("","网络异常,请稍候再试!","error");
+                $("#commitInfo").removeAttr("disabled");
                 return;
             }
         });
-        $("#commitInfo").attr("disabled", true);
     });
 
     $("#cancle").click(function(){
