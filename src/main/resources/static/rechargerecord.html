@@ -365,22 +365,15 @@
                         $("#transactionList").html("");
                         $.each(result.data.list, function (i, item) {
                             $("#transactionList").append(
+                                    "<tr style='text-align: center;'><td>" + item.lockDate + "</td><td>" + item.project.nameCn + (item.project.name) + "</td><td>" + item.investValue + " " + item.tokenMoney.nameEnShort + "</td><td></td></tr>"
                                 "<tr><td>" + item.lockDate + "</td><td>" + item.project.nameCn + (item.project.name) + "</td><td>" + item.investValue + " " + item.tokenMoney.nameEnShort + "</td><td></td></tr>"
                             );
                         });
-                    } else {
-                        $("#transactionInfo").css("display", "none");
-                        $("#untransactionInfo").css("display", "block");
                     }
-
-                } else {
-                    $("#transactionInfo").css("display", "none");
-                    $("#untransactionInfo").css("display", "block");
                 }
             },
             error: function (xhr, type, errerThrown) {
-                $("#transactionInfo").css("display", "none");
-                $("#untransactionInfo").css("display", "block");
+                app.myAlert("", "网络异常,请稍候再试", "error");
             }
         });
     }

@@ -47,6 +47,11 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        th {
+            text-align: center;
+        }
+    </style>
     <script src="assets/scripts/jwt-decode.min.js"></script>
     <script src="assets/scripts/app.js"></script>
     <script>
@@ -363,7 +368,6 @@
             },
             error: function (xhr, type, errerThrown) {
                 app.myAlert("", "网络异常,请稍候再试", "error","tokeninvestment.html");
-                return;
             }
         });
         $.ajax({
@@ -375,7 +379,7 @@
                 if (result.code == 200) {
                     var $trList = [];
                     result.data.forEach(function (record) {
-                        var $tableTr = $("<tr>");
+                        var $tableTr = $("<tr style='text-align:center;'>");
                         $tableTr.append($("<td>").text(record.lockDate));
                         $tableTr.append($("<td>").text(record.investValue + ' ' + record.tokenMoney.nameEnShort));
                         $tableTr.append($("<td>").text(record.project.nameCn + (record.project.name)));
