@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>kikoico</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="bookmark" href="../static/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../static/assets/images/favicon.ico">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="css/sweet-alert.css">
+    <link rel="stylesheet" href="plugins/summernote/summernote.css">
+
+    <style>
+        .note-editor.note-frame .note-editing-area .note-editable {
+            padding: 10px;
+            overflow: auto;
+            color: #000;
+            background-color: #fff;
+            height: 500px;
+        }
+        .modal-content {
+            -webkit-box-shadow: 0 2px 3px rgba(0,0,0,0.125);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.125);
+            padding: 8px;
+        }
+
+    </style>
+    <script src="scripts/jwt-decode.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script>
+        if (!app.isUserValid()) {
+            location.href = "login.html";
+        }
+    </script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <header class="main-header">
+        <!-- Logo -->
+        <a class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>ICO</b></span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>kikoico</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">导航栏</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <span class="hidden-xs" id="name"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-right">
+                                    <a href="javascript:logout()" class="btn btn-default btn-flat">退出</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p><div id="name1"></div></p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                </div>
+            </div>
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">导航栏</li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-table"></i> <span> 用户管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/manager/index.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+                    </ul>
+                </li>
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-folder"></i> <span>项目管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/manager/profiles.html"><i class="fa fa-circle-o"></i> 开启众筹旅程</a></li>
+                        <li><a href="/manager/data.html"><i class="fa fa-circle-o"></i> 项目信息管理</a></li>
+                        <li><a href="/manager/project-wallet-manager.html"><i class="fa fa-circle-o"></i> 项目钱包信息</a></li>
+                        <li><a href="/manager/token.html"><i class="fa fa-circle-o"></i> 代币信息管理</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-edit"></i> <span>编辑器</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/manager/newseditor.html"><i class="fa fa-circle-o"></i>新闻/公告编辑</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                新闻/公告编辑
+                <small>新闻、公告每一天在这里发生</small>
+            </h1>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#set" data-toggle="tab">新闻编辑</a></li>
+                            <li><a href="#activity" data-toggle="tab">公告编辑</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="set">
+                                <form class="form-horizontal" id="myform">
+                                    <div class="box box-info">
+                                        <br>
+                                        <br>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">新闻标题</label>
+                                            <div class="col-sm-11">
+                                                <input type="text" class="form-control" id="title"
+                                                      >
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">新闻描述</label>
+                                            <div  class="col-sm-11">
+                                                <textarea type="text" class="form-control" id="descript"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">上传图片</label>
+                                            <div class="col-sm-6" >
+                                                <input name="file"  type="file" id="content" accept="image/png,image/gif,image/jpeg" onChange="handleConFiles(this.files);">
+                                                <img class="conImage" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">编辑详情</label>
+                                            <div  class="col-xs-11">
+                                                <!--<div class="box-body pad ">-->
+                                                    <div id="editor" class="summernote" ></div>
+                                                <!--</div>-->
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-5 col-sm-10">
+                                                <button type="button" class="btn btn-danger" onclick="newsCommit()">
+                                                    提交
+                                                </button>
+                                                <button type="button" class="btn btn-danger"
+                                                        style="margin-left: 25px"
+                                                        onclick="cancleNews()">清空
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane" id="activity">
+                                <form class="form-horizontal">
+                                    <div class="box box-info">
+                                        <br>
+                                        <br>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">公告编辑</label>
+                                                <div class="col-sm-11">
+                                                    <textarea type="text" class="form-control" style="height:200px;" id="notifyContent"></textarea>
+                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-5 col-sm-10">
+                                                <button type="button" class="btn btn-danger" onclick="notifyCommit()">
+                                                    提交
+                                                </button>
+                                                <button type="button" class="btn btn-danger" style="margin-left: 25px"
+                                                        onclick="cancleNotify()">清空
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/summernote/summernote.js"></script>
+<script src="plugins/summernote/lang/summernote-zh-CN.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<script src="scripts/sweet-alert.js"></script>
+<script>
+    var width,height;
+    function handleConFiles(files){
+        if((navigator.userAgent.indexOf("MSIE 8.0")>0 )||(navigator.userAgent.indexOf("MSIE 9.0")>0)){
+            var objPreviewSizeFake = $(".conImage").get(0);//jquery对象转化为DOM对象
+            var fileupload = document.getElementById("head");
+            var $fileupload = $(fileupload);
+            $fileupload.select();
+            $fileupload.blur();
+            path = document.selection.createRange().text;
+
+            if (/"\w\W"/.test(path)) {
+                path = path.slice(1,-1);
+            }
+
+            objPreviewSizeFake.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = path;
+            width=objPreviewSizeFake.offsetWidth;
+            height=objPreviewSizeFake.offsetHeight;
+            if(width < 270 || height < 203){
+                fill = false;
+                app.myAlert("上传图片", "上传图片的尺寸应为270*203及以上", "error");
+            }
+
+            document.selection.empty();
+        }else{
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                var ret = [];
+                reader.onload = function(theFile) {
+                    var image = new Image();
+                    image.onload = function() {
+                        width=this.width;
+                        height=this.height;
+                        if(width < 270 || height < 203){
+                            fill = false;
+                            app.myAlert("上传图片", "上传图片的尺寸应为270*203及以上", "error");
+                        }
+                    };
+                    image.src = theFile.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+    }
+    jQuery(window).load(function () {
+        var userName = app.getUserInfo().nickName;  var userName = app.getUserInfo().nickName;
+        $("#name").append(userName);
+        $("#name1").append(userName);
+    });
+    $(function () {
+        $('#editor').summernote({
+            placeholder:'新闻描述',
+            lang: 'zh-CN', // default: 'en-US'
+            height: 200,   //set editable area's height
+            callbacks: {
+                onImageUpload: function(files) {
+                    sendFile(files[0]);
+                }
+            }
+        });
+    });
+
+    function sendFile(file) {
+        var data = new FormData();
+        data.append("file", file);
+        $.ajax({
+            data: data,
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: app.getServerUrl() + "/file",
+            cache: false,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function(result) {
+                if(result.code == 200) {
+                    var image = $('<img>').attr('src', result.data.path);
+                    $('#editor').summernote("insertNode", image[0]);
+                }
+            }
+        });
+    }
+
+    function newsCommit() {
+        var formData = new FormData($("#myform")[0]);
+        var pictureUrl = null;
+        $.ajax({
+            url: app.getServerUrl()+'/file',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if(result.code == 200){
+                    pictureUrl = result.data.path;
+                }else{
+                    pictureUrl = null;
+                }
+            },
+            error: function (data, status, e) {
+                app.myAlert("", "网络异常,请稍候再试!", "error");
+            }
+        });
+        var title = $("#title").val();
+        var descript = $("#descript").val();
+        var createTime = new Date();
+        var content = $('#editor').summernote('code');
+        var type = 1;
+        if (title.trim().length <= 0) {
+            app.myAlert("标题内容", "标题内容不能为空！", "error");
+            return;
+        }
+        if (descript.trim().length <= 0) {
+            app.myAlert("新闻描述", "新闻描述不能为空！", "error");
+            return;
+        }
+        if (content.trim().length <= 0) {
+            app.myAlert("新闻内容", "新闻内容不能为空！", "error");
+            return;
+        }
+        if(pictureUrl.trim().length <= 0){
+            app.myAlert("", "请上传至少一张图片！", "error");
+             return;
+         }
+        var newsJson = {
+            title: title,
+            des: descript,
+            createDate: createTime,
+            type: type,
+            content: content,
+            pictureUrl: pictureUrl
+        };
+        $.ajax({
+            url: app.getServerUrl()+"/message/insertMessage", //后台接口
+            type: 'POST',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(newsJson),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            headers:app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    app.myAlert("", result.message, "success");
+                    return;
+                } else {
+                    app.myAlert("", result.message, "warning");
+                    return;
+                }
+            },
+            error: function (data, status, e) {
+                app.myAlert("", "网络异常,请稍候再试!", "error");
+            }
+        });
+    }
+    function notifyCommit() {
+        var createTime = new Date();
+        var content = $("#notifyContent").val();
+        var type = 2;
+        if (content.trim().length <= 0) {
+            app.myAlert("公告内容", "公告内容不能为空！", "error");
+            return;
+        }
+        var notifyJson = {content: content, createDate: createTime, type: type};
+        $.ajax({
+            url: app.getServerUrl()+"/message/insertMessage", //后台接口
+            type: 'POST',
+            timeout: 10000,//超时时间设置为10秒；
+            data: JSON.stringify(notifyJson),
+            dataType: 'json',//服务器返回json格式数据
+            contentType: "application/json; charset=utf-8",
+            headers: app.createAuthorizationTokenHeader(),
+            success: function (result) {
+                if (result.code == 200) {
+                    app.myAlert("", result.message, "success");
+                    $("#notifyContent").val(null);
+//                    return;
+                } else {
+                    app.myAlert("", result.message, "warning");
+//                    return;
+                }
+            },
+            error: function (data, status, e) {
+                app.myAlert("", "网络异常,请稍候再试!", "error");
+            }
+        });
+    }
+    function cancleNews() {
+        window.location.reload();
+    }
+    function cancleNotify() {
+        $("#notifyContent").val(null);
+    }
+    function logout() {
+        $("#personInfo").css('display', 'none');
+        app.clearState();
+        location.href = "/manager/login.html";
+    }
+</script>
+</body>
+</html>
