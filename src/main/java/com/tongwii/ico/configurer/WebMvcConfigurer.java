@@ -40,7 +40,7 @@ import java.util.List;
  * Spring MVC 配置
  */
 @Configuration
-public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPageRegistrar {
+public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     private final static Logger logger = LogManager.getLogger();
 
@@ -130,19 +130,5 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter implements ErrorPa
         } catch (IOException ex) {
             logger.error(ex.getMessage());
         }
-    }
-
-    @Override
-    public void registerErrorPages(ErrorPageRegistry registry) {
-        registry.addErrorPages( new ErrorPage( HttpStatus.NOT_FOUND, "/404.html" ) );
-        registry.addErrorPages( new ErrorPage( HttpStatus.UNAUTHORIZED, "/401.html" ) );
-        registry.addErrorPages( new ErrorPage( Throwable.class, "/500.html" ) );
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/manager/**")
-                .addResourceLocations("classpath:/manager/");
-        registry.addResourceHandler("/upload/**").addResourceLocations("file:"+location+"/");
     }
 }
