@@ -446,7 +446,7 @@
             laydate(start);
         }
         document.getElementById('endTime').onclick = function(){
-            end.elem = this
+            end.elem = this;
             laydate(end);
         }
 
@@ -473,7 +473,7 @@
             }
         });
         function sendFile(file) {
-            data = new FormData();
+            var data = new FormData();
             data.append("file", file);
             $.ajax({
                 data: data,
