@@ -106,13 +106,13 @@ INSERT INTO `project_user_wallet_relation` VALUES ('2', '2', '2');
 -- ----------------------------
 -- Records of file
 -- ----------------------------
-INSERT INTO `file` VALUES ('1', '', '1', 'image');
-INSERT INTO `file` VALUES ('2', 'http://192.168.0.42/file/DELAPHY.jpg', '2', 'image');
-INSERT INTO `file` VALUES ('3', 'http://192.168.0.42/file/listing-grid-2.jpg', '3', 'image');
-INSERT INTO `file` VALUES ('4', 'http://192.168.0.42/file/listing-grid-2.jpg', '4', 'image');
-INSERT INTO `file` VALUES ('5', 'http://192.168.0.42/file/listing-grid-2.jpg', '5', 'image');
-INSERT INTO `file` VALUES ('6', 'http://192.168.0.42/file/listing-grid-2.jpg', '6', 'image');
-INSERT INTO `file` VALUES ('7', 'http://192.168.0.42/file/starbase.png', '7', 'image');
+INSERT INTO `file` VALUES ('1', 'extra-images/img.jpg', '1', 'image');
+INSERT INTO `file` VALUES ('2', 'extra-images/img.jpg', '2', 'image');
+INSERT INTO `file` VALUES ('3', 'extra-images/img.jpg', '3', 'image');
+INSERT INTO `file` VALUES ('4', 'extra-images/img.jpg', '4', 'image');
+INSERT INTO `file` VALUES ('5', 'extra-images/img.jpg', '5', 'image');
+INSERT INTO `file` VALUES ('6', 'extra-images/img.jpg', '6', 'image');
+INSERT INTO `file` VALUES ('7', 'extra-images/img.jpg', '7', 'image');
 
 -- ----------------------------
 -- Records of message

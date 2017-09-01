@@ -70,27 +70,31 @@ public class AuthController {
      * @throws AuthenticationException
      */
     @PostMapping("/login")
-    public Result createAuthenticationToken (@RequestBody User user) throws AuthenticationException {
-        // 执行安全
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getEmailAccount(),
-                        user.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication( authentication );
-        final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
-        final String token = jwtTokenUtil.generateToken( userDetails);
-        // 通过email查询数据库中的唯一记录
-        User userInfo = userService.findByUsername(user.getEmailAccount());
-        // 通过用户Id查询用户钱包
-        List<Object> userWallets = userWalletService.findWalletByUserId(userInfo.getId());
-        // 给用户信息中添加用户钱包信息
-        userInfo.setUserWallets(userWallets);
-        // 记录用户登陆
-        OperatorRecordUtil.record("用户登陆");
-        // 返回
-        return Result.successResult().add( "token", token ).add("userInfo", userInfo);
+    public Result createAuthenticationToken (@RequestBody User user) {
+        try {
+            // 执行安全
+            final Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getEmailAccount(),
+                            user.getPassword()
+                    )
+            );
+            SecurityContextHolder.getContext().setAuthentication( authentication );
+            final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
+            final String token = jwtTokenUtil.generateToken( userDetails);
+            // 通过email查询数据库中的唯一记录
+            User userInfo = userService.findByUsername(user.getEmailAccount());
+            // 通过用户Id查询用户钱包
+            List<Object> userWallets = userWalletService.findWalletByUserId(userInfo.getId());
+            // 给用户信息中添加用户钱包信息
+            userInfo.setUserWallets(userWallets);
+            // 记录用户登陆
+            OperatorRecordUtil.record("用户登陆");
+            // 返回
+            return Result.successResult().add( "token", token ).add("userInfo", userInfo);
+        } catch (AuthenticationException e) {
+            throw new ServiceException("登陆失败：用户名或密码错误");
+        }
     }
 
     /**
@@ -101,26 +105,30 @@ public class AuthController {
      * @throws AuthenticationException
      */
     @PostMapping("/adminLogin")
-    public Result adminAuthenticationToken (@RequestBody User user) throws AuthenticationException {
-        // 执行安全
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getEmailAccount(),
-                        user.getPassword()
-                )
-        );
-        GrantedAuthority authority = new SimpleGrantedAuthority(Role.RoleCode.ADMIN.getCode());
-        if(authentication.getAuthorities().contains(authority)) {
-            SecurityContextHolder.getContext().setAuthentication( authentication );
-            final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
-            final String token = jwtTokenUtil.generateToken( userDetails);
-            // 通过email查询数据库中的唯一记录
-            User userInfo = userService.findByUsername(user.getEmailAccount());
-            OperatorRecordUtil.record("管理员登陆");
-            // 返回
-            return Result.successResult().add( "token", token ).add("userInfo", userInfo);
-        } else {
-            throw new ServiceException("用户没有权限");
+    public Result adminAuthenticationToken (@RequestBody User user) {
+        try {
+            // 执行安全
+            final Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getEmailAccount(),
+                            user.getPassword()
+                    )
+            );
+            GrantedAuthority authority = new SimpleGrantedAuthority(Role.RoleCode.ADMIN.getCode());
+            if(authentication.getAuthorities().contains(authority)) {
+                SecurityContextHolder.getContext().setAuthentication( authentication );
+                final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
+                final String token = jwtTokenUtil.generateToken( userDetails);
+                // 通过email查询数据库中的唯一记录
+                User userInfo = userService.findByUsername(user.getEmailAccount());
+                OperatorRecordUtil.record("管理员登陆");
+                // 返回
+                return Result.successResult().add( "token", token ).add("userInfo", userInfo);
+            } else {
+                throw new ServiceException("用户没有权限");
+            }
+        } catch (AuthenticationException e) {
+            throw new ServiceException("登陆失败：用户名或密码错误");
         }
     }
 

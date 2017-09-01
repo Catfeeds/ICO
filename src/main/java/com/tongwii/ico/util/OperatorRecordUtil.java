@@ -28,7 +28,7 @@ public class OperatorRecordUtil {
             OperatorHistory operatorHistory = new OperatorHistory();
             operatorHistory.setUserId(ContextUtils.getUserId());
             operatorHistory.setIp(IPUtil.getIpAddress());
-           /* operatorHistory.setIpAddress(IPUtil.getIpAddressInfo(IPUtil.getIpAddress()));*/
+            operatorHistory.setIpAddress(IPUtil.getIpAddressInfo(IPUtil.getIpAddress()));
             operatorHistory.setMessage(operatorMessage);
             operatorHistory.setOperatorTime(new Date());
             operatorHistoryMapper.insert(operatorHistory);

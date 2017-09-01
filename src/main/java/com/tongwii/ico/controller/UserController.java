@@ -243,7 +243,7 @@ public class UserController {
      */
     @PostMapping("/phoneValidated")
     @ResponseBody
-    public Result phoneValidated(@RequestBody User user) {
+    public Result phoneValidated() {
         User oldUser = userService.findById(ContextUtils.getUserId());
         oldUser.setValidatePhone(true);
         userService.update(oldUser);
