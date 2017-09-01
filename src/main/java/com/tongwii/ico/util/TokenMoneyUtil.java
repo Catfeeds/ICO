@@ -61,7 +61,7 @@ public class TokenMoneyUtil {
             for (int i = 0; i < 5; i++) {
 
                 // create a key and add it to the wallet
-                wallet.addKey(new ECKey());
+                wallet.importKey(new ECKey());
             }
 
             // 保存钱包文件
