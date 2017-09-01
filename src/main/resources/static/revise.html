@@ -355,7 +355,7 @@
             $("#updatePassword").removeAttr("disabled");
             return;
         }
-        if(newPassword2.length < 8 || newPassword2.length >30){
+        if(newPassword2.length <= 8 || newPassword2.length >= 30){
             app.myAlertWithoutFunction("","密码长度不可小于8位或大于30位!","warning");
             $("#updatePassword").removeAttr("disabled");
             return;
