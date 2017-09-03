@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLConnection;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * 上传文件
@@ -42,7 +43,7 @@ public class FileController {
         String url = MvcUriComponentsBuilder.fromMethodName(FileController.class,
                 "getFile", path.getFileName().toString(), response).build().toString();
         object.put("path", path.toString());*/
-        return Result.successResult().add("path", "\\"+path.toString());
+        return Result.successResult().add("path", "/"+path.toString());
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

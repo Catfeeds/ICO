@@ -55,6 +55,13 @@ public class FileServiceImpl implements FileService {
             }
             Files.copy(file.getInputStream(), this.rootLocation.resolve(newFileName),
                     StandardCopyOption.REPLACE_EXISTING);
+            if(!System.getProperty("os.name").toLowerCase().contains("windows")) {
+                PosixFileAttributes attrs = Files.readAttributes(this.rootLocation.resolve(newFileName), PosixFileAttributes.class);// 读取文件的权限
+                Set<PosixFilePermission> posixPermissions = attrs.permissions();
+                posixPermissions.add(PosixFilePermission.OTHERS_READ);            // 其它组用户可读权限
+                posixPermissions.add(PosixFilePermission.GROUP_READ);
+                Files.setPosixFilePermissions(rootLocation, posixPermissions);    // 设置文件的权限
+            }
             return this.rootLocation.resolve(newFileName);
         }
         catch (IOException e) {
@@ -109,12 +116,6 @@ public class FileServiceImpl implements FileService {
         try {
             if(!Files.exists(rootLocation)) {
                 Files.createDirectories(rootLocation);
-                if(!System.getProperty("os.name").toLowerCase().contains("windows")) {
-                    PosixFileAttributes attrs = Files.readAttributes(rootLocation, PosixFileAttributes.class);// 读取文件的权限
-                    Set<PosixFilePermission> posixPermissions = attrs.permissions();
-                    posixPermissions.add(PosixFilePermission.OTHERS_READ);            // 其它组用户可读权限
-                    Files.setPosixFilePermissions(rootLocation, posixPermissions);    // 设置文件的权限
-                }
             }
         } catch (IOException e) {
             throw new StorageException("无法初始化文件目录", e);
