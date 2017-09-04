@@ -1,17 +1,10 @@
 package com.tongwii.ico.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.tongwii.ico.core.Result;
 import com.tongwii.ico.model.ProjectUserWalletRelation;
 import com.tongwii.ico.service.ProjectUserWalletRelationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.tongwii.ico.service.TransactionsService;
-import com.tongwii.ico.util.ContextUtils;
-import com.tongwii.ico.util.TokenMoneyEnum;
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,8 +18,6 @@ import java.util.List;
 public class ProjectUserWalletRelationController {
     @Resource
     private ProjectUserWalletRelationService projectUserWalletRelationService;
-    @Autowired
-    private TransactionsService transactionsService;
 
     @PostMapping
     public Result add(@RequestBody ProjectUserWalletRelation projectUserWalletRelation) {
