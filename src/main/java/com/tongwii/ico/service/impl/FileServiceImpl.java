@@ -117,12 +117,10 @@ public class FileServiceImpl implements FileService {
     public void init() {
         try {
             if(Files.notExists(rootLocation)) {
+                Files.createDirectories(rootLocation);
                 if(!System.getProperty("os.name").toLowerCase().contains("windows")) {
                     Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxr--r--");
-                    FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(perms);
-                    Files.createDirectories(rootLocation, attr);
-                } else {
-                    Files.createDirectories(rootLocation);
+                    Files.setPosixFilePermissions(rootLocation, perms);
                 }
                 System.out.println("-----------------------------创建文件初始目录成功-----------------------------");
             }
