@@ -18,7 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.FileAttribute;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Set;
@@ -119,7 +118,7 @@ public class FileServiceImpl implements FileService {
             if(Files.notExists(rootLocation)) {
                 Files.createDirectories(rootLocation);
                 if(!System.getProperty("os.name").toLowerCase().contains("windows")) {
-                    Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxr--r--");
+                    Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxr-xr-x");
                     Files.setPosixFilePermissions(rootLocation, perms);
                 }
                 System.out.println("-----------------------------创建文件初始目录成功-----------------------------");
