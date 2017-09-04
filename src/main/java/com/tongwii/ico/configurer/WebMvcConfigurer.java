@@ -44,9 +44,6 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     private final static Logger logger = LogManager.getLogger();
 
-    @Value("${storage.location}")
-    private String location;
-
     //使用阿里 FastJson 作为JSON MessageConverter
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

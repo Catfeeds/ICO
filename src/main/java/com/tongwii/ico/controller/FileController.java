@@ -38,12 +38,12 @@ public class FileController {
      */
     @PostMapping()
     public Result handleFileUpload(@RequestParam("file") MultipartFile file) {
-        Path path = fileService.store(file);
+        String path = fileService.store(file);
         /*JSONObject object = new JSONObject();
         String url = MvcUriComponentsBuilder.fromMethodName(FileController.class,
                 "getFile", path.getFileName().toString(), response).build().toString();
         object.put("path", path.toString());*/
-        return Result.successResult().add("path", "/"+path.toString());
+        return Result.successResult().add("path", path);
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)
@@ -58,13 +58,9 @@ public class FileController {
     public Result handleFilesUpload(@RequestParam("files") MultipartFile [] files, HttpServletResponse response) {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < files.length; i++) {
-            Path path = fileService.store(files[i]);
+            String path = fileService.store(files[i]);
             JSONObject object = new JSONObject();
-            /*Path path = fileService.load(files[i].getOriginalFilename());
-            JSONObject object = new JSONObject();
-            String url = MvcUriComponentsBuilder.fromMethodName(FileController.class,
-                    "getFile", path.getFileName().toString(), response).build().toString();*/
-            object.put("path", "\\" + path.toString());
+            object.put("path", path);
             jsonArray.add(object);
         }
         return Result.successResult(jsonArray);

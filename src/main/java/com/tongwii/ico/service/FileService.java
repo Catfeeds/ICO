@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public interface FileService {
     void init();
 
-    Path store(MultipartFile file);
+    String store(MultipartFile file);
 
     Stream<Path> loadAll();
 

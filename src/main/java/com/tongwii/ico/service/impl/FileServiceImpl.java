@@ -13,12 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.PosixFileAttributes;
+import java.nio.file.attribute.FileAttribute;
 import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -34,13 +36,16 @@ public class FileServiceImpl implements FileService {
 
     private final Path rootLocation;
 
-    public FileServiceImpl(@Value("${storage.location}") String location) {
-        this.rootLocation = Paths.get(location);
+    @Value("${storage.location}")
+    private String location;
+
+    public FileServiceImpl(@Value("${storage.location}") String location) throws URISyntaxException {
+        this.rootLocation = Paths.get(this.getClass().getResource("/").toURI()).getParent().getParent().resolve(Paths.get(location));
         init();
     }
 
     @Override
-    public Path store(MultipartFile file) {
+    public String store(MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String newFileName = UUID.randomUUID().toString().replaceAll("-", "") + fileName.substring(fileName.lastIndexOf("."));
         try {
@@ -56,13 +61,10 @@ public class FileServiceImpl implements FileService {
             Files.copy(file.getInputStream(), this.rootLocation.resolve(newFileName),
                     StandardCopyOption.REPLACE_EXISTING);
             if(!System.getProperty("os.name").toLowerCase().contains("windows")) {
-                PosixFileAttributes attrs = Files.readAttributes(this.rootLocation.resolve(newFileName), PosixFileAttributes.class);// 读取文件的权限
-                Set<PosixFilePermission> posixPermissions = attrs.permissions();
-                posixPermissions.add(PosixFilePermission.OTHERS_READ);            // 其它组用户可读权限
-                posixPermissions.add(PosixFilePermission.GROUP_READ);
-                Files.setPosixFilePermissions(rootLocation, posixPermissions);    // 设置文件的权限
+                Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxr--r--");
+                Files.setPosixFilePermissions(this.rootLocation.resolve(newFileName), perms);    // 设置文件的权限
             }
-            return this.rootLocation.resolve(newFileName);
+            return "/" + location + "/" + newFileName;
         }
         catch (IOException e) {
             throw new StorageException("存储文件失败 " + fileName, e);
@@ -74,7 +76,7 @@ public class FileServiceImpl implements FileService {
         try {
             return Files.walk(this.rootLocation, 1)
                     .filter(path -> !path.equals(this.rootLocation))
-                    .map(path -> this.rootLocation.relativize(path));
+                    .map(this.rootLocation::relativize);
         }
         catch (IOException e) {
             throw new StorageException("读取存储文件失败", e);
@@ -114,8 +116,15 @@ public class FileServiceImpl implements FileService {
     @Override
     public void init() {
         try {
-            if(!Files.exists(rootLocation)) {
-                Files.createDirectories(rootLocation);
+            if(Files.notExists(rootLocation)) {
+                if(!System.getProperty("os.name").toLowerCase().contains("windows")) {
+                    Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxr--r--");
+                    FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(perms);
+                    Files.createDirectories(rootLocation, attr);
+                } else {
+                    Files.createDirectories(rootLocation);
+                }
+                System.out.println("-----------------------------创建文件初始目录成功-----------------------------");
             }
         } catch (IOException e) {
             throw new StorageException("无法初始化文件目录", e);
