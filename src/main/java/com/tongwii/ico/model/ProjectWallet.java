@@ -1,8 +1,11 @@
 package com.tongwii.ico.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Table(name = "project_wallet")
+@Data
 public class ProjectWallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,72 +27,4 @@ public class ProjectWallet {
 
     @Transient
     private TokenMoney tokenMoney;
-
-    /**
-     * @return id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * @return wallet_address
-     */
-    public String getWalletAddress() {
-        return walletAddress;
-    }
-
-    /**
-     * @param walletAddress
-     */
-    public void setWalletAddress(String walletAddress) {
-        this.walletAddress = walletAddress;
-    }
-
-    public Integer getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
-    }
-
-    public Integer getTokenMoneyId() {
-        return tokenMoneyId;
-    }
-
-    public void setTokenMoneyId(Integer tokenMoneyId) {
-        this.tokenMoneyId = tokenMoneyId;
-    }
-
-    public String getDes() {
-        return des;
-    }
-
-    public void setDes(String des) {
-        this.des = des;
-    }
-
-    public TokenMoney getTokenMoney() {
-        return tokenMoney;
-    }
-
-    public void setTokenMoney(TokenMoney tokenMoney) {
-        this.tokenMoney = tokenMoney;
-    }
-
-    public String getWalletPrivateKey() {
-        return walletPrivateKey;
-    }
-
-    public void setWalletPrivateKey(String walletPrivateKey) {
-        this.walletPrivateKey = walletPrivateKey;
-    }
 }
