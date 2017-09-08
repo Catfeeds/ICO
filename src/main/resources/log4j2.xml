@@ -73,6 +73,9 @@ sys:user.home  用户目录
         <logger name="com.alibaba.druid" level="info">
             <AppenderRef ref="STDOUT" level="info"/>
         </logger>
+        <logger name="springfox" level="error">
+            <AppenderRef ref="STDOUT" level="error"/>
+        </logger>
 
         <!-- 定义除单个类外所有日志记录级别 -->
         <Root level="debug" includeLocation="true">

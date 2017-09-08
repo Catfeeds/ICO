@@ -18,7 +18,7 @@ import java.util.Properties;
  * Mybatis & Mapper & PageHelper 配置
  */
 @Configuration
-public class MybatisConfigurer {
+public class MybatisConfig {
 
     @Bean
     public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {

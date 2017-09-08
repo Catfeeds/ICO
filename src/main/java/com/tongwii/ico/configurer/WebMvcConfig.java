@@ -40,7 +40,7 @@ import java.util.List;
  * Spring MVC 配置
  */
 @Configuration
-public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     private final static Logger logger = LogManager.getLogger();
 
