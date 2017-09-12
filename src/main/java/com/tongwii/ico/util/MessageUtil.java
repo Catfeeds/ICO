@@ -16,6 +16,7 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.TemplateEngine;
@@ -69,6 +70,7 @@ public class MessageUtil {
         return randNum;
     }
 
+    @Async
     public boolean sendRegisterMail(String toAddress, String token) {
         MimeMessage message = mailSender.createMimeMessage();
 
