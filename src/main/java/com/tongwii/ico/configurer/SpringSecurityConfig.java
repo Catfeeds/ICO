@@ -6,6 +6,7 @@ import com.tongwii.ico.util.CurrentConfigEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,13 +21,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * @author : Zeral
  * @date : 2017/8/3
  */
+@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity( prePostEnabled = true )
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${spring.profiles.active}")
@@ -39,8 +42,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureAuthentication ( AuthenticationManagerBuilder authenticationManagerBuilder ) throws Exception {
-        authenticationManagerBuilder
-                .authenticationProvider(daoAuthenticationProvider());
+        authenticationManagerBuilder.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Bean
@@ -68,33 +70,34 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // token将拿不到用户信息
         if (env.equals(CurrentConfigEnum.dev.toString())) {
             httpSecurity
-                    // jwt不需要csrf
-                    .csrf().disable()
-                    // cors 支持
-                    .cors().and()
-                    // jwt不需要session , 所以不创建会话
+                    .csrf()
+                    .disable()
+                    .cors()
+                .and()
                     .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
-                    // 允许授权请求
                     .authorizeRequests()
-                    // 允许匿名资源请求
                     .anyRequest().permitAll();
         } else {
             httpSecurity
-                    // jwt不需要csrf
-                    .csrf().disable()
-                    // cors 支持
-                    .cors().and()
+                    // 基于定制JWT安全过滤器
+                    .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
+                    .exceptionHandling()
+                    .authenticationEntryPoint(authenticationEntryPoint)
+                .and()
+                    .csrf()
+                    .disable()
+                    .cors()
+                .and()
                     // jwt不需要session , 所以不创建会话
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                    // 异常处理
-                    .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                     // 允许授权请求
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/user/register").permitAll()
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                     .antMatchers("/admin/**").hasRole("ADMIN");
-            // 基于定制JWT安全过滤器
-            httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+
         }
         // 禁用页面缓存
         httpSecurity.headers().cacheControl();
