@@ -2,6 +2,7 @@ package com.conpany.project;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.tongwii.ico.configurer.TestConfig;
 import com.tongwii.ico.dao.OperatorHistoryMapper;
 import com.tongwii.ico.model.User;
 import com.tongwii.ico.security.JwtTokenUtil;
@@ -39,11 +40,18 @@ public class UtilTest extends Tester {
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
 
+    @Autowired
+    TestConfig testConfig;
+
     @Test
     public void validateUtilTest() {
         Assert.assertEquals(true, ValidateUtil.validateEmail("zeralzhang@gmail.com"));
     }
 
+    @Test
+    public void propertiesTest() {
+        System.out.println(testConfig.getBankcard());
+    }
 
     @Test
     public void sendEmail() {

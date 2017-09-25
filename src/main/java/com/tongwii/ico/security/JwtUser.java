@@ -20,10 +20,8 @@ import java.util.stream.Collectors;
 public class JwtUser implements UserDetails {
     private Integer id;
     private String username;
-    @JSONField(serialize = false)
     private String password;
     private boolean enabled;
-    @JSONField(serialize = false)
     private List<Role> roles;
 
     @Override
